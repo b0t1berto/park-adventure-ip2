@@ -15,7 +15,7 @@ public class Feriados {
     @JsonIgnoreProperties(ignoreUnknown = true)
     record Feriado(String date, String name, String type) {}
 
-    public static void main(String[] args) throws Exception {
+    static void main() throws Exception {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://brasilapi.com.br/api/feriados/v1/2026"))

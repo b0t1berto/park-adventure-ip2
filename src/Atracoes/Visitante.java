@@ -11,8 +11,6 @@ public class Visitante {
         this.altura = altura;
     }
 
-
-
     // Getters and Setters
     public String getNome() {
         return nome;
