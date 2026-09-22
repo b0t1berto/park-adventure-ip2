@@ -1,8 +1,7 @@
 package Atracoes;
 
-public class Aquatico extends Atracoes {
-    public Aquatico(String nome, int capacidadeMaxima, int alturaMinima, int idadeMinima) {
-        super(nome, capacidadeMaxima, alturaMinima, idadeMinima);
+class Aquatico extends Atracao {
+    public Aquatico(String nome, int capacidadeMaxima, int alturaMinima, int idadeMinima, Operador operador, FilaVirtual filaVirtual) {
+        super(nome, capacidadeMaxima, alturaMinima, idadeMinima, operador, filaVirtual);
     }
 }
-
