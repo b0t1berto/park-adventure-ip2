@@ -17,4 +17,13 @@ class ControleIngressos {
     public List<Ingresso> getIngressos() {
         return ingressos;
     }
+    public int consultarQuantidadePorData(LocalDate data) {
+        int count = 0;
+        for (Ingresso ingresso : ingressos) {
+            if (ingresso.getDataCompra().equals(data)) {
+                count++;
+            }
+        }
+        return count;
+    }
 }
