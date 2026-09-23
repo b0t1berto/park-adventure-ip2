@@ -1,4 +1,4 @@
-package Atracoes;
+package ParkAdventure;
 
 class Aquatico extends Atracao {
     public Aquatico(String nome, int capacidadeMaxima, int alturaMinima, int idadeMinima, Operador operador, FilaVirtual filaVirtual) {

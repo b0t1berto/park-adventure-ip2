@@ -1,4 +1,4 @@
-package Atracoes;
+package ParkAdventure;
 
 abstract class Atracao {
     private String nome;

@@ -1,4 +1,4 @@
-package Atracoes;
+package ParkAdventure;
 
 class Radical extends Atracao {
     public Radical(String nome, int capacidadeMaxima, int alturaMinima, int idadeMinima, Operador operador, FilaVirtual filaVirtual) {

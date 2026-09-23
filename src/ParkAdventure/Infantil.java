@@ -1,4 +1,4 @@
-package Atracoes;
+package ParkAdventure;
 
 class Infantil extends Atracao {
     public Infantil(String nome, int capacidadeMaxima, int alturaMinima, int idadeMinima, Operador operador, FilaVirtual filaVirtual) {

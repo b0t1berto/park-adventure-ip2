@@ -1,4 +1,4 @@
-package Atracoes;
+package ParkAdventure;
 
 import java.time.LocalDate;
 

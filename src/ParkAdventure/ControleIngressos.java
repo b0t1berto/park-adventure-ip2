@@ -1,4 +1,4 @@
-package Atracoes;
+package ParkAdventure;
 
 import java.util.ArrayList;
 import java.util.List;
