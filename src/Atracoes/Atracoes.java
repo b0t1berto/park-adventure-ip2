@@ -7,7 +7,7 @@ abstract class Atracao {
     private int idadeMinima;
     private Operador operador;
     private int ocupacaoAtual;
-    private FilaVirtual filaVirtual = new FilaVirtual();
+    private FilaVirtual filaVirtual;
 
     public Atracao(String nome, int capacidadeMaxima, int alturaMinima, int idadeMinima, Operador operador, FilaVirtual filaVirtual) {
         this.nome = nome;
