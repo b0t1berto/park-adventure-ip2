@@ -1,10 +1,11 @@
 package ParkAdventure;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-class ControleIngressos {
-    private List<Ingresso> ingressos;
+public class ControleIngressos {
+    private final List<Ingresso> ingressos;
     public ControleIngressos() {
         this.ingressos = new ArrayList<>();
     }

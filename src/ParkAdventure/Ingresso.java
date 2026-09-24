@@ -2,7 +2,7 @@ package ParkAdventure;
 
 import java.time.LocalDate;
 
-class Ingresso {
+public class Ingresso {
     private Visitante visitante;
     private String tipoIngresso;
     private LocalDate dataCompra;

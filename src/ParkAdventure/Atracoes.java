@@ -1,6 +1,6 @@
 package ParkAdventure;
 
-abstract class Atracoes {
+public abstract class Atracoes {
     private String nome;
     private int capacidadeMaxima;
     private Operador operador;

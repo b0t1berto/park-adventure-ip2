@@ -3,7 +3,7 @@ package ParkAdventure;
 import java.time.LocalDate;
 import java.time.Period;
 
-class Visitante {
+public class Visitante {
     private String nome;
     private LocalDate dataNascimento;
     private int altura;

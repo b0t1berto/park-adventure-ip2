@@ -2,7 +2,7 @@ package ParkAdventure;
 
 import java.time.LocalDate;
 
-class ControleAcesso {
+public class ControleAcesso {
     public boolean registrarAcesso(Visitante visitante, Ingresso ingresso, Atracoes atracao) {
         // Verifica se o ingresso pertence ao visitante
         if (ingresso.getVisitante() != visitante) {

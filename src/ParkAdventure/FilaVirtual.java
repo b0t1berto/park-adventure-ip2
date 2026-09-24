@@ -3,8 +3,8 @@ package ParkAdventure;
 import java.util.LinkedList;
 import java.util.Queue;
 
-class FilaVirtual {
-    private Queue<Visitante> fila;//usa uma fila para gerenciar os visitantes que estão esperando para entrar na atração
+public class FilaVirtual {
+    private final Queue<Visitante> fila;//usa uma fila para gerenciar os visitantes que estão esperando para entrar na atração
     public FilaVirtual() {//estilo primeiro a entrar, primeiro a sair (FIFO)
         fila = new LinkedList<>();//cria uma fila virtual usando o LinkedList
     }
