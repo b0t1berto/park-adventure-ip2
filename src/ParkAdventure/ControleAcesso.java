@@ -3,7 +3,7 @@ package ParkAdventure;
 import java.time.LocalDate;
 
 class ControleAcesso {
-    public boolean registrarAcesso(Visitante visitante,Ingresso ingresso,Atracao atracao) {
+    public boolean registrarAcesso(Visitante visitante, Ingresso ingresso, Atracoes atracao) {
         // Verifica se o ingresso pertence ao visitante
         if (ingresso.getVisitante() != visitante) {
             return false;
@@ -26,15 +26,15 @@ class ControleAcesso {
     }
 
     // consulta a ocupação atual da atração em tempo real
-    public int consultarOcupacao(Atracao atracao) {
+    public int consultarOcupacao(Atracoes atracao) {
         return atracao.getOcupacaoAtual();
     }
 
-    public boolean estaLotada(Atracao atracao) {
+    public boolean estaLotada(Atracoes atracao) {
         return atracao.getOcupacaoAtual() >= atracao.getCapacidadeMaxima();
     }
 
-    public void finalizarUso(Visitante visitante,Atracao atracao) {
+    public void finalizarUso(Visitante visitante, Atracoes atracao) {
         atracao.sair();// Libera uma vaga
         if (!atracao.getFilaVirtual().estaVazia()) {//verifica se a fila virtual não está vazia
             Visitante proximo = atracao.getFilaVirtual().proximo();

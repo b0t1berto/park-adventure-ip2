@@ -1,27 +1,18 @@
 package ParkAdventure;
 
-abstract class Atracao {
+abstract class Atracoes {
     private String nome;
     private int capacidadeMaxima;
-    private int alturaMinima;
-    private int idadeMinima;
     private Operador operador;
     private int ocupacaoAtual;
     private FilaVirtual filaVirtual;
 
-    public Atracao(String nome, int capacidadeMaxima, int alturaMinima, int idadeMinima, Operador operador, FilaVirtual filaVirtual) {
+    public Atracoes(String nome, int capacidadeMaxima, Operador operador, FilaVirtual filaVirtual) {
         this.nome = nome;
         this.capacidadeMaxima = capacidadeMaxima;
-        this.alturaMinima = alturaMinima;
-        this.idadeMinima = idadeMinima;
         this.operador = operador;
         this.filaVirtual = filaVirtual;
         this.ocupacaoAtual = 0;
-    }
-
-    //Verifica se o visitante cumpre os requisitos
-    public boolean podeEntrar(Visitante visitante) {
-        return visitante.getAltura() >= alturaMinima && visitante.getIdade() >= idadeMinima;
     }
 
     //Registra a entrada de uma pessoa
@@ -46,12 +37,6 @@ abstract class Atracao {
     public int getCapacidadeMaxima() { return capacidadeMaxima; }
     public void setCapacidadeMaxima(int capacidadeMaxima) { this.capacidadeMaxima = capacidadeMaxima; }
 
-    public int getAlturaMinima() { return alturaMinima; }
-    public void setAlturaMinima(int alturaMinima) { this.alturaMinima = alturaMinima; }
-
-    public int getIdadeMinima() { return idadeMinima; }
-    public void setIdadeMinima(int idadeMinima) { this.idadeMinima = idadeMinima; }
-
     public Operador getOperador() { return operador; }
     public void setOperador(Operador operador) { this.operador = operador; }
 
@@ -60,4 +45,8 @@ abstract class Atracao {
 
     public int getOcupacaoAtual() { return ocupacaoAtual; }
     public void setOcupacaoAtual(int ocupacaoAtual) { this.ocupacaoAtual = ocupacaoAtual; }
+
+    public boolean podeEntrar(Visitante visitante) {
+        return true;
+    }
 }
