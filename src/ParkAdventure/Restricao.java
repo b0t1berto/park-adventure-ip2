@@ -1,10 +1,10 @@
 package ParkAdventure;
 
-public class Restricoes {
+public class Restricao {
     private int alturaMinima;
     private int idadeMinima;
 
-    public Restricoes(int alturaMinima, int idadeMinima) {
+    public Restricao(int alturaMinima, int idadeMinima) {
         this.alturaMinima = alturaMinima;
         this.idadeMinima = idadeMinima;
     }

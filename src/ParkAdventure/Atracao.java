@@ -1,13 +1,13 @@
 package ParkAdventure;
 
-public abstract class Atracoes {
+public abstract class Atracao {
     private String nome;
     private int capacidadeMaxima;
     private Operador operador;
     private int ocupacaoAtual;
     private FilaVirtual filaVirtual;
 
-    public Atracoes(String nome, int capacidadeMaxima, Operador operador, FilaVirtual filaVirtual) {
+    public Atracao(String nome, int capacidadeMaxima, Operador operador, FilaVirtual filaVirtual) {
         this.nome = nome;
         this.capacidadeMaxima = capacidadeMaxima;
         this.operador = operador;
