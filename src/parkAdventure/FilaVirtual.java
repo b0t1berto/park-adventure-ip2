@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class FilaVirtual {
-    private final Queue<Visitante> fila;//usa uma fila para gerenciar os visitantes que estão esperando para entrar na atração
+    private final Queue<Visitante> fila;//usa uma fila para gerir os visitantes que estão esperando para entrar na atração
     public FilaVirtual() {//estilo primeiro a entrar, primeiro a sair (FIFO)
         fila = new LinkedList<>();//cria uma fila virtual usando o LinkedList
     }

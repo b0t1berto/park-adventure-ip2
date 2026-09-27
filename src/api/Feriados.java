@@ -12,8 +12,12 @@ import java.util.List;
 
 public class Feriados {
 
+    public static List<Feriado> buscarFeriadosBrasilAPI(int ano) {
+        return List.of();
+    }
+
     @JsonIgnoreProperties(ignoreUnknown = true)
-    record Feriado(String date, String name, String type) {}
+    public record Feriado(String date, String name, String type) {}
 
     static void main() throws Exception {
         HttpClient client = HttpClient.newHttpClient();

@@ -7,6 +7,7 @@ public class Ingresso {
     private String tipoIngresso;
     private LocalDate dataCompra;
     private LocalDate dataValidade;
+    private double valor;
 
     public Ingresso(Visitante visitante, String tipoIngresso, LocalDate dataCompra, LocalDate dataValidade) {
         this.visitante = visitante;
@@ -31,4 +32,8 @@ public class Ingresso {
 
     public LocalDate getDataValidade() { return dataValidade; }
     public void setDataValidade(LocalDate dataValidade) { this.dataValidade = dataValidade; }
+
+    public double getValor() {
+        return valor;
+    }
 }
