@@ -1,4 +1,4 @@
-package ParkAdventure;
+package parkAdventure;
 
 public abstract class Atracao {
     private String nome;
@@ -6,13 +6,17 @@ public abstract class Atracao {
     private Operador operador;
     private int ocupacaoAtual;
     private FilaVirtual filaVirtual;
+    private double alturaMinima;
+    private double idadeMinima;
 
-    public Atracao(String nome, int capacidadeMaxima, Operador operador, FilaVirtual filaVirtual) {
-        this.nome = nome;
+    public Atracao(double alturaMinima, int capacidadeMaxima, FilaVirtual filaVirtual, double idadeMinima, String nome, int ocupacaoAtual, Operador operador) {
+        this.alturaMinima = alturaMinima;
         this.capacidadeMaxima = capacidadeMaxima;
-        this.operador = operador;
         this.filaVirtual = filaVirtual;
-        this.ocupacaoAtual = 0;
+        this.idadeMinima = idadeMinima;
+        this.nome = nome;
+        this.ocupacaoAtual = ocupacaoAtual;
+        this.operador = operador;
     }
 
     //Registra a entrada de uma pessoa

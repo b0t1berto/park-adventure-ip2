@@ -1,4 +1,4 @@
-package ParkAdventure;
+package parkAdventure;
 
 import java.io.FileWriter;
 import java.io.IOException;

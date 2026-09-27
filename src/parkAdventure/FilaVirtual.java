@@ -1,4 +1,4 @@
-package ParkAdventure;
+package parkAdventure;
 
 import java.util.LinkedList;
 import java.util.Queue;
