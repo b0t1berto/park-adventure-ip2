@@ -1,4 +1,4 @@
-package parkAdventure;
+package parkadventure;
 
 public class Operador {
     private String nome;

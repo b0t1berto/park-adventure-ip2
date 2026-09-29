@@ -1,4 +1,4 @@
-package parkAdventure;
+package parkadventure;
 
 import api.Feriados;
 import api.Feriados.Feriado;

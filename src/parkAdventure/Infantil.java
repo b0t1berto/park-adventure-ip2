@@ -1,7 +1,8 @@
-package parkAdventure;
+package parkadventure;
 
 public class Infantil extends Atracao {
-    public Infantil(double alturaMinima, int capacidadeMaxima, FilaVirtual filaVirtual, double idadeMinima, String nome, int ocupacaoAtual, Operador operador) {
-        super(alturaMinima, capacidadeMaxima, filaVirtual, idadeMinima, nome, ocupacaoAtual, operador);
+    private Responsavel responsavel;
+    public Infantil(int capacidadeMaxima, FilaVirtual filaVirtual, String nome, int ocupacaoAtual, Operador operador) {
+        super(capacidadeMaxima, filaVirtual, nome, ocupacaoAtual, operador);
     }
 }
