@@ -1,4 +1,6 @@
-package parkadventure;
+package parkAdventure;
+
+import classesExtras.Responsavel;
 
 public class Infantil extends Atracao {
     private Responsavel responsavel;

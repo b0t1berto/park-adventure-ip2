@@ -1,4 +1,4 @@
-package parkadventure;
+package classesExtras;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

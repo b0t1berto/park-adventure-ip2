@@ -1,15 +1,14 @@
-package parkadventure;
+package parkAdventure;
 
 import java.util.LinkedList;
 import java.util.Queue;
-import parkadventure.Atracao;
+import parkAdventure.Atracao;
 
 public class FilaVirtual {
-    private int capacidadeFila;
+    private int capacidadeFila = 0;
     private int capacidadeMaximaFila;
+    private int capacidadeMaxima;
     private final Queue<Visitante> fila;//usa uma fila para gerir os visitantes que estão esperando para entrar na atração
-    capacidadeMaximaFila = capacidadeMaxima;
-    capacidadeFila = 0; 
     public FilaVirtual() {//estilo primeiro a entrar, primeiro a sair (FIFO)
         fila = new LinkedList<>();//cria uma fila virtual usando o LinkedList
     }
@@ -17,8 +16,8 @@ public class FilaVirtual {
         if (capacidadeMaximaFila < capacidadeMaxima ) {
             fila.add(visitante);
             capacidadeFila++;
-        } else if (capacidadeMaximaFila => capacidadeMaxima) {
-            system.out.println('Fila está cheia')
+        } else if (capacidadeMaximaFila > capacidadeMaxima) {
+            System.out.println("Fila está cheia");
         }
     }
 

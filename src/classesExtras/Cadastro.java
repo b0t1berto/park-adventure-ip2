@@ -1,4 +1,7 @@
-package parkadventure;
+package classesExtras;
+
+import parkAdventure.Atracao;
+import parkAdventure.Visitante;
 
 import java.time.LocalDateTime;
 

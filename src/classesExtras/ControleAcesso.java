@@ -1,28 +1,31 @@
-package parkadventure;
+package classesExtras;
+
+import parkAdventure.Atracao;
+import parkAdventure.Visitante;
 
 import java.time.LocalDate;
 
 public class ControleAcesso {
     public boolean registrarAcesso(Visitante visitante, Ingresso ingresso, Atracao atracao) {
         // Verifica se o ingresso pertence ao visitante
-        if (ingresso.getVisitante() != visitante) {
-            return false;
-        }
-        // Verifica se o ingresso está válido
-        if (!ingresso.valido(LocalDate.now())) {
-            return false;
-        }
-        // Verifica idade e altura
-        if (!atracao.podeEntrar(visitante)) {
-            return false;
-        }
+        if (visitante == ingresso.getVisitante()) {// Verifica se o ingresso está válido
+            if (!ingresso.valido(LocalDate.now())) {
+                return true;
+            }
+            // Verifica idade e altura
+            if (!atracao.podeEntrar(visitante)) {
+                return false;
+            }
 
-        // Se estiver lotada, coloca na fila virtual
-        if (!atracao.entrar()) {
-            atracao.getFilaVirtual().adicionar(visitante);
+            // Se estiver lotada, coloca na fila virtual
+            if (!atracao.entrar()) {
+                atracao.getFilaVirtual().adicionar(visitante);
+                return false;
+            }
+            return true;
+        } else {
             return false;
         }
-        return true;
     }
 
     // consulta a ocupação atual da atração em tempo real

@@ -1,4 +1,4 @@
-package parkadventure;
+package parkAdventure;
 
 public abstract class Atracao {
     private String nome;
@@ -9,7 +9,7 @@ public abstract class Atracao {
     private double alturaMinima;
     private double idadeMinima;
 
-    public Atracao(double alturaMinima, int capacidadeMaxima, FilaVirtual filaVirtual, double idadeMinima, String nome, int ocupacaoAtual, Operador operador) {
+    public Atracao(double alturaMinima, FilaVirtual filaVirtual, String nome, int ocupacaoAtual, Operador operador) {
         this.alturaMinima = alturaMinima;
         this.capacidadeMaxima = capacidadeMaxima;
         this.filaVirtual = filaVirtual;
