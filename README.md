@@ -53,3 +53,29 @@ Como diferencial, o preço dos ingressos é ajustado dinamicamente em datas de f
 JavaFX, BrasilAPI — Feriados Nacionais (https://brasilapi.com.br/docs#tag/Feriados-Nacionais, pública e sem chave), `java.net.http.HttpClient`, Jackson/Gson, Java Time api, JUnit.
 
 **Requisito bônus (opcional, fora da contagem oficial):** gerar uma página HTML estática com o calendário de feriados do ano e os dias de maior movimento previsto, aberta automaticamente no navegador via `Desktop.getDesktop().browse()`.
+
+## Diagrama de Classes (UML)
+
+![Diagrama UML do projeto](imagens/uml.jpeg)
+
+O diagrama acima representa a estrutura das classes do projeto, desenvolvido em **Java** com Programação Orientada a Objetos.
+
+### Hierarquia de atrações
+
+- **`Atracao`** (classe abstrata): define os atributos e comportamentos comuns a todas as atrações do parque.
+- **`Aquatico`**: classe filha de `Atracao`, representa as atrações aquáticas.
+- **`Radical`**: classe filha de `Atracao`, representa as atrações radicais.
+- **`Infantil`**: classe filha de `Atracao`, representa as atrações voltadas ao público infantil.
+
+### Demais classes
+
+- **`Operador`**: representa o funcionário responsável por operar as atrações.
+- **`Visitante`**: representa os visitantes do parque.
+- **`Fila`**: gerencia a fila de visitantes de cada atração.
+- **`Relatorio`**: responsável por gerar os relatórios com as informações do parque.
+
+### Conceitos de POO aplicados
+
+- **Abstração:** `Atracao` define o modelo geral sem ser instanciada diretamente.
+- **Herança:** `Aquatico`, `Radical` e `Infantil` herdam de `Atracao`.
+- **Polimorfismo:** cada tipo de atração pode implementar seu próprio comportamento.
