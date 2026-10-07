@@ -1,8 +1,9 @@
-package parkAdventure;
+package classesExtras;
 
 import java.util.LinkedList;
 import java.util.Queue;
-import parkAdventure.Atracao;
+
+import parkAdventure.Visitante;
 
 public class FilaVirtual {
     private int capacidadeFila = 0;

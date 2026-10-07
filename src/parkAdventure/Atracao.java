@@ -1,5 +1,7 @@
 package parkAdventure;
 
+import classesExtras.FilaVirtual;
+
 public abstract class Atracao {
     private String nome;
     private int capacidadeMaxima;

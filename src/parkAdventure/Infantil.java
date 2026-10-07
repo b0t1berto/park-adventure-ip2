@@ -1,5 +1,6 @@
 package parkAdventure;
 
+import classesExtras.FilaVirtual;
 import classesExtras.Responsavel;
 
 public class Infantil extends Atracao {
