@@ -1,8 +1,9 @@
-package parkAdventure;
+package parkAdventure.controller;
 
 import api.Feriados;
 import api.Feriados.Feriado;
 import classesExtras.Ingresso;
+import parkAdventure.model.atracao.Atracao;
 
 import java.io.FileWriter;
 import java.io.IOException;

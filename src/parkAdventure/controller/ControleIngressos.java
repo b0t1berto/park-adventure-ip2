@@ -1,8 +1,10 @@
-package classesExtras;
+package parkAdventure.controller;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import classesExtras.Ingresso;
 
 public class ControleIngressos {
     private final List<Ingresso> ingressos;

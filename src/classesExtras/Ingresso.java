@@ -1,6 +1,6 @@
 package classesExtras;
 
-import parkAdventure.Visitante;
+import parkAdventure.model.pessoa.Visitante;
 
 import java.time.LocalDate;
 

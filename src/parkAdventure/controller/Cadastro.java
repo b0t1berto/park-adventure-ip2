@@ -1,7 +1,7 @@
-package classesExtras;
+package parkAdventure.controller;
 
-import parkAdventure.Atracao;
-import parkAdventure.Visitante;
+import parkAdventure.model.atracao.Atracao;
+import parkAdventure.model.pessoa.Visitante;
 
 import java.time.LocalDateTime;
 

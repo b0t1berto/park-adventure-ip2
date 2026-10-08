@@ -2,8 +2,7 @@ package classesExtras;
 
 import java.util.LinkedList;
 import java.util.Queue;
-
-import parkAdventure.Visitante;
+import parkAdventure.model.pessoa.Visitante;
 
 public class FilaVirtual {
     private int capacidadeFila = 0;
