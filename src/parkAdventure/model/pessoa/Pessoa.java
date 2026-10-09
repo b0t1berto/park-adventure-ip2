@@ -2,27 +2,23 @@ package parkAdventure.model.pessoa;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.time.format.DateTimeFormatter;
-// import atracao.*;
 
 public class Pessoa {
     private String nome;
-    private String dataNascimentoTexto;
     private LocalDate dataNascimento;
-    private int idade;
     private String cpf;
 
-    public Pessoa(String nome,String dataNascimentoTexto,String cpf) {
+    public Pessoa(String nome, LocalDate dataNascimento, String cpf) {
         this.nome = nome;
-        this.dataNascimentoTexto = dataNascimentoTexto;
-        DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        this.dataNascimento = LocalDate.parse(dataNascimentoTexto, formatador);
-        this.idade = Period.between(dataNascimento, LocalDate.now()).getYears();
+        this.dataNascimento = dataNascimento;
         this.cpf = cpf;
     }
-
+//get set
     public int getIdade() {
-        return idade;
+        if (dataNascimento == null) {
+            return 0;
+        }
+        return Period.between(dataNascimento, LocalDate.now()).getYears();
     }
 
     public String getNome() {
@@ -33,4 +29,19 @@ public class Pessoa {
         this.nome = nome;
     }
 
+    public LocalDate getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
 }

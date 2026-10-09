@@ -41,7 +41,7 @@ public class Visitante extends Pessoa {
     public void verificadorResponsavel () {
         if (getIdade() < 18) {
             if (!temResponsavel()) {
-                System.out.println("Você precisa de um Responsável!");
+                System.out.println("Você precisa de um Responsável!");//pode printar no model nao
             } else {
                 System.out.println("Tudo certo, aproveite bastante!");
             }
