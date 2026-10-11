@@ -2,8 +2,11 @@ package parkAdventure.model.pessoa;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.format.DateTimeFormatter;
 
 public class Pessoa {
+    private static final DateTimeFormatter FORMATO_DATA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
     private String nome;
     private LocalDate dataNascimento;
     private String cpf;
@@ -13,7 +16,12 @@ public class Pessoa {
         this.dataNascimento = dataNascimento;
         this.cpf = cpf;
     }
-//get set
+
+    // Aceita a data como texto no formato dd/MM/yyyy
+    public Pessoa(String nome, String dataNascimentoTexto, String cpf) {
+        this(nome, LocalDate.parse(dataNascimentoTexto, FORMATO_DATA), cpf);
+    }
+
     public int getIdade() {
         if (dataNascimento == null) {
             return 0;
@@ -21,27 +29,12 @@ public class Pessoa {
         return Period.between(dataNascimento, LocalDate.now()).getYears();
     }
 
-    public String getNome() {
-        return nome;
-    }
+    public String getNome() { return nome; }
+    public void setNome(String nome) { this.nome = nome; }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+    public LocalDate getDataNascimento() { return dataNascimento; }
+    public void setDataNascimento(LocalDate dataNascimento) { this.dataNascimento = dataNascimento; }
 
-    public LocalDate getDataNascimento() {
-        return dataNascimento;
-    }
-
-    public void setDataNascimento(LocalDate dataNascimento) {
-        this.dataNascimento = dataNascimento;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
+    public String getCpf() { return cpf; }
+    public void setCpf(String cpf) { this.cpf = cpf; }
 }

@@ -1,47 +1,55 @@
 package parkAdventure.controller;
 
 import java.time.LocalDate;
-import classesExtras.Ingresso;
+
 import parkAdventure.model.atracao.Atracao;
+import parkAdventure.model.ingresso.Ingresso;
 import parkAdventure.model.pessoa.Visitante;
 
 public class ControleAcesso {
-    public boolean registrarAcesso(Visitante visitante, Ingresso ingresso, Atracao atracao) {
-        // Verifica se o ingresso pertence ao visitante
-        if ((ingresso.getVisitante() == visitante)) {// Verifica se o ingresso está válido
-            if (!ingresso.valido(LocalDate.now())) {
-                return true;
-            }
-            // Verifica idade e altura
-            if (!atracao.verificadorPodeEntrar(visitante)) {
-                return false;
-            }
 
-            // Se estiver lotada, coloca na fila virtual
-            if (!atracao.verificadorPodeEntrar(visitante)) {
-                atracao.getFilaVirtual().adicionar(visitante);
-                return false;
-            }
-            return true;
-        } else {
-            return false;
+    public ResultadoAcesso registrarAcesso(Visitante visitante, Ingresso ingresso, Atracao atracao) {
+        // O ingresso tem que pertencer ao visitante e estar dentro da validade
+        if (ingresso.getVisitante() != visitante) {
+            return ResultadoAcesso.INGRESSO_DE_OUTRO_VISITANTE;
         }
+        if (!ingresso.valido(LocalDate.now())) {
+            return ResultadoAcesso.INGRESSO_EXPIRADO;
+        }
+
+        // Idade, altura e responsável
+        switch (atracao.verificarRestricao(visitante)) {
+            case FORA_DOS_REQUISITOS: return ResultadoAcesso.FORA_DOS_REQUISITOS;
+            case SEM_RESPONSAVEL:     return ResultadoAcesso.SEM_RESPONSAVEL;
+            default:                  break;
+        }
+
+        // Se estiver lotada, vai para a fila virtual
+        if (atracao.entrar()) {
+            return ResultadoAcesso.AUTORIZADO;
+        }
+        return atracao.getFilaVirtual().adicionar(visitante)
+                ? ResultadoAcesso.NA_FILA
+                : ResultadoAcesso.FILA_CHEIA;
     }
 
-    // consulta a ocupação atual da atração em tempo real
+    // Consulta a ocupação da atração em tempo real
     public int consultarOcupacao(Atracao atracao) {
         return atracao.getOcupacaoAtual();
     }
 
     public boolean estaLotada(Atracao atracao) {
-        return atracao.getOcupacaoAtual() >= atracao.getCapacidadeMaxima();
+        return atracao.estaLotada();
     }
 
-    public void finalizarUso(Visitante visitante, Atracao atracao) {
-        atracao.sair();// Libera uma vaga
-        if (!atracao.getFilaVirtual().estaVazia()) {//verifica se a fila virtual não está vazia
-            Visitante proximo = atracao.getFilaVirtual().proximo();
-            atracao.entrar();
+    // Chama o próximo da fila virtual (retorna null se não tiver ninguém)
+    public Visitante finalizarUso(Visitante visitante, Atracao atracao) {
+        atracao.sair();
+        if (atracao.getFilaVirtual().estaVazia()) {
+            return null;
         }
+        Visitante proximo = atracao.getFilaVirtual().proximo();
+        atracao.entrar();
+        return proximo;
     }
 }

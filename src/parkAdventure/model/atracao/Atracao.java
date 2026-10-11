@@ -1,44 +1,68 @@
 package parkAdventure.model.atracao;
+
 import parkAdventure.model.pessoa.Operador;
 import parkAdventure.model.pessoa.Visitante;
 
-public abstract class Atracao {
+public abstract class Atracao implements IRestricao {
+    private static final int CAPACIDADE_FILA_PADRAO = 50;
+
     private String nome;
     private int capacidadeMaxima;
     private Operador operador;
-    // private int ocupacaoAtual;
-    // private FilaVirtual filaVirtual;
     private int alturaMinima;
     private int idadeMinima;
+    private int ocupacaoAtual;
+    private final FilaVirtual filaVirtual = new FilaVirtual(CAPACIDADE_FILA_PADRAO);
 
-    public Atracao() {
+    protected Atracao(String nome, int capacidadeMaxima, Operador operador, int alturaMinima, int idadeMinima) {
         this.nome = nome;
         this.capacidadeMaxima = capacidadeMaxima;
         this.operador = operador;
         this.alturaMinima = alturaMinima;
         this.idadeMinima = idadeMinima;
-        // this.filaVirtual = filaVirtual;
     }
-     public Atracao(String nome, int capacidadeMaxima, Operador operador) {
-        this.nome = nome;
-        this.capacidadeMaxima = capacidadeMaxima;
-        this.operador = operador;
-     }
-    //Registra a entrada de uma pessoa
-    // public boolean entrar() {
-    //     if (ocupacaoAtual < capacidadeMaxima) {
-    //         ocupacaoAtual++;
-    //         return true;
-    //     }
-    //     return false;
-    // }
 
-    //Registra a saída de uma pessoa
-    // public void sair() {
-    //     if (ocupacaoAtual > 0) {
-    //         ocupacaoAtual--;
-    //     }
-    // }
+    // Regras de cada tipo; as subclasses podem sobrescrever
+    protected boolean atendeRequisitos(Visitante visitante) {
+        return visitante.getIdade() >= idadeMinima && visitante.getAltura() >= alturaMinima;
+    }
+
+    @Override
+    public MotivoBloqueio verificarRestricao(Visitante visitante) {
+        if (!atendeRequisitos(visitante)) {
+            return MotivoBloqueio.FORA_DOS_REQUISITOS;
+        }
+        if (visitante.precisaDeResponsavel()) {
+            return MotivoBloqueio.SEM_RESPONSAVEL;
+        }
+        return MotivoBloqueio.NENHUM;
+    }
+
+    public boolean podeEntrar(Visitante visitante) {
+        return verificarRestricao(visitante) == MotivoBloqueio.NENHUM;
+    }
+
+    // Registra a entrada de uma pessoa; false se estiver lotado
+    public boolean entrar() {
+        if (estaLotada()) {
+            return false;
+        }
+        ocupacaoAtual++;
+        return true;
+    }
+
+    // Registra a saída de uma pessoa
+    public void sair() {
+        if (ocupacaoAtual > 0) {
+            ocupacaoAtual--;
+        }
+    }
+
+    public boolean estaLotada() { return ocupacaoAtual >= capacidadeMaxima; }
+
+    public boolean temOperador() { return operador != null; }
+
+    public String getTipo() { return getClass().getSimpleName(); }
 
     public String getNome() { return nome; }
     public void setNome(String nome) { this.nome = nome; }
@@ -46,40 +70,16 @@ public abstract class Atracao {
     public int getCapacidadeMaxima() { return capacidadeMaxima; }
     public void setCapacidadeMaxima(int capacidadeMaxima) { this.capacidadeMaxima = capacidadeMaxima; }
 
-    public String getOperador() { return "O Operador do " + nome + " é o " + operador.getNome(); }
+    public Operador getOperador() { return operador; }
     public void setOperador(Operador operador) { this.operador = operador; }
 
-    public String getTipo() { return this.getClass().getSimpleName(); }
+    public int getAlturaMinima() { return alturaMinima; }
+    public void setAlturaMinima(int alturaMinima) { this.alturaMinima = alturaMinima; }
 
-    public String toString() {
-        return getTipo() + "\nNome: " + nome + "\nCapacidade Maxima: " + capacidadeMaxima + "\nOperador: " + getOperador()
-                + "\nAltura Mínima: " + alturaMinima + "cm" + "\nIdade Mínima: " + idadeMinima;
-    }
-    
-    public int getAlturaMinima() {
-        return alturaMinima;
-    }
-    public void setAlturaMinima(int alturaMinima) {
-        this.alturaMinima = alturaMinima;
-    }
-    public int getIdadeMinima() {
-        return idadeMinima;
-    }
-    public void setIdadeMinima(int idadeMinima) {
-        this.idadeMinima = idadeMinima;
-    }
+    public int getIdadeMinima() { return idadeMinima; }
+    public void setIdadeMinima(int idadeMinima) { this.idadeMinima = idadeMinima; }
 
-    public abstract boolean verificadorPodeEntrar(Visitante visitanteUm);
+    public int getOcupacaoAtual() { return ocupacaoAtual; }
 
-    // public FilaVirtual getFilaVirtual() { return filaVirtual; }
-    // public void setFilaVirtual(FilaVirtual filaVirtual) { this.filaVirtual = filaVirtual; }
-
-    // public int getOcupacaoAtual() { return ocupacaoAtual; }
-    // public void setOcupacaoAtual(int ocupacaoAtual) { this.ocupacaoAtual = ocupacaoAtual; }
-
+    public FilaVirtual getFilaVirtual() { return filaVirtual; }
 }
-
-//     public boolean podeEntrar(Visitante visitante) {
-//         return true;
-//     }
-// }

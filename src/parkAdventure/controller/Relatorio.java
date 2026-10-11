@@ -1,72 +1,84 @@
 package parkAdventure.controller;
 
-import api.Feriados;
-import api.Feriados.Feriado;
-import classesExtras.Ingresso;
-import parkAdventure.model.atracao.Atracao;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import parkAdventure.model.api.Feriados;
+import parkAdventure.model.api.Feriados.Feriado;
+import parkAdventure.model.atracao.Atracao;
+import parkAdventure.model.ingresso.Ingresso;
+
+// Monta os dados dos relatórios
 public class Relatorio {
 
-    public void gerarRelatorioAtracoesCSV(List<Atracao> atracoes, String caminhoArquivo) {
+    public record LinhaVenda(LocalDate data, double valor, boolean feriado) {}
 
-        atracoes.sort((a1, a2) -> Integer.compare(a2.getOcupacaoAtual(), a1.getOcupacaoAtual()));
+    public record ResumoReceita(List<LinhaVenda> vendas, double receitaTotal, double receitaFeriados) {}
 
+    public record LinhaEscala(String feriado, LocalDate data, String operador) {}
+
+    public String montarCsvAtracoes(List<Atracao> atracoes) {
+        List<Atracao> ordenadas = new ArrayList<>(atracoes);
+        ordenadas.sort((a1, a2) -> Integer.compare(a2.getOcupacaoAtual(), a1.getOcupacaoAtual()));
+
+        StringBuilder csv = new StringBuilder("Atracao,Ocupacao\n");
+        for (Atracao a : ordenadas) {
+            csv.append(a.getNome()).append(",").append(a.getOcupacaoAtual()).append("\n");
+        }
+        return csv.toString();
+    }
+
+    public void salvarCsvAtracoes(List<Atracao> atracoes, String caminhoArquivo) throws IOException {
         try (FileWriter writer = new FileWriter(caminhoArquivo)) {
-            writer.append("Atracao,Ocupacao\n");
-            for (Atracao a : atracoes) {
-                writer.append(a.getNome()).append(",").append(String.valueOf(a.getOcupacaoAtual())).append("\n");
-            }
-            System.out.println("Relatório gerado com sucesso em: " + caminhoArquivo);
-        } catch (IOException e) {
-            System.out.println("Erro ao gerar relatório: " + e.getMessage());
+            writer.write(montarCsvAtracoes(atracoes));
         }
     }
 
-    public void gerarRelatorioIngressos(List<Ingresso> vendas, Month mes, int ano) throws Exception {
-        List<Feriado> feriadosAPI = Feriados.buscarFeriadosBrasilAPI(ano);
-        Set<LocalDate> datasFeriado = new HashSet<>();
-        for (Feriado f : feriadosAPI) {
-            datasFeriado.add(LocalDate.parse(f.date()));
-        }
+    public ResumoReceita gerarRelatorioIngressos(List<Ingresso> vendas, Month mes, int ano)
+            throws IOException, InterruptedException {
+        Set<LocalDate> datasFeriado = buscarDatasFeriado(ano);
 
+        List<LinhaVenda> linhas = new ArrayList<>();
         double receitaTotal = 0;
         double receitaFeriados = 0;
 
-        System.out.println("Relatório de Vendas de Ingressos - " + mes + "/" + ano);
         for (Ingresso venda : vendas) {
-            if (venda.getDataCompra().getMonth() == mes && venda.getDataCompra().getYear() == ano) {
+            LocalDate data = venda.getDataCompra();
+            if (data.getMonth() == mes && data.getYear() == ano) {
+                boolean feriado = datasFeriado.contains(data);
                 receitaTotal += venda.getValor();
-                boolean isFeriado = datasFeriado.contains(venda.getDataCompra());
-
-                if (isFeriado) {
+                if (feriado) {
                     receitaFeriados += venda.getValor();
-                    System.out.printf("[Destaque Feriado] Data %s | Valor: R$ %.2f%n", venda.getDataCompra(), venda.getValor());
-                } else {
-                    System.out.printf("Data %s | Valor: R$ %.2f%n", venda.getDataCompra(), venda.getValor());
                 }
+                linhas.add(new LinhaVenda(data, venda.getValor(), feriado));
             }
         }
-        System.out.printf("Receita Total: R$ %.2f%n", receitaTotal);
-        System.out.printf("Receita em Feriados: R$ %.2f%n", receitaFeriados);
+        return new ResumoReceita(linhas, receitaTotal, receitaFeriados);
     }
 
-    public void listaEscalaProximosFeriados(Map<LocalDate, String> escalaOperadores, int ano) throws Exception {
-        List<Feriado> feriadosNacionais = Feriados.buscarFeriadosBrasilAPI(ano);
-
-        System.out.println("Escala de Operadores para os Próximos Feriados Nacionais de " + ano + " (BrasilAPI) --");
-        for (Feriado feriado : feriadosNacionais) {
+    public List<LinhaEscala> listarEscalaProximosFeriados(Map<LocalDate, String> escalaOperadores, int ano)
+            throws IOException, InterruptedException {
+        List<LinhaEscala> escala = new ArrayList<>();
+        for (Feriado feriado : Feriados.buscarFeriadosBrasilAPI(ano)) {
             LocalDate data = LocalDate.parse(feriado.date());
-            String operador = escalaOperadores.getOrDefault(data, "Sem operador escalado");
-            System.out.printf("Feriado: %s (%s) | Operador: %s%n", feriado.name(), feriado.date(), operador);
+            escala.add(new LinhaEscala(feriado.name(), data,
+                    escalaOperadores.getOrDefault(data, "Sem operador escalado")));
         }
+        return escala;
+    }
+
+    private Set<LocalDate> buscarDatasFeriado(int ano) throws IOException, InterruptedException {
+        Set<LocalDate> datas = new HashSet<>();
+        for (Feriado f : Feriados.buscarFeriadosBrasilAPI(ano)) {
+            datas.add(LocalDate.parse(f.date()));
+        }
+        return datas;
     }
 }

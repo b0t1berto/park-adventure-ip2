@@ -1,50 +1,32 @@
 package parkAdventure.model.pessoa;
 
 public class Visitante extends Pessoa {
+    private static final int IDADE_MAIORIDADE = 18;
+
     private int altura;
     private Responsavel responsavel;
-    private boolean variavelDeControle;
 
-    public Visitante (String nome, String dataNascimentoTexto, String cpf, int altura) {
-        super(nome, dataNascimentoTexto, cpf);   
+    public Visitante(String nome, String dataNascimentoTexto, String cpf, int altura) {
+        super(nome, dataNascimentoTexto, cpf);
         this.altura = altura;
     }
-    
-    public int getAltura() {
-        return altura;
-    }
 
-    public void setResponsavel(Responsavel responsavel) {
-        this.responsavel = responsavel;
-    }
+    public int getAltura() { return altura; }
+    public void setAltura(int altura) { this.altura = altura; }
 
-    public String getResponsavel() {
-        return this.responsavel.getNome();
-    }
+    public Responsavel getResponsavel() { return responsavel; }
+    public void setResponsavel(Responsavel responsavel) { this.responsavel = responsavel; }
 
     public boolean temResponsavel() {
-        return this.responsavel != null;
+        return responsavel != null;
     }
 
-    public void setVariavelDeControle() {
-        if (variavelDeControle == true) {
-            variavelDeControle = false;
-        } else {
-            variavelDeControle = true;
-        }
-    } 
-
-    public boolean getVariavlDeControle() {
-        return this.variavelDeControle;
+    public boolean ehMenorDeIdade() {
+        return getIdade() < IDADE_MAIORIDADE;
     }
 
-    public void verificadorResponsavel () {
-        if (getIdade() < 18) {
-            if (!temResponsavel()) {
-                System.out.println("Você precisa de um Responsável!");//pode printar no model nao
-            } else {
-                System.out.println("Tudo certo, aproveite bastante!");
-            }
-        }
+    // Menor de idade sem responsável não pode acessar atrações
+    public boolean precisaDeResponsavel() {
+        return ehMenorDeIdade() && !temResponsavel();
     }
 }
