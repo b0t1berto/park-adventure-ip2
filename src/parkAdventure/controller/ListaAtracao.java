@@ -4,14 +4,11 @@ import parkAdventure.model.atracao.Atracao;
 import java.util.ArrayList;
 
 public class ListaAtracao {
-    private final ArrayList<Atracao> atracoes;
-
-    public ListaAtracao() {
-        this.atracoes = new ArrayList<>();
-    }
+    private final ArrayList<Atracao> atracoes = new ArrayList<>();
 
     public boolean cadastrar(Atracao atracao) {
-        if (buscar(atracao.getNome()) != null) {
+        if (atracao == null || atracao.getNome() == null || atracao.getNome().isBlank()
+                || buscar(atracao.getNome()) != null) {
             return false;
         }
         return atracoes.add(atracao);
@@ -22,29 +19,30 @@ public class ListaAtracao {
     }
 
     public Atracao buscar(String nome) {
-        for (Atracao a : atracoes) {
-            if (a.getNome().equals(nome)) {
-                return a;
+        if (nome == null) return null;
+        for (Atracao atracao : atracoes) {
+            if (atracao.getNome() != null && atracao.getNome().trim().equalsIgnoreCase(nome.trim())) {
+                return atracao;
             }
         }
         return null;
     }
 
     public boolean atualizar(String nome, Atracao atracaoAtualizada) {
-        Atracao atracaoExistente = buscar(nome);
-        if (atracaoExistente != null) {
-            int index = atracoes.indexOf(atracaoExistente);
-            atracoes.set(index, atracaoAtualizada);
-            return true;
+        Atracao existente = buscar(nome);
+        if (existente == null || atracaoAtualizada == null
+                || atracaoAtualizada.getNome() == null || atracaoAtualizada.getNome().isBlank()) {
+            return false;
         }
-        return false;
+        Atracao duplicada = buscar(atracaoAtualizada.getNome());
+        if (duplicada != null && duplicada != existente) return false;
+        int indice = atracoes.indexOf(existente);
+        atracoes.set(indice, atracaoAtualizada);
+        return true;
     }
 
     public boolean remover(String nome) {
-        Atracao a = buscar(nome);
-        if (a != null) {
-            return atracoes.remove(a);
-        }
-        return false;
+        Atracao atracao = buscar(nome);
+        return atracao != null && atracoes.remove(atracao);
     }
 }

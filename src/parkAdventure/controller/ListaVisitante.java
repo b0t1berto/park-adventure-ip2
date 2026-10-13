@@ -4,14 +4,11 @@ import parkAdventure.model.pessoa.Visitante;
 import java.util.ArrayList;
 
 public class ListaVisitante {
-    private ArrayList<Visitante> visitantes;
-
-    public ListaVisitante() {
-        this.visitantes = new ArrayList<>();
-    }
+    private final ArrayList<Visitante> visitantes = new ArrayList<>();
 
     public boolean cadastrar(Visitante visitante) {
-        if (buscar(visitante.getNome()) != null) {
+        if (visitante == null || visitante.getNome() == null || visitante.getNome().isBlank()
+                || buscar(visitante.getNome()) != null) {
             return false;
         }
         return visitantes.add(visitante);
@@ -22,29 +19,30 @@ public class ListaVisitante {
     }
 
     public Visitante buscar(String nome) {
-        for (Visitante v : visitantes) {
-            if (v.getNome().equals(nome)) {
-                return v;
+        if (nome == null) return null;
+        for (Visitante visitante : visitantes) {
+            if (visitante.getNome() != null && visitante.getNome().trim().equalsIgnoreCase(nome.trim())) {
+                return visitante;
             }
         }
         return null;
     }
 
     public boolean atualizar(String nome, Visitante visitanteAtualizado) {
-        Visitante visitanteExistente = buscar(nome);
-        if (visitanteExistente != null) {
-            int index = visitantes.indexOf(visitanteExistente);
-            visitantes.set(index, visitanteAtualizado);
-            return true;
+        Visitante existente = buscar(nome);
+        if (existente == null || visitanteAtualizado == null
+                || visitanteAtualizado.getNome() == null || visitanteAtualizado.getNome().isBlank()) {
+            return false;
         }
-        return false;
+        Visitante duplicado = buscar(visitanteAtualizado.getNome());
+        if (duplicado != null && duplicado != existente) return false;
+        int indice = visitantes.indexOf(existente);
+        visitantes.set(indice, visitanteAtualizado);
+        return true;
     }
 
     public boolean remover(String nome) {
-        Visitante v = buscar(nome);
-        if (v != null) {
-            return visitantes.remove(v);
-        }
-        return false;
+        Visitante visitante = buscar(nome);
+        return visitante != null && visitantes.remove(visitante);
     }
 }
