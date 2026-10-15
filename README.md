@@ -56,7 +56,7 @@ JavaFX, BrasilAPI — Feriados Nacionais (https://brasilapi.com.br/docs#tag/Feri
 
 ## Diagrama de Classes (UML)
 
-![Diagrama UML do projeto](imagens/uml.jpeg)
+![Diagrama UML do projeto](modelo%20UML.jpeg)
 
 O diagrama acima representa a estrutura das classes do projeto, desenvolvido em **Java** com Programação Orientada a Objetos.
 
