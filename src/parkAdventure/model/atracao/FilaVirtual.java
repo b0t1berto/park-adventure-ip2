@@ -1,28 +1,79 @@
 package parkAdventure.model.atracao;
 
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Queue;
 import parkAdventure.model.pessoa.Visitante;
 
-// Fila FIFO (primeiro a entrar, primeiro a sair)
+// filas virtuais divididas apenas por horários (das 11:00 às 18:00, de 30 em 30 minutos)
 public class FilaVirtual {
-    private final int capacidadeMaxima;
-    private final Queue<Visitante> fila = new LinkedList<>();
-
-    public FilaVirtual(int capacidadeMaxima) {
-        this.capacidadeMaxima = capacidadeMaxima;
+    private final int capacidadeMaximaPorHora;
+    // fila de visitantes para aquele horário específico
+    private final Map<String, Queue<Visitante>> filasPorHorario = new HashMap<>();
+    public FilaVirtual(int capacidadeMaximaPorHora) {
+        this.capacidadeMaximaPorHora = capacidadeMaximaPorHora;
+        inicializarHorarios();
     }
 
-    // Retorna false quando está cheia
-    public boolean adicionar(Visitante visitante) {
-        if (fila.size() >= capacidadeMaxima) {
+    private void inicializarHorarios() {
+        String[] horariosValidos = {
+            "11:00", "11:30", "12:00", "12:30", 
+            "13:00", "13:30", "14:00", "14:30", 
+            "15:00", "15:30", "16:00", "16:30", 
+            "17:00", "17:30", "18:00"
+        };      
+        
+        for (String horario : horariosValidos) {
+            filasPorHorario.put(horario, new LinkedList<>());
+        }
+    }
+
+    private boolean validarHorario(String horario) { // Horários válidos das 11:00 às 18:00 de 30 em 30 min
+        return horario != null && horario.matches("^(1[1-7]:(00|30)|18:00)$");
+    }
+    // Adiciona visitante a uma fila específica de um horário
+    public boolean adicionar(String horario, Visitante visitante) {
+        if (visitante == null || !validarHorario(horario)) {
             return false;
         }
-        return fila.add(visitante);
-    }
+        // Cria a fila se ela ainda não existir
+        Queue<Visitante> filaHora = filasPorHorario.computeIfAbsent(horario, k -> new LinkedList<>());
 
-    public Visitante proximo() { return fila.poll(); }
-    public int tamanho() { return fila.size(); }
-    public boolean estaVazia() { return fila.isEmpty(); }
-    public int getCapacidadeMaxima() { return capacidadeMaxima; }
+        if (filaHora.size() >= capacidadeMaximaPorHora) {
+            return false; // cheia
+        }
+
+        return filaHora.add(visitante);
+    }
+    // Remove e retorna o próximo visitante de um determinado horário
+    public Visitante proximo(String horario) {
+        if (!validarHorario(horario)) {
+            return null;
+        }
+        Queue<Visitante> filaHora = filasPorHorario.get(horario);
+        if (filaHora != null) {
+            return filaHora.poll();
+        }
+        return null;
+    }
+    // Retorna o tamanho da fila de um horário específico
+    public int tamanho(String horario) {
+        if (!validarHorario(horario)) {
+            return 0;
+        }
+        Queue<Visitante> filaHora = filasPorHorario.get(horario);
+        return (filaHora != null) ? filaHora.size() : 0;
+    }
+    // Verifica se a fila de um horário está vazia
+    public boolean estaVazia(String horario) {
+        if (!validarHorario(horario)) {
+            return true;
+        }
+        Queue<Visitante> filaHora = filasPorHorario.get(horario);
+        return filaHora == null || filaHora.isEmpty();
+    }
+    public int getCapacidadeMaximaPorHora() {
+        return capacidadeMaximaPorHora;
+    }
 }
