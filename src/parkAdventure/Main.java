@@ -5,8 +5,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
-import parkAdventure.controller.ListaAtracao;
-import parkAdventure.controller.ListaVisitante;
+import parkAdventure.repository.ListaAtracao;
+import parkAdventure.repository.ListaVisitante;
 import parkAdventure.model.atracao.Aquatico;
 import parkAdventure.model.atracao.Atracao;
 import parkAdventure.model.atracao.Infantil;

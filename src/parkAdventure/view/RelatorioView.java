@@ -3,9 +3,9 @@ package parkAdventure.view;
 import java.time.Month;
 import java.util.List;
 
-import parkAdventure.controller.Relatorio.LinhaEscala;
-import parkAdventure.controller.Relatorio.LinhaVenda;
-import parkAdventure.controller.Relatorio.ResumoReceita;
+import parkAdventure.repository.Relatorio.LinhaEscala;
+import parkAdventure.repository.Relatorio.LinhaVenda;
+import parkAdventure.repository.Relatorio.ResumoReceita;
 
 public class RelatorioView {
 

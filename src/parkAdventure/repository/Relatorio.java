@@ -1,4 +1,4 @@
-package parkAdventure.controller;
+package parkAdventure.repository;
 
 import java.io.FileWriter;
 import java.io.IOException;
