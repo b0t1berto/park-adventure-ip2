@@ -6,17 +6,18 @@ import parkAdventure.model.api.Feriados;
 import parkAdventure.model.ingresso.Ingresso;
 import parkAdventure.model.ingresso.TipoIngresso;
 import parkAdventure.model.pessoa.Visitante;
+import parkAdventure.repository.ListaIngresso;
 
 // Emissão de ingressos com acréscimo de preço em feriados
-public class Cadastro {
-    private final ControleIngressos controleIngressos;
+public class ControleIngresso {
+    private final ListaIngresso ingressos;
     private final double precoDiaria;
     private final double precoPasseAnual;
     private final double acrescimoFeriadoPercentual;
 
-    public Cadastro(ControleIngressos controleIngressos, double precoDiaria,
-                    double precoPasseAnual, double acrescimoFeriadoPercentual) {
-        this.controleIngressos = controleIngressos;
+    public ControleIngresso(ListaIngresso ingressos, double precoDiaria,
+                            double precoPasseAnual, double acrescimoFeriadoPercentual) {
+        this.ingressos = ingressos;
         this.precoDiaria = precoDiaria;
         this.precoPasseAnual = precoPasseAnual;
         this.acrescimoFeriadoPercentual = acrescimoFeriadoPercentual;
@@ -34,6 +35,11 @@ public class Cadastro {
     }
 
     public Ingresso emitirIngresso(Visitante visitante, TipoIngresso tipo, LocalDate dataCompra) {
+        return emitirIngresso(visitante, tipo, dataCompra, tipo == TipoIngresso.DIARIA && ehFeriado(dataCompra));
+    }
+
+    // Para quem já consultou a API ou quer simular um feriado
+    public Ingresso emitirIngresso(Visitante visitante, TipoIngresso tipo, LocalDate dataCompra, boolean feriado) {
         double valor;
         LocalDate validade;
         if (tipo == TipoIngresso.PASSE_ANUAL) {
@@ -42,12 +48,12 @@ public class Cadastro {
         } else {
             valor = precoDiaria;
             validade = dataCompra;
-            if (ehFeriado(dataCompra)) {
+            if (feriado) {
                 valor += valor * acrescimoFeriadoPercentual / 100.0;
             }
         }
         Ingresso ingresso = new Ingresso(visitante, tipo, dataCompra, validade, valor);
-        controleIngressos.adicionarIngresso(ingresso);
+        ingressos.cadastrar(ingresso);
         return ingresso;
     }
 }

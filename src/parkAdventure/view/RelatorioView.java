@@ -1,13 +1,66 @@
 package parkAdventure.view;
 
+import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
 
+import parkAdventure.repository.ListaAtracao;
+import parkAdventure.repository.ListaIngresso;
+import parkAdventure.repository.Relatorio;
 import parkAdventure.repository.Relatorio.LinhaEscala;
 import parkAdventure.repository.Relatorio.LinhaVenda;
 import parkAdventure.repository.Relatorio.ResumoReceita;
 
 public class RelatorioView {
+    private final ConsoleView console;
+    private final Relatorio relatorio;
+    private final ListaAtracao atracoes;
+    private final ListaIngresso ingressos;
+
+    public RelatorioView(ConsoleView console, Relatorio relatorio, ListaAtracao atracoes, ListaIngresso ingressos) {
+        this.console = console;
+        this.relatorio = relatorio;
+        this.atracoes = atracoes;
+        this.ingressos = ingressos;
+    }
+
+    public void menu() {
+        boolean voltar = false;
+        while (!voltar) {
+            console.exibir("\n--- RELATÓRIOS ---");
+            console.exibir("1. Exportar atrações em CSV");
+            console.exibir("2. Receita de ingressos por mês");
+            console.exibir("0. Voltar");
+            switch (console.lerInteiro("Escolha: ")) {
+                case 1 -> exportarCsv();
+                case 2 -> receitaDoMes();
+                case 0 -> voltar = true;
+                default -> console.exibir("Opção inválida.");
+            }
+        }
+    }
+
+    private void exportarCsv() {
+        String caminho = console.lerTextoOpcional("Arquivo de saída [atracoes.csv]: ");
+        if (caminho.isEmpty()) caminho = "atracoes.csv";
+        try {
+            relatorio.salvarCsvAtracoes(atracoes.listarTodas(), caminho);
+            exibirCsvGerado(caminho);
+        } catch (Exception e) {
+            exibirErro(e.getMessage());
+        }
+    }
+
+    private void receitaDoMes() {
+        LocalDate hoje = LocalDate.now();
+        int mes = console.lerInteiro("Mês (1-12): ");
+        int ano = console.lerInteiro("Ano [" + hoje.getYear() + "]: ");
+        try {
+            exibirReceita(relatorio.gerarRelatorioIngressos(ingressos.listarTodos(), Month.of(mes), ano), Month.of(mes), ano);
+        } catch (Exception e) {
+            exibirErro(e.getMessage());
+        }
+    }
 
     public void exibirReceita(ResumoReceita resumo, Month mes, int ano) {
         System.out.println("Relatório de Vendas de Ingressos - " + mes + "/" + ano);

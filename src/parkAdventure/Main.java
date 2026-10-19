@@ -1,307 +1,69 @@
 package parkAdventure;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.Scanner;
-
-import parkAdventure.repository.ListaAtracao;
-import parkAdventure.repository.ListaVisitante;
+import parkAdventure.controller.ControleIngresso;
+import parkAdventure.controller.ControleAcesso;
 import parkAdventure.model.atracao.Aquatico;
-import parkAdventure.model.atracao.Atracao;
 import parkAdventure.model.atracao.Infantil;
 import parkAdventure.model.atracao.Radical;
 import parkAdventure.model.pessoa.Operador;
 import parkAdventure.model.pessoa.Responsavel;
 import parkAdventure.model.pessoa.Visitante;
+import parkAdventure.repository.ListaAtracao;
+import parkAdventure.repository.ListaIngresso;
+import parkAdventure.repository.ListaVisitante;
+import parkAdventure.repository.Relatorio;
+import parkAdventure.view.AcessoView;
+import parkAdventure.view.AtracaoView;
+import parkAdventure.view.ConsoleView;
+import parkAdventure.view.IngressoView;
+import parkAdventure.view.MenuView;
+import parkAdventure.view.RelatorioView;
+import parkAdventure.view.VisitanteView;
 
-// Menu para executar as operações CRUD de visitantes e atrações.
+// Monta o sistema (model + controller + view) e abre o menu interativo.
+// Não tem regra de negócio nem entrada/saída: isso fica nos controllers e nas views.
 public class Main {
-    private static final Scanner SCANNER = new Scanner(System.in);
-    private static final DateTimeFormatter FORMATO_DATA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    // Repositórios e controllers
     private static final ListaAtracao ATRACOES = new ListaAtracao();
     private static final ListaVisitante VISITANTES = new ListaVisitante();
+    private static final ListaIngresso INGRESSOS = new ListaIngresso();
+    private static final ControleIngresso INGRESSO = new ControleIngresso(INGRESSOS, 100.0, 800.0, 20.0);
+    private static final ControleAcesso ACESSO = new ControleAcesso();
+    private static final Relatorio RELATORIO = new Relatorio();
+
+    // Views (todas usam o mesmo ConsoleView, que é o único dono do Scanner)
+    private static final ConsoleView CONSOLE = new ConsoleView();
+    private static final VisitanteView VISITANTE_VIEW = new VisitanteView(CONSOLE, VISITANTES);
+    private static final AtracaoView ATRACAO_VIEW = new AtracaoView(CONSOLE, ATRACOES);
+    private static final IngressoView INGRESSO_VIEW = new IngressoView(CONSOLE, INGRESSOS, INGRESSO, VISITANTES);
+    private static final AcessoView ACESSO_VIEW = new AcessoView(CONSOLE, ATRACOES, VISITANTES, INGRESSOS, ACESSO);
+    private static final RelatorioView RELATORIO_VIEW = new RelatorioView(CONSOLE, RELATORIO, ATRACOES, INGRESSOS);
 
     public static void main(String[] args) {
-        boolean executando = true;
-        while (executando) {
-            System.out.println("\n=== PARK ADVENTURE ===");
-            System.out.println("1. Gerenciar visitantes");
-            System.out.println("2. Gerenciar atrações");
-            System.out.println("0. Sair");
-            int opcao = lerInteiro("Escolha: ");
-            switch (opcao) {
-                case 1 -> menuVisitantes();
-                case 2 -> menuAtracoes();
-                case 0 -> executando = false;
-                default -> System.out.println("Opção inválida.");
-            }
+        if (CONSOLE.lerSimNao("Carregar dados de exemplo (atrações e visitantes)? (s/n): ")) {
+            carregarDadosDeExemplo();
         }
-        System.out.println("Programa encerrado.");
-        SCANNER.close();
+        new MenuView(CONSOLE, VISITANTE_VIEW, ATRACAO_VIEW, INGRESSO_VIEW, ACESSO_VIEW, RELATORIO_VIEW).iniciar();
     }
 
-    private static void menuVisitantes() {
-        boolean voltar = false;
-        while (!voltar) {
-            System.out.println("\n--- CRUD DE VISITANTES ---");
-            System.out.println("1. Cadastrar");
-            System.out.println("2. Listar");
-            System.out.println("3. Buscar por nome");
-            System.out.println("4. Atualizar");
-            System.out.println("5. Remover");
-            System.out.println("0. Voltar");
-            switch (lerInteiro("Escolha: ")) {
-                case 1 -> cadastrarVisitante();
-                case 2 -> listarVisitantes();
-                case 3 -> buscarVisitante();
-                case 4 -> atualizarVisitante();
-                case 5 -> removerVisitante();
-                case 0 -> voltar = true;
-                default -> System.out.println("Opção inválida.");
-            }
-        }
-    }
+    private static void carregarDadosDeExemplo() {
+        Operador carlos = new Operador("Carlos", "22/01/1991", null, "Piratas do Caribe");
+        Operador caique = new Operador("Caique", "22/01/2000", null, "Lula Voadora");
+        Operador ivaldo = new Operador("Ivaldo", "20/01/1990", null, "Água Ardente");
 
-    private static void cadastrarVisitante() {
-        try {
-            String nome = lerTexto("Nome: ");
-            String nascimento = lerData("Data de nascimento (dd/MM/aaaa): ");
-            String cpf = lerTextoOpcional("CPF (opcional): ");
-            int altura = lerInteiroPositivo("Altura em centímetros: ");
-            Visitante visitante = new Visitante(nome, nascimento, vazioParaNull(cpf), altura);
-            if (lerSimNao("O visitante possui responsável? (s/n): ")) {
-                visitante.setResponsavel(new Responsavel(
-                        lerTexto("Nome do responsável: "),
-                        lerData("Nascimento do responsável (dd/MM/aaaa): "),
-                        vazioParaNull(lerTextoOpcional("CPF do responsável (opcional): "))));
-            }
-            System.out.println(VISITANTES.cadastrar(visitante)
-                    ? "Visitante cadastrado com sucesso."
-                    : "Já existe um visitante com esse nome.");
-        } catch (IllegalArgumentException | DateTimeParseException e) {
-            System.out.println("Não foi possível cadastrar: " + e.getMessage());
-        }
-    }
+        // Piratas do Caribe tem capacidade 2 de propósito, para a fila virtual aparecer logo
+        ATRACOES.cadastrar(new Aquatico("Piratas do Caribe", 2, carlos, 130, 9));
+        ATRACOES.cadastrar(new Infantil("Lula Voadora", 3, caique, 140, 12));
+        ATRACOES.cadastrar(new Radical("Água Ardente", 20, ivaldo, 150, 16));
 
-    private static void listarVisitantes() {
-        if (VISITANTES.listarTodos().isEmpty()) {
-            System.out.println("Nenhum visitante cadastrado.");
-            return;
-        }
-        for (Visitante v : VISITANTES.listarTodos()) exibirVisitante(v);
-    }
-
-    private static void buscarVisitante() {
-        Visitante v = VISITANTES.buscar(lerTexto("Nome para buscar: "));
-        if (v == null) System.out.println("Visitante não encontrado.");
-        else exibirVisitante(v);
-    }
-
-    private static void atualizarVisitante() {
-        String nomeAtual = lerTexto("Nome atual do visitante: ");
-        Visitante existente = VISITANTES.buscar(nomeAtual);
-        if (existente == null) {
-            System.out.println("Visitante não encontrado.");
-            return;
-        }
-        String novoNome = lerTexto("Novo nome: ");
-        String nascimento = lerData("Nova data de nascimento (dd/MM/aaaa): ");
-        String cpf = lerTextoOpcional("Novo CPF (opcional): ");
-        int altura = lerInteiroPositivo("Nova altura em centímetros: ");
-        Visitante atualizado = new Visitante(novoNome, nascimento, vazioParaNull(cpf), altura);
-        if (existente.temResponsavel()) {
-            atualizado.setResponsavel(existente.getResponsavel());
-        }
-        System.out.println(VISITANTES.atualizar(nomeAtual, atualizado)
-                ? "Visitante atualizado com sucesso."
-                : "Não foi possível atualizar. Verifique se o novo nome já está cadastrado.");
-    }
-
-    private static void removerVisitante() {
-        String nome = lerTexto("Nome do visitante a remover: ");
-        System.out.println(VISITANTES.remover(nome)
-                ? "Visitante removido com sucesso."
-                : "Visitante não encontrado.");
-    }
-
-    private static void exibirVisitante(Visitante v) {
-        System.out.println("\nNome: " + v.getNome()
-                + "\nNascimento: " + v.getDataNascimento().format(FORMATO_DATA)
-                + "\nIdade: " + v.getIdade()
-                + "\nCPF: " + (v.getCpf() == null ? "não informado" : v.getCpf())
-                + "\nAltura: " + v.getAltura() + " cm"
-                + "\nResponsável: " + (v.temResponsavel() ? v.getResponsavel().getNome() : "não informado"));
-    }
-
-    private static void menuAtracoes() {
-        boolean voltar = false;
-        while (!voltar) {
-            System.out.println("\n--- CRUD DE ATRAÇÕES ---");
-            System.out.println("1. Cadastrar");
-            System.out.println("2. Listar");
-            System.out.println("3. Buscar por nome");
-            System.out.println("4. Atualizar");
-            System.out.println("5. Remover");
-            System.out.println("0. Voltar");
-            switch (lerInteiro("Escolha: ")) {
-                case 1 -> cadastrarAtracao();
-                case 2 -> listarAtracoes();
-                case 3 -> buscarAtracao();
-                case 4 -> atualizarAtracao();
-                case 5 -> removerAtracao();
-                case 0 -> voltar = true;
-                default -> System.out.println("Opção inválida.");
-            }
-        }
-    }
-
-    private static Atracao lerDadosAtracao() {
-        String nome = lerTexto("Nome da atração: ");
-        int capacidade = lerInteiroPositivo("Capacidade máxima: ");
-        String nomeOperador = lerTexto("Nome do operador responsável: ");
-        String cargo = lerTexto("Cargo/atração do operador: ");
-        Operador operador = new Operador(nomeOperador, "01/01/1990", null, cargo);
-        System.out.println("Tipo: 1. Aquática  2. Radical  3. Infantil");
-        int tipo = lerInteiro("Escolha o tipo: ");
-        if (tipo == 3) {
-            int alturaMaxima = lerInteiroPositivo("Altura máxima em centímetros: ");
-            int idadeMaxima = lerInteiroNaoNegativo("Idade máxima: ");
-            return new Infantil(nome, capacidade, operador, alturaMaxima, idadeMaxima);
-        }
-        int alturaMinima = lerInteiroNaoNegativo("Altura mínima em centímetros: ");
-        int idadeMinima = lerInteiroNaoNegativo("Idade mínima: ");
-        if (tipo == 1) return new Aquatico(nome, capacidade, operador, alturaMinima, idadeMinima);
-        if (tipo == 2) return new Radical(nome, capacidade, operador, alturaMinima, idadeMinima);
-        throw new IllegalArgumentException("Tipo de atração inválido.");
-    }
-
-    private static void cadastrarAtracao() {
-        try {
-            Atracao atracao = lerDadosAtracao();
-            System.out.println(ATRACOES.cadastrar(atracao)
-                    ? "Atração cadastrada com sucesso."
-                    : "Já existe uma atração com esse nome.");
-        } catch (IllegalArgumentException e) {
-            System.out.println("Não foi possível cadastrar: " + e.getMessage());
-        }
-    }
-
-    private static void listarAtracoes() {
-        if (ATRACOES.listarTodas().isEmpty()) {
-            System.out.println("Nenhuma atração cadastrada.");
-            return;
-        }
-        for (Atracao a : ATRACOES.listarTodas()) exibirAtracao(a);
-    }
-
-    private static void buscarAtracao() {
-        Atracao a = ATRACOES.buscar(lerTexto("Nome para buscar: "));
-        if (a == null) System.out.println("Atração não encontrada.");
-        else exibirAtracao(a);
-    }
-
-    private static void atualizarAtracao() {
-        String nomeAtual = lerTexto("Nome atual da atração: ");
-        if (ATRACOES.buscar(nomeAtual) == null) {
-            System.out.println("Atração não encontrada.");
-            return;
-        }
-        try {
-            Atracao atualizada = lerDadosAtracao();
-            System.out.println(ATRACOES.atualizar(nomeAtual, atualizada)
-                    ? "Atração atualizada com sucesso."
-                    : "Não foi possível atualizar. Verifique se o novo nome já está cadastrado.");
-        } catch (IllegalArgumentException e) {
-            System.out.println("Não foi possível atualizar: " + e.getMessage());
-        }
-    }
-
-    private static void removerAtracao() {
-        String nome = lerTexto("Nome da atração a remover: ");
-        System.out.println(ATRACOES.remover(nome)
-                ? "Atração removida com sucesso."
-                : "Atração não encontrada.");
-    }
-
-    private static void exibirAtracao(Atracao a) {
-        System.out.println("\nTipo: " + a.getTipo()
-                + "\nNome: " + a.getNome()
-                + "\nCapacidade: " + a.getCapacidadeMaxima()
-                + "\nOcupação: " + a.getOcupacaoAtual()
-                + "\nOperador: " + (a.temOperador() ? a.getOperador().getNome() : "não informado"));
-        if (a instanceof Infantil i) {
-            System.out.println("Altura máxima: " + i.getAlturaMaxima() + " cm"
-                    + "\nIdade máxima: " + i.getIdadeMaxima());
-        } else {
-            System.out.println("Altura mínima: " + a.getAlturaMinima() + " cm"
-                    + "\nIdade mínima: " + a.getIdadeMinima());
-        }
-    }
-
-    private static String lerTexto(String mensagem) {
-        while (true) {
-            System.out.print(mensagem);
-            String valor = SCANNER.nextLine().trim();
-            if (!valor.isEmpty()) return valor;
-            System.out.println("O valor não pode ficar vazio.");
-        }
-    }
-
-    private static String lerTextoOpcional(String mensagem) {
-        System.out.print(mensagem);
-        return SCANNER.nextLine().trim();
-    }
-
-    private static String lerData(String mensagem) {
-        while (true) {
-            String valor = lerTexto(mensagem);
-            try {
-                LocalDate.parse(valor, FORMATO_DATA);
-                return valor;
-            } catch (DateTimeParseException e) {
-                System.out.println("Data inválida. Use dd/MM/aaaa.");
-            }
-        }
-    }
-
-    private static int lerInteiro(String mensagem) {
-        while (true) {
-            System.out.print(mensagem);
-            try {
-                return Integer.parseInt(SCANNER.nextLine().trim());
-            } catch (NumberFormatException e) {
-                System.out.println("Digite um número inteiro válido.");
-            }
-        }
-    }
-
-    private static int lerInteiroPositivo(String mensagem) {
-        while (true) {
-            int valor = lerInteiro(mensagem);
-            if (valor > 0) return valor;
-            System.out.println("O valor deve ser maior que zero.");
-        }
-    }
-
-    private static int lerInteiroNaoNegativo(String mensagem) {
-        while (true) {
-            int valor = lerInteiro(mensagem);
-            if (valor >= 0) return valor;
-            System.out.println("O valor não pode ser negativo.");
-        }
-    }
-
-    private static boolean lerSimNao(String mensagem) {
-        while (true) {
-            String resposta = lerTexto(mensagem);
-            if (resposta.equalsIgnoreCase("s")) return true;
-            if (resposta.equalsIgnoreCase("n")) return false;
-            System.out.println("Responda com 's' ou 'n'.");
-        }
-    }
-
-    private static String vazioParaNull(String valor) {
-        return valor == null || valor.isBlank() ? null : valor;
+        Visitante miguel = new Visitante("Miguel Ferreira", "30/09/2016", null, 136);
+        miguel.setResponsavel(new Responsavel("Alexssandra", "11/11/1998", null));
+        VISITANTES.cadastrar(miguel);
+        VISITANTES.cadastrar(new Visitante("Pedro Neto", "12/12/2014", null, 140)); // menor sem responsável
+        VISITANTES.cadastrar(new Visitante("Edivan José", "21/04/2008", null, 181));
+        VISITANTES.cadastrar(new Visitante("Ana Souza", "15/05/2001", null, 165));
+        VISITANTES.cadastrar(new Visitante("Bruno Lima", "03/03/1995", null, 178));
+        VISITANTES.cadastrar(new Visitante("Carla Dias", "20/08/2000", null, 160));
+        VISITANTES.cadastrar(new Visitante("Diego Alves", "07/07/1992", null, 175));
     }
 }
