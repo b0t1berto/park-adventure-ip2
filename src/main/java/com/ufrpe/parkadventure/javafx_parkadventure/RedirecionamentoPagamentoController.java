@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class RedirecionamentoPagamentoController {
 
@@ -21,8 +22,12 @@ public class RedirecionamentoPagamentoController {
         pausa.setOnFinished(e -> {
             try {
                 FXMLLoader loader = new FXMLLoader(
-                        HelloApplication.class.getResource(""));
+                        HelloApplication.class.getResource("pagamento.fxml"));
                 Scene scene = new Scene(loader.load());
+
+                PagamentoController pagamento = loader.getController();
+                pagamento.setResumo("Ingresso day use", LocalDate.now(), 1, 120.00);
+
                 Stage stage = (Stage) lblMensagem.getScene().getWindow();
                 stage.setScene(scene);
             } catch (IOException ex) {

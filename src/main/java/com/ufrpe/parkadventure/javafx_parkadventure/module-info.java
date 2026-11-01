@@ -5,11 +5,11 @@ module com.exemplo.projeto {
     requires com.fasterxml.jackson.databind;
     requires com.fasterxml.jackson.annotation;
     requires com.fasterxml.jackson.core;
+    requires com.google.zxing; requires com.google.zxing.javase; requires java.desktop;
 
     exports com.ufrpe.parkadventure.javafx_parkadventure;
     opens com.ufrpe.parkadventure.javafx_parkadventure to javafx.fxml;
 
-    exports park_adventure;
     exports com.ufrpe.parkadventure.javafx_parkadventure.controller;
     opens com.ufrpe.parkadventure.javafx_parkadventure.controller to javafx.fxml;
     exports com.ufrpe.parkadventure.javafx_parkadventure.view;

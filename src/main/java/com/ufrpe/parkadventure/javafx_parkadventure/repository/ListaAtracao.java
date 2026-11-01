@@ -1,10 +1,12 @@
 package com.ufrpe.parkadventure.javafx_parkadventure.repository;
 
 import com.ufrpe.parkadventure.javafx_parkadventure.model.atracao.Atracao;
+import com.ufrpe.parkadventure.javafx_parkadventure.model.pessoa.Operador;
+
 import java.util.ArrayList;
 
 public class ListaAtracao {
-    private final ArrayList<Atracao> atracoes = new ArrayList<>();
+    private static final ArrayList<Atracao> atracoes = new ArrayList<>();
 
     public boolean cadastrar(Atracao atracao) {
         if (atracao == null || atracao.getNome() == null || atracao.getNome().isBlank()
@@ -18,7 +20,7 @@ public class ListaAtracao {
         return new ArrayList<>(atracoes);
     }
 
-    public Atracao buscar(String nome) {
+    public static Atracao buscar(String nome) {
         if (nome == null) return null;
         for (Atracao atracao : atracoes) {
             if (atracao.getNome() != null && atracao.getNome().trim().equalsIgnoreCase(nome.trim())) {
@@ -28,6 +30,15 @@ public class ListaAtracao {
         return null;
     }
 
+    public static boolean cadastrarOperador(String nomeAtracao, Operador operador) {
+        Atracao atracao = buscar(nomeAtracao);
+        if (atracao == null || atracao.getNome() == null || atracao.getNome().isBlank()
+                || buscar(atracao.getNome()) != null) {
+            return false;
+        }
+        atracao.setOperador(operador);
+        return true;
+    }
     public boolean atualizar(String nome, Atracao atracaoAtualizada) {
         Atracao existente = buscar(nome);
         if (existente == null || atracaoAtualizada == null

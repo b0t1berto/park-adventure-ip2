@@ -4,9 +4,9 @@ import com.ufrpe.parkadventure.javafx_parkadventure.model.pessoa.Visitante;
 import java.util.ArrayList;
 
 public class ListaVisitante {
-    private final ArrayList<Visitante> visitantes = new ArrayList<>();
+    private static final ArrayList<Visitante> visitantes = new ArrayList<>();
 
-    public boolean cadastrar(Visitante visitante) {
+    public static boolean cadastrar(Visitante visitante) {
         if (visitante == null || visitante.getNome() == null || visitante.getNome().isBlank()
                 || buscar(visitante.getNome()) != null) {
             return false;
@@ -18,7 +18,7 @@ public class ListaVisitante {
         return new ArrayList<>(visitantes);
     }
 
-    public Visitante buscar(String nome) {
+    public static Visitante buscar(String nome) {
         if (nome == null) return null;
         for (Visitante visitante : visitantes) {
             if (visitante.getNome() != null && visitante.getNome().trim().equalsIgnoreCase(nome.trim())) {
