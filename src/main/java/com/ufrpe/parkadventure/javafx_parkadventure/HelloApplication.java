@@ -1,5 +1,6 @@
 package com.ufrpe.parkadventure.javafx_parkadventure;
 
+import com.ufrpe.parkadventure.javafx_parkadventure.controller.DadosExemplo;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -9,11 +10,17 @@ import java.io.IOException;
 
 public class HelloApplication extends Application {
     @Override
-    public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("compra-ingressos.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Hello!");
-        stage.setScene(scene);
-        stage.show();
+    public void start(Stage palco) throws IOException {
+        DadosExemplo.carregar();   // preenche o sistema antes de qualquer tela abrir
+
+        FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("principal.fxml"));
+        Scene cena = new Scene(loader.load(), 1100, 680);
+
+        cena.getStylesheets().add(HelloApplication.class.getResource("estilo.css").toExternalForm());
+        palco.setTitle("ParkAdventure");
+        palco.setScene(cena);
+        palco.setMinWidth(980);
+        palco.setMinHeight(640);
+        palco.show();
     }
 }

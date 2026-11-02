@@ -104,4 +104,49 @@ public class FilaVirtual {
     public int getCapacidadeMaximaPorHora() {
         return capacidadeMaximaPorHora;
     }
+
+    // Horário em que o visitante está esperando (null se não está na fila)
+    public String horarioDe(Visitante visitante) {
+        for (Map.Entry<String, Queue<Visitante>> entrada : filasPorHorario.entrySet()) {
+            if (entrada.getValue().contains(visitante)) {
+                return entrada.getKey();
+            }
+        }
+        return null;
+    }
+
+    public boolean contem(Visitante visitante) {
+        return horarioDe(visitante) != null;
+    }
+
+    // Posição (1, 2, 3...) dentro da fila do próprio horário; 0 se não estiver nela
+    public int posicaoNoHorario(String horario, Visitante visitante) {
+        Queue<Visitante> filaHora = filasPorHorario.get(horario);
+        if (filaHora == null) {
+            return 0;
+        }
+        int posicao = 1;
+        for (Visitante v : filaHora) {          // a LinkedList percorre na ordem de chegada (FIFO)
+            if (v == visitante) {
+                return posicao;
+            }
+            posicao++;
+        }
+        return 0;
+    }
+
+    // Posição na ORDEM DE CHAMADA da atração: mesma regra do método proximo()
+    // (horário mais cedo primeiro; dentro do horário, quem chegou antes).
+    // Retorna 0 se o visitante não está esperando.
+    public int posicaoGeral(Visitante visitante) {
+        int pessoasAntes = 0;
+        for (Map.Entry<String, Queue<Visitante>> entrada : filasPorHorario.entrySet()) {
+            int posicao = posicaoNoHorario(entrada.getKey(), visitante);
+            if (posicao > 0) {
+                return pessoasAntes + posicao;
+            }
+            pessoasAntes += entrada.getValue().size();   // todo mundo desse horário passa na frente
+        }
+        return 0;
+    }
 }

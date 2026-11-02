@@ -39,6 +39,16 @@ public class ListaAtracao {
         atracao.setOperador(operador);
         return true;
     }
+    // Atração pela qual o operador é responsável (null se ele não opera nenhuma)
+    public Atracao buscarPorOperador(Operador operador) {
+        for (Atracao atracao : atracoes) {
+            if (atracao.getOperador() == operador) {
+                return atracao;
+            }
+        }
+        return null;
+    }
+
     public boolean atualizar(String nome, Atracao atracaoAtualizada) {
         Atracao existente = buscar(nome);
         if (existente == null || atracaoAtualizada == null

@@ -38,21 +38,27 @@ public class ControleIngresso {
         return emitirIngresso(visitante, tipo, dataCompra, tipo == TipoIngresso.DIARIA && ehFeriado(dataCompra));
     }
 
+    // Quanto custa um ingresso? A TELA usa este método para mostrar o preço antes de emitir,
+    // e o próprio emitirIngresso() usa o mesmo método: o preço nunca fica diferente entre os dois.
+    public double calcularValor(TipoIngresso tipo, boolean feriado) {
+        if (tipo == TipoIngresso.PASSE_ANUAL) {
+            return precoPasseAnual;
+        }
+        double valor = precoDiaria;
+        if (feriado) {
+            valor += valor * acrescimoFeriadoPercentual / 100.0;
+        }
+        return valor;
+    }
+
+    public double getAcrescimoFeriadoPercentual() {
+        return acrescimoFeriadoPercentual;
+    }
+
     // Para quem já consultou a API ou quer simular um feriado
     public Ingresso emitirIngresso(Visitante visitante, TipoIngresso tipo, LocalDate dataCompra, boolean feriado) {
-        double valor;
-        LocalDate validade;
-        if (tipo == TipoIngresso.PASSE_ANUAL) {
-            valor = precoPasseAnual;
-            validade = dataCompra.plusYears(1);
-        } else {
-            valor = precoDiaria;
-            validade = dataCompra;
-            if (feriado) {
-                valor += valor * acrescimoFeriadoPercentual / 100.0;
-            }
-        }
-        Ingresso ingresso = new Ingresso(visitante, tipo, dataCompra, validade, valor);
+        LocalDate validade = (tipo == TipoIngresso.PASSE_ANUAL) ? dataCompra.plusYears(1) : dataCompra;
+        Ingresso ingresso = new Ingresso(visitante, tipo, dataCompra, validade, calcularValor(tipo, feriado));
         ingressos.cadastrar(ingresso);
         return ingresso;
     }

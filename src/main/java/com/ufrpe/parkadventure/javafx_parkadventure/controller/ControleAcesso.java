@@ -26,6 +26,10 @@ public class ControleAcesso {
         if (!atracao.getFilaVirtual().validarHorario(horario)) {
             return ResultadoAcesso.HORARIO_INVALIDO;
         }
+        // Não deixa o mesmo visitante ocupar duas posições na mesma atração
+        if (atracao.getFilaVirtual().contem(visitante)) {
+            return ResultadoAcesso.JA_NA_FILA;
+        }
         return atracao.getFilaVirtual().adicionar(horario, visitante)
                 ? ResultadoAcesso.NA_FILA
                 : ResultadoAcesso.FILA_CHEIA;
@@ -33,6 +37,10 @@ public class ControleAcesso {
 
     // Regras comuns às duas operações; retorna null quando o visitante pode seguir
     private ResultadoAcesso validar(Visitante visitante, Ingresso ingresso, Atracao atracao) {
+        // atração sem operador responsável não está aberta ao público
+        if (!atracao.temOperador()) {
+            return ResultadoAcesso.SEM_OPERADOR;
+        }
         // O ingresso tem que pertencer ao visitante e estar dentro da validade
         if (ingresso.getVisitante() != visitante) {
             return ResultadoAcesso.INGRESSO_DE_OUTRO_VISITANTE;
