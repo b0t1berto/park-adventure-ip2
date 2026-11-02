@@ -23,6 +23,8 @@ public class EscolhaDataController {
         LocalDate hoje = LocalDate.now();
         LocalDate limite = hoje.plusDays(DIAS_MAXIMOS);
 
+        dpDataVisita.setEditable(false);
+
         dpDataVisita.setDayCellFactory(picker -> new DateCell() {
             @Override
             public void updateItem(LocalDate data, boolean vazio) {
@@ -53,12 +55,12 @@ public class EscolhaDataController {
         }
         try {
             FXMLLoader loader = new FXMLLoader(HelloApplication.class
-                    .getResource("redirecionamento-pagamento-ingresso.fxml"));
+                    .getResource("entrar-fila-virtual.fxml"));
             Scene scene = new Scene(loader.load());
-            RedirecionamentoPagamentoController redir = loader.getController();
-            redir.setDataVisita(data);
+            EntrarFilaVirtualController fila = loader.getController();
+            fila.setDataVisita(data);
             ((Stage) btnContinuar.getScene().getWindow()).setScene(scene);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
