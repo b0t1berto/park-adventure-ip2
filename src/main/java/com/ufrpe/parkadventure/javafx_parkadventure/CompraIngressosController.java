@@ -22,7 +22,11 @@ public class CompraIngressosController {
     }
 
     @FXML
-    private void onIngressoProgramado() {
-        System.out.println("Ingresso programado");
+    private void onIngressoProgramado(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(
+                HelloApplication.class.getResource("escolha-data.fxml"));
+        Scene scene = new Scene(loader.load());
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
     }
 }

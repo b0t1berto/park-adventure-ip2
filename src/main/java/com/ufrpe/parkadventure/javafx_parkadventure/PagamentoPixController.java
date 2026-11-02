@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.UUID;
 
 public class PagamentoPixController {
@@ -94,6 +95,8 @@ public class PagamentoPixController {
                     HelloApplication.class.getResource("pagamento.fxml"));
             Scene scene = new Scene(loader.load());
             Stage stage = (Stage) btnVoltar.getScene().getWindow();
+            PagamentoController p = loader.getController();
+            p.setResumo("Ingresso day use", LocalDate.now(), 1, total);
             stage.setScene(scene);
         } catch (IOException e) {
             e.printStackTrace();

@@ -83,6 +83,8 @@ public class PagamentoBoletoController {
                     HelloApplication.class.getResource("pagamento.fxml"));
             Scene scene = new Scene(loader.load());
             Stage stage = (Stage) btnVoltar.getScene().getWindow();
+            PagamentoController p = loader.getController();
+            p.setResumo("Ingresso day use", LocalDate.now(), 1, total);
             stage.setScene(scene);
         } catch (IOException e) {
             e.printStackTrace();

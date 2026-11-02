@@ -16,6 +16,12 @@ public class RedirecionamentoPagamentoController {
     @FXML
     private Label lblMensagem;
 
+    private LocalDate dataVisita = LocalDate.now();
+
+    public void setDataVisita(LocalDate dataVisita) {
+        this.dataVisita = dataVisita;
+    }
+
     @FXML
     public void initialize() {
         PauseTransition pausa = new PauseTransition(Duration.seconds(2));
@@ -26,7 +32,7 @@ public class RedirecionamentoPagamentoController {
                 Scene scene = new Scene(loader.load());
 
                 PagamentoController pagamento = loader.getController();
-                pagamento.setResumo("Ingresso day use", LocalDate.now(), 1, 120.00);
+                pagamento.setResumo("Ingresso day use", dataVisita, 1, 120.00);
 
                 Stage stage = (Stage) lblMensagem.getScene().getWindow();
                 stage.setScene(scene);

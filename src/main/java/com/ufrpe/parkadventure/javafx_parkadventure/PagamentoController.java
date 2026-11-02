@@ -89,11 +89,9 @@ public class PagamentoController {
 
     @FXML
     private void aoPagar() {
-        System.out.println("1. clicou em Pagar");
 
         String erro = validar();
         if (erro != null) {
-            System.out.println("2. validação falhou: " + erro);
             new Alert(Alert.AlertType.WARNING, erro).showAndWait();
             return;
         }
@@ -101,7 +99,6 @@ public class PagamentoController {
         try {
             Stage stage = (Stage) btnPagar.getScene().getWindow();
             Toggle escolhido = grupoPagamento.getSelectedToggle();
-            System.out.println("3. escolhido=" + escolhido + " | rbBoleto=" + rbBoleto);
 
             if (escolhido == rbPix) {
                 FXMLLoader loader = new FXMLLoader(
@@ -126,9 +123,6 @@ public class PagamentoController {
                 PagamentoBoletoController boleto = loader.getController();
                 boleto.setValor(total);
                 stage.setScene(scene);
-
-            } else {
-                System.out.println("4. nenhuma forma reconhecida");
             }
         } catch (Exception e) {
             e.printStackTrace();
