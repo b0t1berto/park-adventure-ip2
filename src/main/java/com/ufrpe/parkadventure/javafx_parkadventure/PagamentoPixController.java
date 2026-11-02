@@ -26,6 +26,7 @@ public class PagamentoPixController {
 
     private Timeline contagem;
     private int segundosRestantes = 300; // 5 minutos
+    private double total;
 
     @FXML
     private void initialize() {
@@ -47,7 +48,21 @@ public class PagamentoPixController {
     }
 
     public void setValor(double total) {
+        this.total = total;
         lblValor.setText(String.format("R$ %.2f", total));
+    }
+
+    private void abrirConfirmacao(Stage stage, String forma, String situacao) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    HelloApplication.class.getResource("pagamento-confirmado.fxml"));
+            Scene scene = new Scene(loader.load());
+            PagamentoConfirmadoController conf = loader.getController();
+            conf.setDados(forma, total, situacao);
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void atualizarTempo() {
@@ -67,9 +82,8 @@ public class PagamentoPixController {
     @FXML
     private void aoConfirmar() {
         contagem.stop();
-        lblStatus.setText("Pagamento confirmado!");
-        System.out.println("Pix confirmado");
-        // aqui você segue para a tela de confirmação do ingresso
+        abrirConfirmacao((Stage) btnJaPaguei.getScene().getWindow(),
+                "Pix", "Pagamento aprovado");
     }
 
     @FXML

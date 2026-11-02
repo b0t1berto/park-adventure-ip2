@@ -97,24 +97,38 @@ public class PagamentoController {
             new Alert(Alert.AlertType.WARNING, erro).showAndWait();
             return;
         }
-        System.out.println("2. validação ok");
 
         try {
             Stage stage = (Stage) btnPagar.getScene().getWindow();
+            Toggle escolhido = grupoPagamento.getSelectedToggle();
+            System.out.println("3. escolhido=" + escolhido + " | rbBoleto=" + rbBoleto);
 
-            if (grupoPagamento.getSelectedToggle() == rbPix) {
-                var url = HelloApplication.class.getResource("pagamento-pix.fxml");
-                System.out.println("3. url do pix: " + url);
-                if (url == null) return;
-
-                FXMLLoader loader = new FXMLLoader(url);
+            if (escolhido == rbPix) {
+                FXMLLoader loader = new FXMLLoader(
+                        HelloApplication.class.getResource("pagamento-pix.fxml"));
                 Scene scene = new Scene(loader.load());
                 PagamentoPixController pix = loader.getController();
                 pix.setValor(total);
                 stage.setScene(scene);
-                System.out.println("4. tela do pix aberta");
+
+            } else if (escolhido == rbCartao) {
+                FXMLLoader loader = new FXMLLoader(
+                        HelloApplication.class.getResource("pagamento-cartao.fxml"));
+                Scene scene = new Scene(loader.load());
+                PagamentoCartaoController cartao = loader.getController();
+                cartao.setValor(total);
+                stage.setScene(scene);
+
+            } else if (escolhido == rbBoleto) {
+                FXMLLoader loader = new FXMLLoader(
+                        HelloApplication.class.getResource("pagamento-boleto.fxml"));
+                Scene scene = new Scene(loader.load());
+                PagamentoBoletoController boleto = loader.getController();
+                boleto.setValor(total);
+                stage.setScene(scene);
+
             } else {
-                System.out.println("3. Pix não foi o selecionado");
+                System.out.println("4. nenhuma forma reconhecida");
             }
         } catch (Exception e) {
             e.printStackTrace();
