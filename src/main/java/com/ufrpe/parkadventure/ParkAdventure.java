@@ -1,0 +1,65 @@
+package com.ufrpe.parkadventure;
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.util.ArrayDeque;
+import java.util.Deque;
+
+public class ParkAdventure extends Application {
+    // =============================================
+    // || ATRIBUTOS
+    // =============================================
+    private static Stage palcoPrimario; // Variável para armazenar o palco primário
+    private static final Deque<String> historico = new ArrayDeque<>(); // Pilha para armazenar o histórico de telas
+    private static String fxmlAtual; // Variável para armazenar o caminho do FXML atual
+
+
+    // =============================================
+    // || MÉTODO START/INICIALIZADOR
+    // =============================================
+    @Override
+    public void start(Stage palco) throws IOException {
+        palcoPrimario = palco;
+        navegar("view/menu.fxml");
+        palco.setTitle("Park Adventure");
+        palco.setResizable(true);
+        palco.show();
+    }
+
+    // =============================================
+    // || MÉTODO NAVEGAR
+    // =============================================
+    private static void navegar(String primeiraTelaFxml) throws IOException {
+        FXMLLoader loader = new FXMLLoader(ParkAdventure.class.getResource(primeiraTelaFxml));
+        Parent raiz = loader.load();
+        fxmlAtual = primeiraTelaFxml;
+        Scene novaCena = new Scene(raiz, 600, 400);
+        palcoPrimario.setScene(novaCena);
+        palcoPrimario.centerOnScreen();
+    }
+
+    // =============================================
+    // || MÉTODO AVANÇAR TELA
+    // =============================================
+    public static void proximaCena(String novaTelaFxml) throws IOException {
+        if (fxmlAtual != null) {
+            historico.push(fxmlAtual);
+        }
+        navegar(novaTelaFxml);
+    }
+
+    // =============================================
+    // || MÉTODO VOLTAR TELA
+    // =============================================
+    public static void voltar() throws IOException {
+        if (!historico.isEmpty()) {
+            String telaAnteriorFxml = historico.pop();
+            navegar(telaAnteriorFxml);
+        }
+    }
+}

@@ -91,7 +91,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                com.exemplo.projeto/com.ufrpe.parkadventure.javafx_parkadventure.HelloApplication
+                                com.exemplo.projeto/com.ufrpe.parkadventure.Launcher
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
