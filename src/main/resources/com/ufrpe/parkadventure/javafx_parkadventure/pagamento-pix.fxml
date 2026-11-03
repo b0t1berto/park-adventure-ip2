@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="520.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.javafx_parkadventure.PagamentoPixController">
+   <top>
+      <Label text="Pagamento via pix" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+         <padding>
+            <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+         </padding>
+      </Label>
+   </top>
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0" spacing="14.0" BorderPane.alignment="TOP_CENTER">
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+         <children>
+            <Label text="Valor a pagar" />
+            <Label fx:id="lblValor" text="R$ 0,00">
+               <font>
+                  <Font name="System Bold" size="28.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="ivQrCode" fitHeight="220.0" fitWidth="220.0" pickOnBounds="true" preserveRatio="true" />
+            <Label text="Escaneie o QR Code ou use o código abaixo" wrapText="true" />
+            <TextField fx:id="txtCodigoPix" editable="false" prefWidth="380.0" />
+            <Button fx:id="btnCopiar" mnemonicParsing="false" onAction="#aoCopiar" text="Copiar código" />
+            <Label fx:id="lblTempo" text="Expira em 05:00" />
+            <Label fx:id="lblStatus" text="Aguardando pagamento..." wrapText="true" />
+         </children>
+      </VBox>
+   </center>
+   <bottom>
+      <HBox prefHeight="100.0" prefWidth="200.0" spacing="12.0" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+         </padding>
+         <children>
+            <Button fx:id="btnVoltar" mnemonicParsing="false" onAction="#aoVoltar" prefWidth="120.0" text="Voltar" />
+            <Button fx:id="btnJaPaguei" mnemonicParsing="false" onAction="#aoConfirmar" prefWidth="180.0" text="Já fiz o pagamento" />
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>
