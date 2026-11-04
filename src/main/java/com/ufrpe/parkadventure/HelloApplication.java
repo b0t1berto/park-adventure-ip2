@@ -13,10 +13,10 @@ public class HelloApplication extends Application {
     public void start(Stage palco) throws IOException {
         DadosExemplo.carregar();   // preenche o sistema antes de qualquer tela abrir
 
-        FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("compra-ingressos.fxml"));
+        FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("view/compra-ingressos.fxml"));
         Scene cena = new Scene(loader.load(), 1100, 680);
 
-        cena.getStylesheets().add(HelloApplication.class.getResource("estilo.css").toExternalForm());
+        cena.getStylesheets().add(HelloApplication.class.getResource("view/estilo.css").toExternalForm());
         palco.setTitle("ParkAdventure");
         palco.setScene(cena);
         palco.setMinWidth(980);

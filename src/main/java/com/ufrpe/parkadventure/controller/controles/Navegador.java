@@ -28,7 +28,7 @@ public final class Navegador {
         public String getArquivoFxml() { return arquivoFxml; }
     }
 
-    private static final String PASTA_FXML = "/com/ufrpe/parkadventure/javafx_parkadventure/";
+    private static final String PASTA_FXML = "/com/ufrpe/parkadventure/view/";
     private static BorderPane moldura;
    private static final ObjectProperty<Tela> telaAtual = new SimpleObjectProperty<>();
     public static ObjectProperty<Tela> telaAtualProperty() { return telaAtual; }

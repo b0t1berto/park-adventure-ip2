@@ -12,7 +12,7 @@ public class MenuController {
     @FXML
     void onCriarConta(ActionEvent event) {
         try {
-            ParkAdventure.proximaCena("tela-criar-conta.fxml");
+            ParkAdventure.proximaCena("view/tela-criar-conta.fxml");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -21,7 +21,7 @@ public class MenuController {
     @FXML
     void onFazerLogin(ActionEvent event) {
         try {
-            ParkAdventure.proximaCena("tela-de-login.fxml");
+            ParkAdventure.proximaCena("view/tela-de-login.fxml");
         } catch (Exception e) {
             e.printStackTrace();
         }
