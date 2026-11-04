@@ -6,7 +6,7 @@ public class SessaoController {
     private static SessaoController instancia;
     private Visitante visitanteAtual;
 
-    private SessaoController() {}
+    SessaoController() {}
 
     public static synchronized SessaoController getInstancia() {
         if (instancia == null) {

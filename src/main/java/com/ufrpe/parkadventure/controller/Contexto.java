@@ -14,5 +14,5 @@ public final class Contexto {
     public static final ControleIngresso CONTROLE_INGRESSO = new ControleIngresso(INGRESSOS, 100.0, 800.0, 20.0);
     public static final ControleAcesso CONTROLE_ACESSO = new ControleAcesso();
     public static final ControleFeriados FERIADOS = new ControleFeriados();
-    public static final Sessao SESSAO = new Sessao();
+    public static final SessaoController SESSAO = new SessaoController();
 }
