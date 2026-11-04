@@ -1,0 +1,2 @@
+# Dados salvos pelo programa: se duas pessoas alterarem, o Git junta as linhas dos dois lados
+dados/dados.txt merge=union

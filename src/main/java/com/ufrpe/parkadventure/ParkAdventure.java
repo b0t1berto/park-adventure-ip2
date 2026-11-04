@@ -1,5 +1,6 @@
 package com.ufrpe.parkadventure;
 
+import com.ufrpe.parkadventure.repository.Persistencia;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,9 +15,9 @@ public class ParkAdventure extends Application {
     // =============================================
     // || ATRIBUTOS
     // =============================================
-    private static Stage palcoPrimario; // Variável para armazenar o palco primário
-    private static final Deque<String> historico = new ArrayDeque<>(); // Pilha para armazenar o histórico de telas
-    private static String fxmlAtual; // Variável para armazenar o caminho do FXML atual
+    private static Stage palcoPrimario;
+    private static final Deque<String> historico = new ArrayDeque<>();
+    private static String fxmlAtual;
 
 
     // =============================================
@@ -25,10 +26,16 @@ public class ParkAdventure extends Application {
     @Override
     public void start(Stage palco) throws IOException {
         palcoPrimario = palco;
+        Persistencia.carregar();
         navegar("view/menu.fxml");
         palco.setTitle("Park Adventure");
         palco.setResizable(true);
         palco.show();
+    }
+
+    @Override
+    public void stop() {
+        Persistencia.salvar();
     }
 
     // =============================================

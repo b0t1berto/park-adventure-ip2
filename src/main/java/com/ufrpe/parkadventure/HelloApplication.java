@@ -1,6 +1,7 @@
 package com.ufrpe.parkadventure;
 
 import com.ufrpe.parkadventure.controller.controles.DadosExemplo;
+import com.ufrpe.parkadventure.repository.Persistencia;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,8 +12,8 @@ import java.io.IOException;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage palco) throws IOException {
-        DadosExemplo.carregar();   // preenche o sistema antes de qualquer tela abrir
-
+        DadosExemplo.carregar();
+        Persistencia.carregar();
         FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("view/compra-ingressos.fxml"));
         Scene cena = new Scene(loader.load(), 1100, 680);
 
@@ -22,5 +23,10 @@ public class HelloApplication extends Application {
         palco.setMinWidth(980);
         palco.setMinHeight(640);
         palco.show();
+    }
+
+    @Override
+    public void stop() {
+        Persistencia.salvar();
     }
 }

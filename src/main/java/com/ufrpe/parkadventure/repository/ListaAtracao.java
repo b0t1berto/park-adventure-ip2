@@ -27,8 +27,7 @@ public class ListaAtracao {
 
     public boolean cadastrarOperador(String nomeAtracao, Operador operador) {
         Atracao atracao = buscar(nomeAtracao);
-        if (atracao == null || atracao.getNome() == null || atracao.getNome().isBlank()
-                || buscar(atracao.getNome()) != null) {
+        if (atracao == null || operador == null) {
             return false;
         }
         atracao.setOperador(operador);

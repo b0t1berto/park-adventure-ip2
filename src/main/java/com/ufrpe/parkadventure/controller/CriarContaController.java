@@ -3,6 +3,8 @@ package com.ufrpe.parkadventure.controller;
 import com.ufrpe.parkadventure.ParkAdventure;
 import com.ufrpe.parkadventure.model.pessoa.Operador;
 import com.ufrpe.parkadventure.model.pessoa.Visitante;
+import com.ufrpe.parkadventure.repository.ListaVisitante;
+import com.ufrpe.parkadventure.repository.Persistencia;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -41,7 +43,7 @@ public class CriarContaController {
             alert.setTitle("ERRO");
             alert.setHeaderText("Suas informações estão Inválidas!");
             alert.setContentText("Digite informações válidas para criar sua conta.");
-            alert.showAndWait(); //Apenas quando apertar OK para sair da tela de aviso
+            alert.showAndWait();
 
             txtFieldNome.setText("");
             txtFieldCpf.setText("");
@@ -52,19 +54,20 @@ public class CriarContaController {
             alert.setTitle("CONFIRMAÇÃO");
             alert.setHeaderText("Confirme os dados da sua conta");
             alert.setContentText("Seu nome é: " + this.txtFieldNome.getText() + "\nSeu CPF é: " + this.txtFieldCpf.getText() + " ?");
-            alert.showAndWait(); //Apenas quando apertar OK para sair da tela de aviso
+            alert.showAndWait();
             lblTextoConfirmar.setText("Conta criada com sucesso!");
 
             if (txtFieldNome.getText().equalsIgnoreCase("leandro")) {
                 Visitante leandro = new Visitante(txtFieldNome.getText(), "01/01/2000", txtFieldCpf.getText(), 0);
-                ContextoController.VISITANTES.cadastrar(leandro);
+                ListaVisitante.cadastrar(leandro);
             } else if (txtFieldCargo.getText().isBlank()) {
                 Visitante visitante = new Visitante(txtFieldNome.getText(), "01/01/2000", txtFieldCpf.getText(), 0);
-                ContextoController.VISITANTES.cadastrar(visitante);
+                ListaVisitante.cadastrar(visitante);
             } else {
                 Operador operador = new Operador(txtFieldNome.getText(), "01/01/2000", txtFieldCpf.getText(), txtFieldCargo.getText());
                 ContextoController.atracoes.cadastrarOperador(txtFieldCargo.getText(), operador);
             }
+            Persistencia.salvar();
             txtFieldNome.setText("");
             txtFieldCpf.setText("");
             txtFieldCargo.setText("");
