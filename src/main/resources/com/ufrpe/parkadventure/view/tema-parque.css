@@ -1,0 +1,35 @@
+@font-face { font-family: "Fredoka"; src: url("fontes/Fredoka-Regular.ttf"); }
+@font-face { font-family: "Fredoka"; src: url("fontes/Fredoka-Bold.ttf"); }
+
+.tela-parque {
+    -fx-background-color: linear-gradient(to bottom, #bfe3ff, #eaf6ff);
+}
+.tela-parque .label, .tela-parque .button { -fx-font-family: "Fredoka"; }
+
+.titulo-parque    { -fx-font-size: 34px; -fx-font-weight: bold; -fx-text-fill: #14365d; }
+.subtitulo-parque { -fx-font-size: 15px; -fx-text-fill: #1f6fd1; }
+.rodape-parque    { -fx-font-size: 12px; -fx-text-fill: #14365d; -fx-opacity: 0.75; }
+
+.card-ingresso {
+    -fx-padding: 12 18 12 18;
+    -fx-wrap-text: true;
+    -fx-background-radius: 28; -fx-border-radius: 28;
+    -fx-font-size: 15px; -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(20,54,93,0.25), 14, 0.2, 0, 6);
+}
+.card-instantaneo { -fx-background-color: linear-gradient(to bottom right, #3a9bff, #1f6fd1); -fx-text-fill: white; }
+.card-programado  { -fx-background-color: white; -fx-border-color: #1f6fd1; -fx-border-width: 3; -fx-text-fill: #14365d; }
+.card-ingresso:hover   { -fx-scale-x: 1.04; -fx-scale-y: 1.04; }
+.card-ingresso:pressed { -fx-scale-x: 0.98; -fx-scale-y: 0.98; }
+
+.titulo-redirecionamento { -fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #14365d; }
+
+.cartao-redirecionamento {
+    -fx-background-color: white;
+    -fx-background-radius: 32;
+    -fx-padding: 36 40 36 40;
+    -fx-effect: dropshadow(gaussian, rgba(20,54,93,0.25), 18, 0.2, 0, 8);
+}
+
+.tela-parque .progress-indicator { -fx-progress-color: #1f6fd1; }

@@ -3,18 +3,21 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane fx:controller="com.ufrpe.parkadventure.controller.RedirecionamentoPagamentoController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
-   <top>
-      <Label fx:id= "lblMensagem" text="AGUARDE E VOCÊ SERÁ REDIRECIONADO" BorderPane.alignment="CENTER">
-         <font>
-            <Font size="25.0" />
-         </font>
-      </Label>
-   </top>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="720.0" styleClass="tela-parque" stylesheets="@tema-parque.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.RedirecionamentoPagamentoController">
    <center>
-      <ProgressIndicator progress="-1.0" BorderPane.alignment="CENTER" />
+      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="420.0" spacing="16.0" styleClass="cartao-redirecionamento" stylesheets="@tema-parque.css" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="lblMensagem" styleClass="titulo-redirecionamento" text="Quase lá!">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+            <Label styleClass="subtitulo-parque" text="Estamos te levando para o pagamento" textAlignment="CENTER" wrapText="true" />
+            <ProgressIndicator prefHeight="90.0" prefWidth="90.0" progress="-1.0" />
+         </children>
+      </VBox>
    </center>
 </BorderPane>
