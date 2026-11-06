@@ -1,0 +1,40 @@
+.titulo-fila    { -fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: white; }
+.subtitulo-fila { -fx-font-size: 14px; -fx-text-fill: #dbe9fb; }
+
+.nome-visitante { -fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #14365d; }
+.selo-data {
+    -fx-background-color: #e3f0ff;
+    -fx-text-fill: #1858a6;
+    -fx-font-weight: bold;
+    -fx-padding: 4 12 4 12;
+    -fx-background-radius: 14;
+}
+.rotulo-campo { -fx-font-weight: bold; -fx-text-fill: #14365d; }
+.detalhe-fila { -fx-text-fill: #5c6b7a; -fx-font-size: 12px; }
+
+.posicao-fila {
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1f6fd1;
+}
+
+.tela-parque .combo-box {
+    -fx-background-color: white;
+    -fx-border-color: #8fb4e3;
+    -fx-border-width: 2;
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-pref-height: 38px;
+}
+.tela-parque .combo-box:focused { -fx-border-color: #1f6fd1; }
+.tela-parque .combo-box-popup .list-cell:filled:hover,
+.tela-parque .combo-box-popup .list-cell:filled:selected {
+    -fx-background-color: #1f6fd1;
+    -fx-text-fill: white;
+}
+.combo-box-popup .list-view { -fx-background-color: white; -fx-border-color: #8fb4e3; }
+.combo-box-popup .list-cell:filled:hover,
+.combo-box-popup .list-cell:filled:selected { -fx-background-color: #1f6fd1; -fx-text-fill: white; }
+
+.status-pagamento.ok   { -fx-text-fill: #1b7a3a; -fx-font-weight: bold; }
+.status-pagamento.erro { -fx-text-fill: #b3261e; -fx-font-weight: bold; }

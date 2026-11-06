@@ -7,41 +7,39 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="520.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.EscolhaDataController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="520.0" styleClass="tela-parque" stylesheets="@tema-parque.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.EscolhaDataController">
    <top>
-      <Label text="Escolha a data da visita" BorderPane.alignment="CENTER">
-         <font>
-            <Font name="System Bold" size="24.0" />
-         </font>
+      <Label alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="cabecalho-pagamento" text="Escolha a data da visita" BorderPane.alignment="CENTER">
          <padding>
             <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
          </padding>
       </Label>
    </top>
    <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" spacing="14.0" BorderPane.alignment="TOP_CENTER">
+      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="440.0" spacing="16.0" styleClass="cartao-pagamento" BorderPane.alignment="CENTER">
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding>
          <children>
-            <Label prefWidth="400.0" text="Selecione o dia em que você quer visitar o parque" textAlignment="CENTER" wrapText="true" />
-            <DatePicker fx:id="dpDataVisita" prefWidth="220.0" promptText="dd/mm/aaaa" />
-            <Label fx:id="lblData" text="Nenhuma data selecionada" />
-            <Label fx:id="lblErro" textFill="RED" />
+            <Label maxWidth="1.7976931348623157E308" prefWidth="380.0" styleClass="subtitulo-parque" text="Selecione o dia em que você quer visitar o parque" textAlignment="CENTER" wrapText="true" />
+            <DatePicker fx:id="dpDataVisita" prefWidth="280.0" promptText="mm/dd/aaaa" styleClass="campo-data" />
+            <Label fx:id="lblData" styleClass="etiqueta-pedido" text="Nenhuma data selecionada" />
+            <Label fx:id="lblErro" maxWidth="1.7976931348623157E308" styleClass="erro-parque" textAlignment="CENTER" />
          </children>
+         <BorderPane.margin>
+            <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+         </BorderPane.margin>
       </VBox>
    </center>
    <bottom>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="12.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER_RIGHT" spacing="12.0" styleClass="rodape-acoes" BorderPane.alignment="CENTER">
          <padding>
-            <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+            <Insets bottom="16.0" left="20.0" right="20.0" top="12.0" />
          </padding>
          <children>
-            <Button fx:id="btnVoltar" mnemonicParsing="false" onAction="#aoVoltar" prefWidth="120.0" text="Voltar" />
-            <Button fx:id="btnContinuar" mnemonicParsing="false" onAction="#aoContinuar" prefWidth="160.0" text="Continuar" />
+            <Button fx:id="btnVoltar" mnemonicParsing="false" onAction="#aoVoltar" styleClass="botao-secundario" text="Voltar" />
+            <Button fx:id="btnContinuar" mnemonicParsing="false" onAction="#aoContinuar" styleClass="botao-primario" text="Continuar" />
          </children>
       </HBox>
    </bottom>

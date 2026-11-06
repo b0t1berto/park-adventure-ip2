@@ -88,7 +88,7 @@
                               <Label text="Documento com foto" GridPane.rowIndex="6" />
                               <TextField fx:id="txtNome" GridPane.columnIndex="1" />
                               <TextField fx:id="txtCpf" promptText="000.000.000-00" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <DatePicker fx:id="dpNascimento" promptText="dd/mm/aaaa" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <DatePicker fx:id="dpNascimento" promptText="mm/dd/aaaa" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <TextField fx:id="txtEmail" promptText="nome@email.com" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                               <TextField fx:id="txtTelefone" promptText="(00) 90000-0000" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                               <Spinner fx:id="spAltura" prefWidth="120.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />

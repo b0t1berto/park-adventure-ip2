@@ -17,6 +17,7 @@ public final class PedidoAtual {
     private static final DateTimeFormatter DATA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     private static LocalDate dataVisita = LocalDate.now();
+    private static Ingresso ultimoIngresso;
 
     private static boolean temComprador;
     private static String nome;
@@ -28,6 +29,10 @@ public final class PedidoAtual {
     private static String nomeResponsavel;
     private static String cpfResponsavel;
     private static String contatoEmergencia;
+
+    public static Ingresso getUltimoIngresso() {
+        return ultimoIngresso;
+    }
 
     public static LocalDate getDataVisita() {
         return dataVisita;
@@ -85,6 +90,7 @@ public final class PedidoAtual {
 
         Persistencia.salvar();
         limpar();
+        ultimoIngresso = ingresso;
         return ingresso;
     }
 

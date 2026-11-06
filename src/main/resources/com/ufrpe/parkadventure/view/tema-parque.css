@@ -145,3 +145,40 @@
     -fx-background-radius: 16;
 }
 .grade-boleto .label { -fx-text-fill: #14365d; }
+
+.situacao-pagamento {
+    -fx-font-size: 17px;
+    -fx-text-fill: #14365d;
+    -fx-text-alignment: center;
+}
+
+.etiqueta-pedido {
+    -fx-background-color: #dcebff;
+    -fx-background-radius: 20;
+    -fx-text-fill: #14365d;
+    -fx-font-weight: bold;
+    -fx-padding: 3 14 3 14;
+}
+
+.erro-parque { -fx-text-fill: #c62828; -fx-font-weight: bold; -fx-text-alignment: center; }
+
+.campo-data { -fx-font-size: 16px; }
+
+/* Calendário do DatePicker (janela separada, por isso sem o prefixo .tela-parque) */
+.date-picker-popup,
+.date-picker-popup * { -fx-font-family: "Fredoka"; }
+
+.date-picker-popup {
+    -fx-background-color: white;
+    -fx-background-radius: 16;
+    -fx-border-color: #bfe3ff;
+    -fx-border-radius: 16;
+    -fx-effect: dropshadow(gaussian, rgba(20,54,93,0.25), 16, 0.2, 0, 6);
+}
+.date-picker-popup .month-year-pane {
+    -fx-background-color: #dcebff;
+    -fx-background-radius: 16 16 0 0;
+}
+.date-picker-popup .day-cell { -fx-background-radius: 10; -fx-text-fill: #14365d; }
+.date-picker-popup .day-cell:hover    { -fx-background-color: #dcebff; }
+.date-picker-popup .day-cell:selected { -fx-background-color: #1f6fd1; -fx-text-fill: white; }

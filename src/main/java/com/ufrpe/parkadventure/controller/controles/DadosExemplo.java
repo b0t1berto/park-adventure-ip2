@@ -18,10 +18,11 @@ import java.time.LocalDate;
 public final class DadosExemplo {
     private DadosExemplo() { }
 
-    public static void carregar() {
-        LocalDate hoje = LocalDate.now();
-
-        // Operadores e atrações
+    public static Atracao carregarAtracoes() {
+        Atracao existente = ContextoController.atracoes.buscar("Piratas do Caribe");
+        if (existente != null) {
+            return existente;
+        }
         Operador carlos = new Operador("Carlos", "22/01/1991", null, "Piratas do Caribe");
         Operador caique = new Operador("Caique", "22/01/2000", null, "Lula Voadora");
         Operador ivaldo = new Operador("Ivaldo", "20/01/1990", null, "Água Ardente");
@@ -31,8 +32,17 @@ public final class DadosExemplo {
         ContextoController.atracoes.cadastrar(new Infantil("Lula Voadora", 3, caique, 140, 12));
         ContextoController.atracoes.cadastrar(new Radical("Água Ardente", 20, ivaldo, 150, 16));
         ContextoController.atracoes.cadastrar(new Radical("Montanha Fantasma", 10, null, 140, 12));
+        return piratas;
+    }
 
-        // Visitantes
+    public static void carregar() {
+        LocalDate hoje = LocalDate.now();
+
+        Atracao piratas = carregarAtracoes();
+        Operador carlos = piratas.getOperador();
+        Operador caique = ContextoController.atracoes.buscar("Lula Voadora").getOperador();
+        Operador ivaldo = ContextoController.atracoes.buscar("Água Ardente").getOperador();
+
         Visitante miguel = new Visitante("Miguel Ferreira", "30/09/2016", null, 136);
         miguel.setResponsavel(new Responsavel("Alexssandra", "11/11/1998", null));
         Visitante pedro = new Visitante("Pedro Neto", "12/12/2014", null, 140);   // menor SEM responsável
@@ -45,7 +55,6 @@ public final class DadosExemplo {
             ListaVisitante.cadastrar(v);
         }
 
-        // Ingressos (o 4º parâmetro 'false' evita consultar a internet aqui)
         IngressoController ingressos = ContextoController.CONTROLE_INGRESSO;
         ingressos.emitirIngresso(bruno, TipoIngresso.DIARIA, hoje.minusDays(10), false);   // expirado
         for (Visitante v : new Visitante[]{miguel, pedro, edivan, ana, bruno, carla}) {
@@ -53,7 +62,6 @@ public final class DadosExemplo {
         }
         ingressos.emitirIngresso(ana, TipoIngresso.PASSE_ANUAL, hoje, false);
 
-        // Atração lotada + fila virtual (usa as regras reais do ControleAcesso)
         AcessoController acesso = ContextoController.CONTROLE_ACESSO;
         acesso.registrarAcesso(ana, ContextoController.INGRESSOS.buscarUltimo(ana), piratas);       // 1/2
         acesso.registrarAcesso(bruno, ContextoController.INGRESSOS.buscarUltimo(bruno), piratas);   // 2/2 (lotada)
