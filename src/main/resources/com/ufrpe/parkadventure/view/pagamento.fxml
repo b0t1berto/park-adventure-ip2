@@ -13,36 +13,27 @@
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.PagamentoController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="720.0" styleClass="tela-parque" stylesheets="@tema-parque.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.PagamentoController">
    <top>
-      <Label text="Finalizar compra" BorderPane.alignment="CENTER">
-         <font>
-            <Font name="System Bold" size="24.0" />
-         </font>
-         <padding>
-            <Insets bottom="16.0" top="16.0" />
-         </padding>
-      </Label>
+      <Label alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="cabecalho-pagamento" text="Finalizar compra" BorderPane.alignment="CENTER" />
    </top>
    <center>
-      <ScrollPane fitToWidth="true" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <ScrollPane fitToWidth="true" prefHeight="200.0" prefWidth="200.0" styleClass="rolagem-parque" BorderPane.alignment="CENTER">
          <content>
-            <VBox prefHeight="200.0" prefWidth="100.0" spacing="16.0">
+            <VBox spacing="16.0">
                <padding>
-                  <Insets bottom="20.0" />
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="12.0" />
                </padding>
                <children>
-                  <TitledPane animated="false" collapsible="false" text="Resumo da compra">
-                     <graphic>
+                  <TitledPane animated="false" collapsible="false" styleClass="secao-parque" text="Resumo da compra">
+                     <content>
                         <GridPane hgap="12.0" vgap="10.0">
                           <columnConstraints>
                             <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="100.0" prefWidth="130.0" />
@@ -62,16 +53,16 @@
                               <Label fx:id="lblItem" text="-----" GridPane.columnIndex="1" />
                               <Label fx:id="lblDataVisita" text="-----" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <Label fx:id="lblQuantidade" text="-----" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <Label fx:id="lblTotal" text="-----" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <Label fx:id="lblTotal" styleClass="valor-total" text="-----" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                            </children>
                            <padding>
                               <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
                            </padding>
                         </GridPane>
-                     </graphic>
+                     </content>
                   </TitledPane>
-                  <TitledPane animated="false" collapsible="false" text="Dados pessoais">
-                     <graphic>
+                  <TitledPane animated="false" collapsible="false" styleClass="secao-parque" text="Dados pessoais">
+                     <content>
                         <GridPane hgap="12.0" vgap="10.0">
                           <columnConstraints>
                             <ColumnConstraints halignment="RIGHT" hgrow="NEVER" minWidth="120.0" prefWidth="140.0" />
@@ -85,7 +76,7 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="TOP" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="-1.0" valignment="TOP" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
                               <Label text="Nome completo" />
@@ -112,10 +103,10 @@
                               <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
                            </padding>
                         </GridPane>
-                     </graphic>
+                     </content>
                   </TitledPane>
-                  <TitledPane fx:id="paneResponsavel" animated="false" collapsible="false" text="Dados do responsável">
-                     <graphic>
+                  <TitledPane fx:id="paneResponsavel" animated="false" collapsible="false" styleClass="secao-parque" text="Dados do responsável">
+                     <content>
                         <GridPane hgap="12.0" vgap="10.0">
                           <columnConstraints>
                             <ColumnConstraints halignment="RIGHT" hgrow="NEVER" minWidth="140.0" prefWidth="160.0" />
@@ -140,13 +131,10 @@
                               <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
                            </padding>
                         </GridPane>
-                     </graphic>
+                     </content>
                   </TitledPane>
-                  <TitledPane animated="false" collapsible="false" text="Outras informações (opcional)">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                    </content>
-                     <graphic>
+                  <TitledPane animated="false" collapsible="false" styleClass="secao-parque" text="Outras informações (opcional)">
+                     <content>
                         <GridPane hgap="12.0" vgap="10.0">
                           <columnConstraints>
                             <ColumnConstraints halignment="RIGHT" hgrow="NEVER" minWidth="120.0" prefWidth="180.0" />
@@ -170,11 +158,11 @@
                               <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
                            </padding>
                         </GridPane>
-                     </graphic>
+                     </content>
                   </TitledPane>
-                  <TitledPane animated="false" collapsible="false" text="Pagamento" textAlignment="RIGHT">
-                     <graphic>
-                        <VBox prefHeight="200.0" prefWidth="175.0" spacing="8.0">
+                  <TitledPane animated="false" collapsible="false" styleClass="secao-parque" text="Pagamento">
+                     <content>
+                        <VBox spacing="8.0">
                            <padding>
                               <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
                            </padding>
@@ -188,7 +176,7 @@
                               <RadioButton fx:id="rbBoleto" mnemonicParsing="false" text="Boleto" toggleGroup="$grupoPagamento" />
                            </children>
                         </VBox>
-                     </graphic>
+                     </content>
                   </TitledPane>
                </children>
             </VBox>
@@ -196,13 +184,13 @@
       </ScrollPane>
    </center>
    <bottom>
-      <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER_RIGHT">
+      <HBox alignment="CENTER_RIGHT" spacing="12.0" styleClass="rodape-acoes" BorderPane.alignment="CENTER_RIGHT">
          <padding>
-            <Insets bottom="16.0" />
+            <Insets bottom="16.0" left="20.0" right="20.0" top="12.0" />
          </padding>
          <children>
-            <Button fx:id="btnVoltar" mnemonicParsing="false" text="Voltar" />
-            <Button fx:id="btnPagar" mnemonicParsing="false" onAction="#aoPagar" text="Pagar" />
+            <Button fx:id="btnVoltar" mnemonicParsing="false" styleClass="botao-secundario" text="Voltar" />
+            <Button fx:id="btnPagar" mnemonicParsing="false" onAction="#aoPagar" styleClass="botao-primario" text="Pagar" />
          </children>
       </HBox>
    </bottom>

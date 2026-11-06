@@ -14,6 +14,18 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageConfig;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+import javafx.scene.image.Image;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.util.Map;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -33,6 +45,8 @@ public class PagamentoPixController {
     @FXML
     private void initialize() {
         txtCodigoPix.setText("00020126-PARKADVENTURE-" + UUID.randomUUID());
+        txtCodigoPix.setText("00020126-PARKADVENTURE-" + UUID.randomUUID());
+        gerarQrCode(txtCodigoPix.getText());
         atualizarTempo();
 
         contagem = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
@@ -64,6 +78,22 @@ public class PagamentoPixController {
             stage.setScene(scene);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void gerarQrCode(String texto) {
+        try {
+            BitMatrix matriz = new QRCodeWriter().encode(
+                    texto, BarcodeFormat.QR_CODE, 400, 400,
+                    Map.of(EncodeHintType.MARGIN, 1));
+
+            ByteArrayOutputStream saida = new ByteArrayOutputStream();
+            MatrixToImageWriter.writeToStream(matriz, "PNG", saida,
+                    new MatrixToImageConfig(0xFF14365D, 0xFFFFFFFF));
+
+            ivQrCode.setImage(new Image(new ByteArrayInputStream(saida.toByteArray())));
+        } catch (WriterException | IOException e) {
+            lblStatus.setText("Não foi possível gerar o QR Code. Use o código abaixo.");
         }
     }
 

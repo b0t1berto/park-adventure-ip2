@@ -33,3 +33,115 @@
 }
 
 .tela-parque .progress-indicator { -fx-progress-color: #1f6fd1; }
+
+.tela-parque {
+    -fx-font-family: "Fredoka";
+    -fx-accent: #1f6fd1;
+    -fx-focus-color: #1f6fd1;
+    -fx-faint-focus-color: #1f6fd133;
+}
+
+.cabecalho-pagamento {
+    -fx-background-color: linear-gradient(to right, #3a9bff, #1f6fd1);
+    -fx-text-fill: white;
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-padding: 18 16 18 16;
+}
+
+.rolagem-parque,
+.rolagem-parque > .viewport { -fx-background-color: transparent; }
+.rolagem-parque { -fx-background-insets: 0; -fx-padding: 0; }
+
+.secao-parque > .title {
+    -fx-background-color: #dcebff;
+    -fx-background-radius: 16 16 0 0;
+}
+.secao-parque > .title > .text { -fx-fill: #14365d; -fx-font-weight: bold; -fx-font-size: 15px; }
+.secao-parque > .content {
+    -fx-background-color: white;
+    -fx-border-color: #bfe3ff;
+    -fx-border-radius: 0 0 16 16;
+    -fx-background-radius: 0 0 16 16;
+}
+.secao-parque .label,
+.secao-parque .check-box,
+.secao-parque .radio-button { -fx-text-fill: #14365d; }
+
+.tela-parque .text-field:focused { -fx-border-color: #1f6fd1; -fx-border-width: 2; }
+
+.valor-total { -fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #1f6fd1; }
+
+.rodape-acoes {
+    -fx-background-color: white;
+    -fx-effect: dropshadow(gaussian, rgba(20,54,93,0.15), 12, 0, 0, -3);
+}
+.botao-primario {
+    -fx-background-color: linear-gradient(to bottom right, #3a9bff, #1f6fd1);
+    -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px;
+    -fx-background-radius: 24; -fx-padding: 10 32 10 32; -fx-cursor: hand;
+}
+.botao-primario:hover    { -fx-scale-x: 1.04; -fx-scale-y: 1.04; }
+.botao-primario:disabled { -fx-opacity: 0.45; }
+.botao-secundario {
+    -fx-background-color: white;
+    -fx-border-color: #1f6fd1; -fx-border-width: 2;
+    -fx-background-radius: 24; -fx-border-radius: 24;
+    -fx-text-fill: #14365d; -fx-font-size: 16px; -fx-padding: 10 28 10 28; -fx-cursor: hand;
+}
+.botao-secundario:hover { -fx-scale-x: 1.04; -fx-scale-y: 1.04; }
+
+.cartao-pagamento {
+    -fx-background-color: white;
+    -fx-background-radius: 28;
+    -fx-padding: 24 28 24 28;
+    -fx-effect: dropshadow(gaussian, rgba(20,54,93,0.25), 18, 0.2, 0, 8);
+}
+.valor-pagamento { -fx-font-size: 40px; -fx-font-weight: bold; -fx-text-fill: #1f6fd1; }
+
+.moldura-qr {
+    -fx-background-color: white;
+    -fx-border-color: #bfe3ff; -fx-border-width: 3;
+    -fx-border-radius: 20; -fx-background-radius: 20;
+    -fx-padding: 10;
+}
+.codigo-pagamento {
+    -fx-background-color: #f1f7ff;
+    -fx-background-radius: 14; -fx-border-radius: 14;
+    -fx-border-color: #bfe3ff;
+    -fx-text-fill: #14365d;
+    -fx-alignment: center;
+    -fx-font-size: 13px;
+}
+.tempo-pix {
+    -fx-background-color: #dcebff; -fx-background-radius: 20;
+    -fx-text-fill: #14365d; -fx-font-weight: bold;
+    -fx-padding: 4 16 4 16;
+}
+.status-pagamento { -fx-text-fill: #1f6fd1; -fx-text-alignment: center; }
+
+.botao-secundario:disabled { -fx-opacity: 0.45; }
+
+.grade-cartao .label { -fx-text-fill: #14365d; }
+
+.grade-cartao .text-field,
+.grade-cartao .password-field {
+    -fx-background-color: #f8fbff;
+    -fx-background-radius: 12; -fx-border-radius: 12;
+    -fx-border-color: #bfe3ff;
+    -fx-padding: 7 12 7 12;
+}
+.grade-cartao .text-field:focused,
+.grade-cartao .password-field:focused { -fx-border-color: #1f6fd1; -fx-border-width: 2; }
+
+.grade-cartao .combo-box-base {
+    -fx-background-color: #f8fbff;
+    -fx-background-radius: 12; -fx-border-radius: 12;
+    -fx-border-color: #bfe3ff;
+}
+
+.grade-boleto {
+    -fx-background-color: #f1f7ff;
+    -fx-background-radius: 16;
+}
+.grade-boleto .label { -fx-text-fill: #14365d; }

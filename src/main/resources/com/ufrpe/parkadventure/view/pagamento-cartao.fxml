@@ -12,33 +12,24 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.PagamentoCartaoController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" styleClass="tela-parque" stylesheets="@tema-parque.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.PagamentoCartaoController">
    <top>
-      <Label text="Pagamento com cartão de crédito" BorderPane.alignment="CENTER">
-         <font>
-            <Font name="System Bold" size="24.0" />
-         </font>
+      <Label alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="cabecalho-pagamento" text="Pagamento com cartão de crédito" BorderPane.alignment="CENTER">
          <padding>
             <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
          </padding>
       </Label>
    </top>
    <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" spacing="14.0" BorderPane.alignment="TOP_CENTER">
+      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="520.0" spacing="10.0" styleClass="cartao-pagamento" BorderPane.alignment="CENTER">
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding>
          <children>
-            <Label text="Valor a pagar" />
-            <Label fx:id="lblValor" text="R$ 0.00">
-               <font>
-                  <Font name="System Bold" size="28.0" />
-               </font>
-            </Label>
-            <GridPane hgap="12.0" vgap="10.0">
+            <Label styleClass="subtitulo-parque" text="Valor a pagar" />
+            <Label fx:id="lblValor" styleClass="valor-pagamento" text="R$ 0.00" />
+            <GridPane hgap="12.0" maxWidth="1.7976931348623157E308" styleClass="grade-cartao" vgap="10.0">
               <columnConstraints>
                 <ColumnConstraints halignment="RIGHT" hgrow="NEVER" minWidth="140.0" prefWidth="160.0" />
                 <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" minWidth="10.0" prefWidth="300.0" />
@@ -56,28 +47,31 @@
                   <Label text="Validade" GridPane.rowIndex="2" />
                   <Label text="CVV" GridPane.rowIndex="3" />
                   <Label text="Parcelas" GridPane.rowIndex="4" />
-                  <TextField fx:id="txtNumeroCartao" GridPane.columnIndex="1" />
-                  <TextField fx:id="txtNomeCartao" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <TextField fx:id="txtValidade" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <PasswordField fx:id="pfCvv" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <ComboBox fx:id="cbParcelas" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <TextField fx:id="txtNumeroCartao" promptText="0000 0000 0000 0000" GridPane.columnIndex="1" />
+                  <TextField fx:id="txtNomeCartao" promptText="Como está impresso no cartão" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="txtValidade" promptText="MM/AA" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <PasswordField fx:id="pfCvv" promptText="000" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <ComboBox fx:id="cbParcelas" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                </children>
                <padding>
                   <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
                </padding>
             </GridPane>
-            <Label fx:id="lblStatus" text="Preencha os dados do cartão" />
+            <Label fx:id="lblStatus" maxWidth="1.7976931348623157E308" styleClass="status-pagamento" text="Preencha os dados do cartão" textAlignment="CENTER" wrapText="true" />
          </children>
+         <BorderPane.margin>
+            <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+         </BorderPane.margin>
       </VBox>
    </center>
    <bottom>
-      <HBox prefHeight="100.0" prefWidth="200.0" spacing="12.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER_RIGHT" spacing="12.0" styleClass="rodape-acoes" BorderPane.alignment="CENTER">
          <padding>
-            <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+            <Insets bottom="16.0" left="20.0" right="20.0" top="12.0" />
          </padding>
          <children>
-            <Button fx:id="btnVoltar" mnemonicParsing="false" onAction="#aoVoltar" prefWidth="120.0" text="Voltar" />
-            <Button fx:id="btnPagar" mnemonicParsing="false" onAction="#aoPagar" prefWidth="160.0" text="Pagar" />
+            <Button fx:id="btnVoltar" mnemonicParsing="false" onAction="#aoVoltar" styleClass="botao-secundario" text="Voltar" />
+            <Button fx:id="btnPagar" mnemonicParsing="false" onAction="#aoPagar" styleClass="botao-primario" text="Pagar" />
          </children>
       </HBox>
    </bottom>

@@ -10,26 +10,22 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="520.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.PagamentoBoletoController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" styleClass="tela-parque" stylesheets="@tema-parque.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.PagamentoBoletoController">
    <top>
-      <Label text="Pagamento com boleto" BorderPane.alignment="CENTER">
-         <font>
-            <Font name="System Bold" size="24.0" />
-         </font>
+      <Label alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="cabecalho-pagamento" text="Pagamento com boleto" BorderPane.alignment="CENTER">
          <padding>
             <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
          </padding>
       </Label>
    </top>
    <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" spacing="14.0" BorderPane.alignment="TOP_CENTER">
+      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="540.0" spacing="12.0" styleClass="cartao-pagamento" BorderPane.alignment="CENTER">
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding>
          <children>
-            <GridPane hgap="12.0" vgap="10.0">
+            <GridPane hgap="12.0" maxWidth="1.7976931348623157E308" styleClass="grade-boleto" vgap="10.0">
               <columnConstraints>
                 <ColumnConstraints halignment="RIGHT" hgrow="NEVER" minWidth="110.0" prefWidth="120.0" />
                 <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" minWidth="10.0" prefWidth="280.0" />
@@ -43,11 +39,7 @@
                   <Label text="Valor" />
                   <Label text="Vencimento" GridPane.rowIndex="1" />
                   <Label text="Beneficiário" GridPane.rowIndex="2" />
-                  <Label fx:id="lblValor" text="R$ 0.00" GridPane.columnIndex="1">
-                     <font>
-                        <Font name="System Bold" size="22.0" />
-                     </font>
-                  </Label>
+                  <Label fx:id="lblValor" styleClass="valor-total" text="R$ 0.00" GridPane.columnIndex="1" />
                   <Label fx:id="lblVencimento" text="--/--/----" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label text="Park Adventure" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                </children>
@@ -55,22 +47,25 @@
                   <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
                </padding>
             </GridPane>
-            <Label text="Linha digitável" />
-            <TextField fx:id="txtLinhaDigitavel" editable="false" prefWidth="420.0" />
-            <Button fx:id="btnCopiar" mnemonicParsing="false" onAction="#aoCopiar" prefWidth="200.0" text="Copiar linha digitável" />
-             <Label minHeight="-Infinity" prefHeight="18.0" prefWidth="440.0" text="Pague até o vencimento. A compensação leva até 3 dias úteis." textAlignment="CENTER" wrapText="true" />
-             <Label fx:id="lblStatus" text="Boleto gerado" />
+            <Label styleClass="subtitulo-parque" text="Linha digitável" />
+            <TextField fx:id="txtLinhaDigitavel" editable="false" maxWidth="1.7976931348623157E308" styleClass="codigo-pagamento" />
+            <Button fx:id="btnCopiar" mnemonicParsing="false" onAction="#aoCopiar" styleClass="botao-secundario" text="Copiar linha digitável" />
+             <Label maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefWidth="480.0" styleClass="subtitulo-parque" text="Pague até o vencimento. A compensação leva até 3 dias úteis." textAlignment="CENTER" wrapText="true" />
+             <Label fx:id="lblStatus" maxWidth="1.7976931348623157E308" styleClass="status-pagamento" text="Boleto gerado" textAlignment="CENTER" />
          </children>
+         <BorderPane.margin>
+            <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+         </BorderPane.margin>
       </VBox>
    </center>
    <bottom>
-      <HBox prefHeight="100.0" prefWidth="200.0" spacing="12.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER_RIGHT" spacing="12.0" styleClass="rodape-acoes" BorderPane.alignment="CENTER">
          <padding>
-            <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+            <Insets bottom="16.0" left="20.0" right="20.0" top="12.0" />
          </padding>
          <children>
-            <Button fx:id="btnVoltar" mnemonicParsing="false" onAction="#aoVoltar" prefWidth="120.0" text="Voltar" />
-            <Button fx:id="btnConcluir" mnemonicParsing="false" onAction="#aoConcluir" prefWidth="160.0" text="Concluir" />
+            <Button fx:id="btnVoltar" mnemonicParsing="false" onAction="#aoVoltar" styleClass="botao-secundario" text="Voltar" />
+            <Button fx:id="btnConcluir" mnemonicParsing="false" onAction="#aoConcluir" styleClass="botao-primario" text="Concluir" />
          </children>
       </HBox>
    </bottom>
