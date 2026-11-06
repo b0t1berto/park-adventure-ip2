@@ -1,6 +1,6 @@
 package com.ufrpe.parkadventure.controller;
 
-import com.ufrpe.parkadventure.HelloApplication;
+import com.ufrpe.parkadventure.ParkAdventure;
 import com.ufrpe.parkadventure.controller.controles.DadosExemplo;
 import com.ufrpe.parkadventure.model.atracao.Atracao;
 import com.ufrpe.parkadventure.model.ingresso.Ingresso;
@@ -15,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
@@ -33,8 +34,8 @@ public class CadastroFilaVirtualController {
 
     @FXML
     private void initialize() {
-        if (ContextoController.atracoes.listarTodas().isEmpty()) {
-            DadosExemplo.carregarAtracoes();
+        if (ContextoController.ATRACOES.listarTodas().isEmpty()) {
+            DadosExemplo.carregar();
         }
 
         ingresso = PedidoAtual.getUltimoIngresso();
@@ -45,8 +46,8 @@ public class CadastroFilaVirtualController {
             ingresso = (visitante == null) ? null : ContextoController.INGRESSOS.buscarUltimo(visitante);
         }
 
-        cbAtracao.setItems(FXCollections.observableArrayList(ContextoController.atracoes.listarTodas()));
-        cbAtracao.setConverter(new javafx.util.StringConverter<>() {
+        cbAtracao.setItems(FXCollections.observableArrayList(ContextoController.ATRACOES.listarTodas()));
+        cbAtracao.setConverter(new StringConverter<>() {
             @Override public String toString(Atracao a) { return a == null ? "" : a.getNome(); }
             @Override public Atracao fromString(String s) { return null; }
         });
@@ -125,7 +126,7 @@ public class CadastroFilaVirtualController {
     @FXML
     private void aoVoltar() {
         try {
-            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("view/menu.fxml"));
+            FXMLLoader loader = new FXMLLoader(ParkAdventure.class.getResource("view/menu.fxml"));
             ((Stage) btnVoltar.getScene().getWindow()).setScene(new Scene(loader.load()));
         } catch (IOException e) {
             e.printStackTrace();
