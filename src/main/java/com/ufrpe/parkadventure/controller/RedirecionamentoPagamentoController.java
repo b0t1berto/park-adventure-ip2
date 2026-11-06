@@ -1,6 +1,6 @@
 package com.ufrpe.parkadventure.controller;
 
-import com.ufrpe.parkadventure.HelloApplication;
+import com.ufrpe.parkadventure.ParkAdventure;
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,7 +29,7 @@ public class RedirecionamentoPagamentoController {
         pausa.setOnFinished(e -> {
             try {
                 FXMLLoader loader = new FXMLLoader(
-                        HelloApplication.class.getResource("view/pagamento.fxml"));
+                        ParkAdventure.class.getResource("view/pagamento.fxml"));
                 Scene scene = new Scene(loader.load());
 
                 PagamentoController pagamento = loader.getController();

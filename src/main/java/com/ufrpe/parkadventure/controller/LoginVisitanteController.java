@@ -14,10 +14,33 @@ public class LoginVisitanteController {
     @FXML
     Label lblBoasVindas;
 
-    @FXML
-    void initialize() {
-        lblBoasVindas.setText("Bem-vindo a tela de Visitante!");
+    @FXML 
+    void onComprarIngresso(ActionEvent event) {
+        try {
+            ParkAdventure.proximaCena("view/compra-ingressos.fxml");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
+    @FXML 
+    void onVerIngresso(ActionEvent event) {
+        try {
+            ParkAdventure.proximaCena("view/ingressos-comprados.fxml");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // @FXML 
+    // void onComprarIngresso(ActionEvent event) {
+    //     try {
+    //         ParkAdventure.proximaCena("view/compra-ingressos.fxml");
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //     }
+    // }
+
 
     @FXML
     void onVoltar(ActionEvent event) {

@@ -1,6 +1,5 @@
 package com.ufrpe.parkadventure.controller;
 
-import com.ufrpe.parkadventure.ParkAdventure;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -8,18 +7,19 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.fxml.FXML;
+import com.ufrpe.parkadventure.ParkAdventure;
 
-public class LoginController {
+public class TelaLoginController {
 
-    @FXML
-    Label lblNome, lblCpf, lblCargo;
+    @FXML 
+    Label lblNome, lblCpf, lblCargo, lblParkAdventure, lblAcesseConta;
 
-    @FXML
+    @FXML 
     TextField txtFieldNome, txtFieldCpf, txtFieldCargo;
 
-    @FXML
+    @FXML 
     Button btOk;
-
+    
     @FXML
     void onVoltar(ActionEvent event) {
         try {
@@ -34,7 +34,7 @@ public class LoginController {
         String nome = txtFieldNome.getText();
 
         if (txtFieldNome.getText().isBlank() || txtFieldCpf.getText().isBlank()) {
-            Alert alert = new Alert(AlertType.ERROR);
+            Alert alert = new Alert(AlertType.ERROR); 
             alert.setTitle("AVISO");
             alert.setHeaderText("Suas informações estão Inválidas!");
             alert.setContentText("Digite informações válidas para entrar na conta.");
@@ -57,13 +57,13 @@ public class LoginController {
                     e.printStackTrace();
                 }
             } else if (ContextoController.VISITANTES.buscar(nome) == null) {
-                try {
+                try {                
                     Alert alert = new Alert(AlertType.ERROR);
                     alert.setTitle("AVISO");
                     alert.setHeaderText("Visitante não encontrado!");
                     alert.setContentText("O visitante não está cadastrado.");
                     alert.showAndWait();
-
+                    
                     txtFieldNome.setText("");
                     txtFieldCpf.setText("");
                     txtFieldCargo.setText("");

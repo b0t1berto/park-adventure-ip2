@@ -1,11 +1,14 @@
 module com.exemplo.projeto {
-    requires javafx.controls;
+    requires transitive javafx.controls;
+    requires transitive javafx.graphics;
     requires javafx.fxml;
     requires java.net.http;
     requires com.fasterxml.jackson.databind;
     requires com.fasterxml.jackson.annotation;
     requires com.fasterxml.jackson.core;
-    requires com.google.zxing; requires com.google.zxing.javase; requires java.desktop;
+    requires com.google.zxing;
+    requires com.google.zxing.javase;
+    requires java.desktop;
 
     exports com.ufrpe.parkadventure;
     opens com.ufrpe.parkadventure to javafx.fxml;

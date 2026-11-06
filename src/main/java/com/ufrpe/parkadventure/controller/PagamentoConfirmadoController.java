@@ -1,6 +1,6 @@
 package com.ufrpe.parkadventure.controller;
 
-import com.ufrpe.parkadventure.HelloApplication;
+import com.ufrpe.parkadventure.ParkAdventure;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -37,7 +37,7 @@ public class PagamentoConfirmadoController {
     private void aoNovoPedido() {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    HelloApplication.class.getResource("view/menu.fxml"));
+                    ParkAdventure.class.getResource("view/menu.fxml"));
             Scene scene = new Scene(loader.load());
             Stage stage = (Stage) btnNovoPedido.getScene().getWindow();
             stage.setScene(scene);

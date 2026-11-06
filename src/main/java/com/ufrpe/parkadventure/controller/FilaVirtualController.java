@@ -1,13 +1,13 @@
 package com.ufrpe.parkadventure.controller;
 
-import com.ufrpe.parkadventure.controller.controles.Navegador;
-import com.ufrpe.parkadventure.controller.controles.Navegador.Tela;
+import com.ufrpe.parkadventure.ParkAdventure;
 import com.ufrpe.parkadventure.model.atracao.Atracao;
 import com.ufrpe.parkadventure.model.atracao.FilaVirtual;
 import com.ufrpe.parkadventure.model.pessoa.Visitante;
 import com.ufrpe.parkadventure.view.Aviso;
 
 import javafx.animation.KeyFrame;
+import javafx.event.ActionEvent;
 import javafx.animation.Timeline;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -71,7 +71,7 @@ public class FilaVirtualController {
         List<LinhaFila> linhas = new ArrayList<>();
         String atracaoDoProximo = null;
 
-        for (Atracao atracao : ContextoController.atracoes.listarTodas()) {
+        for (Atracao atracao : ContextoController.ATRACOES.listarTodas()) {
             FilaVirtual fila = atracao.getFilaVirtual();
             String horario = fila.horarioDe(visitante);
             if (horario == null) {
@@ -105,7 +105,11 @@ public class FilaVirtualController {
     }
 
     @FXML
-    private void onVoltarParaIngressos() {
-        Navegador.ir(Tela.INGRESSOS_COMPRADOS);
+    private void onVoltar(ActionEvent event) {
+        try {
+            ParkAdventure.voltar();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

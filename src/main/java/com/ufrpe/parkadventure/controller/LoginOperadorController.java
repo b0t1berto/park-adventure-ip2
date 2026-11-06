@@ -1,23 +1,18 @@
 package com.ufrpe.parkadventure.controller;
 
 import com.ufrpe.parkadventure.ParkAdventure;
+import javafx.scene.control.MenuItem;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 public class LoginOperadorController {
 
     @FXML
-    Button btVoltar;
+    MenuItem menuVoltar;
 
     @FXML
     Label lblBoasVindas;
-
-    @FXML
-    void initialize() {
-        lblBoasVindas.setText("Bem-vindo a tela de Operador!");
-    }
 
     @FXML
     void onVoltar(ActionEvent event) {

@@ -3,7 +3,6 @@ package com.ufrpe.parkadventure.controller;
 import com.ufrpe.parkadventure.ParkAdventure;
 import com.ufrpe.parkadventure.model.pessoa.Operador;
 import com.ufrpe.parkadventure.model.pessoa.Visitante;
-import com.ufrpe.parkadventure.repository.ListaVisitante;
 import com.ufrpe.parkadventure.repository.Persistencia;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -59,13 +58,13 @@ public class CriarContaController {
 
             if (txtFieldNome.getText().equalsIgnoreCase("leandro")) {
                 Visitante leandro = new Visitante(txtFieldNome.getText(), "01/01/2000", txtFieldCpf.getText(), 0);
-                ListaVisitante.cadastrar(leandro);
+                ContextoController.VISITANTES.cadastrar(leandro);
             } else if (txtFieldCargo.getText().isBlank()) {
                 Visitante visitante = new Visitante(txtFieldNome.getText(), "01/01/2000", txtFieldCpf.getText(), 0);
-                ListaVisitante.cadastrar(visitante);
+                ContextoController.VISITANTES.cadastrar(visitante);
             } else {
                 Operador operador = new Operador(txtFieldNome.getText(), "01/01/2000", txtFieldCpf.getText(), txtFieldCargo.getText());
-                ContextoController.atracoes.cadastrarOperador(txtFieldCargo.getText(), operador);
+                ContextoController.ATRACOES.cadastrarOperador(txtFieldCargo.getText(), operador);
             }
             Persistencia.salvar();
             txtFieldNome.setText("");

@@ -110,6 +110,8 @@ public class AcessoView {
             case INGRESSO_EXPIRADO -> console.exibir("O ingresso de " + nome + " está fora da validade.");
             case FORA_DOS_REQUISITOS -> console.exibir(nome + " não atinge os requisitos mínimos para " + atracao.getNome() + "!");
             case SEM_RESPONSAVEL -> console.exibir(nome + " precisa de um responsável para entrar em " + atracao.getNome() + "!");
+            case SEM_OPERADOR -> console.exibir("A atração " + atracao.getNome() + " está sem operador no momento.");
+            case JA_NA_FILA -> console.exibir(nome + " já se encontra na fila desta atração.");
         }
     }
 

@@ -1,5 +1,6 @@
 package com.ufrpe.parkadventure.repository;
 
+import com.ufrpe.parkadventure.controller.ContextoController;
 import com.ufrpe.parkadventure.model.atracao.Atracao;
 import com.ufrpe.parkadventure.model.ingresso.Ingresso;
 import com.ufrpe.parkadventure.model.ingresso.TipoIngresso;
@@ -24,6 +25,8 @@ public final class Persistencia {
     private static final String SEPARADOR = "\t";
     private static Path arquivo = localizarArquivo();
 
+    // Sobe a partir da pasta atual até achar o pom.xml (a raiz do projeto) e usa <raiz>/dados/dados.txt.
+    // Assim o arquivo é o mesmo, não importa de onde o programa foi iniciado.
     private static Path localizarArquivo() {
         Path atual = Paths.get("").toAbsolutePath();
         for (Path pasta = atual; pasta != null; pasta = pasta.getParent()) {
@@ -81,40 +84,20 @@ public final class Persistencia {
     private static void lerVisitante(String[] c) {
         Visitante visitante = new Visitante(c[1], c[2], vazioParaNulo(c[3]), Integer.parseInt(c[4]));
         if (!c[5].isEmpty()) {
-            LocalDate nascimentoResp = c[6].isEmpty() ? null : LocalDate.parse(c[6], DATA);
-            Responsavel responsavel = new Responsavel(c[5], nascimentoResp, vazioParaNulo(c[7]));
-            if (c.length > 8) {
-                responsavel.setContatoEmergencia(vazioParaNulo(c[8]));
-            }
-            visitante.setResponsavel(responsavel);
+            visitante.setResponsavel(new Responsavel(c[5], c[6], vazioParaNulo(c[7])));
         }
-        if (c.length > 9) {
-            visitante.setEmail(vazioParaNulo(c[9]));
-        }
-        if (c.length > 10) {
-            visitante.setTelefone(vazioParaNulo(c[10]));
-        }
-
-        Visitante existente = ListaVisitante.buscar(visitante.getNome());
-        if (existente == null) {
-            ListaVisitante.cadastrar(visitante);
-            return;
-        }
-        if (existente.getEmail() == null) existente.setEmail(visitante.getEmail());
-        if (existente.getTelefone() == null) existente.setTelefone(visitante.getTelefone());
-        if (existente.getCpf() == null) existente.setCpf(visitante.getCpf());
-        if (!existente.temResponsavel()) existente.setResponsavel(visitante.getResponsavel());
+        ContextoController.VISITANTES.cadastrar(visitante);
     }
 
     private static void lerOperador(String[] c) {
-        Atracao atracao = ListaAtracao.getInstancia().buscar(c[4]);
+        Atracao atracao = ContextoController.ATRACOES.buscar(c[4]);
         if (atracao != null && !atracao.temOperador()) {
             atracao.setOperador(new Operador(c[1], c[2], vazioParaNulo(c[3]), c[4]));
         }
     }
 
     private static void lerIngresso(String[] c) {
-        Visitante visitante = ListaVisitante.buscar(c[1]);
+        Visitante visitante = ContextoController.VISITANTES.buscar(c[1]);
         if (visitante == null) {
             return;
         }
@@ -126,17 +109,10 @@ public final class Persistencia {
             if (existente.getVisitante() == visitante && existente.getTipoIngresso() == tipo
                     && existente.getDataCompra().equals(compra)
                     && existente.getDataValidade().equals(validade)) {
-                if (existente.getFormaPagamento() == null && c.length > 6) {
-                    existente.setFormaPagamento(vazioParaNulo(c[6]));
-                }
                 return;
             }
         }
-        Ingresso novo = new Ingresso(visitante, tipo, compra, validade, Double.parseDouble(c[5]));
-        if (c.length > 6) {
-            novo.setFormaPagamento(vazioParaNulo(c[6]));
-        }
-        ingressos.cadastrar(novo);
+        ingressos.cadastrar(new Ingresso(visitante, tipo, compra, validade, Double.parseDouble(c[5])));
     }
 
     public static synchronized void salvar() {
@@ -149,9 +125,7 @@ public final class Persistencia {
                     String.valueOf(v.getAltura()),
                     r == null ? "" : texto(r.getNome()),
                     r == null ? "" : data(r.getDataNascimento()),
-                    r == null ? "" : texto(r.getCpf()),
-                    r == null ? "" : texto(r.getContatoEmergencia()),
-                    texto(v.getEmail()), texto(v.getTelefone())));
+                    r == null ? "" : texto(r.getCpf())));
         }
 
         for (Atracao a : ListaAtracao.getInstancia().listarTodas()) {
@@ -170,7 +144,7 @@ public final class Persistencia {
             linhas.add(String.join(SEPARADOR, "I",
                     texto(i.getVisitante().getNome()), i.getTipoIngresso().name(),
                     data(i.getDataCompra()), data(i.getDataValidade()),
-                    String.valueOf(i.getValor()), texto(i.getFormaPagamento())));
+                    String.valueOf(i.getValor())));
         }
 
         try {

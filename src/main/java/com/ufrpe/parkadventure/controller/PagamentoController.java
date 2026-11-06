@@ -1,6 +1,6 @@
 package com.ufrpe.parkadventure.controller;
 
-import com.ufrpe.parkadventure.HelloApplication;
+import com.ufrpe.parkadventure.ParkAdventure;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -102,7 +102,7 @@ public class PagamentoController {
 
             if (escolhido == rbPix) {
                 FXMLLoader loader = new FXMLLoader(
-                        HelloApplication.class.getResource("view/pagamento-pix.fxml"));
+                        ParkAdventure.class.getResource("view/pagamento-pix.fxml"));
                 Scene scene = new Scene(loader.load());
                 PagamentoPixController pix = loader.getController();
                 pix.setValor(total);
@@ -110,7 +110,7 @@ public class PagamentoController {
 
             } else if (escolhido == rbCartao) {
                 FXMLLoader loader = new FXMLLoader(
-                        HelloApplication.class.getResource("view/pagamento-cartao.fxml"));
+                        ParkAdventure.class.getResource("view/pagamento-cartao.fxml"));
                 Scene scene = new Scene(loader.load());
                 PagamentoCartaoController cartao = loader.getController();
                 cartao.setValor(total);
@@ -118,7 +118,7 @@ public class PagamentoController {
 
             } else if (escolhido == rbBoleto) {
                 FXMLLoader loader = new FXMLLoader(
-                        HelloApplication.class.getResource("view/pagamento-boleto.fxml"));
+                        ParkAdventure.class.getResource("view/pagamento-boleto.fxml"));
                 Scene scene = new Scene(loader.load());
                 PagamentoBoletoController boleto = loader.getController();
                 boleto.setValor(total);

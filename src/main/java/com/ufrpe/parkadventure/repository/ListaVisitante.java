@@ -16,7 +16,7 @@ public class ListaVisitante {
         return instancia;
     }
 
-    public static boolean cadastrar(Visitante visitante) {
+    public boolean cadastrar(Visitante visitante) {
         if (visitante == null || visitante.getNome() == null || visitante.getNome().isBlank()
                 || buscar(visitante.getNome()) != null) {
             return false;
@@ -28,7 +28,7 @@ public class ListaVisitante {
         return new ArrayList<>(visitantes);
     }
 
-    public static Visitante buscar(String nome) {
+    public Visitante buscar(String nome) {
         if (nome == null) return null;
         for (Visitante visitante : visitantes) {
             if (visitante.getNome() != null && visitante.getNome().trim().equalsIgnoreCase(nome.trim())) {

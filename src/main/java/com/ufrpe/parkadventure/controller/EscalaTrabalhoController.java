@@ -6,7 +6,6 @@ import com.ufrpe.parkadventure.model.pessoa.Operador;
 import com.ufrpe.parkadventure.repository.EscalaTrabalho.Turno;
 import com.ufrpe.parkadventure.view.Aviso;
 import com.ufrpe.parkadventure.view.Formatos;
-import com.ufrpe.parkadventure.controller.ContextoController;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -72,7 +71,7 @@ public class EscalaTrabalhoController {
     }
 
     private List<Operador> operadoresDisponiveis() {
-        return ContextoController.atracoes.listarTodas().stream()
+        return ContextoController.ATRACOES.listarTodas().stream()
                 .map(Atracao::getOperador)
                 .filter(Objects::nonNull)
                 .distinct()
@@ -82,7 +81,7 @@ public class EscalaTrabalhoController {
     private void atualizarTabela() {
         List<LinhaEscala> linhas = new ArrayList<>();
         for (Turno turno : ContextoController.ESCALA.listarOrdenado()) {
-            String atracao = ContextoController.atracoes.buscarOperador(turno.operador());
+            String atracao = ContextoController.ATRACOES.buscarOperador(turno.operador());
             String observacao = ContextoController.FERIADOS.nomeDoFeriado(turno.data())
                     .map(nome -> "Feriado: " + nome)
                     .orElse("");

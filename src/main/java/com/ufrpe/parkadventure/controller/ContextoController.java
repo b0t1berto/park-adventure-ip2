@@ -7,7 +7,7 @@ import com.ufrpe.parkadventure.repository.EscalaTrabalho;
 
 public final class ContextoController {
     private ContextoController() { }
-    public static final ListaAtracao atracoes = ListaAtracao.getInstancia();
+    public static final ListaAtracao ATRACOES = ListaAtracao.getInstancia();
     public static final ListaVisitante VISITANTES = ListaVisitante.getInstancia();
     public static final ListaIngresso INGRESSOS = ListaIngresso.getInstancia();
     public static final EscalaTrabalho ESCALA = EscalaTrabalho.getInstancia();

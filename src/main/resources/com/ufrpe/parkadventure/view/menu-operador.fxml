@@ -2,11 +2,82 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.LoginOperadorController">
-   <children>
-      <Button fx:id="btVoltar" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onVoltar" text="Button" />
-      <Label fx:id="lblBoasVindas" layoutX="265.0" layoutY="31.0" text="Label" />
-   </children>
-</Pane>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.LoginOperadorController">
+   <top>
+      <StackPane prefHeight="68.0" prefWidth="600.0" style="-fx-background-color: #5ba6b9;" BorderPane.alignment="CENTER">
+         <effect>
+            <DropShadow offsetY="3.0" />
+         </effect>
+         <children>
+            <Pane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  
+                  <Label fx:id="lblBoasVindas" alignment="CENTER" layoutX="70.0" layoutY="24.0" prefWidth="420.0" text="Bem-Vindo ao Menu de Operador!" textFill="WHITE">
+                     <font>
+                        <Font name="DejaVu Sans Mono Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  
+                  <!-- MenuButton com a imagem do usuário -->
+                  <MenuButton layoutX="510.0" layoutY="8.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand;">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Meu Perfil" />
+                      <MenuItem mnemonicParsing="false" text="Configurações" />
+                      <MenuItem fx:id="menuVoltar" mnemonicParsing="false" onAction="#onVoltar" text="Sair" />
+                    </items>
+                     <graphic>
+                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <!-- URL provisória da imagem, será substituída posteriormente -->
+                              <Image url="@imagens/guest.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuButton>
+               </children>
+            </Pane>
+         </children>
+      </StackPane>
+   </top>
+   <center>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="250.0" style="-fx-background-color: #1693b3; -fx-background-radius: 6; -fx-cursor: hand;" text="Comprar Ingressos" textFill="WHITE">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="14.0" />
+               </font>
+               <effect>
+                  <DropShadow color="#aaaaaa" offsetY="2.0" />
+               </effect>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="250.0" style="-fx-background-color: #1693b3; -fx-background-radius: 6; -fx-cursor: hand;" text="Meu Histórico" textFill="WHITE">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="14.0" />
+               </font>
+               <effect>
+                  <DropShadow color="#aaaaaa" offsetY="2.0" />
+               </effect>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="250.0" style="-fx-background-color: #1693b3; -fx-background-radius: 6; -fx-cursor: hand;" text="Ver Atrações" textFill="WHITE">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="14.0" />
+               </font>
+               <effect>
+                  <DropShadow color="#aaaaaa" offsetY="2.0" />
+               </effect>
+            </Button>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>

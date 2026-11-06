@@ -141,7 +141,7 @@ public class CalendarioController {
         } else {
             texto.append("\nOperadores escalados:");
             for (Operador operador : escalados) {
-                String atracao = ContextoController.atracoes.buscarOperador(operador);
+                String atracao = ContextoController.ATRACOES.buscarOperador(operador);
                 texto.append("\n  • ").append(operador.getNome())
                         .append(atracao == null ? "" : " — " + atracao);
             }

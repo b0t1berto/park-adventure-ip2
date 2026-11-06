@@ -1,17 +1,17 @@
-package com.ufrpe.parkadventure;
+// package com.ufrpe.parkadventure;
 
-import com.ufrpe.parkadventure.controller.AcessoController;
-import com.ufrpe.parkadventure.controller.IngressoController;
-import com.ufrpe.parkadventure.model.atracao.Aquatico;
-import com.ufrpe.parkadventure.model.atracao.Infantil;
-import com.ufrpe.parkadventure.model.atracao.Radical;
-import com.ufrpe.parkadventure.model.pessoa.Operador;
-import com.ufrpe.parkadventure.model.pessoa.Responsavel;
-import com.ufrpe.parkadventure.model.pessoa.Visitante;
-import com.ufrpe.parkadventure.repository.ListaAtracao;
-import com.ufrpe.parkadventure.repository.ListaIngresso;
-import com.ufrpe.parkadventure.repository.ListaVisitante;
-import com.ufrpe.parkadventure.repository.Relatorio;
+// import com.ufrpe.parkadventure.controller.AcessoController;
+// import com.ufrpe.parkadventure.controller.IngressoController;
+// // import com.ufrpe.parkadventure.model.atracao.Aquatico;
+// // import com.ufrpe.parkadventure.model.atracao.Infantil;
+// // import com.ufrpe.parkadventure.model.atracao.Radical;
+// // import com.ufrpe.parkadventure.model.pessoa.Operador;
+// // import com.ufrpe.parkadventure.model.pessoa.Responsavel;
+// // import com.ufrpe.parkadventure.model.pessoa.Visitante;
+// import com.ufrpe.parkadventure.repository.ListaAtracao;
+// import com.ufrpe.parkadventure.repository.ListaIngresso;
+// import com.ufrpe.parkadventure.repository.ListaVisitante;
+// import com.ufrpe.parkadventure.repository.Relatorio;
 // import recom.ufrpe.parkadventure.view.AcessoView;
 // import com.ufrpe.parkadventure.view.AtracaoView;
 // import com.ufrpe.parkadventure.view.ConsoleView;
@@ -20,15 +20,15 @@ import com.ufrpe.parkadventure.repository.Relatorio;
 // import com.ufrpe.parkadventure.view.RelatorioView;
 // import com.ufrpe.parkadventure.view.VisitanteView;
 
-public class Main {
-    private static final ListaAtracao ATRACOES = new ListaAtracao();
-    private static final ListaVisitante VISITANTES = new ListaVisitante();
-    private static final ListaIngresso INGRESSOS = new ListaIngresso();
-    private static final IngressoController INGRESSO = new IngressoController(INGRESSOS, 100.0, 800.0, 20.0);
-    private static final AcessoController ACESSO = new AcessoController();
-    private static final Relatorio RELATORIO = new Relatorio();
+// public class Main {
+//     private static final ListaAtracao ATRACOES = new ListaAtracao();
+//     private static final ListaVisitante VISITANTES = new ListaVisitante();
+//     private static final ListaIngresso INGRESSOS = new ListaIngresso();
+//     private static final IngressoController INGRESSO = new IngressoController(INGRESSOS, 100.0, 800.0, 20.0);
+//     private static final AcessoController ACESSO = new AcessoController();
+//     private static final Relatorio RELATORIO = new Relatorio();
 
-    public static void main(String[] args) {
+//     public static void main(String[] args) {
         //     if (CONSOLE.lerSimNao("Carregar dados de exemplo (atrações e visitantes)? (s/n): ")) {
         //         carregarDadosDeExemplo();
         //     }
@@ -55,5 +55,5 @@ public class Main {
         //     VISITANTES.cadastrar(new Visitante("Carla Dias", "20/08/2000", null, 160));
         //     VISITANTES.cadastrar(new Visitante("Diego Alves", "07/07/1992", null, 175));
 
-    }
-}
+//     }
+// }

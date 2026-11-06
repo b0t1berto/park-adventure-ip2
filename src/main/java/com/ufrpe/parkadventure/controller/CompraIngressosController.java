@@ -1,6 +1,6 @@
 package com.ufrpe.parkadventure.controller;
 
-import com.ufrpe.parkadventure.HelloApplication;
+import com.ufrpe.parkadventure.ParkAdventure;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +15,7 @@ public class CompraIngressosController {
     @FXML
     private void onIngressoInstantaneo(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(
-                HelloApplication.class.getResource("view/redirecionamento-pagamento-ingresso.fxml"));
+                ParkAdventure.class.getResource("view/redirecionamento-pagamento-ingresso.fxml"));
         Scene scene = new Scene(loader.load());
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -25,7 +25,7 @@ public class CompraIngressosController {
     @FXML
     private void onIngressoProgramado(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(
-                HelloApplication.class.getResource("view/escolha-data.fxml"));
+                ParkAdventure.class.getResource("view/escolha-data.fxml"));
         Scene scene = new Scene(loader.load());
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
