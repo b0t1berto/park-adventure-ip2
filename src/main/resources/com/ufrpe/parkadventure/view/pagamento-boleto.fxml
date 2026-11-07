@@ -4,6 +4,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -25,6 +27,11 @@
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding>
          <children>
+            <ImageView fitHeight="64.0" pickOnBounds="true" preserveRatio="true" styleClass="logo-parque">
+               <image>
+                  <Image url="@imagens/logo.png" />
+               </image>
+            </ImageView>
             <GridPane hgap="12.0" maxWidth="1.7976931348623157E308" styleClass="grade-boleto" vgap="10.0">
               <columnConstraints>
                 <ColumnConstraints halignment="RIGHT" hgrow="NEVER" minWidth="110.0" prefWidth="120.0" />

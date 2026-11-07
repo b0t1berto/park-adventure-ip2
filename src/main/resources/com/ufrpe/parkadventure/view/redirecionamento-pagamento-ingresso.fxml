@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -20,4 +23,14 @@
          </children>
       </VBox>
    </center>
+   <top>
+      <ImageView fitHeight="64.0" pickOnBounds="true" preserveRatio="true" styleClass="logo-parque" BorderPane.alignment="CENTER">
+         <image>
+            <Image url="@imagens/logo.png" />
+         </image>
+         <BorderPane.margin>
+            <Insets top="20.0" />
+         </BorderPane.margin>
+      </ImageView>
+   </top>
 </BorderPane>

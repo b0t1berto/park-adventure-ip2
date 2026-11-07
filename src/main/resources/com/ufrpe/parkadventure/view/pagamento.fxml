@@ -12,6 +12,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -32,6 +33,14 @@
                   <Insets bottom="20.0" left="20.0" right="20.0" top="12.0" />
                </padding>
                <children>
+                  <ImageView fitHeight="64.0" pickOnBounds="true" preserveRatio="true" styleClass="logo-parque">
+                     <image>
+                        <Image url="@imagens/logo.png" />
+                     </image>
+                     <VBox.margin>
+                        <Insets left="300.0" />
+                     </VBox.margin>
+                  </ImageView>
                   <TitledPane animated="false" collapsible="false" styleClass="secao-parque" text="Resumo da compra">
                      <content>
                         <GridPane hgap="12.0" vgap="10.0">

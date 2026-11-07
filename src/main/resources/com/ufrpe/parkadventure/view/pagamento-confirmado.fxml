@@ -3,6 +3,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -25,6 +27,11 @@
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding>
          <children>
+            <ImageView fitHeight="64.0" pickOnBounds="true" preserveRatio="true" styleClass="logo-parque">
+               <image>
+                  <Image url="@imagens/logo.png" />
+               </image>
+            </ImageView>
             <Label text="✔" textFill="#2e7d32">
                <font>
                   <Font name="System Bold" size="64.0" />
