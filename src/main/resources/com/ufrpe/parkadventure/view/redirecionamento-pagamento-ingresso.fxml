@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="720.0" styleClass="tela-parque" stylesheets="@tema-parque.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.RedirecionamentoPagamentoController">
+<BorderPane prefHeight="400.0" prefWidth="720.0" styleClass="tela-parque" stylesheets="@tema-parque.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.RedirecionamentoPagamentoController">
    <center>
-      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="420.0" spacing="16.0" styleClass="cartao-redirecionamento" stylesheets="@tema-parque.css" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="420.0" spacing="16.0" styleClass="cartao-redirecionamento" stylesheets="@tema-parque.css" BorderPane.alignment="TOP_CENTER">
          <children>
             <Label fx:id="lblMensagem" styleClass="titulo-redirecionamento" text="Quase lá!">
                <font>
@@ -29,7 +29,7 @@
             <Image url="@imagens/logo.png" />
          </image>
          <BorderPane.margin>
-            <Insets top="20.0" />
+            <Insets bottom="20.0" top="20.0" />
          </BorderPane.margin>
       </ImageView>
    </top>
