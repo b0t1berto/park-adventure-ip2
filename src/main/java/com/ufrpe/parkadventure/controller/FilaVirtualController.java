@@ -105,7 +105,7 @@ public class FilaVirtualController {
     }
 
     @FXML
-    private void onVoltar(ActionEvent event) {
+    private void onVoltarParaIngressos(ActionEvent event) {
         try {
             ParkAdventure.voltar();
         } catch (Exception e) {
