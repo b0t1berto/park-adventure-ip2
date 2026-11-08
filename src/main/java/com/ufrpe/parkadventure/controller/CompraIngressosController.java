@@ -3,31 +3,36 @@ package com.ufrpe.parkadventure.controller;
 import com.ufrpe.parkadventure.ParkAdventure;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class CompraIngressosController {
 
     @FXML
+    private void onIngressoProgramado(ActionEvent event) throws IOException {
+        try {
+            ParkAdventure.proximaCena("view/escolha-data.fxml");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    @FXML
     private void onIngressoInstantaneo(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(
-                ParkAdventure.class.getResource("view/redirecionamento-pagamento-ingresso.fxml"));
-        Scene scene = new Scene(loader.load());
-
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(scene);
+        try {
+            ParkAdventure.proximaCena("view/redirecionamento-pagamento-ingresso.fxml");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    @FXML
-    private void onIngressoProgramado(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(
-                ParkAdventure.class.getResource("view/escolha-data.fxml"));
-        Scene scene = new Scene(loader.load());
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(scene);
+
+    @FXML 
+    void onVoltar(ActionEvent event) {
+        try {
+            ParkAdventure.voltar();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

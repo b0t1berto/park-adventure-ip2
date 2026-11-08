@@ -3,8 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.effect.Bloom?>
-<?import javafx.scene.effect.BoxBlur?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.effect.Light.Distant?>
 <?import javafx.scene.effect.Lighting?>
@@ -18,26 +16,68 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" styleClass="tela-parque" stylesheets="@tema-parque.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.MenuController">
-   <top>
-      <StackPane prefHeight="130.0" BorderPane.alignment="CENTER">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" styleClass="tela-parque" stylesheets="@tema-parque.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.TelaMenuController">
+   <center>
+      <!-- VBox para alinhar textos e botões no centro -->
+      <VBox alignment="CENTER" spacing="8.0" styleClass="tela-parque" BorderPane.alignment="CENTER">
          <children>
-            <!-- Imagem de Fundo do Topo -->
-            <ImageView fitHeight="130.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="false">
+            <Label fx:id="lblReservar" maxWidth="300.0" style="-fx-border-radius: 6; -fx-padding: 8; -fx-background-color: #ffffff;" styleClass="cartao-pagamento" text="Que tal reservar o acesso a uma Experiência Inédita?" textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font name="DejaVu Sans Mono Bold" size="13.0" />
+               </font>
+            </Label>
+            <Button fx:id="bntComeceAqui" mnemonicParsing="false" onAction="#onCriarConta" prefHeight="39.0" prefWidth="187.0" style="-fx-background-color: #5ba6b9;" styleClass="botao-primario" text="Comece por Aqui" textFill="WHITE">
+               <effect>
+                  <DropShadow offsetY="5.0">
+                     <color>
+                        <Color red="0.5529412031173706" green="0.5529412031173706" blue="0.5529412031173706" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Button>
+            <Label fx:id="lblDesejaReservar" prefHeight="45.0" prefWidth="223.0" styleClass="cartao-pagamento" text="Deseja acessar sua reserva?">
+               <font>
+                  <Font name="DejaVu Sans Mono Bold" size="13.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="15.0" />
+               </VBox.margin>
+            </Label>
+            <Button fx:id="bntAcesseAqui" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onFazerLogin" prefHeight="42.0" prefWidth="156.0" style="-fx-background-color: #5ba6b9;" styleClass="botao-primario" text="Acesse Aqui!" textFill="WHITE">
+               <effect>
+                  <DropShadow offsetY="3.0">
+                     <color>
+                        <Color red="0.5529412031173706" green="0.5529412031173706" blue="0.5529412031173706" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Button>
+         </children>
+      </VBox>
+   </center>
+   <top>
+      <StackPane prefHeight="101.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="134.0" fitWidth="599.0" pickOnBounds="true">
                <image>
                   <Image url="@imagens/menu-fundo.jpeg" />
                </image>
                <effect>
-                  <Bloom threshold="0.85">
-                     <input>
-                        <BoxBlur height="2.0" width="4.0" />
-                     </input>
-                  </Bloom>
+                  <Lighting diffuseConstant="1.17" specularConstant="0.97" specularExponent="20.38">
+                     <bumpInput>
+                        <Shadow>
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </Shadow>
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
                </effect>
             </ImageView>
-
-            <!-- Conteúdo sobreposto (Logótipo e Título) -->
-            <HBox alignment="CENTER" spacing="15.0">
+            <HBox alignment="CENTER" prefHeight="125.0" prefWidth="600.0" spacing="15.0" style="-fx-background-color: transparent; -fx-padding: 8;">
                <children>
                   <ImageView fx:id="imgLogo" fitHeight="117.0" fitWidth="118.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -83,42 +123,9 @@
                </children>
             </HBox>
          </children>
+         <effect>
+            <DropShadow />
+         </effect>
       </StackPane>
    </top>
-   <center>
-      <!-- VBox para alinhar textos e botões no centro -->
-      <VBox alignment="CENTER" spacing="10.0" styleClass="tela-parque" BorderPane.alignment="CENTER">
-         <children>
-            <Label fx:id="lblReservar" maxWidth="300.0" style="-fx-border-radius: 6; -fx-padding: 8; -fx-background-color: #ffffff;" styleClass="cartao-pagamento" text="Que tal reservar o acesso a uma Experiência Inédita?" textAlignment="CENTER" wrapText="true">
-               <font>
-                  <Font name="DejaVu Sans Mono Bold" size="13.0" />
-               </font>
-            </Label>
-            <Button fx:id="bntComeceAqui" mnemonicParsing="false" onAction="#onCriarConta" prefHeight="39.0" prefWidth="187.0" style="-fx-background-color: #5ba6b9;" styleClass="botao-primario" text="Comece por Aqui" textFill="WHITE">
-               <effect>
-                  <DropShadow offsetY="5.0">
-                     <color>
-                        <Color red="0.5529412031173706" green="0.5529412031173706" blue="0.5529412031173706" />
-                     </color>
-                  </DropShadow>
-               </effect></Button>
-            <Label fx:id="lblDesejaReservar" prefHeight="45.0" prefWidth="223.0" styleClass="cartao-pagamento" text="Deseja acessar sua reserva?">
-               <font>
-                  <Font name="DejaVu Sans Mono Bold" size="13.0" />
-               </font>
-               <VBox.margin>
-                  <Insets top="15.0" />
-               </VBox.margin>
-            </Label>
-            <Button fx:id="bntAcesseAqui" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onFazerLogin" prefHeight="42.0" prefWidth="156.0" style="-fx-background-color: #5ba6b9;" styleClass="botao-primario" text="Acesse Aqui!" textFill="WHITE">
-               <effect>
-                  <DropShadow offsetY="3.0">
-                     <color>
-                        <Color red="0.5529412031173706" green="0.5529412031173706" blue="0.5529412031173706" />
-                     </color>
-                  </DropShadow>
-               </effect></Button>
-         </children>
-      </VBox>
-   </center>
 </BorderPane>

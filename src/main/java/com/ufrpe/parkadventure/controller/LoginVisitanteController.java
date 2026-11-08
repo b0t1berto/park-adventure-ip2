@@ -33,7 +33,7 @@ public class LoginVisitanteController {
     }
 
     // @FXML 
-    // void onComprarIngresso(ActionEvent event) {
+    // void onVerificarAtracao(ActionEvent event) {
     //     try {
     //         ParkAdventure.proximaCena("view/compra-ingressos.fxml");
     //     } catch (Exception e) {

@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.effect.Light.Distant?>
@@ -137,13 +136,13 @@
                </effect>
             </Label>
             <TextField fx:id="txtNome" layoutX="-20.0" layoutY="87.0" />
-            <PasswordField fx:id="txtCpf" layoutX="-20.0" layoutY="145.0" />
             <TextField fx:id="txtCargo" layoutX="-20.0" layoutY="205.0" />
             <Button fx:id="bntConfirmar" layoutX="11.0" layoutY="246.0" mnemonicParsing="false" onAction="#onConfirmar" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 4;" text="Confirmar" textFill="WHITE">
                <font>
                   <Font name="DejaVu Sans Bold" size="14.0" />
                </font>
             </Button>
+            <TextField fx:id="TextCpf" layoutX="-20.0" layoutY="147.0" />
          </children>
       </Pane>
    </center>

@@ -13,24 +13,24 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.LoginAdmController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="tela-parque" stylesheets="@tema-parque.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.LoginAdmController">
    <top>
       <StackPane prefHeight="68.0" prefWidth="600.0" style="-fx-background-color: #5ba6b9;" BorderPane.alignment="CENTER">
          <effect>
             <DropShadow offsetY="3.0" />
          </effect>
          <children>
-            <Pane prefHeight="200.0" prefWidth="200.0">
+            <Pane prefHeight="200.0" prefWidth="200.0" styleClass="cabecalho-pagamento">
                <children>
                   
-                  <Label fx:id="lblBoasVindas" alignment="CENTER" layoutX="68.0" layoutY="24.0" prefHeight="20.0" prefWidth="431.0" text="Bem-Vindo ao Menu de Administrador, Leandro!" textFill="WHITE">
+                  <Label fx:id="lblBoasVindas" alignment="CENTER" layoutX="5.0" layoutY="11.0" prefHeight="49.0" prefWidth="515.0" text="Bem-Vindo ao Menu de Administrador!" textFill="WHITE" wrapText="true">
                      <font>
                         <Font name="DejaVu Sans Mono Bold" size="16.0" />
                      </font>
                   </Label>
                   
                   <!-- MenuButton com a imagem do usuário -->
-                  <MenuButton layoutX="510.0" layoutY="8.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand;">
+                  <MenuButton layoutX="495.0" layoutY="8.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="68.0" style="-fx-background-color: transparent; -fx-cursor: hand;">
                     <items>
                       <MenuItem mnemonicParsing="false" text="Meu Perfil" />
                       <MenuItem mnemonicParsing="false" text="Configurações" />
@@ -53,7 +53,7 @@
    <center>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="250.0" style="-fx-background-color: #1693b3; -fx-background-radius: 6; -fx-cursor: hand;" text="Comprar Ingressos" textFill="WHITE">
+            <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="250.0" styleClass="botao-primario" text="Relatório" textFill="WHITE">
                <font>
                   <Font name="DejaVu Sans Bold" size="14.0" />
                </font>
@@ -61,7 +61,7 @@
                   <DropShadow color="#aaaaaa" offsetY="2.0" />
                </effect>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="250.0" style="-fx-background-color: #1693b3; -fx-background-radius: 6; -fx-cursor: hand;" text="Ver Atrações" textFill="WHITE">
+            <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="250.0" styleClass="botao-primario" text="Cadastro de Atrações" textFill="WHITE">
                <font>
                   <Font name="DejaVu Sans Bold" size="14.0" />
                </font>
@@ -69,7 +69,7 @@
                   <DropShadow color="#aaaaaa" offsetY="2.0" />
                </effect>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="250.0" style="-fx-background-color: #1693b3; -fx-background-radius: 6; -fx-cursor: hand;" text="Meu Histórico" textFill="WHITE">
+            <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="250.0" styleClass="botao-primario" text="Funcionários Cadastrados" textFill="WHITE">
                <font>
                   <Font name="DejaVu Sans Bold" size="14.0" />
                </font>

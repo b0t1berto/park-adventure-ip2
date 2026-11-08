@@ -3,6 +3,7 @@ package com.ufrpe.parkadventure.controller;
 import com.ufrpe.parkadventure.model.ingresso.Ingresso;
 import com.ufrpe.parkadventure.model.pessoa.Visitante;
 import com.ufrpe.parkadventure.view.Formatos;
+import com.ufrpe.parkadventure.ParkAdventure;
 import com.ufrpe.parkadventure.controller.controles.Navegador;
 import com.ufrpe.parkadventure.controller.controles.Navegador.Tela;
 
@@ -71,5 +72,14 @@ public class IngressosCompradosController {
     @FXML
     private void onComprarIngresso() {
         Navegador.ir(Tela.INGRESSO);
+    }
+
+    @FXML 
+    private void onVoltar() {
+        try {
+            ParkAdventure.voltar();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

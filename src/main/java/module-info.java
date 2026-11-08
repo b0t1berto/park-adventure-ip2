@@ -1,4 +1,4 @@
-module com.exemplo.projeto {
+module com.ufrpe.parkadventure {
     requires transitive javafx.controls;
     requires transitive javafx.graphics;
     requires javafx.fxml;

@@ -1,10 +1,7 @@
 package com.ufrpe.parkadventure.controller;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -54,12 +51,7 @@ public class EscolhaDataController {
             return;
         }
         try {
-            FXMLLoader loader = new FXMLLoader(ParkAdventure.class
-                    .getResource("view/redirecionamento-pagamento-ingresso.fxml"));
-            Scene scene = new Scene(loader.load());
-            RedirecionamentoPagamentoController redir = loader.getController();
-            redir.setDataVisita(data);
-            ((Stage) btnContinuar.getScene().getWindow()).setScene(scene);
+            ParkAdventure.proximaCena("view/redirecionamento-pagamento-ingresso.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -68,10 +60,8 @@ public class EscolhaDataController {
     @FXML
     private void aoVoltar() {
         try {
-            FXMLLoader loader = new FXMLLoader(
-                    ParkAdventure.class.getResource("view/compra-ingressos.fxml"));
-            ((Stage) btnVoltar.getScene().getWindow()).setScene(new Scene(loader.load()));
-        } catch (IOException e) {
+            ParkAdventure.voltar();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
