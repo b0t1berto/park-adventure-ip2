@@ -1,6 +1,9 @@
-V	Humberto	01/01/2000	111.111.111-11	0			
-V	Edivan	01/01/2000	222.222.222-22	0			
-V	João	01/01/2000	12332145678	0			
-V	Leandro	01/01/2000	123	0			
-V	Cauê Marquéz	01/01/2000	123	0			
-V	Edivan José	01/01/2000	123	0			
+V	Humberto	01/01/2000	111.111.111-11	0						
+V	Edivan	01/01/2000	222.222.222-22	0						
+V	João	01/01/2000	12332145678	0						
+V	Leandro	01/01/2000	123	0						
+V	Cauê Marquéz	01/01/2000	123	0						
+V	Edivan José	01/01/2000	123	0						
+V	Mugni	01/01/2000	1234567	0						
+V	Carlos Souza da Silva	03/11/2006	123.456.789-00	172					carlos@gmail.com	(81) 98901-8997
+I	Carlos Souza da Silva	DIARIA	08/11/2026	19/11/2026	120.0	Pix

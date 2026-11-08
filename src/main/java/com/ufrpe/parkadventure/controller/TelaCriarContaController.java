@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Alert;
+import com.ufrpe.parkadventure.repository.Persistencia;
 
 public class TelaCriarContaController {
 
@@ -32,8 +33,6 @@ public class TelaCriarContaController {
 
     @FXML
     public void onConfirmar (ActionEvent event) {
-    //     String nome = txtFieldNome.getText();
-    //     String cpf = txtFieldCpf.getText();
 
         if (txtNome.getText().isBlank()|| txtCpf.getText().isBlank()) {
             Alert alert = new Alert(AlertType.ERROR); 
@@ -51,7 +50,7 @@ public class TelaCriarContaController {
             alert.setTitle("CONFIRMAÇÃO");
             alert.setHeaderText("Confirme os dados da sua conta");
             alert.setContentText("Seu nome é: " + this.txtNome.getText() + "\nSeu CPF é: " + this.txtCpf.getText() + " ?");
-            alert.showAndWait(); //Apenas quando apertar OK para sair da tela de avis
+            alert.showAndWait();
 
             if (txtNome.getText().equalsIgnoreCase("leandro")) {
                 Visitante leandro = new Visitante(txtNome.getText(), "01/01/2000", txtCpf.getText(), 0);
@@ -64,6 +63,7 @@ public class TelaCriarContaController {
                 Operador operador = new Operador(txtNome.getText(), "01/01/2000", txtCpf.getText(), txtCargo.getText());
                 RepositorioAtracaoController.cadastrarOperador(txtCargo.getText(), operador);
             }
+            Persistencia.salvar();
             txtNome.setText("");
             txtCpf.setText("");
             txtCargo.setText("");

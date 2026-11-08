@@ -55,6 +55,8 @@ public class FilaVirtualController {
         lblVisitante.setText("Filas virtuais de " + visitante.getNome());
         carregar();
 
+        lblDestaque.visibleProperty().bind(lblDestaque.textProperty().isNotEmpty());
+        lblDestaque.managedProperty().bind(lblDestaque.visibleProperty());
         atualizador = new Timeline(new KeyFrame(Duration.seconds(5), evento -> carregar()));
         atualizador.setCycleCount(Timeline.INDEFINITE);
         atualizador.play();
@@ -105,7 +107,7 @@ public class FilaVirtualController {
     }
 
     @FXML
-    private void onVoltar(ActionEvent event) {
+    private void onVoltarParaIngressos(ActionEvent event) {
         try {
             ParkAdventure.voltar();
         } catch (Exception e) {

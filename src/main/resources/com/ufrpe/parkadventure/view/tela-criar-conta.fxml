@@ -142,7 +142,7 @@
                   <Font name="DejaVu Sans Bold" size="14.0" />
                </font>
             </Button>
-            <TextField fx:id="TextCpf" layoutX="-20.0" layoutY="147.0" />
+            <TextField fx:id="txtCpf" layoutX="-20.0" layoutY="147.0" />
          </children>
       </Pane>
    </center>

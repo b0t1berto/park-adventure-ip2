@@ -96,6 +96,14 @@ public class PagamentoController {
             return;
         }
 
+        boolean menor = paneResponsavel.isVisible();
+        PedidoAtual.definirComprador(
+                txtNome.getText(), txtCpf.getText(), dpNascimento.getValue(), spAltura.getValue(),
+                txtEmail.getText(), txtTelefone.getText(),
+                menor ? txtNomeResponsavel.getText() : null,
+                menor ? txtCpfResponsavel.getText() : null,
+                menor ? txtContatoEmergencia.getText() : null);
+
         try {
             Stage stage = (Stage) btnPagar.getScene().getWindow();
             Toggle escolhido = grupoPagamento.getSelectedToggle();

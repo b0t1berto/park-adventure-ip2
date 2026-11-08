@@ -31,6 +31,7 @@ public class PagamentoConfirmadoController {
         lblForma.setText(forma);
         lblValor.setText(String.format("R$ %.2f", valor));
         lblSituacao.setText(situacao);
+        PedidoAtual.concluir(forma, valor);
     }
 
     @FXML

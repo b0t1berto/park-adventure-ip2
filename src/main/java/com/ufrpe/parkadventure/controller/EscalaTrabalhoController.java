@@ -46,6 +46,9 @@ public class EscalaTrabalhoController {
 
         tabela.setPlaceholder(new Label("Nenhum operador escalado ainda."));
 
+        lblProximoFeriado.visibleProperty().bind(lblProximoFeriado.textProperty().isNotEmpty());
+        lblProximoFeriado.managedProperty().bind(lblProximoFeriado.visibleProperty());
+
         cbOperador.setItems(FXCollections.observableArrayList(operadoresDisponiveis()));
         cbOperador.setConverter(new StringConverter<>() {
             @Override public String toString(Operador operador) {
@@ -55,6 +58,8 @@ public class EscalaTrabalhoController {
                 return null;
             }
         });
+
+        tabela.setPlaceholder(new Label("Nenhuma escala cadastrada."));
 
         dpData.setValue(LocalDate.now());
         dpData.setDayCellFactory(seletor -> new DateCell() {
