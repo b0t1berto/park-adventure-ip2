@@ -5,24 +5,17 @@ import com.ufrpe.parkadventure.controller.ResultadoAcesso;
 import com.ufrpe.parkadventure.model.atracao.Atracao;
 import com.ufrpe.parkadventure.model.ingresso.Ingresso;
 import com.ufrpe.parkadventure.model.pessoa.Visitante;
-import com.ufrpe.parkadventure.repository.ListaAtracao;
-import com.ufrpe.parkadventure.repository.ListaIngresso;
-import com.ufrpe.parkadventure.repository.ListaVisitante;
+import com.ufrpe.parkadventure.controller.RepositorioAtracaoController;
+import com.ufrpe.parkadventure.controller.RepositorioIngressoController;
+import com.ufrpe.parkadventure.controller.RepositorioVisitanteController;
 
 // Menu de acesso às atrações e fila virtual
 public class AcessoView {
     private final ConsoleView console;
-    private final ListaAtracao atracoes;
-    private final ListaVisitante visitantes;
-    private final ListaIngresso ingressos;
     private final AcessoController controleAcesso;
 
-    public AcessoView(ConsoleView console, ListaAtracao atracoes, ListaVisitante visitantes,
-                      ListaIngresso ingressos, AcessoController controleAcesso) {
+    public AcessoView(ConsoleView console, AcessoController controleAcesso) {
         this.console = console;
-        this.atracoes = atracoes;
-        this.visitantes = visitantes;
-        this.ingressos = ingressos;
         this.controleAcesso = controleAcesso;
     }
 
@@ -71,29 +64,29 @@ public class AcessoView {
     }
 
     private void verOcupacao() {
-        if (atracoes.listarTodas().isEmpty()) {
+        if (RepositorioAtracaoController.listarTodas().isEmpty()) {
             console.exibir("Nenhuma atração cadastrada.");
             return;
         }
-        for (Atracao a : atracoes.listarTodas()) {
+        for (Atracao a : RepositorioAtracaoController.listarTodas()) {
             exibirStatus(a);
         }
     }
 
     private Visitante lerVisitante() {
-        Visitante visitante = visitantes.buscar(console.lerTexto("Nome do visitante: "));
+        Visitante visitante = RepositorioVisitanteController.buscarVisitante(console.lerTexto("Nome do visitante: "));
         if (visitante == null) console.exibir("Visitante não encontrado.");
         return visitante;
     }
 
     private Atracao lerAtracao() {
-        Atracao atracao = atracoes.buscar(console.lerTexto("Nome da atração: "));
+        Atracao atracao = RepositorioAtracaoController.buscar(console.lerTexto("Nome da atração: "));
         if (atracao == null) console.exibir("Atração não encontrada.");
         return atracao;
     }
 
     private Ingresso ultimoIngresso(Visitante visitante) {
-        Ingresso ingresso = ingressos.buscarUltimo(visitante);
+        Ingresso ingresso = RepositorioIngressoController.buscarUltimo(visitante.getNome());
         if (ingresso == null) console.exibir(visitante.getNome() + " ainda não comprou ingresso.");
         return ingresso;
     }

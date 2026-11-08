@@ -2,17 +2,16 @@ package com.ufrpe.parkadventure.repository;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import com.ufrpe.parkadventure.model.ingresso.Ingresso;
-import com.ufrpe.parkadventure.model.pessoa.Visitante;
 
-public class ListaIngresso {
-    private static ListaIngresso instancia;
+public class RepositorioIngresso {
+    private static RepositorioIngresso instancia;
     private static final ArrayList<Ingresso> ingressos = new ArrayList<>();
+    
+    private RepositorioIngresso() {}
 
-    public ListaIngresso() {}
-
-    public static synchronized ListaIngresso getInstancia() {
+    public static synchronized RepositorioIngresso getInstancia() {
         if (instancia == null) {
-            instancia = new ListaIngresso();
+            instancia = new RepositorioIngresso();
         }
         return instancia;
     }
@@ -24,14 +23,10 @@ public class ListaIngresso {
         return ingressos.add(ingresso);
     }
 
-    public ArrayList<Ingresso> listarTodos() {
-        return ingressos;
-    }
-
-    public ArrayList<Ingresso> listarPorVisitante(Visitante visitante) {
+    public ArrayList<Ingresso> listarPorVisitante(String visitante) {
         ArrayList<Ingresso> resultado = new ArrayList<>();
         for (Ingresso ingresso : ingressos) {
-            if (ingresso.getVisitante() == visitante) {
+            if (ingresso.getVisitante().getNome() == visitante) {
                 resultado.add(ingresso);
             }
         }
@@ -39,10 +34,10 @@ public class ListaIngresso {
     }
 
     // Ingresso mais recente do visitante (null se ele nunca comprou)
-    public Ingresso buscarUltimo(Visitante visitante) {
+    public Ingresso buscarUltimo(String visitante) {
         Ingresso ultimo = null;
         for (Ingresso ingresso : ingressos) {
-            if (ingresso.getVisitante() == visitante) {
+            if (ingresso.getVisitante().getNome() == visitante) {
                 ultimo = ingresso;
             }
         }
@@ -62,5 +57,9 @@ public class ListaIngresso {
 
     public boolean remover(Ingresso ingresso) {
         return ingressos.remove(ingresso);
+    }
+
+    public ArrayList<Ingresso> listarTodos() {
+        return ingressos;
     }
 }

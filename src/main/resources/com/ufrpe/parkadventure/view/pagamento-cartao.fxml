@@ -6,8 +6,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -15,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefWidth="600.0" styleClass="tela-parque" stylesheets="@tema-parque.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.PagamentoCartaoController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" styleClass="tela-parque" stylesheets="@tema-parque.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.PagamentoCartaoController">
    <top>
       <Label alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="cabecalho-pagamento" text="Pagamento com cartão de crédito" BorderPane.alignment="CENTER">
          <padding>
@@ -24,16 +22,11 @@
       </Label>
    </top>
    <center>
-      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="720.0" prefWidth="520.0" spacing="10.0" styleClass="cartao-pagamento" BorderPane.alignment="TOP_CENTER">
+      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="520.0" spacing="10.0" styleClass="cartao-pagamento" BorderPane.alignment="CENTER">
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding>
          <children>
-            <ImageView fitHeight="64.0" pickOnBounds="true" preserveRatio="true" styleClass="logo-parque">
-               <image>
-                  <Image url="@imagens/logo.png" />
-               </image>
-            </ImageView>
             <Label styleClass="subtitulo-parque" text="Valor a pagar" />
             <Label fx:id="lblValor" styleClass="valor-pagamento" text="R$ 0.00" />
             <GridPane hgap="12.0" maxWidth="1.7976931348623157E308" styleClass="grade-cartao" vgap="10.0">

@@ -37,4 +37,11 @@ public class Pessoa {
 
     public String getCpf() { return cpf; }
     public void setCpf(String cpf) { this.cpf = cpf; }
+
+    @Override
+    public String toString() {
+        return "Pessoa [nome=" + nome + ", cpf=" + cpf + ", getIdade()=" + getIdade() + "]";
+    }
+
+    
 }

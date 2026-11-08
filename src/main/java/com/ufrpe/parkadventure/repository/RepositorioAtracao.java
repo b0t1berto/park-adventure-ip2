@@ -4,15 +4,15 @@ import com.ufrpe.parkadventure.model.atracao.Atracao;
 import com.ufrpe.parkadventure.model.pessoa.Operador;
 import java.util.ArrayList;
 
-public class ListaAtracao {
-    public static ListaAtracao instancia;
+public class RepositorioAtracao{
+    public static RepositorioAtracao instancia;
     public static final ArrayList<Atracao> atracoes = new ArrayList<>();
 
-    public ListaAtracao() {}
+    public RepositorioAtracao() {}
 
-    public static synchronized ListaAtracao getInstancia() {
+    public static synchronized RepositorioAtracao getInstancia() {
         if (instancia == null) {
-            instancia = new ListaAtracao();
+            instancia = new RepositorioAtracao();
         }
         return instancia;
     }
@@ -32,10 +32,6 @@ public class ListaAtracao {
         }
         atracao.setOperador(operador);
         return true;
-    }
-
-    public ArrayList<Atracao> listarTodas() {
-        return new ArrayList<>(atracoes);
     }
 
     public Atracao buscar(String nome) {
@@ -74,5 +70,9 @@ public class ListaAtracao {
     public boolean remover(String nome) {
         Atracao atracao = buscar(nome);
         return atracao != null && atracoes.remove(atracao);
+    }
+
+    public ArrayList<Atracao> getAtracoes() {
+        return new ArrayList<>(atracoes);
     }
 }

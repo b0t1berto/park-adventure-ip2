@@ -56,13 +56,13 @@ public class TelaCriarContaController {
             if (txtNome.getText().equalsIgnoreCase("leandro")) {
                 Visitante leandro = new Visitante(txtNome.getText(), "01/01/2000", txtCpf.getText(), 0);
                 System.out.println("funcionou");
-                ContextoController.VISITANTES.cadastrar(leandro);
+                RepositorioVisitanteController.cadastrarVisitante(leandro);
             } else if (txtCargo.getText().isBlank()) {
                 Visitante visitante = new Visitante(txtNome.getText(), "01/01/2000", txtCpf.getText(), 0);
-                ContextoController.VISITANTES.cadastrar(visitante);
+                RepositorioVisitanteController.cadastrarVisitante(visitante);
             } else {
                 Operador operador = new Operador(txtNome.getText(), "01/01/2000", txtCpf.getText(), txtCargo.getText());
-                ContextoController.ATRACOES.cadastrarOperador(txtCargo.getText(), operador);
+                RepositorioAtracaoController.cadastrarOperador(txtCargo.getText(), operador);
             }
             txtNome.setText("");
             txtCpf.setText("");

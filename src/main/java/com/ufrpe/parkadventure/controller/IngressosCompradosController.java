@@ -43,7 +43,7 @@ public class IngressosCompradosController {
         }
         lblVisitante.setText("Ingressos de " + visitante.getNome());
 
-        List<Ingresso> ingressos = new ArrayList<>(ContextoController.INGRESSOS.listarPorVisitante(visitante));
+        List<Ingresso> ingressos = new ArrayList<>(RepositorioIngressoController.listarPorVisitante(visitante.getNome()));
         Collections.reverse(ingressos);
 
         LocalDate hoje = LocalDate.now();

@@ -3,24 +3,21 @@ package com.ufrpe.parkadventure.view;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.ufrpe.parkadventure.controller.IngressoController;
+import com.ufrpe.parkadventure.controller.ContextoController;
+import com.ufrpe.parkadventure.controller.RepositorioIngressoController;
 import com.ufrpe.parkadventure.model.ingresso.Ingresso;
 import com.ufrpe.parkadventure.model.ingresso.TipoIngresso;
 import com.ufrpe.parkadventure.model.pessoa.Visitante;
-import com.ufrpe.parkadventure.repository.ListaIngresso;
-import com.ufrpe.parkadventure.repository.ListaVisitante;
+import com.ufrpe.parkadventure.repository.RepositorioIngresso;
+import com.ufrpe.parkadventure.repository.RepositorioVisitante;
 
 // Menu de compra de ingressos e exibição dos ingressos
 public class IngressoView {
     private final ConsoleView console;
-    private final ListaIngresso ingressos;
-    private final IngressoController cadastro;
-    private final ListaVisitante visitantes;
+    private final RepositorioVisitante visitantes;
 
-    public IngressoView(ConsoleView console, ListaIngresso ingressos, IngressoController cadastro, ListaVisitante visitantes) {
+    public IngressoView(ConsoleView console, RepositorioIngresso ingresso, RepositorioVisitante visitantes) {
         this.console = console;
-        this.ingressos = ingressos;
-        this.cadastro = cadastro;
         this.visitantes = visitantes;
     }
 
@@ -35,7 +32,7 @@ public class IngressoView {
             console.exibir("0. Voltar");
             switch (console.lerInteiro("Escolha: ")) {
                 case 1 -> comprar();
-                case 2 -> listar(ingressos.listarTodos());
+                case 2 -> listar(RepositorioIngressoController.listarTodos());
                 case 3 -> listarPorVisitante();
                 case 4 -> quantidadePorData();
                 case 0 -> voltar = true;
@@ -62,8 +59,8 @@ public class IngressoView {
         }
         LocalDate data = console.lerDataOpcional("Data da compra (dd/MM/aaaa)", LocalDate.now());
         // REQ09: aviso quando a data escolhida é feriado (só a diária tem acréscimo)
-        boolean feriado = tipo == TipoIngresso.DIARIA && cadastro.ehFeriado(data);
-        exibirIngresso(cadastro.emitirIngresso(visitante, tipo, data, feriado), feriado);
+        boolean feriado = tipo == TipoIngresso.DIARIA && ContextoController.CONTROLE_INGRESSO.ehFeriado(data);
+        exibirIngresso(ContextoController.CONTROLE_INGRESSO.emitirIngresso(visitante, tipo, data, feriado), feriado);
     }
 
     private void listarPorVisitante() {
@@ -72,12 +69,12 @@ public class IngressoView {
             console.exibir("Visitante não encontrado.");
             return;
         }
-        listar(ingressos.listarPorVisitante(visitante));
+        listar(RepositorioIngressoController.listarPorVisitante(visitante.getNome()));
     }
 
     private void quantidadePorData() {
         LocalDate data = console.lerDataOpcional("Data (dd/MM/aaaa)", LocalDate.now());
-        exibirQuantidade(data, ingressos.consultarQuantidadePorData(data));
+        exibirQuantidade(data, RepositorioIngressoController.consultarQuantidadePorData(data));
     }
 
     private void listar(List<Ingresso> lista) {

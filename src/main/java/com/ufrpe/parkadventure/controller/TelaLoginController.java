@@ -56,7 +56,7 @@ public class TelaLoginController {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            } else if (ContextoController.VISITANTES.buscar(nome) == null) {
+            } else if (RepositorioVisitanteController.buscarVisitante(nome) == null) {
                 try {                
                     Alert alert = new Alert(AlertType.ERROR);
                     alert.setTitle("AVISO");

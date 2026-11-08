@@ -4,8 +4,6 @@ import com.ufrpe.parkadventure.model.ingresso.Ingresso;
 import com.ufrpe.parkadventure.model.ingresso.TipoIngresso;
 import com.ufrpe.parkadventure.model.pessoa.Responsavel;
 import com.ufrpe.parkadventure.model.pessoa.Visitante;
-import com.ufrpe.parkadventure.repository.ListaIngresso;
-import com.ufrpe.parkadventure.repository.ListaVisitante;
 import com.ufrpe.parkadventure.repository.Persistencia;
 
 import java.time.LocalDate;
@@ -63,10 +61,10 @@ public final class PedidoAtual {
             return null;
         }
 
-        Visitante visitante = ListaVisitante.buscar(nome);
+        Visitante visitante = RepositorioVisitanteController.buscarVisitante(nome);
         if (visitante == null) {
             visitante = new Visitante(nome, nascimento.format(DATA), cpf, altura);
-            ListaVisitante.cadastrar(visitante);
+            RepositorioVisitanteController.cadastrarVisitante(visitante);
         } else {
             visitante.setCpf(cpf);
             visitante.setDataNascimento(nascimento);
@@ -86,7 +84,7 @@ public final class PedidoAtual {
         LocalDate validade = dataVisita.isBefore(hoje) ? hoje : dataVisita;
         Ingresso ingresso = new Ingresso(visitante, TipoIngresso.DIARIA, hoje, validade, valor);
         ingresso.setFormaPagamento(formaPagamento);
-        ListaIngresso.getInstancia().cadastrar(ingresso);
+        RepositorioIngressoController.cadastrarIngresso(ingresso);
 
         Persistencia.salvar();
         limpar();

@@ -34,7 +34,7 @@ public class PrincipalController {
     }
 
     private void configurarSeletorDeVisitante() {
-        cbVisitante.setItems(FXCollections.observableArrayList(ContextoController.VISITANTES.listarTodos()));
+        cbVisitante.setItems(FXCollections.observableArrayList(RepositorioVisitanteController.listarTodos()));
 
         cbVisitante.setConverter(new StringConverter<>() {
             @Override public String toString(Visitante visitante) {

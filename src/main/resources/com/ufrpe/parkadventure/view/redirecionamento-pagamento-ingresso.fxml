@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressIndicator?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="400.0" prefWidth="720.0" styleClass="tela-parque" stylesheets="@tema-parque.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.RedirecionamentoPagamentoController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="720.0" styleClass="tela-parque" stylesheets="@tema-parque.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.RedirecionamentoPagamentoController">
    <center>
-      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="420.0" spacing="16.0" styleClass="cartao-redirecionamento" stylesheets="@tema-parque.css" BorderPane.alignment="TOP_CENTER">
+      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="420.0" spacing="16.0" styleClass="cartao-redirecionamento" stylesheets="@tema-parque.css" BorderPane.alignment="CENTER">
          <children>
             <Label fx:id="lblMensagem" styleClass="titulo-redirecionamento" text="Quase lá!">
                <font>
@@ -23,14 +20,4 @@
          </children>
       </VBox>
    </center>
-   <top>
-      <ImageView fitHeight="64.0" pickOnBounds="true" preserveRatio="true" styleClass="logo-parque" BorderPane.alignment="CENTER">
-         <image>
-            <Image url="@imagens/logo.png" />
-         </image>
-         <BorderPane.margin>
-            <Insets bottom="20.0" top="20.0" />
-         </BorderPane.margin>
-      </ImageView>
-   </top>
 </BorderPane>

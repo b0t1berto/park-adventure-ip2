@@ -182,7 +182,3 @@
 .date-picker-popup .day-cell { -fx-background-radius: 10; -fx-text-fill: #14365d; }
 .date-picker-popup .day-cell:hover    { -fx-background-color: #dcebff; }
 .date-picker-popup .day-cell:selected { -fx-background-color: #1f6fd1; -fx-text-fill: white; }
-
-.logo-parque {
-    -fx-effect: dropshadow(gaussian, rgba(20, 54, 93, 0.35), 8, 0.2, 0, 2);
-}

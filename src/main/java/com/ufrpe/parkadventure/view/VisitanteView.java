@@ -2,18 +2,16 @@ package com.ufrpe.parkadventure.view;
 
 import java.time.format.DateTimeParseException;
 
+import com.ufrpe.parkadventure.controller.RepositorioVisitanteController;
 import com.ufrpe.parkadventure.model.pessoa.Responsavel;
 import com.ufrpe.parkadventure.model.pessoa.Visitante;
-import com.ufrpe.parkadventure.repository.ListaVisitante;
 
 // Menu do CRUD de visitantes
 public class VisitanteView {
     private final ConsoleView console;
-    private final ListaVisitante visitantes;
 
-    public VisitanteView(ConsoleView console, ListaVisitante visitantes) {
+    public VisitanteView(ConsoleView console) {
         this.console = console;
-        this.visitantes = visitantes;
     }
 
     public void menu() {
@@ -51,7 +49,7 @@ public class VisitanteView {
                         console.lerData("Nascimento do responsável (dd/MM/aaaa): "),
                         console.vazioParaNull(console.lerTextoOpcional("CPF do responsável (opcional): "))));
             }
-            console.exibir(visitantes.cadastrar(visitante)
+            console.exibir(RepositorioVisitanteController.cadastrarVisitante(visitante)
                     ? "Visitante cadastrado com sucesso."
                     : "Já existe um visitante com esse nome.");
         } catch (IllegalArgumentException | DateTimeParseException e) {
@@ -60,22 +58,22 @@ public class VisitanteView {
     }
 
     private void listar() {
-        if (visitantes.listarTodos().isEmpty()) {
+        if (RepositorioVisitanteController.listarTodos().isEmpty()) {
             console.exibir("Nenhum visitante cadastrado.");
             return;
         }
-        for (Visitante v : visitantes.listarTodos()) exibirVisitante(v);
+        for (Visitante v : RepositorioVisitanteController.listarTodos()) exibirVisitante(v);
     }
 
     private void buscar() {
-        Visitante v = visitantes.buscar(console.lerTexto("Nome para buscar: "));
+        Visitante v = RepositorioVisitanteController.buscarVisitante(console.lerTexto("Nome para buscar: "));
         if (v == null) console.exibir("Visitante não encontrado.");
         else exibirVisitante(v);
     }
 
     private void atualizar() {
         String nomeAtual = console.lerTexto("Nome atual do visitante: ");
-        Visitante existente = visitantes.buscar(nomeAtual);
+        Visitante existente = RepositorioVisitanteController.buscarVisitante(nomeAtual);
         if (existente == null) {
             console.exibir("Visitante não encontrado.");
             return;
@@ -88,14 +86,14 @@ public class VisitanteView {
         if (existente.temResponsavel()) {
             atualizado.setResponsavel(existente.getResponsavel());
         }
-        console.exibir(visitantes.atualizar(nomeAtual, atualizado)
+        console.exibir(RepositorioVisitanteController.atualizarVisitante(nomeAtual, atualizado)
                 ? "Visitante atualizado com sucesso."
                 : "Não foi possível atualizar. Verifique se o novo nome já está cadastrado.");
     }
 
     private void remover() {
         String nome = console.lerTexto("Nome do visitante a remover: ");
-        console.exibir(visitantes.remover(nome)
+        console.exibir(RepositorioVisitanteController.removerVisitante(nome)
                 ? "Visitante removido com sucesso."
                 : "Visitante não encontrado.");
     }

@@ -71,7 +71,7 @@ public class EscalaTrabalhoController {
     }
 
     private List<Operador> operadoresDisponiveis() {
-        return ContextoController.ATRACOES.listarTodas().stream()
+        return RepositorioAtracaoController.listarTodas().stream()
                 .map(Atracao::getOperador)
                 .filter(Objects::nonNull)
                 .distinct()
@@ -80,8 +80,8 @@ public class EscalaTrabalhoController {
 
     private void atualizarTabela() {
         List<LinhaEscala> linhas = new ArrayList<>();
-        for (Turno turno : ContextoController.ESCALA.listarOrdenado()) {
-            String atracao = ContextoController.ATRACOES.buscarOperador(turno.operador());
+        for (Turno turno : RepositorioEscalaDeTrabalhoController.listarOrdenado()) {
+            String atracao = RepositorioAtracaoController.buscarOperador(turno.operador());
             String observacao = ContextoController.FERIADOS.nomeDoFeriado(turno.data())
                     .map(nome -> "Feriado: " + nome)
                     .orElse("");
@@ -103,7 +103,7 @@ public class EscalaTrabalhoController {
             return;
         }
         LocalDate data = proximo.get().getKey();
-        List<Operador> escalados = ContextoController.ESCALA.operadoresDoDia(data);
+        List<Operador> escalados = RepositorioEscalaDeTrabalhoController.operadoresDoDia(data);
         String quem = escalados.isEmpty()
                 ? "nenhum operador escalado"
                 : escalados.stream().map(Operador::getNome).collect(Collectors.joining(", "));
@@ -144,7 +144,7 @@ public class EscalaTrabalhoController {
             Aviso.erro(lblStatus, "Não é possível escalar para uma data que já passou.");
             return;
         }
-        if (!ContextoController.ESCALA.escalar(data, operador)) {
+        if (!RepositorioEscalaDeTrabalhoController.escalar(data, operador)) {
             Aviso.erro(lblStatus, operador.getNome() + " já está escalado em " + Formatos.data(data) + ".");
             return;
         }
@@ -159,7 +159,7 @@ public class EscalaTrabalhoController {
             Aviso.erro(lblStatus, "Selecione uma linha da tabela para remover.");
             return;
         }
-        ContextoController.ESCALA.remover(selecionada.turno());
+        RepositorioEscalaDeTrabalhoController.remover(selecionada.turno());
         Aviso.sucesso(lblStatus, "Escala de " + selecionada.operador() + " em " + selecionada.data() + " removida.");
         atualizarTabela();
     }

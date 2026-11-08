@@ -1,6 +1,8 @@
 package com.ufrpe.parkadventure.repository;
 
-import com.ufrpe.parkadventure.controller.ContextoController;
+import com.ufrpe.parkadventure.controller.RepositorioAtracaoController;
+import com.ufrpe.parkadventure.controller.RepositorioVisitanteController;
+import com.ufrpe.parkadventure.controller.RepositorioIngressoController;
 import com.ufrpe.parkadventure.model.atracao.Atracao;
 import com.ufrpe.parkadventure.model.ingresso.Ingresso;
 import com.ufrpe.parkadventure.model.ingresso.TipoIngresso;
@@ -86,39 +88,38 @@ public final class Persistencia {
         if (!c[5].isEmpty()) {
             visitante.setResponsavel(new Responsavel(c[5], c[6], vazioParaNulo(c[7])));
         }
-        ContextoController.VISITANTES.cadastrar(visitante);
+        RepositorioVisitanteController.cadastrarVisitante(visitante);
     }
 
     private static void lerOperador(String[] c) {
-        Atracao atracao = ContextoController.ATRACOES.buscar(c[4]);
+        Atracao atracao = RepositorioAtracaoController.buscar(c[4]);
         if (atracao != null && !atracao.temOperador()) {
             atracao.setOperador(new Operador(c[1], c[2], vazioParaNulo(c[3]), c[4]));
         }
     }
 
     private static void lerIngresso(String[] c) {
-        Visitante visitante = ContextoController.VISITANTES.buscar(c[1]);
+        Visitante visitante = RepositorioVisitanteController.buscarVisitante(c[1]);
         if (visitante == null) {
             return;
         }
         TipoIngresso tipo = TipoIngresso.valueOf(c[2]);
         LocalDate compra = LocalDate.parse(c[3], DATA);
         LocalDate validade = LocalDate.parse(c[4], DATA);
-        ListaIngresso ingressos = ListaIngresso.getInstancia();
-        for (Ingresso existente : ingressos.listarTodos()) {
+        for (Ingresso existente : RepositorioIngressoController.listarTodos()) {
             if (existente.getVisitante() == visitante && existente.getTipoIngresso() == tipo
                     && existente.getDataCompra().equals(compra)
                     && existente.getDataValidade().equals(validade)) {
                 return;
             }
         }
-        ingressos.cadastrar(new Ingresso(visitante, tipo, compra, validade, Double.parseDouble(c[5])));
+        RepositorioIngressoController.cadastrarIngresso(new Ingresso(visitante, tipo, compra, validade, Double.parseDouble(c[5])));
     }
 
     public static synchronized void salvar() {
         List<String> linhas = new ArrayList<>();
 
-        for (Visitante v : ListaVisitante.getInstancia().listarTodos()) {
+        for (Visitante v : RepositorioVisitanteController.listarTodos()) {
             Responsavel r = v.getResponsavel();
             linhas.add(String.join(SEPARADOR, "V",
                     texto(v.getNome()), data(v.getDataNascimento()), texto(v.getCpf()),
@@ -128,7 +129,7 @@ public final class Persistencia {
                     r == null ? "" : texto(r.getCpf())));
         }
 
-        for (Atracao a : ListaAtracao.getInstancia().listarTodas()) {
+        for (Atracao a : RepositorioAtracaoController.listarTodas()) {
             Operador o = a.getOperador();
             if (o != null) {
                 linhas.add(String.join(SEPARADOR, "O",
@@ -137,7 +138,7 @@ public final class Persistencia {
             }
         }
 
-        for (Ingresso i : ListaIngresso.getInstancia().listarTodos()) {
+        for (Ingresso i : RepositorioIngressoController.listarTodos()) {
             if (i.getVisitante() == null) {
                 continue;
             }

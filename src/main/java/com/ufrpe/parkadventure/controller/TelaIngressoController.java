@@ -85,7 +85,7 @@ public class TelaIngressoController {
         }
         mostrarPreco(tipo, data);
         lblEmitidos.setText("Ingressos já emitidos em " + Formatos.data(data) + ": "
-                + ContextoController.INGRESSOS.consultarQuantidadePorData(data));
+                + RepositorioIngressoController.consultarQuantidadePorData(data));
 
         if (tipo != TipoIngresso.DIARIA) {
             btnEmitir.setDisable(false);
@@ -164,7 +164,7 @@ public class TelaIngressoController {
                 + visitante.getNome() + " por " + Formatos.moeda(ingresso.getValor())
                 + ", válido até " + Formatos.data(ingresso.getDataValidade()) + ".");
         lblEmitidos.setText("Ingressos já emitidos em " + Formatos.data(data) + ": "
-                + ContextoController.INGRESSOS.consultarQuantidadePorData(data));
+                + RepositorioIngressoController.consultarQuantidadePorData(data));
     }
 
     @FXML

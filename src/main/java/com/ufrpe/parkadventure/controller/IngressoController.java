@@ -6,16 +6,16 @@ import com.ufrpe.parkadventure.model.api.Feriados;
 import com.ufrpe.parkadventure.model.ingresso.Ingresso;
 import com.ufrpe.parkadventure.model.ingresso.TipoIngresso;
 import com.ufrpe.parkadventure.model.pessoa.Visitante;
-import com.ufrpe.parkadventure.repository.ListaIngresso;
+import com.ufrpe.parkadventure.repository.RepositorioIngresso;
 
 // Emissão de ingressos com acréscimo de preço em feriados
 public class IngressoController {
-    private final ListaIngresso ingressos;
+    private final RepositorioIngresso ingressos;
     private final double precoDiaria;
     private final double precoPasseAnual;
     private final double acrescimoFeriadoPercentual;
 
-    public IngressoController(ListaIngresso ingressos, double precoDiaria,
+    public IngressoController(RepositorioIngresso ingressos, double precoDiaria,
                               double precoPasseAnual, double acrescimoFeriadoPercentual) {
         this.ingressos = ingressos;
         this.precoDiaria = precoDiaria;

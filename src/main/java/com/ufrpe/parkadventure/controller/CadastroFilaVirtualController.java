@@ -34,7 +34,7 @@ public class CadastroFilaVirtualController {
 
     @FXML
     private void initialize() {
-        if (ContextoController.ATRACOES.listarTodas().isEmpty()) {
+        if (RepositorioAtracaoController.listarTodas().isEmpty()) {
             DadosExemplo.carregar();
         }
 
@@ -43,10 +43,10 @@ public class CadastroFilaVirtualController {
             visitante = ingresso.getVisitante();
         } else {
             visitante = ContextoController.SESSAO.getVisitanteAtual();
-            ingresso = (visitante == null) ? null : ContextoController.INGRESSOS.buscarUltimo(visitante);
+            ingresso = (visitante == null) ? null : RepositorioIngressoController.buscarUltimo(visitante.getNome());
         }
 
-        cbAtracao.setItems(FXCollections.observableArrayList(ContextoController.ATRACOES.listarTodas()));
+        cbAtracao.setItems(FXCollections.observableArrayList(RepositorioAtracaoController.listarTodas()));
         cbAtracao.setConverter(new StringConverter<>() {
             @Override public String toString(Atracao a) { return a == null ? "" : a.getNome(); }
             @Override public Atracao fromString(String s) { return null; }

@@ -71,7 +71,7 @@ public class FilaVirtualController {
         List<LinhaFila> linhas = new ArrayList<>();
         String atracaoDoProximo = null;
 
-        for (Atracao atracao : ContextoController.ATRACOES.listarTodas()) {
+        for (Atracao atracao : RepositorioAtracaoController.listarTodas()) {
             FilaVirtual fila = atracao.getFilaVirtual();
             String horario = fila.horarioDe(visitante);
             if (horario == null) {

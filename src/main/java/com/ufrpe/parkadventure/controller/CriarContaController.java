@@ -58,13 +58,13 @@ public class CriarContaController {
 
             if (txtFieldNome.getText().equalsIgnoreCase("leandro")) {
                 Visitante leandro = new Visitante(txtFieldNome.getText(), "01/01/2000", txtFieldCpf.getText(), 0);
-                ContextoController.VISITANTES.cadastrar(leandro);
+                RepositorioVisitanteController.cadastrarVisitante(leandro);
             } else if (txtFieldCargo.getText().isBlank()) {
                 Visitante visitante = new Visitante(txtFieldNome.getText(), "01/01/2000", txtFieldCpf.getText(), 0);
-                ContextoController.VISITANTES.cadastrar(visitante);
+                RepositorioVisitanteController.cadastrarVisitante(visitante);
             } else {
                 Operador operador = new Operador(txtFieldNome.getText(), "01/01/2000", txtFieldCpf.getText(), txtFieldCargo.getText());
-                ContextoController.ATRACOES.cadastrarOperador(txtFieldCargo.getText(), operador);
+                RepositorioAtracaoController.cadastrarOperador(txtFieldCargo.getText(), operador);
             }
             Persistencia.salvar();
             txtFieldNome.setText("");

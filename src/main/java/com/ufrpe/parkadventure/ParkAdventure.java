@@ -30,7 +30,6 @@ public class ParkAdventure extends Application {
         navegar("view/menu.fxml");
         palco.setTitle("Park Adventure");
         palco.setResizable(true);
-        TelaCheia.configurar(palco);
         palco.show();
     }
 
@@ -46,12 +45,9 @@ public class ParkAdventure extends Application {
         FXMLLoader loader = new FXMLLoader(ParkAdventure.class.getResource(primeiraTelaFxml));
         Parent raiz = loader.load();
         fxmlAtual = primeiraTelaFxml;
-        if (palcoPrimario.isShowing()) {
-            palcoPrimario.setScene(new Scene(raiz));
-        } else {
-            palcoPrimario.setScene(new Scene(raiz, 600, 400));
-            palcoPrimario.centerOnScreen();
-        }
+        Scene novaCena = new Scene(raiz, 600, 400);
+        palcoPrimario.setScene(novaCena);
+        palcoPrimario.centerOnScreen();
     }
 
     // =============================================

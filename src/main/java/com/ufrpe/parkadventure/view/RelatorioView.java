@@ -4,8 +4,9 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
 
-import com.ufrpe.parkadventure.repository.ListaAtracao;
-import com.ufrpe.parkadventure.repository.ListaIngresso;
+import com.ufrpe.parkadventure.controller.RepositorioAtracaoController;
+import com.ufrpe.parkadventure.repository.RepositorioAtracao;
+import com.ufrpe.parkadventure.repository.RepositorioIngresso;
 import com.ufrpe.parkadventure.repository.Relatorio;
 import com.ufrpe.parkadventure.repository.Relatorio.LinhaEscala;
 import com.ufrpe.parkadventure.repository.Relatorio.LinhaVenda;
@@ -14,13 +15,11 @@ import com.ufrpe.parkadventure.repository.Relatorio.ResumoReceita;
 public class RelatorioView {
     private final ConsoleView console;
     private final Relatorio relatorio;
-    private final ListaAtracao atracoes;
-    private final ListaIngresso ingressos;
+    private final RepositorioIngresso ingressos;
 
-    public RelatorioView(ConsoleView console, Relatorio relatorio, ListaAtracao atracoes, ListaIngresso ingressos) {
+    public RelatorioView(ConsoleView console, Relatorio relatorio, RepositorioAtracao atracoes, RepositorioIngresso ingressos) {
         this.console = console;
         this.relatorio = relatorio;
-        this.atracoes = atracoes;
         this.ingressos = ingressos;
     }
 
@@ -44,7 +43,7 @@ public class RelatorioView {
         String caminho = console.lerTextoOpcional("Arquivo de saída [atracoes.csv]: ");
         if (caminho.isEmpty()) caminho = "atracoes.csv";
         try {
-            relatorio.salvarCsvAtracoes(atracoes.listarTodas(), caminho);
+            relatorio.salvarCsvAtracoes(RepositorioAtracaoController.listarTodas(), caminho);
             exibirCsvGerado(caminho);
         } catch (Exception e) {
             exibirErro(e.getMessage());

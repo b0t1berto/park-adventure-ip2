@@ -1,18 +1,19 @@
 package com.ufrpe.parkadventure.view;
 
+import com.ufrpe.parkadventure.controller.RepositorioAtracaoController;
 import com.ufrpe.parkadventure.model.atracao.Aquatico;
 import com.ufrpe.parkadventure.model.atracao.Atracao;
 import com.ufrpe.parkadventure.model.atracao.Infantil;
 import com.ufrpe.parkadventure.model.atracao.Radical;
 import com.ufrpe.parkadventure.model.pessoa.Operador;
-import com.ufrpe.parkadventure.repository.ListaAtracao;
+import com.ufrpe.parkadventure.repository.RepositorioAtracao;
 
 // Menu do CRUD de atrações e exibição dos dados de uma atração
 public class AtracaoView {
     private final ConsoleView console;
-    private final ListaAtracao atracoes;
+    private final RepositorioAtracao atracoes;
 
-    public AtracaoView(ConsoleView console, ListaAtracao atracoes) {
+    public AtracaoView(ConsoleView console, RepositorioAtracao atracoes) {
         this.console = console;
         this.atracoes = atracoes;
     }
@@ -71,11 +72,11 @@ public class AtracaoView {
     }
 
     private void listar() {
-        if (atracoes.listarTodas().isEmpty()) {
+        if (RepositorioAtracaoController.listarTodas().isEmpty()) {
             console.exibir("Nenhuma atração cadastrada.");
             return;
         }
-        for (Atracao a : atracoes.listarTodas()) {
+        for (Atracao a : RepositorioAtracaoController.listarTodas()) {
             console.pularLinha();
             exibirDetalhes(a);
             exibirOcupacao(a);

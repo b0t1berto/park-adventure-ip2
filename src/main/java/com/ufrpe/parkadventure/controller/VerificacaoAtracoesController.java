@@ -38,7 +38,7 @@ public class VerificacaoAtracoesController {
     @FXML
     private void initialize() {
         visitante = ContextoController.SESSAO.getVisitanteAtual();
-        ingresso = (visitante == null) ? null : ContextoController.INGRESSOS.buscarUltimo(visitante);
+        ingresso = (visitante == null) ? null : RepositorioIngressoController.buscarUltimo(visitante.getNome());
         lblVisitante.setText(descreverVisitante());
 
         colNome.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().nome()));
@@ -91,7 +91,7 @@ public class VerificacaoAtracoesController {
         Atracao anterior = atracaoSelecionada();
 
         List<LinhaAtracao> linhas = new ArrayList<>();
-        for (Atracao a : ContextoController.ATRACOES.listarTodas()) {
+        for (Atracao a : RepositorioAtracaoController.listarTodas()) {
             linhas.add(new LinhaAtracao(
                     a,
                     a.getNome(),

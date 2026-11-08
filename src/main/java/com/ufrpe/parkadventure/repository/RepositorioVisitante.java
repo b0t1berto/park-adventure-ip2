@@ -3,20 +3,20 @@ package com.ufrpe.parkadventure.repository;
 import com.ufrpe.parkadventure.model.pessoa.Visitante;
 import java.util.ArrayList;
 
-public class ListaVisitante {
-    private static ListaVisitante instancia;
+public class RepositorioVisitante {
+    private static RepositorioVisitante instancia;
     private static final ArrayList<Visitante> visitantes = new ArrayList<>();
 
-    public ListaVisitante() {}
+    private RepositorioVisitante() {}
 
-    public static synchronized ListaVisitante getInstancia() {
+    public static synchronized RepositorioVisitante getInstancia() {
         if (instancia == null) {
-            instancia = new ListaVisitante();
+            instancia = new RepositorioVisitante();
         }
         return instancia;
     }
 
-    public static boolean cadastrar(Visitante visitante) {
+    public boolean cadastrar(Visitante visitante) {
         if (visitante == null || visitante.getNome() == null || visitante.getNome().isBlank()
                 || buscar(visitante.getNome()) != null) {
             return false;
@@ -24,11 +24,7 @@ public class ListaVisitante {
         return visitantes.add(visitante);
     }
 
-    public ArrayList<Visitante> listarTodos() {
-        return new ArrayList<>(visitantes);
-    }
-
-    public static Visitante buscar(String nome) {
+    public Visitante buscar(String nome) {
         if (nome == null) return null;
         for (Visitante visitante : visitantes) {
             if (visitante.getNome() != null && visitante.getNome().trim().equalsIgnoreCase(nome.trim())) {
@@ -55,4 +51,9 @@ public class ListaVisitante {
         Visitante visitante = buscar(nome);
         return visitante != null && visitantes.remove(visitante);
     }
+
+    public ArrayList<Visitante> getVisitantes() {
+        return visitantes;
+    }
+
 }
