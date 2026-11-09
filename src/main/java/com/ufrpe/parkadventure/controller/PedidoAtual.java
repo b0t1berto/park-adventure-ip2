@@ -85,8 +85,6 @@ public final class PedidoAtual {
         Ingresso ingresso = new Ingresso(visitante, TipoIngresso.DIARIA, hoje, validade, valor);
         ingresso.setFormaPagamento(formaPagamento);
         RepositorioIngressoController.cadastrarIngresso(ingresso);
-        // quem acabou de comprar passa a ser o visitante da sessão (telas de ingressos e fura-fila usam isso)
-        ContextoController.SESSAO.setVisitanteAtual(visitante);
 
         Persistencia.salvar();
         limpar();

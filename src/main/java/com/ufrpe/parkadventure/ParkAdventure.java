@@ -45,9 +45,26 @@ public class ParkAdventure extends Application {
         FXMLLoader loader = new FXMLLoader(ParkAdventure.class.getResource(primeiraTelaFxml));
         Parent raiz = loader.load();
         fxmlAtual = primeiraTelaFxml;
-        Scene novaCena = new Scene(raiz, 600, 400);
-        palcoPrimario.setScene(novaCena);
-        palcoPrimario.centerOnScreen();
+        boolean primeiraTela = palcoPrimario.getScene() == null;
+        palcoPrimario.setScene(criarCena(raiz));
+        if (primeiraTela) {
+            palcoPrimario.centerOnScreen();
+        }
+    }
+
+    /**
+     * Cria uma Scene com as dimensões da tela atual. Isso evita que a janela
+     * volte ao tamanho preferido de cada FXML durante a navegação e preserva
+     * o estado maximizado do Stage.
+     */
+    public static Scene criarCena(Parent raiz) {
+        if (palcoPrimario != null && palcoPrimario.getScene() != null) {
+            Scene atual = palcoPrimario.getScene();
+            double largura = atual.getWidth() > 0 ? atual.getWidth() : 1000;
+            double altura = atual.getHeight() > 0 ? atual.getHeight() : 700;
+            return new Scene(raiz, largura, altura);
+        }
+        return new Scene(raiz, 1000, 700);
     }
 
     // =============================================

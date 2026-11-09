@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
@@ -12,20 +11,21 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane styleClass="tela-parque" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.EscalaTrabalhoController">
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.ufrpe.parkadventure.controller.EscalaTrabalhoController">
+   <padding>
+      <Insets bottom="16.0" left="20.0" right="20.0" top="16.0" />
+   </padding>
    <top>
-      <VBox spacing="6.0" styleClass="cabecalho-pagamento" BorderPane.alignment="TOP_CENTER">
+      <VBox spacing="6.0">
          <children>
-            <Label styleClass="titulo-cabecalho" text="Escala de trabalho" />
-            <Label styleClass="subtitulo-cabecalho" text="Defina quais operadores trabalham em cada dia. Os feriados nacionais vêm da BrasilAPI." />
-            <Label fx:id="lblProximoFeriado" alignment="CENTER" styleClass="aviso" wrapText="true" />
+            <Label styleClass="titulo-tela" text="Escala de trabalho" />
+            <Label styleClass="subtitulo" text="Defina quais operadores trabalham em cada dia. Os feriados nacionais vêm da BrasilAPI." />
+            <Label fx:id="lblProximoFeriado" maxWidth="Infinity" styleClass="aviso" wrapText="true" />
          </children>
          <BorderPane.margin>
-            <Insets />
+            <Insets bottom="10.0" />
          </BorderPane.margin>
-         <padding>
-            <Insets bottom="18.0" left="24.0" right="24.0" top="18.0" />
-         </padding>
       </VBox>
    </top>
    <center>
@@ -40,37 +40,26 @@
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
-         <padding>
-            <Insets bottom="8.0" left="20.0" right="20.0" top="16.0" />
-         </padding>
       </TableView>
    </center>
    <bottom>
-      <VBox spacing="8.0" styleClass="rodape-acoes">
+      <VBox spacing="8.0">
          <children>
             <HBox alignment="CENTER_LEFT" spacing="10.0">
                <children>
                   <Label text="Data:" />
-                  <DatePicker fx:id="dpData" styleClass="date-picker-popup" />
+                  <DatePicker fx:id="dpData" />
                   <Label text="Operador:" />
-                  <ComboBox fx:id="cbOperador" prefWidth="200.0" styleClass="combo-box-base" />
-                  <Button onAction="#onEscalar" styleClass="botao-primario" text="Escalar" />
-                  <Button onAction="#onRemover" styleClass="botao-secundario" text="Remover linha" />
-                  <Button onAction="#onVoltar" styleClass="botao-secundario" text="Voltar" />
+                  <ComboBox fx:id="cbOperador" prefWidth="200.0" />
+                  <Button onAction="#onEscalar" styleClass="botao-principal" text="Escalar" />
+                  <Button onAction="#onRemover" text="Remover linha selecionada" />
                </children>
             </HBox>
             <Label fx:id="lblStatus" maxWidth="Infinity" wrapText="true" />
          </children>
          <BorderPane.margin>
-            <Insets />
+            <Insets top="12.0" />
          </BorderPane.margin>
-         <padding>
-            <Insets bottom="14.0" left="20.0" right="20.0" top="14.0" />
-         </padding>
       </VBox>
    </bottom>
-   <stylesheets>
-      <URL value="@estilo.css" />
-      <URL value="@tema-parque.css" />
-   </stylesheets>
 </BorderPane>

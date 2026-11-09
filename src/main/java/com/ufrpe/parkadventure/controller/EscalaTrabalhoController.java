@@ -1,11 +1,9 @@
 package com.ufrpe.parkadventure.controller;
 
-import com.ufrpe.parkadventure.ParkAdventure;
 import com.ufrpe.parkadventure.controller.controles.Tarefas;
 import com.ufrpe.parkadventure.model.atracao.Atracao;
 import com.ufrpe.parkadventure.model.pessoa.Operador;
 import com.ufrpe.parkadventure.repository.EscalaTrabalho.Turno;
-import com.ufrpe.parkadventure.repository.Persistencia;
 import com.ufrpe.parkadventure.view.Aviso;
 import com.ufrpe.parkadventure.view.Formatos;
 
@@ -48,9 +46,6 @@ public class EscalaTrabalhoController {
 
         tabela.setPlaceholder(new Label("Nenhum operador escalado ainda."));
 
-        lblProximoFeriado.visibleProperty().bind(lblProximoFeriado.textProperty().isNotEmpty());
-        lblProximoFeriado.managedProperty().bind(lblProximoFeriado.visibleProperty());
-
         cbOperador.setItems(FXCollections.observableArrayList(operadoresDisponiveis()));
         cbOperador.setConverter(new StringConverter<>() {
             @Override public String toString(Operador operador) {
@@ -60,8 +55,6 @@ public class EscalaTrabalhoController {
                 return null;
             }
         });
-
-        tabela.setPlaceholder(new Label("Nenhuma escala cadastrada."));
 
         dpData.setValue(LocalDate.now());
         dpData.setDayCellFactory(seletor -> new DateCell() {
@@ -156,7 +149,6 @@ public class EscalaTrabalhoController {
             return;
         }
         Aviso.sucesso(lblStatus, operador.getNome() + " escalado em " + Formatos.data(data) + ".");
-        Persistencia.salvar();
         atualizarTabela();
     }
 
@@ -169,16 +161,6 @@ public class EscalaTrabalhoController {
         }
         RepositorioEscalaDeTrabalhoController.remover(selecionada.turno());
         Aviso.sucesso(lblStatus, "Escala de " + selecionada.operador() + " em " + selecionada.data() + " removida.");
-        Persistencia.salvar();
         atualizarTabela();
-    }
-
-    @FXML
-    private void onVoltar() {
-        try {
-            ParkAdventure.voltar();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

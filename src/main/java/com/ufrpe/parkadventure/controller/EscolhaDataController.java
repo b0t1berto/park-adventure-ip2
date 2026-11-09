@@ -50,7 +50,6 @@ public class EscolhaDataController {
             lblErro.setText("Escolha uma data a partir de amanhã.");
             return;
         }
-        PedidoAtual.setDataVisita(data);
         try {
             ParkAdventure.proximaCena("view/redirecionamento-pagamento-ingresso.fxml");
         } catch (IOException e) {

@@ -51,9 +51,9 @@
       </StackPane>
    </top>
    <center>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0" stylesheets="@tema-parque.css" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" maxWidth="500.0" prefHeight="200.0" prefWidth="100.0" spacing="25.0" stylesheets="@tema-parque.css" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="250.0" styleClass="botao-primario" stylesheets="@tema-parque.css" text="Controle da Atração" onAction="#onControleAtracao" textFill="WHITE">
+            <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="250.0" styleClass="botao-primario" stylesheets="@tema-parque.css" text="Escala de Trabalho" textFill="WHITE">
                <font>
                   <Font name="DejaVu Sans Bold" size="14.0" />
                </font>
@@ -61,7 +61,7 @@
                   <DropShadow color="#aaaaaa" offsetY="2.0" />
                </effect>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="250.0" styleClass="botao-primario" stylesheets="@tema-parque.css" text="Escala de Trabalho" onAction="#onEscala" textFill="WHITE">
+            <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="250.0" styleClass="botao-primario" stylesheets="@tema-parque.css" text="Calendário" textFill="WHITE">
                <font>
                   <Font name="DejaVu Sans Bold" size="14.0" />
                </font>
@@ -69,7 +69,7 @@
                   <DropShadow color="#aaaaaa" offsetY="2.0" />
                </effect>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="250.0" styleClass="botao-primario" stylesheets="@tema-parque.css" text="Calendário" onAction="#onCalendario" textFill="WHITE">
+            <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="250.0" styleClass="botao-primario" stylesheets="@tema-parque.css" text="..." textFill="WHITE">
                <font>
                   <Font name="DejaVu Sans Bold" size="14.0" />
                </font>

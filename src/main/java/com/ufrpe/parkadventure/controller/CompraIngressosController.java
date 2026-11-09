@@ -19,7 +19,6 @@ public class CompraIngressosController {
     
     @FXML
     private void onIngressoInstantaneo(ActionEvent event) throws IOException {
-        PedidoAtual.setDataVisita(java.time.LocalDate.now());
         try {
             ParkAdventure.proximaCena("view/redirecionamento-pagamento-ingresso.fxml");
         } catch (Exception e) {

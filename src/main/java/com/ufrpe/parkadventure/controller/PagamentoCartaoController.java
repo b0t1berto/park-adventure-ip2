@@ -55,7 +55,7 @@ public class PagamentoCartaoController {
         lblValor.setText(String.format("R$ %.2f", total));
 
         cbParcelas.getItems().clear();
-        for (int i = 2; i <= 6; i++) {
+        for (int i = 1; i <= 6; i++) {
             cbParcelas.getItems().add(String.format("%dx de R$ %.2f sem juros", i, total / i));
         }
         cbParcelas.getSelectionModel().selectFirst();
@@ -65,7 +65,7 @@ public class PagamentoCartaoController {
         try {
             FXMLLoader loader = new FXMLLoader(
                     ParkAdventure.class.getResource("view/pagamento-confirmado.fxml"));
-            Scene scene = new Scene(loader.load());
+            Scene scene = ParkAdventure.criarCena(loader.load());
             PagamentoConfirmadoController conf = loader.getController();
             conf.setDados(forma, total, situacao);
             stage.setScene(scene);
@@ -91,7 +91,7 @@ public class PagamentoCartaoController {
         try {
             FXMLLoader loader = new FXMLLoader(
                     ParkAdventure.class.getResource("view/pagamento.fxml"));
-            Scene scene = new Scene(loader.load());
+            Scene scene = ParkAdventure.criarCena(loader.load());
             Stage stage = (Stage) btnVoltar.getScene().getWindow();
             PagamentoController p = loader.getController();
             p.setResumo("Ingresso day use", LocalDate.now(), 1, total);
@@ -102,9 +102,6 @@ public class PagamentoCartaoController {
     }
 
     private String validar() {
-        if (cbParcelas.getSelectionModel().getSelectedIndex() < 0)
-            return "Escolha o número de parcelas (mínimo 2x).";
-
         if (txtNumeroCartao.getText().replaceAll("\\D", "").length() != 16)
             return "Número do cartão inválido.";
 

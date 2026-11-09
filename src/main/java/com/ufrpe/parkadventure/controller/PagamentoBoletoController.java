@@ -43,7 +43,7 @@ public class PagamentoBoletoController {
         try {
             FXMLLoader loader = new FXMLLoader(
                     ParkAdventure.class.getResource("view/pagamento-confirmado.fxml"));
-            Scene scene = new Scene(loader.load());
+            Scene scene = ParkAdventure.criarCena(loader.load());
             PagamentoConfirmadoController conf = loader.getController();
             conf.setDados(forma, total, situacao);
             stage.setScene(scene);
@@ -82,7 +82,7 @@ public class PagamentoBoletoController {
         try {
             FXMLLoader loader = new FXMLLoader(
                     ParkAdventure.class.getResource("view/pagamento.fxml"));
-            Scene scene = new Scene(loader.load());
+            Scene scene = ParkAdventure.criarCena(loader.load());
             Stage stage = (Stage) btnVoltar.getScene().getWindow();
             PagamentoController p = loader.getController();
             p.setResumo("Ingresso day use", LocalDate.now(), 1, total);

@@ -127,7 +127,7 @@ public class CadastroFilaVirtualController {
     private void aoVoltar() {
         try {
             FXMLLoader loader = new FXMLLoader(ParkAdventure.class.getResource("view/menu.fxml"));
-            ((Stage) btnVoltar.getScene().getWindow()).setScene(new Scene(loader.load()));
+            ((Stage) btnVoltar.getScene().getWindow()).setScene(ParkAdventure.criarCena(loader.load()));
         } catch (IOException e) {
             e.printStackTrace();
         }

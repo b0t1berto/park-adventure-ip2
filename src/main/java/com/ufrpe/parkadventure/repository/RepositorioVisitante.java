@@ -53,7 +53,7 @@ public class RepositorioVisitante {
     }
 
     public ArrayList<Visitante> getVisitantes() {
-        return new ArrayList<>(visitantes);
+        return visitantes;
     }
 
 }

@@ -16,7 +16,9 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #1693b3;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.TelaLoginController">
+<StackPane alignment="CENTER" style="-fx-background-color: #1693b3;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.TelaLoginController">
+   <children>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #1693b3;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <StackPane prefHeight="68.0" prefWidth="600.0" style="-fx-background-color: #5ba6b9;" BorderPane.alignment="CENTER">
          <effect>
@@ -118,9 +120,9 @@
       <Pane layoutX="-20.0" layoutY="160.0" prefHeight="305.0" prefWidth="118.0" BorderPane.alignment="CENTER">
          <children>
             
-            <TextField fx:id="txtFieldNome" layoutX="-20.0" layoutY="87.0" styleClass="codigo-pagamento" stylesheets="@tema-parque.css" />
-            <TextField fx:id="txtFieldCpf" layoutX="-20.0" layoutY="145.0" styleClass="codigo-pagamento" stylesheets="@tema-parque.css" />
-            <TextField fx:id="txtFieldCargo" layoutX="-20.0" layoutY="205.0" styleClass="codigo-pagamento" stylesheets="@tema-parque.css" />
+            <TextField fx:id="txtFieldNome" layoutX="-20.0" layoutY="87.0" />
+            <TextField fx:id="txtFieldCpf" layoutX="-20.0" layoutY="145.0" />
+            <TextField fx:id="txtFieldCargo" layoutX="-20.0" layoutY="205.0" />
             
             <!-- Botão OK com o mesmo estilo do botão Confirmar da tela de criar conta -->
             <Button fx:id="btOk" layoutX="11.0" layoutY="246.0" mnemonicParsing="false" onAction="#onConfirmar" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 4;" text="Confirmar" textFill="WHITE">
@@ -156,3 +158,5 @@
       </Pane>
    </center>
 </BorderPane>
+   </children>
+</StackPane>

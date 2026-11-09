@@ -14,15 +14,6 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.WriterException;
-import com.google.zxing.client.j2se.MatrixToImageWriter;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
-import javafx.scene.image.Image;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -42,7 +33,6 @@ public class PagamentoPixController {
     @FXML
     private void initialize() {
         txtCodigoPix.setText("00020126-PARKADVENTURE-" + UUID.randomUUID());
-        gerarQrCode(txtCodigoPix.getText());
         atualizarTempo();
 
         contagem = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
@@ -68,7 +58,7 @@ public class PagamentoPixController {
         try {
             FXMLLoader loader = new FXMLLoader(
                     ParkAdventure.class.getResource("view/pagamento-confirmado.fxml"));
-            Scene scene = new Scene(loader.load());
+            Scene scene = ParkAdventure.criarCena(loader.load());
             PagamentoConfirmadoController conf = loader.getController();
             conf.setDados(forma, total, situacao);
             stage.setScene(scene);
@@ -81,18 +71,6 @@ public class PagamentoPixController {
         int min = Math.max(segundosRestantes, 0) / 60;
         int seg = Math.max(segundosRestantes, 0) % 60;
         lblTempo.setText(String.format("Expira em %02d:%02d", min, seg));
-    }
-
-    private void gerarQrCode(String texto) {
-        try {
-            BitMatrix matriz = new QRCodeWriter().encode(texto, BarcodeFormat.QR_CODE, 400, 400);
-            ByteArrayOutputStream saida = new ByteArrayOutputStream();
-            MatrixToImageWriter.writeToStream(matriz, "PNG", saida);
-            ivQrCode.setImage(new Image(new ByteArrayInputStream(saida.toByteArray())));
-        } catch (WriterException | IOException e) {
-            lblStatus.setText("Não foi possível gerar o QR Code.");
-            e.printStackTrace();
-        }
     }
 
     @FXML
@@ -116,7 +94,7 @@ public class PagamentoPixController {
         try {
             FXMLLoader loader = new FXMLLoader(
                     ParkAdventure.class.getResource("view/pagamento.fxml"));
-            Scene scene = new Scene(loader.load());
+            Scene scene = ParkAdventure.criarCena(loader.load());
             Stage stage = (Stage) btnVoltar.getScene().getWindow();
             PagamentoController p = loader.getController();
             p.setResumo("Ingresso day use", LocalDate.now(), 1, total);

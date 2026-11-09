@@ -14,7 +14,7 @@
    <top>
       <VBox alignment="CENTER" spacing="4.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btVoltar" mnemonicParsing="false" onAction="#onVoltar" styleClass="botao-secundario" text="Voltar">
+            <Button fx:id="btVoltar" mnemonicParsing="false" onAction="#onVoltar" prefWidth="150.0" styleClass="botao-secundario" text="Voltar">
                <VBox.margin>
                   <Insets right="550.0" />
                </VBox.margin>
@@ -32,22 +32,22 @@
             <Label styleClass="subtitulo-parque" text="Escolha como você quer entrar no parque" />
          </children>
          <padding>
-            <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+            <Insets bottom="8.0" top="24.0" />
          </padding>
       </VBox>
    </top>
    <center>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" maxWidth="720.0" prefHeight="100.0" prefWidth="200.0" spacing="32.0" BorderPane.alignment="CENTER">
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding>
          <children>
-            <Button mnemonicParsing="false" onAction="#onIngressoInstantaneo" prefHeight="170.0" prefWidth="260.0" text="Ingresso instantâneo" textAlignment="CENTER" wrapText="true">
+            <Button mnemonicParsing="false" onAction="#onIngressoInstantaneo" prefHeight="170.0" prefWidth="300.0" text="Ingresso instantâneo" textAlignment="CENTER" wrapText="true">
                <styleClass>
                   <String fx:value="card-ingresso" />
                   <String fx:value="card-instantaneo" />
                </styleClass></Button>
-            <Button mnemonicParsing="false" onAction="#onIngressoProgramado" prefHeight="170.0" prefWidth="260.0" text="Ingresso programado" textAlignment="CENTER" wrapText="true">
+            <Button mnemonicParsing="false" onAction="#onIngressoProgramado" prefHeight="170.0" prefWidth="300.0" text="Ingresso programado" textAlignment="CENTER" wrapText="true">
                <styleClass>
                   <String fx:value="card-ingresso" />
                   <String fx:value="card-programado" />

@@ -1,19 +1,6 @@
-A	Aquatico	Piratas do Caribe	2	130	9	0	0
-A	Infantil	Lula Voadora	3	0	0	140	12
-A	Radical	Água Ardente	20	150	16	0	0
-A	Radical	Montanha Fantasma	10	140	12	0	0
-V	Humberto	15/04/2004	111.111.111-11	165					humberto@email.com	(81) 98888-9999
-V	Edivan	01/01/2000	222.222.222-22	0						
-V	João	01/01/2000	12332145678	0						
-V	Leandro	01/01/2000	123	0						
-V	Cauê Marquéz	01/01/2000	123	0						
-V	Edivan José	01/01/2000	123	0						
-V	Mugni	03/11/2006	111.111.111-11	167					mugni@gmail.com	(81) 99999-8888
-V	Carlos Souza da Silva	03/11/2006	123.456.789-00	172					carlos@gmail.com	(81) 98901-8997
-O	Carlos	22/01/1991		Piratas do Caribe
-O	Caique	22/01/2000		Lula Voadora
-O	Ivaldo	20/01/1990		Água Ardente
-I	Carlos Souza da Silva	DIARIA	08/11/2026	19/11/2026	120.0	Pix
-I	Humberto	DIARIA	09/11/2026	09/11/2026	120.0	Boleto
-I	Mugni	DIARIA	09/11/2026	09/11/2026	120.0	Pix
-I	Mugni	DIARIA	09/11/2026	19/11/2026	120.0	Pix
+V	Humberto	01/01/2000	111.111.111-11	0			
+V	Edivan	01/01/2000	222.222.222-22	0			
+V	João	01/01/2000	12332145678	0			
+V	Leandro	01/01/2000	123	0			
+V	Cauê Marquéz	01/01/2000	123	0			
+V	Edivan José	01/01/2000	123	0			

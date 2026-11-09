@@ -30,10 +30,10 @@ public class RedirecionamentoPagamentoController {
             try {
                 FXMLLoader loader = new FXMLLoader(
                         ParkAdventure.class.getResource("view/pagamento.fxml"));
-                Scene scene = new Scene(loader.load());
+                Scene scene = ParkAdventure.criarCena(loader.load());
 
                 PagamentoController pagamento = loader.getController();
-                pagamento.setResumo("Ingresso day use", PedidoAtual.getDataVisita(), 1, 120.00);
+                pagamento.setResumo("Ingresso day use", dataVisita, 1, 120.00);
 
                 Stage stage = (Stage) lblMensagem.getScene().getWindow();
                 stage.setScene(scene);

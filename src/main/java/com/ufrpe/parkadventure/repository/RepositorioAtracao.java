@@ -54,32 +54,6 @@ public class RepositorioAtracao{
         return null;
     }
 
-    // Atração em que o operador trabalha (null se ele não estiver vinculado a nenhuma)
-    public Atracao buscarAtracaoPorOperador(Operador operador) {
-        if (operador == null) return null;
-        for (Atracao atracao : atracoes) {
-            if (atracao.getOperador() == operador) {
-                return atracao;
-            }
-        }
-        return null;
-    }
-
-    // Procura o operador pelo nome e pela atração em que ele trabalha (o "cargo" do login é o nome da atração)
-    public Operador buscarOperadorPorNome(String nome, String nomeAtracao) {
-        if (nome == null || nomeAtracao == null) return null;
-        for (Atracao atracao : atracoes) {
-            Operador operador = atracao.getOperador();
-            if (operador != null && operador.getNome() != null
-                    && operador.getNome().trim().equalsIgnoreCase(nome.trim())
-                    && atracao.getNome() != null
-                    && atracao.getNome().trim().equalsIgnoreCase(nomeAtracao.trim())) {
-                return operador;
-            }
-        }
-        return null;
-    }
-
     public boolean atualizar(String nome, Atracao atracaoAtualizada) {
         Atracao existente = buscar(nome);
         if (existente == null || atracaoAtualizada == null
@@ -88,8 +62,6 @@ public class RepositorioAtracao{
         }
         Atracao duplicada = buscar(atracaoAtualizada.getNome());
         if (duplicada != null && duplicada != existente) return false;
-        // a nova versão mantém a ocupação e as reservas da antiga (antes elas eram perdidas)
-        atracaoAtualizada.herdarEstadoDe(existente);
         int indice = atracoes.indexOf(existente);
         atracoes.set(indice, atracaoAtualizada);
         return true;

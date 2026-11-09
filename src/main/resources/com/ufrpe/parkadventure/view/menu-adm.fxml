@@ -51,7 +51,7 @@
       </StackPane>
    </top>
    <center>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" maxWidth="500.0" prefHeight="200.0" prefWidth="100.0" spacing="25.0" BorderPane.alignment="CENTER">
          <children>
             <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="250.0" styleClass="botao-primario" text="Relatório" textFill="WHITE">
                <font>

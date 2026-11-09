@@ -27,6 +27,8 @@ public final class Persistencia {
     private static final String SEPARADOR = "\t";
     private static Path arquivo = localizarArquivo();
 
+    // Sobe a partir da pasta atual até achar o pom.xml (a raiz do projeto) e usa <raiz>/dados/dados.txt.
+    // Assim o arquivo é o mesmo, não importa de onde o programa foi iniciado.
     private static Path localizarArquivo() {
         Path atual = Paths.get("").toAbsolutePath();
         for (Path pasta = atual; pasta != null; pasta = pasta.getParent()) {
@@ -84,14 +86,8 @@ public final class Persistencia {
     private static void lerVisitante(String[] c) {
         Visitante visitante = new Visitante(c[1], c[2], vazioParaNulo(c[3]), Integer.parseInt(c[4]));
         if (!c[5].isEmpty()) {
-            Responsavel responsavel = c[6].isEmpty()
-                    ? new Responsavel(c[5], (LocalDate) null, vazioParaNulo(c[7]))
-                    : new Responsavel(c[5], c[6], vazioParaNulo(c[7]));
-            responsavel.setContatoEmergencia(vazioParaNulo(campo(c, 8)));
-            visitante.setResponsavel(responsavel);
+            visitante.setResponsavel(new Responsavel(c[5], c[6], vazioParaNulo(c[7])));
         }
-        visitante.setEmail(vazioParaNulo(campo(c, 9)));
-        visitante.setTelefone(vazioParaNulo(campo(c, 10)));
         RepositorioVisitanteController.cadastrarVisitante(visitante);
     }
 
@@ -117,9 +113,7 @@ public final class Persistencia {
                 return;
             }
         }
-        Ingresso novo = new Ingresso(visitante, tipo, compra, validade, Double.parseDouble(c[5]));
-        novo.setFormaPagamento(vazioParaNulo(campo(c, 6)));
-        RepositorioIngressoController.cadastrarIngresso(novo);
+        RepositorioIngressoController.cadastrarIngresso(new Ingresso(visitante, tipo, compra, validade, Double.parseDouble(c[5])));
     }
 
     public static synchronized void salvar() {
@@ -132,9 +126,7 @@ public final class Persistencia {
                     String.valueOf(v.getAltura()),
                     r == null ? "" : texto(r.getNome()),
                     r == null ? "" : data(r.getDataNascimento()),
-                    r == null ? "" : texto(r.getCpf()),
-                    r == null ? "" : texto(r.getContatoEmergencia()),
-                    texto(v.getEmail()), texto(v.getTelefone())));
+                    r == null ? "" : texto(r.getCpf())));
         }
 
         for (Atracao a : RepositorioAtracaoController.listarTodas()) {
@@ -153,7 +145,7 @@ public final class Persistencia {
             linhas.add(String.join(SEPARADOR, "I",
                     texto(i.getVisitante().getNome()), i.getTipoIngresso().name(),
                     data(i.getDataCompra()), data(i.getDataValidade()),
-                    String.valueOf(i.getValor()), texto(i.getFormaPagamento())));
+                    String.valueOf(i.getValor())));
         }
 
         try {
@@ -171,10 +163,6 @@ public final class Persistencia {
 
     private static String data(LocalDate valor) {
         return valor == null ? "" : valor.format(DATA);
-    }
-
-    private static String campo(String[] c, int indice) {
-        return indice < c.length ? c[indice] : "";
     }
 
     private static String vazioParaNulo(String valor) {

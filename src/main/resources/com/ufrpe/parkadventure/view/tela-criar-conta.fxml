@@ -16,7 +16,9 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #1693b3;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.TelaCriarContaController">
+<StackPane alignment="CENTER" style="-fx-background-color: #1693b3;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.TelaCriarContaController">
+   <children>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #1693b3;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <StackPane prefHeight="68.0" prefWidth="600.0" style="-fx-background-color: #5ba6b9;" BorderPane.alignment="CENTER">
          <effect>
@@ -142,8 +144,10 @@
                   <Font name="DejaVu Sans Bold" size="14.0" />
                </font>
             </Button>
-            <TextField fx:id="txtCpf" layoutX="-20.0" layoutY="147.0" />
+            <TextField fx:id="TextCpf" layoutX="-20.0" layoutY="147.0" />
          </children>
       </Pane>
    </center>
 </BorderPane>
+   </children>
+</StackPane>

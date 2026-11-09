@@ -96,14 +96,6 @@ public class PagamentoController {
             return;
         }
 
-        boolean menor = paneResponsavel.isVisible();
-        PedidoAtual.definirComprador(
-                txtNome.getText(), txtCpf.getText(), dpNascimento.getValue(), spAltura.getValue(),
-                txtEmail.getText(), txtTelefone.getText(),
-                menor ? txtNomeResponsavel.getText() : null,
-                menor ? txtCpfResponsavel.getText() : null,
-                menor ? txtContatoEmergencia.getText() : null);
-
         try {
             Stage stage = (Stage) btnPagar.getScene().getWindow();
             Toggle escolhido = grupoPagamento.getSelectedToggle();
@@ -111,7 +103,7 @@ public class PagamentoController {
             if (escolhido == rbPix) {
                 FXMLLoader loader = new FXMLLoader(
                         ParkAdventure.class.getResource("view/pagamento-pix.fxml"));
-                Scene scene = new Scene(loader.load());
+                Scene scene = ParkAdventure.criarCena(loader.load());
                 PagamentoPixController pix = loader.getController();
                 pix.setValor(total);
                 stage.setScene(scene);
@@ -119,7 +111,7 @@ public class PagamentoController {
             } else if (escolhido == rbCartao) {
                 FXMLLoader loader = new FXMLLoader(
                         ParkAdventure.class.getResource("view/pagamento-cartao.fxml"));
-                Scene scene = new Scene(loader.load());
+                Scene scene = ParkAdventure.criarCena(loader.load());
                 PagamentoCartaoController cartao = loader.getController();
                 cartao.setValor(total);
                 stage.setScene(scene);
@@ -127,7 +119,7 @@ public class PagamentoController {
             } else if (escolhido == rbBoleto) {
                 FXMLLoader loader = new FXMLLoader(
                         ParkAdventure.class.getResource("view/pagamento-boleto.fxml"));
-                Scene scene = new Scene(loader.load());
+                Scene scene = ParkAdventure.criarCena(loader.load());
                 PagamentoBoletoController boleto = loader.getController();
                 boleto.setValor(total);
                 stage.setScene(scene);
