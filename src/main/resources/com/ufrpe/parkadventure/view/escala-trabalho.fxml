@@ -1,16 +1,18 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.collections.*?>
-<?import javafx.util.*?>
-<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.EscalaTrabalhoController" styleClass="tela-parque">
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.ufrpe.parkadventure.controller.EscalaTrabalhoController">
    <padding>
       <Insets bottom="16.0" left="20.0" right="20.0" top="16.0" />
    </padding>
@@ -49,8 +51,8 @@
                   <DatePicker fx:id="dpData" />
                   <Label text="Operador:" />
                   <ComboBox fx:id="cbOperador" prefWidth="200.0" />
-                  <Button onAction="#onEscalar" styleClass="botao-principal" text="Escalar" wrapText="true" />
-                  <Button onAction="#onRemover" text="Remover linha selecionada" wrapText="true" />
+                  <Button onAction="#onEscalar" styleClass="botao-principal" text="Escalar" />
+                  <Button onAction="#onRemover" text="Remover linha selecionada" />
                </children>
             </HBox>
             <Label fx:id="lblStatus" maxWidth="Infinity" wrapText="true" />

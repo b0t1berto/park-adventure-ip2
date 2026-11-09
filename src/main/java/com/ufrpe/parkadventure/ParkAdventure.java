@@ -27,11 +27,10 @@ public class ParkAdventure extends Application {
     public void start(Stage palco) throws IOException {
         palcoPrimario = palco;
         Persistencia.carregar();
+        navegar("view/menu.fxml");
         palco.setTitle("Park Adventure");
         palco.setResizable(true);
-        navegar("view/menu.fxml");
         palco.show();
-        palco.setMaximized(true);
     }
 
     @Override
@@ -46,33 +45,26 @@ public class ParkAdventure extends Application {
         FXMLLoader loader = new FXMLLoader(ParkAdventure.class.getResource(primeiraTelaFxml));
         Parent raiz = loader.load();
         fxmlAtual = primeiraTelaFxml;
+        boolean primeiraTela = palcoPrimario.getScene() == null;
         palcoPrimario.setScene(criarCena(raiz));
+        if (primeiraTela) {
+            palcoPrimario.centerOnScreen();
+        }
     }
 
-
-    /** Cria uma cena padronizada, reaplicando os estilos em toda navegação. */
+    /**
+     * Cria uma Scene com as dimensões da tela atual. Isso evita que a janela
+     * volte ao tamanho preferido de cada FXML durante a navegação e preserva
+     * o estado maximizado do Stage.
+     */
     public static Scene criarCena(Parent raiz) {
-        Scene cena = new Scene(raiz);
-        adicionarEstilo(cena, "/com/ufrpe/parkadventure/view/estilo.css");
-        adicionarEstilo(cena, "/com/ufrpe/parkadventure/view/tema-parque.css");
-        adicionarEstilo(cena, "/com/ufrpe/parkadventure/view/fila-virtual.css");
-        return cena;
-    }
-
-    /** Exibe uma tela carregada por navegadores auxiliares sem perder o tema. */
-    public static void exibirConteudo(Parent raiz) {
-        if (palcoPrimario == null) {
-            throw new IllegalStateException("A janela principal ainda não foi inicializada.");
+        if (palcoPrimario != null && palcoPrimario.getScene() != null) {
+            Scene atual = palcoPrimario.getScene();
+            double largura = atual.getWidth() > 0 ? atual.getWidth() : 1000;
+            double altura = atual.getHeight() > 0 ? atual.getHeight() : 700;
+            return new Scene(raiz, largura, altura);
         }
-        palcoPrimario.setScene(criarCena(raiz));
-    }
-
-    private static void adicionarEstilo(Scene cena, String caminho) {
-        var recurso = ParkAdventure.class.getResource(caminho);
-        if (recurso != null) {
-            String url = recurso.toExternalForm();
-            if (!cena.getStylesheets().contains(url)) cena.getStylesheets().add(url);
-        }
+        return new Scene(raiz, 1000, 700);
     }
 
     // =============================================

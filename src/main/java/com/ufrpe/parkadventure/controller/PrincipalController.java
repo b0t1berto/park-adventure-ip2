@@ -54,8 +54,7 @@ public class PrincipalController {
 
     private void destacar(Tela telaAtual) {
         botoes.values().forEach(botao -> botao.getStyleClass().remove("ativo"));
-        Button ativo = botoes.get(telaAtual);
-        if (ativo != null) ativo.getStyleClass().add("ativo");
+        botoes.get(telaAtual).getStyleClass().add("ativo");
     }
 
     @FXML private void onEscala()            { Navegador.ir(Tela.ESCALA); }

@@ -131,11 +131,6 @@ public class PagamentoController {
 
     @FXML
     private void aoVoltar() {
-        try {
-            ParkAdventure.voltar();
-        } catch (Exception e) {
-            new Alert(Alert.AlertType.ERROR, "Não foi possível voltar à tela anterior: " + e.getMessage()).showAndWait();
-        }
     }
 
     private String validar() {

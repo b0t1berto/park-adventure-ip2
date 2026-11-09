@@ -112,10 +112,4 @@ public class FilaVirtualController {
             e.printStackTrace();
         }
     }
-
-    // Nome usado pelo FXML da tela; mantém compatibilidade com o botão existente.
-    @FXML
-    private void onVoltarParaIngressos() {
-        onVoltar(null);
-    }
 }

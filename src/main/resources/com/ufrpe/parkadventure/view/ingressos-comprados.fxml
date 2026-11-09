@@ -1,16 +1,15 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.collections.*?>
-<?import javafx.util.*?>
-<BorderPane xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.IngressosCompradosController" styleClass="tela-parque">
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.IngressosCompradosController">
    <padding>
       <Insets bottom="16.0" left="20.0" right="20.0" top="16.0" />
    </padding>
@@ -45,9 +44,9 @@
             <Label fx:id="lblResumo" styleClass="subtitulo" />
             <HBox spacing="10.0">
                <children>
-                  <Button onAction="#onVerFilaVirtual" styleClass="botao-principal" text="Ver posição na fila virtual" wrapText="true" />
-                  <Button onAction="#onComprarIngresso" text="Comprar outro ingresso" wrapText="true" />
-                  <Button fx:id="btnVoltar" onAction="#onVoltar" text="&lt;">
+                  <Button fx:id="btVerFilaVirtual" onAction="#onVerFilaVirtual" styleClass="botao-principal" text="Ver posição na fila virtual" />
+                  <Button fx:id="btComprarIngresso" onAction="#onComprarIngresso" text="Comprar outro ingresso" />
+                  <Button fx:id="btVoltar" onAction="#onVoltar" text="&lt;">
                      <HBox.margin>
                         <Insets left="25.0" />
                      </HBox.margin>

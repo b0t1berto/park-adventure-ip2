@@ -1,23 +1,35 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.effect.*?>
-<BorderPane xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" styleClass="tela-parque" stylesheets="@tema-parque.css" fx:controller="com.ufrpe.parkadventure.controller.TelaMenuController">
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" styleClass="tela-parque" stylesheets="@tema-parque.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.TelaMenuController">
    <center>
-      
-      <VBox alignment="CENTER" spacing="8.0" styleClass="tela-parque" BorderPane.alignment="CENTER">
+      <!-- VBox para alinhar textos e botões no centro -->
+      <VBox alignment="CENTER" maxWidth="500.0" spacing="8.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="lblReservar" maxWidth="300.0" style="-fx-border-radius: 6; -fx-padding: 8; -fx-background-color: #ffffff;" styleClass="cartao-pagamento" text="Que tal reservar o acesso a uma Experiência Inédita?" textAlignment="CENTER" wrapText="true">
+            <Label fx:id="lblReservar" maxWidth="363.0" prefHeight="80.0" prefWidth="363.0" style="-fx-border-radius: 6; -fx-padding: 8; -fx-background-color: #ffffff;" styleClass="cartao-pagamento" text="Que tal reservar o acesso a uma Experiência Inédita?" textAlignment="CENTER" wrapText="true">
                <font>
-                  <Font name="DejaVu Sans Mono Bold" size="13.0" />
+                  <Font size="24.0" />
                </font>
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
             </Label>
-            <Button fx:id="bntComeceAqui" mnemonicParsing="false" onAction="#onCriarConta" prefHeight="39.0" prefWidth="187.0" style="-fx-background-color: #5ba6b9;" styleClass="botao-primario" text="Comece por Aqui" textFill="WHITE" wrapText="true">
+            <Button fx:id="bntComeceAqui" mnemonicParsing="false" onAction="#onCriarConta" prefHeight="60.0" prefWidth="250.0" styleClass="botao-primario" text="Comece por Aqui" textFill="WHITE">
                <effect>
                   <DropShadow offsetY="5.0">
                      <color>
@@ -25,16 +37,22 @@
                      </color>
                   </DropShadow>
                </effect>
-            </Button>
-            <Label fx:id="lblDesejaReservar" prefHeight="45.0" prefWidth="223.0" styleClass="cartao-pagamento" text="Deseja acessar sua reserva?">
                <font>
-                  <Font name="DejaVu Sans Mono Bold" size="13.0" />
+                  <Font size="20.0" />
                </font>
+               <VBox.margin>
+                  <Insets bottom="60.0" />
+               </VBox.margin>
+            </Button>
+            <Label fx:id="lblDesejaReservar" prefHeight="73.0" prefWidth="374.0" styleClass="cartao-pagamento" text="Deseja acessar sua reserva?">
                <VBox.margin>
                   <Insets top="15.0" />
                </VBox.margin>
+               <font>
+                  <Font size="24.0" />
+               </font>
             </Label>
-            <Button fx:id="bntAcesseAqui" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onFazerLogin" prefHeight="42.0" prefWidth="156.0" style="-fx-background-color: #5ba6b9;" styleClass="botao-primario" text="Acesse Aqui!" textFill="WHITE" wrapText="true">
+            <Button fx:id="bntAcesseAqui" mnemonicParsing="false" onAction="#onFazerLogin" prefHeight="60.0" prefWidth="250.0" styleClass="botao-primario" text="Acesse Aqui!" textFill="WHITE">
                <effect>
                   <DropShadow offsetY="3.0">
                      <color>
@@ -44,12 +62,15 @@
                </effect>
             </Button>
          </children>
+         <BorderPane.margin>
+            <Insets top="-20.0" />
+         </BorderPane.margin>
       </VBox>
    </center>
    <top>
-      <StackPane prefHeight="101.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      <StackPane prefHeight="200.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="134.0" fitWidth="599.0" pickOnBounds="true">
+            <ImageView fitHeight="200.0" fitWidth="1000.0" pickOnBounds="true">
                <image>
                   <Image url="@imagens/menu-fundo.jpeg" />
                </image>
@@ -70,7 +91,7 @@
             </ImageView>
             <HBox alignment="CENTER" prefHeight="125.0" prefWidth="600.0" spacing="15.0" style="-fx-background-color: transparent; -fx-padding: 8;">
                <children>
-                  <ImageView fx:id="imgLogo" fitHeight="117.0" fitWidth="118.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="imgLogo" fitHeight="177.0" fitWidth="212.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@imagens/logo.png" />
                      </image>
@@ -80,7 +101,7 @@
                   </ImageView>
                   <Label fx:id="lblParkAdventure" text="Park Adventure" textFill="WHITE">
                      <font>
-                        <Font name="DejaVu Serif Bold Italic" size="50.0" />
+                        <Font name="DejaVu Serif Bold Italic" size="90.0" />
                      </font>
                      <effect>
                         <DropShadow height="13.75" offsetX="3.0" offsetY="2.0" radius="6.6875" spread="0.39" width="15.0">
@@ -112,6 +133,9 @@
                      </effect>
                   </Label>
                </children>
+               <StackPane.margin>
+                  <Insets />
+               </StackPane.margin>
             </HBox>
          </children>
          <effect>

@@ -186,15 +186,3 @@
 .logo-parque {
     -fx-effect: dropshadow(gaussian, rgba(20, 54, 93, 0.35), 8, 0.2, 0, 2);
 }
-
-/* Controles responsivos: evita rótulos cortados em janelas menores. */
-.tela-parque .button {
-    -fx-wrap-text: true;
-    -fx-min-height: 42px;
-    -fx-padding: 9 16 9 16;
-    -fx-alignment: center;
-    -fx-text-alignment: center;
-}
-.tela-parque .label { -fx-wrap-text: true; }
-.rodape-acoes .button { -fx-min-width: 104px; }
-

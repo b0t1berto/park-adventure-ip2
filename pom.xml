@@ -93,7 +93,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                com.ufrpe.parkadventure/com.ufrpe.parkadventure.Launcher
+                                com.exemplo.projeto/com.ufrpe.parkadventure.Launcher
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

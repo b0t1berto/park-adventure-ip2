@@ -3,6 +3,7 @@ package com.ufrpe.parkadventure.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import com.ufrpe.parkadventure.model.pessoa.*;
+import com.ufrpe.parkadventure.repository.Persistencia;
 import com.ufrpe.parkadventure.ParkAdventure;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -30,43 +31,43 @@ public class TelaCriarContaController {
         }
     }
 
-    @FXML
-    public void onConfirmar (ActionEvent event) {
-    //     String nome = txtFieldNome.getText();
-    //     String cpf = txtFieldCpf.getText();
+@FXML
+public void onConfirmar (ActionEvent event) {
+    String nome = txtNome.getText().trim();
+    String cpf = txtCpf.getText().replaceAll("[^0-9]", "").trim(); // Remove pontos e traços do CPF
+    String cargo = txtCargo.getText().trim();
 
-        if (txtNome.getText().isBlank()|| txtCpf.getText().isBlank()) {
-            Alert alert = new Alert(AlertType.ERROR); 
-            alert.setTitle("ERRO");
-            alert.setHeaderText("Suas informações estão Inválidas!");
-            alert.setContentText("Digite informações válidas para criar sua conta.");
-            alert.showAndWait(); //Apenas quando apertar OK para sair da tela de aviso
+    if (nome.isBlank() || cpf.isBlank()) {
+        Alert alert = new Alert(AlertType.ERROR); 
+        alert.setTitle("ERRO");
+        alert.setHeaderText("Suas informações estão Inválidas!");
+        alert.setContentText("Digite informações válidas para criar sua conta.");
+        alert.showAndWait();
 
-            txtNome.setText("");
-            txtCpf.setText("");
-            txtCargo.setText("");
-            return;
-        } else {
-            Alert alert = new Alert(AlertType.INFORMATION); 
-            alert.setTitle("CONFIRMAÇÃO");
-            alert.setHeaderText("Confirme os dados da sua conta");
-            alert.setContentText("Seu nome é: " + this.txtNome.getText() + "\nSeu CPF é: " + this.txtCpf.getText() + " ?");
-            alert.showAndWait(); //Apenas quando apertar OK para sair da tela de avis
+        txtNome.setText("");
+        txtCpf.setText("");
+        txtCargo.setText("");
+        return;
+    } 
 
-            if (txtNome.getText().equalsIgnoreCase("leandro")) {
-                Visitante leandro = new Visitante(txtNome.getText(), "01/01/2000", txtCpf.getText(), 0);
-                System.out.println("funcionou");
-                RepositorioVisitanteController.cadastrarVisitante(leandro);
-            } else if (txtCargo.getText().isBlank()) {
-                Visitante visitante = new Visitante(txtNome.getText(), "01/01/2000", txtCpf.getText(), 0);
-                RepositorioVisitanteController.cadastrarVisitante(visitante);
-            } else {
-                Operador operador = new Operador(txtNome.getText(), "01/01/2000", txtCpf.getText(), txtCargo.getText());
-                RepositorioAtracaoController.cadastrarOperador(txtCargo.getText(), operador);
-            }
-            txtNome.setText("");
-            txtCpf.setText("");
-            txtCargo.setText("");
-        }
+    Alert alert = new Alert(AlertType.INFORMATION); 
+    alert.setTitle("CONFIRMAÇÃO");
+    alert.setHeaderText("Confirme os dados da sua conta");
+    alert.setContentText("Seu nome é: " + nome + "\nSeu CPF é: " + cpf + " ?");
+    alert.showAndWait();
+
+    if (cargo.isBlank()) {
+        Visitante visitante = new Visitante(nome, "01/01/2000", cpf, 0);
+        RepositorioVisitanteController.cadastrarVisitante(visitante);
+    } else {
+        Operador operador = new Operador(nome, "01/01/2000", cpf, cargo);
+        RepositorioAtracaoController.cadastrarOperador(cargo, operador);
     }
+
+    Persistencia.salvar();
+    
+    txtNome.setText("");
+    txtCpf.setText("");
+    txtCargo.setText("");
+}
 }
