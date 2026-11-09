@@ -1,4 +1,15 @@
 <?xml version='1.0' encoding='UTF-8'?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.collections.*?>
+<?import javafx.util.*?>
 <BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" styleClass="tela-parque" fx:controller="com.ufrpe.parkadventure.controller.VerificacaoAtracoesController">
   <padding><Insets top="16" right="20" bottom="16" left="20" /></padding>
   <top><VBox spacing="6"><children><Label text="Verificação de atrações" styleClass="titulo-tela" /><Label fx:id="lblVisitante" styleClass="subtitulo" wrapText="true" /></children><VBox.margin><Insets bottom="12" /></VBox.margin></VBox></top>

@@ -1,4 +1,15 @@
 <?xml version='1.0' encoding='UTF-8'?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.collections.*?>
+<?import javafx.util.*?>
 <BorderPane xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.IngressosCompradosController" styleClass="tela-parque">
    <padding>
       <Insets bottom="16.0" left="20.0" right="20.0" top="16.0" />
