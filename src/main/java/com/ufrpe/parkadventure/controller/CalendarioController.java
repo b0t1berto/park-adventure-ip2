@@ -1,5 +1,6 @@
 package com.ufrpe.parkadventure.controller;
 
+import com.ufrpe.parkadventure.ParkAdventure;
 import com.ufrpe.parkadventure.controller.controles.Tarefas;
 import com.ufrpe.parkadventure.model.pessoa.Operador;
 import com.ufrpe.parkadventure.view.Formatos;
@@ -204,5 +205,14 @@ public class CalendarioController {
         montarGrade();
         mostrarDetalhe(dataSelecionada);
         carregarFeriadosDoMes();
+    }
+
+    @FXML
+    private void onVoltar() {
+        try {
+            ParkAdventure.voltar();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

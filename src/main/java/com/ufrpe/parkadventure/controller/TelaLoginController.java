@@ -1,25 +1,28 @@
 package com.ufrpe.parkadventure.controller;
 
+import com.ufrpe.parkadventure.ParkAdventure;
+import com.ufrpe.parkadventure.model.pessoa.Operador;
+import com.ufrpe.parkadventure.model.pessoa.Visitante;
+
 import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.fxml.FXML;
-import com.ufrpe.parkadventure.ParkAdventure;
+import javafx.scene.control.TextField;
 
 public class TelaLoginController {
 
-    @FXML 
+    @FXML
     Label lblNome, lblCpf, lblCargo, lblParkAdventure, lblAcesseConta;
 
-    @FXML 
+    @FXML
     TextField txtFieldNome, txtFieldCpf, txtFieldCargo;
 
-    @FXML 
+    @FXML
     Button btOk;
-    
+
     @FXML
     void onVoltar(ActionEvent event) {
         try {
@@ -30,54 +33,61 @@ public class TelaLoginController {
     }
 
     @FXML
-    public void onConfirmar (ActionEvent event) {
-        String nome = txtFieldNome.getText();
+    public void onConfirmar(ActionEvent event) {
+        String nome = txtFieldNome.getText().trim();
+        String cpf = txtFieldCpf.getText().trim();
+        String cargo = txtFieldCargo.getText().trim();
 
-        if (txtFieldNome.getText().isBlank() || txtFieldCpf.getText().isBlank()) {
-            Alert alert = new Alert(AlertType.ERROR); 
-            alert.setTitle("AVISO");
-            alert.setHeaderText("Suas informações estão Inválidas!");
-            alert.setContentText("Digite informações válidas para entrar na conta.");
-            alert.showAndWait(); //Apenas quando apertar OK para sair da tela de aviso
-
-            txtFieldNome.setText("");
-            txtFieldCpf.setText("");
-            txtFieldCargo.setText("");
-        } else {
-            if (txtFieldNome.getText().equalsIgnoreCase("leandro")) {
-                try {
-                    ParkAdventure.proximaCena("view/menu-adm.fxml");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else if (txtFieldCargo.getText().isBlank())  {
-                try {
-                    ParkAdventure.proximaCena("view/menu-visitante.fxml");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else if (RepositorioVisitanteController.buscarVisitante(nome) == null) {
-                try {                
-                    Alert alert = new Alert(AlertType.ERROR);
-                    alert.setTitle("AVISO");
-                    alert.setHeaderText("Visitante não encontrado!");
-                    alert.setContentText("O visitante não está cadastrado.");
-                    alert.showAndWait();
-                    
-                    txtFieldNome.setText("");
-                    txtFieldCpf.setText("");
-                    txtFieldCargo.setText("");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            } else {
-                try {
-                    ParkAdventure.proximaCena("view/menu-operador.fxml");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
+        if (nome.isEmpty() || cpf.isEmpty()) {
+            avisar("Suas informações estão inválidas!", "Digite informações válidas para entrar na conta.");
+            limparCampos();
+            return;
         }
+
+        try {
+            if (nome.equalsIgnoreCase("leandro")) {
+                ContextoController.SESSAO.limpar();
+                ParkAdventure.proximaCena("view/menu-adm.fxml");
+            } else if (cargo.isEmpty()) {
+                // sem cargo: é um visitante, e ele precisa existir
+                Visitante visitante = RepositorioVisitanteController.buscarVisitante(nome);
+                if (visitante == null) {
+                    avisar("Visitante não encontrado!", "O visitante não está cadastrado.");
+                    limparCampos();
+                    return;
+                }
+                ContextoController.SESSAO.limpar();
+                ContextoController.SESSAO.setVisitanteAtual(visitante);
+                ParkAdventure.proximaCena("view/menu-visitante.fxml");
+            } else {
+                // com cargo: é um operador; o cargo é o nome da atração em que ele trabalha
+                Operador operador = RepositorioAtracaoController.buscarOperadorPorNome(nome, cargo);
+                if (operador == null) {
+                    avisar("Operador não encontrado!",
+                            "Não há operador com esse nome nessa atração. No campo cargo, digite o nome da atração.");
+                    limparCampos();
+                    return;
+                }
+                ContextoController.SESSAO.limpar();
+                ContextoController.SESSAO.setOperadorAtual(operador);
+                ParkAdventure.proximaCena("view/menu-operador.fxml");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void avisar(String titulo, String mensagem) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("AVISO");
+        alert.setHeaderText(titulo);
+        alert.setContentText(mensagem);
+        alert.showAndWait();
+    }
+
+    private void limparCampos() {
+        txtFieldNome.setText("");
+        txtFieldCpf.setText("");
+        txtFieldCargo.setText("");
     }
 }

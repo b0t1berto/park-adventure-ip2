@@ -76,6 +76,7 @@
                 <Insets bottom="16.0" left="20.0" right="20.0" top="12.0" />
             </padding>
             <children>
+                <Button fx:id="btnReservar" mnemonicParsing="false" onAction="#aoReservarFilaVirtual" styleClass="botao-primario" text="Reservar fura-fila" />
                 <Button fx:id="btnNovoPedido" mnemonicParsing="false" onAction="#aoNovoPedido" styleClass="botao-secundario" text="Novo pedido" />
                 <Button fx:id="btnConcluir" mnemonicParsing="false" onAction="#aoConcluir" styleClass="botao-primario" text="Concluir" />
             </children>

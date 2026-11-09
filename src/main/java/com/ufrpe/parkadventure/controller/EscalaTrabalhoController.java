@@ -1,5 +1,6 @@
 package com.ufrpe.parkadventure.controller;
 
+import com.ufrpe.parkadventure.ParkAdventure;
 import com.ufrpe.parkadventure.controller.controles.Tarefas;
 import com.ufrpe.parkadventure.model.atracao.Atracao;
 import com.ufrpe.parkadventure.model.pessoa.Operador;
@@ -167,5 +168,14 @@ public class EscalaTrabalhoController {
         RepositorioEscalaDeTrabalhoController.remover(selecionada.turno());
         Aviso.sucesso(lblStatus, "Escala de " + selecionada.operador() + " em " + selecionada.data() + " removida.");
         atualizarTabela();
+    }
+
+    @FXML
+    private void onVoltar() {
+        try {
+            ParkAdventure.voltar();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

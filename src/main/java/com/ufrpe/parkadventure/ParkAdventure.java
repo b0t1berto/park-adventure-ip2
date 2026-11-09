@@ -1,5 +1,7 @@
 package com.ufrpe.parkadventure;
 
+import com.ufrpe.parkadventure.controller.RepositorioAtracaoController;
+import com.ufrpe.parkadventure.controller.controles.DadosExemplo;
 import com.ufrpe.parkadventure.repository.Persistencia;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -27,6 +29,10 @@ public class ParkAdventure extends Application {
     public void start(Stage palco) throws IOException {
         palcoPrimario = palco;
         Persistencia.carregar();
+        // primeira execução: cria as atrações e os operadores do parque
+        if (RepositorioAtracaoController.listarTodas().isEmpty()) {
+            DadosExemplo.carregarAtracoesPadrao();
+        }
         navegar("view/menu.fxml");
         palco.setTitle("Park Adventure");
         palco.setResizable(true);

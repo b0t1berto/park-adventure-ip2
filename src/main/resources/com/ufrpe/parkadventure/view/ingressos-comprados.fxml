@@ -57,7 +57,7 @@
                <children>
                   <Button onAction="#onVerFilaVirtual" styleClass="botao-primario" text="Ver posição na fila virtual" />
                   <Button onAction="#onComprarIngresso" styleClass="botao-secundario" text="Comprar outro ingresso" />
-                  <Button fx:id="onVoltar" onAction="#onComprarIngresso" styleClass="botao-secundario" text="Voltar">
+                  <Button onAction="#onVoltar" styleClass="botao-secundario" text="Voltar">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>

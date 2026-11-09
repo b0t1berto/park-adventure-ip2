@@ -56,6 +56,7 @@
                   <ComboBox fx:id="cbOperador" prefWidth="200.0" styleClass="combo-box-base" />
                   <Button onAction="#onEscalar" styleClass="botao-primario" text="Escalar" />
                   <Button onAction="#onRemover" styleClass="botao-secundario" text="Remover linha" />
+                  <Button onAction="#onVoltar" styleClass="botao-secundario" text="Voltar" />
                </children>
             </HBox>
             <Label fx:id="lblStatus" maxWidth="Infinity" wrapText="true" />

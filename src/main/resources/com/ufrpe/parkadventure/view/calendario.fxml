@@ -50,6 +50,7 @@
                </children>
             </HBox>
             <Label fx:id="lblDetalhe" maxWidth="Infinity" minHeight="78.0" styleClass="detalhe" wrapText="true" />
+            <Button onAction="#onVoltar" styleClass="botao-secundario" text="Voltar" />
          </children>
          <BorderPane.margin>
             <Insets />

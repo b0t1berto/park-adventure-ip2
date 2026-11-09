@@ -3,11 +3,8 @@ package com.ufrpe.parkadventure.controller;
 import com.ufrpe.parkadventure.ParkAdventure;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -17,7 +14,7 @@ import java.util.UUID;
 public class PagamentoConfirmadoController {
 
     @FXML private Label lblSituacao, lblCodigo, lblForma, lblValor, lblData;
-    @FXML private Button btnNovoPedido, btnConcluir;
+    @FXML private Button btnReservar, btnNovoPedido, btnConcluir;
 
     @FXML
     private void initialize() {
@@ -34,21 +31,27 @@ public class PagamentoConfirmadoController {
         PedidoAtual.concluir(forma, valor);
     }
 
+    // Com o ingresso emitido já dá para reservar o fura-fila
+    @FXML
+    private void aoReservarFilaVirtual() {
+        ir("view/fila-virtual-cadastro.fxml");
+    }
+
     @FXML
     private void aoNovoPedido() {
-        try {
-            FXMLLoader loader = new FXMLLoader(
-                    ParkAdventure.class.getResource("view/menu.fxml"));
-            Scene scene = new Scene(loader.load());
-            Stage stage = (Stage) btnNovoPedido.getScene().getWindow();
-            stage.setScene(scene);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        ir("view/compra-ingressos.fxml");
     }
 
     @FXML
     private void aoConcluir() {
         Platform.exit();
+    }
+
+    private void ir(String fxml) {
+        try {
+            ParkAdventure.proximaCena(fxml);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
