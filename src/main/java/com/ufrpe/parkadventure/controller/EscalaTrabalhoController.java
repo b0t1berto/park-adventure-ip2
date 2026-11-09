@@ -5,6 +5,7 @@ import com.ufrpe.parkadventure.controller.controles.Tarefas;
 import com.ufrpe.parkadventure.model.atracao.Atracao;
 import com.ufrpe.parkadventure.model.pessoa.Operador;
 import com.ufrpe.parkadventure.repository.EscalaTrabalho.Turno;
+import com.ufrpe.parkadventure.repository.Persistencia;
 import com.ufrpe.parkadventure.view.Aviso;
 import com.ufrpe.parkadventure.view.Formatos;
 
@@ -155,6 +156,7 @@ public class EscalaTrabalhoController {
             return;
         }
         Aviso.sucesso(lblStatus, operador.getNome() + " escalado em " + Formatos.data(data) + ".");
+        Persistencia.salvar();
         atualizarTabela();
     }
 
@@ -167,6 +169,7 @@ public class EscalaTrabalhoController {
         }
         RepositorioEscalaDeTrabalhoController.remover(selecionada.turno());
         Aviso.sucesso(lblStatus, "Escala de " + selecionada.operador() + " em " + selecionada.data() + " removida.");
+        Persistencia.salvar();
         atualizarTabela();
     }
 

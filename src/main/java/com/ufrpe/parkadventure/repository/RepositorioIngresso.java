@@ -26,7 +26,7 @@ public class RepositorioIngresso {
     public ArrayList<Ingresso> listarPorVisitante(String visitante) {
         ArrayList<Ingresso> resultado = new ArrayList<>();
         for (Ingresso ingresso : ingressos) {
-            if (mesmoVisitante(ingresso, visitante)) {
+            if (ingresso.getVisitante().getNome() == visitante) {
                 resultado.add(ingresso);
             }
         }
@@ -37,7 +37,7 @@ public class RepositorioIngresso {
     public Ingresso buscarUltimo(String visitante) {
         Ingresso ultimo = null;
         for (Ingresso ingresso : ingressos) {
-            if (mesmoVisitante(ingresso, visitante)) {
+            if (ingresso.getVisitante().getNome() == visitante) {
                 ultimo = ingresso;
             }
         }
@@ -61,11 +61,5 @@ public class RepositorioIngresso {
 
     public ArrayList<Ingresso> listarTodos() {
         return ingressos;
-    }
-
-    // Compara pelo nome (sem diferenciar maiúsculas) em vez de comparar as referências das Strings
-    private boolean mesmoVisitante(Ingresso ingresso, String nome) {
-        String dono = ingresso.getVisitante().getNome();
-        return dono != null && nome != null && dono.trim().equalsIgnoreCase(nome.trim());
     }
 }

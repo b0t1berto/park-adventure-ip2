@@ -55,7 +55,7 @@ public class PagamentoCartaoController {
         lblValor.setText(String.format("R$ %.2f", total));
 
         cbParcelas.getItems().clear();
-        for (int i = 1; i <= 6; i++) {
+        for (int i = 2; i <= 6; i++) {
             cbParcelas.getItems().add(String.format("%dx de R$ %.2f sem juros", i, total / i));
         }
         cbParcelas.getSelectionModel().selectFirst();
@@ -102,6 +102,9 @@ public class PagamentoCartaoController {
     }
 
     private String validar() {
+        if (cbParcelas.getSelectionModel().getSelectedIndex() < 0)
+            return "Escolha o número de parcelas (mínimo 2x).";
+
         if (txtNumeroCartao.getText().replaceAll("\\D", "").length() != 16)
             return "Número do cartão inválido.";
 
