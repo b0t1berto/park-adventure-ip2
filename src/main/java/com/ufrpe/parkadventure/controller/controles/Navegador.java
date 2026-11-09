@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
+import com.ufrpe.parkadventure.ParkAdventure;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -39,14 +40,20 @@ public final class Navegador {
     }
 
     public static void ir(Tela tela) {
+        if (tela == null) throw new IllegalArgumentException("A tela de destino não foi informada.");
         URL arquivo = Navegador.class.getResource(PASTA_FXML + tela.getArquivoFxml());
         if (arquivo == null) {
             throw new IllegalStateException("Arquivo FXML não encontrado: " + tela.getArquivoFxml());
         }
         try {
             FXMLLoader loader = new FXMLLoader(arquivo);
-            Parent conteudo = loader.load(); 
-            moldura.setCenter(conteudo);
+            Parent conteudo = loader.load();
+            if (moldura != null) {
+                moldura.setCenter(conteudo);
+            } else {
+                // Algumas telas também são abertas fora do painel administrativo.
+                ParkAdventure.exibirConteudo(conteudo);
+            }
             telaAtual.set(tela);
         } catch (IOException e) {
             throw new UncheckedIOException("Não foi possível abrir a tela " + tela, e);

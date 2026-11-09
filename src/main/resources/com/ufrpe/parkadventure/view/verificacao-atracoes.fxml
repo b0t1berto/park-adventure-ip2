@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" styleClass="tela-parque" fx:controller="com.ufrpe.parkadventure.controller.VerificacaoAtracoesController">
+  <padding><Insets top="16" right="20" bottom="16" left="20" /></padding>
+  <top><VBox spacing="6"><children><Label text="Verificação de atrações" styleClass="titulo-tela" /><Label fx:id="lblVisitante" styleClass="subtitulo" wrapText="true" /></children><VBox.margin><Insets bottom="12" /></VBox.margin></VBox></top>
+  <center><TableView fx:id="tabela"><columns>
+    <TableColumn fx:id="colNome" text="Atração" prefWidth="150" /><TableColumn fx:id="colTipo" text="Tipo" prefWidth="100" /><TableColumn fx:id="colRequisitos" text="Requisitos" prefWidth="160" /><TableColumn fx:id="colOcupacao" text="Ocupação" prefWidth="90" /><TableColumn fx:id="colFila" text="Fila" prefWidth="100" /><TableColumn fx:id="colOperador" text="Operador" prefWidth="130" /><TableColumn fx:id="colSituacao" text="Situação" prefWidth="160" />
+  </columns><columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY" /></columnResizePolicy></TableView></center>
+  <bottom><VBox spacing="10"><children><HBox alignment="CENTER_LEFT" spacing="10"><children><Label text="Horário da fila:" /><ComboBox fx:id="cbHorario" promptText="Selecione o horário" /><Button text="Registrar acesso" styleClass="botao-primario" onAction="#onEntrar" wrapText="true" /><Button text="Entrar na fila virtual" styleClass="botao-secundario" onAction="#onEntrarNaFila" wrapText="true" /><Button text="Simular saída" onAction="#onSimularSaida" wrapText="true" /><Button text="Ver minha fila" onAction="#onVerFila" wrapText="true" /></children></HBox><Label fx:id="lblResultado" wrapText="true" /></children><VBox.margin><Insets top="12" /></VBox.margin></VBox></bottom>
+</BorderPane>
