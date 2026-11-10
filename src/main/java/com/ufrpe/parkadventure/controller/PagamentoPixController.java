@@ -4,7 +4,6 @@ import com.ufrpe.parkadventure.ParkAdventure;
 import javafx.animation.Timeline;
 import javafx.animation.KeyFrame;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -12,8 +11,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
-import javafx.stage.Stage;
 import javafx.util.Duration;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+import javafx.scene.image.Image;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -29,10 +36,16 @@ public class PagamentoPixController {
     private Timeline contagem;
     private int segundosRestantes = 300; // 5 minutos
     private double total;
+    private Scene cenaAnterior;   // formulário de pagamento, para o "Voltar" não perder o que foi digitado
+
+    public void setCenaAnterior(Scene cenaAnterior) {
+        this.cenaAnterior = cenaAnterior;
+    }
 
     @FXML
     private void initialize() {
         txtCodigoPix.setText("00020126-PARKADVENTURE-" + UUID.randomUUID());
+        gerarQrCode(txtCodigoPix.getText());
         atualizarTempo();
 
         contagem = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
@@ -54,14 +67,10 @@ public class PagamentoPixController {
         lblValor.setText(String.format("R$ %.2f", total));
     }
 
-    private void abrirConfirmacao(Stage stage, String forma, String situacao) {
+    private void abrirConfirmacao(String forma, String situacao) {
         try {
-            FXMLLoader loader = new FXMLLoader(
-                    ParkAdventure.class.getResource("view/pagamento-confirmado.fxml"));
-            Scene scene = ParkAdventure.criarCena(loader.load());
-            PagamentoConfirmadoController conf = loader.getController();
+            PagamentoConfirmadoController conf = ParkAdventure.substituirCena("view/pagamento-confirmado.fxml");
             conf.setDados(forma, total, situacao);
-            stage.setScene(scene);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -71,6 +80,18 @@ public class PagamentoPixController {
         int min = Math.max(segundosRestantes, 0) / 60;
         int seg = Math.max(segundosRestantes, 0) % 60;
         lblTempo.setText(String.format("Expira em %02d:%02d", min, seg));
+    }
+
+    private void gerarQrCode(String texto) {
+        try {
+            BitMatrix matriz = new QRCodeWriter().encode(texto, BarcodeFormat.QR_CODE, 400, 400);
+            ByteArrayOutputStream saida = new ByteArrayOutputStream();
+            MatrixToImageWriter.writeToStream(matriz, "PNG", saida);
+            ivQrCode.setImage(new Image(new ByteArrayInputStream(saida.toByteArray())));
+        } catch (WriterException | IOException e) {
+            lblStatus.setText("Não foi possível gerar o QR Code.");
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -84,21 +105,18 @@ public class PagamentoPixController {
     @FXML
     private void aoConfirmar() {
         contagem.stop();
-        abrirConfirmacao((Stage) btnJaPaguei.getScene().getWindow(),
-                "Pix", "Pagamento aprovado");
+        abrirConfirmacao("Pix", "Pagamento aprovado");
     }
 
     @FXML
     private void aoVoltar() {
         contagem.stop();
         try {
-            FXMLLoader loader = new FXMLLoader(
-                    ParkAdventure.class.getResource("view/pagamento.fxml"));
-            Scene scene = ParkAdventure.criarCena(loader.load());
-            Stage stage = (Stage) btnVoltar.getScene().getWindow();
-            PagamentoController p = loader.getController();
-            p.setResumo("Ingresso day use", LocalDate.now(), 1, total);
-            stage.setScene(scene);
+            if (cenaAnterior != null) {
+                ParkAdventure.restaurarCena(cenaAnterior, "view/pagamento.fxml");   // o formulário volta como estava
+            } else {
+                ParkAdventure.voltar();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

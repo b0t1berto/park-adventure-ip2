@@ -1,51 +1,58 @@
 package com.ufrpe.parkadventure.controller;
 
 import com.ufrpe.parkadventure.ParkAdventure;
+import com.ufrpe.parkadventure.model.pessoa.Visitante;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 public class LoginVisitanteController {
 
     @FXML
-    Button btVoltar;
-
-    @FXML
     Label lblBoasVindas;
 
-    @FXML 
+    @FXML
+    private void initialize() {
+        Visitante visitante = ContextoController.SESSAO.getVisitanteAtual();
+        if (visitante != null && lblBoasVindas != null) {
+            lblBoasVindas.setText("Bem-vindo, " + visitante.getNome() + "!");
+        }
+    }
+
+    @FXML
     void onComprarIngresso(ActionEvent event) {
-        try {
-            ParkAdventure.proximaCena("view/compra-ingressos.fxml");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        ir("view/compra-ingressos.fxml");
     }
 
-    @FXML 
+    @FXML
     void onVerIngresso(ActionEvent event) {
-        try {
-            ParkAdventure.proximaCena("view/ingressos-comprados.fxml");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        ir("view/ingressos-comprados.fxml");
     }
 
-    // @FXML 
-    // void onVerificarAtracao(ActionEvent event) {
-    //     try {
-    //         ParkAdventure.proximaCena("view/compra-ingressos.fxml");
-    //     } catch (Exception e) {
-    //         e.printStackTrace();
-    //     }
-    // }
+    @FXML
+    void onVerAtracoes(ActionEvent event) {
+        ir("view/verificacao-atracoes.fxml");
+    }
 
+    @FXML
+    void onMinhasReservas(ActionEvent event) {
+        ir("view/fila-virtual.fxml");
+    }
 
     @FXML
     void onVoltar(ActionEvent event) {
         try {
+            ContextoController.SESSAO.limpar();
             ParkAdventure.voltar();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void ir(String fxml) {
+        try {
+            ParkAdventure.proximaCena(fxml);
         } catch (Exception e) {
             e.printStackTrace();
         }

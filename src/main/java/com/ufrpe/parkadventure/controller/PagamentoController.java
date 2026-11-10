@@ -2,7 +2,6 @@ package com.ufrpe.parkadventure.controller;
 
 import com.ufrpe.parkadventure.ParkAdventure;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -96,33 +95,32 @@ public class PagamentoController {
             return;
         }
 
+        boolean menor = paneResponsavel.isVisible();
+        PedidoAtual.definirComprador(
+                txtNome.getText(), txtCpf.getText(), dpNascimento.getValue(), spAltura.getValue(),
+                txtEmail.getText(), txtTelefone.getText(),
+                menor ? txtNomeResponsavel.getText() : null,
+                menor ? txtCpfResponsavel.getText() : null,
+                menor ? txtContatoEmergencia.getText() : null);
+
         try {
-            Stage stage = (Stage) btnPagar.getScene().getWindow();
+            Scene formulario = btnPagar.getScene();   // o "Voltar" das próximas telas devolve este formulário como está
             Toggle escolhido = grupoPagamento.getSelectedToggle();
 
             if (escolhido == rbPix) {
-                FXMLLoader loader = new FXMLLoader(
-                        ParkAdventure.class.getResource("view/pagamento-pix.fxml"));
-                Scene scene = ParkAdventure.criarCena(loader.load());
-                PagamentoPixController pix = loader.getController();
+                PagamentoPixController pix = ParkAdventure.substituirCena("view/pagamento-pix.fxml");
+                pix.setCenaAnterior(formulario);
                 pix.setValor(total);
-                stage.setScene(scene);
 
             } else if (escolhido == rbCartao) {
-                FXMLLoader loader = new FXMLLoader(
-                        ParkAdventure.class.getResource("view/pagamento-cartao.fxml"));
-                Scene scene = ParkAdventure.criarCena(loader.load());
-                PagamentoCartaoController cartao = loader.getController();
+                PagamentoCartaoController cartao = ParkAdventure.substituirCena("view/pagamento-cartao.fxml");
+                cartao.setCenaAnterior(formulario);
                 cartao.setValor(total);
-                stage.setScene(scene);
 
             } else if (escolhido == rbBoleto) {
-                FXMLLoader loader = new FXMLLoader(
-                        ParkAdventure.class.getResource("view/pagamento-boleto.fxml"));
-                Scene scene = ParkAdventure.criarCena(loader.load());
-                PagamentoBoletoController boleto = loader.getController();
+                PagamentoBoletoController boleto = ParkAdventure.substituirCena("view/pagamento-boleto.fxml");
+                boleto.setCenaAnterior(formulario);
                 boleto.setValor(total);
-                stage.setScene(scene);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -131,6 +129,12 @@ public class PagamentoController {
 
     @FXML
     private void aoVoltar() {
+        try {
+            // volta para a tela anterior à compra (o redirecionamento não entra no histórico)
+            ParkAdventure.voltar();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private String validar() {

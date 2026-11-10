@@ -2,14 +2,12 @@ package com.ufrpe.parkadventure.controller;
 
 import com.ufrpe.parkadventure.ParkAdventure;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -23,6 +21,11 @@ public class PagamentoBoletoController {
     @FXML private Button btnCopiar, btnVoltar, btnConcluir;
 
     private double total;
+    private Scene cenaAnterior;   // formulário de pagamento, para o "Voltar" não perder o que foi digitado
+
+    public void setCenaAnterior(Scene cenaAnterior) {
+        this.cenaAnterior = cenaAnterior;
+    }
 
     @FXML
     private void initialize() {
@@ -39,14 +42,10 @@ public class PagamentoBoletoController {
         lblValor.setText(String.format("R$ %.2f", total));
     }
 
-    private void abrirConfirmacao(Stage stage, String forma, String situacao) {
+    private void abrirConfirmacao(String forma, String situacao) {
         try {
-            FXMLLoader loader = new FXMLLoader(
-                    ParkAdventure.class.getResource("view/pagamento-confirmado.fxml"));
-            Scene scene = ParkAdventure.criarCena(loader.load());
-            PagamentoConfirmadoController conf = loader.getController();
+            PagamentoConfirmadoController conf = ParkAdventure.substituirCena("view/pagamento-confirmado.fxml");
             conf.setDados(forma, total, situacao);
-            stage.setScene(scene);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -73,20 +72,17 @@ public class PagamentoBoletoController {
 
     @FXML
     private void aoConcluir() {
-        abrirConfirmacao((Stage) btnConcluir.getScene().getWindow(),
-                "Boleto", "Pedido registrado. O ingresso é liberado após a compensação (até 3 dias úteis).");
+        abrirConfirmacao("Boleto", "Pedido registrado. O ingresso é liberado após a compensação (até 3 dias úteis).");
     }
 
     @FXML
     private void aoVoltar() {
         try {
-            FXMLLoader loader = new FXMLLoader(
-                    ParkAdventure.class.getResource("view/pagamento.fxml"));
-            Scene scene = ParkAdventure.criarCena(loader.load());
-            Stage stage = (Stage) btnVoltar.getScene().getWindow();
-            PagamentoController p = loader.getController();
-            p.setResumo("Ingresso day use", LocalDate.now(), 1, total);
-            stage.setScene(scene);
+            if (cenaAnterior != null) {
+                ParkAdventure.restaurarCena(cenaAnterior, "view/pagamento.fxml");   // o formulário volta como estava
+            } else {
+                ParkAdventure.voltar();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

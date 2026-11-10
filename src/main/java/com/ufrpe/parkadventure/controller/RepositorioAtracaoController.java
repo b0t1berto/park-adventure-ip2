@@ -29,6 +29,14 @@ public class RepositorioAtracaoController {
         return repositorioAtracao.buscarOperador(nomeOperador);
     }
 
+    public static Atracao buscarAtracaoPorOperador(Operador operador) {
+        return repositorioAtracao.buscarAtracaoPorOperador(operador);
+    }
+
+    public static Operador buscarOperadorPorNome(String nome, String nomeAtracao) {
+        return repositorioAtracao.buscarOperadorPorNome(nome, nomeAtracao);
+    }
+
     public static boolean atualizar(String nome, Atracao atracaoAtualizada) {
         return repositorioAtracao.atualizar(nome, atracaoAtualizada);
     }

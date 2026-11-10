@@ -2,10 +2,8 @@ package com.ufrpe.parkadventure.controller;
 
 import com.ufrpe.parkadventure.ParkAdventure;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -20,6 +18,11 @@ public class PagamentoCartaoController {
     @FXML private Button btnVoltar, btnPagar;
 
     private double total;
+    private Scene cenaAnterior;   // formulário de pagamento, para o "Voltar" não perder o que foi digitado
+
+    public void setCenaAnterior(Scene cenaAnterior) {
+        this.cenaAnterior = cenaAnterior;
+    }
 
     @FXML
     private void initialize() {
@@ -61,14 +64,10 @@ public class PagamentoCartaoController {
         cbParcelas.getSelectionModel().selectFirst();
     }
 
-    private void abrirConfirmacao(Stage stage, String forma, String situacao) {
+    private void abrirConfirmacao(String forma, String situacao) {
         try {
-            FXMLLoader loader = new FXMLLoader(
-                    ParkAdventure.class.getResource("view/pagamento-confirmado.fxml"));
-            Scene scene = ParkAdventure.criarCena(loader.load());
-            PagamentoConfirmadoController conf = loader.getController();
+            PagamentoConfirmadoController conf = ParkAdventure.substituirCena("view/pagamento-confirmado.fxml");
             conf.setDados(forma, total, situacao);
-            stage.setScene(scene);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -82,20 +81,17 @@ public class PagamentoCartaoController {
             return;
         }
 
-        abrirConfirmacao((Stage) btnPagar.getScene().getWindow(),
-                "Cartão de crédito", "Pagamento aprovado");
+        abrirConfirmacao("Cartão de crédito", "Pagamento aprovado");
     }
 
     @FXML
     private void aoVoltar() {
         try {
-            FXMLLoader loader = new FXMLLoader(
-                    ParkAdventure.class.getResource("view/pagamento.fxml"));
-            Scene scene = ParkAdventure.criarCena(loader.load());
-            Stage stage = (Stage) btnVoltar.getScene().getWindow();
-            PagamentoController p = loader.getController();
-            p.setResumo("Ingresso day use", LocalDate.now(), 1, total);
-            stage.setScene(scene);
+            if (cenaAnterior != null) {
+                ParkAdventure.restaurarCena(cenaAnterior, "view/pagamento.fxml");   // o formulário volta como estava
+            } else {
+                ParkAdventure.voltar();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -3,7 +3,12 @@ package com.ufrpe.parkadventure.repository;
 import com.ufrpe.parkadventure.controller.RepositorioAtracaoController;
 import com.ufrpe.parkadventure.controller.RepositorioVisitanteController;
 import com.ufrpe.parkadventure.controller.RepositorioIngressoController;
+import com.ufrpe.parkadventure.model.atracao.Aquatico;
 import com.ufrpe.parkadventure.model.atracao.Atracao;
+import com.ufrpe.parkadventure.model.atracao.EstadoReserva;
+import com.ufrpe.parkadventure.model.atracao.Infantil;
+import com.ufrpe.parkadventure.model.atracao.Radical;
+import com.ufrpe.parkadventure.model.atracao.Reserva;
 import com.ufrpe.parkadventure.model.ingresso.Ingresso;
 import com.ufrpe.parkadventure.model.ingresso.TipoIngresso;
 import com.ufrpe.parkadventure.model.pessoa.Operador;
@@ -16,6 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,11 +30,10 @@ public final class Persistencia {
     private Persistencia() { }
 
     private static final DateTimeFormatter DATA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static final DateTimeFormatter HORA = DateTimeFormatter.ofPattern("HH:mm");
     private static final String SEPARADOR = "\t";
     private static Path arquivo = localizarArquivo();
 
-    // Sobe a partir da pasta atual até achar o pom.xml (a raiz do projeto) e usa <raiz>/dados/dados.txt.
-    // Assim o arquivo é o mesmo, não importa de onde o programa foi iniciado.
     private static Path localizarArquivo() {
         Path atual = Paths.get("").toAbsolutePath();
         for (Path pasta = atual; pasta != null; pasta = pasta.getParent()) {
@@ -55,6 +60,10 @@ public final class Persistencia {
             System.err.println("Não foi possível ler " + arquivo + ": " + e.getMessage());
             return;
         }
+        // atrações primeiro: operadores e reservas dependem delas
+        for (String linha : linhas) {
+            lerLinha(linha, 'A');
+        }
         for (String linha : linhas) {
             lerLinha(linha, 'V');
         }
@@ -63,6 +72,10 @@ public final class Persistencia {
         }
         for (String linha : linhas) {
             lerLinha(linha, 'I');
+        }
+        // reservas por último: dependem de visitantes e atrações
+        for (String linha : linhas) {
+            lerLinha(linha, 'R');
         }
     }
 
@@ -73,9 +86,11 @@ public final class Persistencia {
         String[] c = linha.split(SEPARADOR, -1);
         try {
             switch (tipo) {
+                case 'A' -> lerAtracao(c);
                 case 'V' -> lerVisitante(c);
                 case 'O' -> lerOperador(c);
                 case 'I' -> lerIngresso(c);
+                case 'R' -> lerReserva(c);
                 default -> { }
             }
         } catch (RuntimeException e) {
@@ -83,11 +98,45 @@ public final class Persistencia {
         }
     }
 
+    // A <nome> <tipo> <capacidade> <altura> <idade>   (na Infantil, altura e idade são os limites máximos)
+    private static void lerAtracao(String[] c) {
+        String nome = c[1];
+        int capacidade = Integer.parseInt(c[3]);
+        int altura = Integer.parseInt(c[4]);
+        int idade = Integer.parseInt(c[5]);
+        Atracao atracao = switch (c[2]) {
+            case "Aquatico" -> new Aquatico(nome, capacidade, null, altura, idade);
+            case "Infantil" -> new Infantil(nome, capacidade, null, altura, idade);
+            case "Radical" -> new Radical(nome, capacidade, null, altura, idade);
+            default -> null;
+        };
+        if (atracao != null) {
+            RepositorioAtracaoController.cadastrar(atracao);
+        }
+    }
+
+    // R <visitante> <atração> <data> <horário> <estado>
+    private static void lerReserva(String[] c) {
+        Visitante visitante = RepositorioVisitanteController.buscarVisitante(c[1]);
+        Atracao atracao = RepositorioAtracaoController.buscar(c[2]);
+        if (visitante == null || atracao == null) {
+            return;
+        }
+        atracao.getFilaVirtual().restaurar(visitante, LocalDate.parse(c[3], DATA),
+                LocalTime.parse(c[4], HORA), EstadoReserva.valueOf(c[5]));
+    }
+
     private static void lerVisitante(String[] c) {
         Visitante visitante = new Visitante(c[1], c[2], vazioParaNulo(c[3]), Integer.parseInt(c[4]));
         if (!c[5].isEmpty()) {
-            visitante.setResponsavel(new Responsavel(c[5], c[6], vazioParaNulo(c[7])));
+            Responsavel responsavel = c[6].isEmpty()
+                    ? new Responsavel(c[5], (LocalDate) null, vazioParaNulo(c[7]))
+                    : new Responsavel(c[5], c[6], vazioParaNulo(c[7]));
+            responsavel.setContatoEmergencia(vazioParaNulo(campo(c, 8)));
+            visitante.setResponsavel(responsavel);
         }
+        visitante.setEmail(vazioParaNulo(campo(c, 9)));
+        visitante.setTelefone(vazioParaNulo(campo(c, 10)));
         RepositorioVisitanteController.cadastrarVisitante(visitante);
     }
 
@@ -113,7 +162,9 @@ public final class Persistencia {
                 return;
             }
         }
-        RepositorioIngressoController.cadastrarIngresso(new Ingresso(visitante, tipo, compra, validade, Double.parseDouble(c[5])));
+        Ingresso novo = new Ingresso(visitante, tipo, compra, validade, Double.parseDouble(c[5]));
+        novo.setFormaPagamento(vazioParaNulo(campo(c, 6)));
+        RepositorioIngressoController.cadastrarIngresso(novo);
     }
 
     public static synchronized void salvar() {
@@ -126,7 +177,17 @@ public final class Persistencia {
                     String.valueOf(v.getAltura()),
                     r == null ? "" : texto(r.getNome()),
                     r == null ? "" : data(r.getDataNascimento()),
-                    r == null ? "" : texto(r.getCpf())));
+                    r == null ? "" : texto(r.getCpf()),
+                    r == null ? "" : texto(r.getContatoEmergencia()),
+                    texto(v.getEmail()), texto(v.getTelefone())));
+        }
+
+        for (Atracao a : RepositorioAtracaoController.listarTodas()) {
+            boolean infantil = a instanceof Infantil;
+            linhas.add(String.join(SEPARADOR, "A", texto(a.getNome()), a.getTipo(),
+                    String.valueOf(a.getCapacidadeMaxima()),
+                    String.valueOf(infantil ? ((Infantil) a).getAlturaMaxima() : a.getAlturaMinima()),
+                    String.valueOf(infantil ? ((Infantil) a).getIdadeMaxima() : a.getIdadeMinima())));
         }
 
         for (Atracao a : RepositorioAtracaoController.listarTodas()) {
@@ -145,7 +206,19 @@ public final class Persistencia {
             linhas.add(String.join(SEPARADOR, "I",
                     texto(i.getVisitante().getNome()), i.getTipoIngresso().name(),
                     data(i.getDataCompra()), data(i.getDataValidade()),
-                    String.valueOf(i.getValor())));
+                    String.valueOf(i.getValor()), texto(i.getFormaPagamento())));
+        }
+
+        // reservas do fura-fila de hoje em diante (as antigas não precisam ser guardadas)
+        LocalDate hoje = LocalDate.now();
+        for (Atracao a : RepositorioAtracaoController.listarTodas()) {
+            for (Reserva r : a.getFilaVirtual().getReservas()) {
+                if (r.getVisitante() == null || r.getData().isBefore(hoje)) {
+                    continue;
+                }
+                linhas.add(String.join(SEPARADOR, "R", texto(r.getVisitante().getNome()), texto(a.getNome()),
+                        data(r.getData()), r.getHorario().format(HORA), r.getEstado().name()));
+            }
         }
 
         try {
@@ -163,6 +236,10 @@ public final class Persistencia {
 
     private static String data(LocalDate valor) {
         return valor == null ? "" : valor.format(DATA);
+    }
+
+    private static String campo(String[] c, int indice) {
+        return indice < c.length ? c[indice] : "";
     }
 
     private static String vazioParaNulo(String valor) {

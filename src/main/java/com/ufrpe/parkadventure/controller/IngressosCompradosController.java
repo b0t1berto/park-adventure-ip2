@@ -4,8 +4,6 @@ import com.ufrpe.parkadventure.model.ingresso.Ingresso;
 import com.ufrpe.parkadventure.model.pessoa.Visitante;
 import com.ufrpe.parkadventure.view.Formatos;
 import com.ufrpe.parkadventure.ParkAdventure;
-import com.ufrpe.parkadventure.controller.controles.Navegador;
-import com.ufrpe.parkadventure.controller.controles.Navegador.Tela;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -38,7 +36,7 @@ public class IngressosCompradosController {
 
         Visitante visitante = ContextoController.SESSAO.getVisitanteAtual();
         if (visitante == null) {
-            lblVisitante.setText("Escolha um visitante na caixa do topo da janela.");
+            lblVisitante.setText("Faça login para ver seus ingressos.");
             lblResumo.setText("");
             return;
         }
@@ -66,18 +64,26 @@ public class IngressosCompradosController {
 
     @FXML
     private void onVerFilaVirtual() {
-        Navegador.ir(Tela.FILA_VIRTUAL);
+        ir("view/fila-virtual.fxml");
     }
 
     @FXML
     private void onComprarIngresso() {
-        Navegador.ir(Tela.INGRESSO);
+        ir("view/compra-ingressos.fxml");
     }
 
     @FXML 
     private void onVoltar() {
         try {
             ParkAdventure.voltar();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void ir(String fxml) {
+        try {
+            ParkAdventure.proximaCena(fxml);
         } catch (Exception e) {
             e.printStackTrace();
         }

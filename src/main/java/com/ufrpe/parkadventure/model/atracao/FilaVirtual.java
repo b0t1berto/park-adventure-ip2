@@ -1,152 +1,206 @@
 package com.ufrpe.parkadventure.model.atracao;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
-import java.util.TreeMap;
 import com.ufrpe.parkadventure.model.pessoa.Visitante;
 
-// filas virtuais divididas apenas por horários (das 11:00 às 18:00, de 30 em 30 minutos)
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.function.IntSupplier;
+
+// Fura-fila FÍSICO: o visitante reserva um horário; no dia, apresenta-se ao operador
+// dentro da janela [horário, horário + TOLERANCIA] e passa na frente da fila comum.
 public class FilaVirtual {
-    private final int capacidadeMaximaPorHora;
-    // fila de visitantes para aquele horário específico
-    private final Map<String, Queue<Visitante>> filasPorHorario = new TreeMap<>(); // TreeMap mantém os horários em ordem
+    public enum ResultadoReserva { OK, HORARIO_INVALIDO, JA_RESERVOU_NESTA_ATRACAO, HORARIO_CHEIO }
 
-    public FilaVirtual(int capacidadeMaximaPorHora) {
-        this.capacidadeMaximaPorHora = capacidadeMaximaPorHora;
-        inicializarHorarios();
+    public static final Duration TOLERANCIA = Duration.ofMinutes(15);
+    private static final LocalTime ABERTURA = LocalTime.of(11, 0);
+    private static final LocalTime FECHAMENTO = LocalTime.of(18, 0);
+
+    private final IntSupplier vagasPorHorario;
+    private final List<Reserva> reservas = new ArrayList<>();
+
+    public FilaVirtual(int vagasPorHorario) {
+        this(() -> vagasPorHorario);
     }
 
-    private void inicializarHorarios() {
-        String[] horariosValidos = {
-                "11:00", "11:30", "12:00", "12:30",
-                "13:00", "13:30", "14:00", "14:30",
-                "15:00", "15:30", "16:00", "16:30",
-                "17:00", "17:30", "18:00"
-        };
+    // Aceita um fornecedor para que a cota acompanhe a capacidade da atração, mesmo se ela for editada
+    public FilaVirtual(IntSupplier vagasPorHorario) {
+        this.vagasPorHorario = vagasPorHorario;
+    }
 
-        for (String horario : horariosValidos) {
-            filasPorHorario.put(horario, new LinkedList<>());
+    // Única fonte dos horários (a tela e a validação usam esta lista)
+    public static List<LocalTime> horarios() {
+        List<LocalTime> lista = new ArrayList<>();
+        for (LocalTime h = ABERTURA; !h.isAfter(FECHAMENTO); h = h.plusMinutes(30)) {
+            lista.add(h);
         }
+        return lista;
     }
 
-    public boolean validarHorario(String horario) { // Horários válidos das 11:00 às 18:00 de 30 em 30 min
-        return horario != null && horario.matches("^(1[1-7]:(00|30)|18:00)$");
+    public static boolean horarioValido(LocalTime horario) {
+        return horario != null && horarios().contains(horario);
     }
-    // Adiciona visitante a uma fila específica de um horário
-    public boolean adicionar(String horario, Visitante visitante) {
-        if (visitante == null || !validarHorario(horario)) {
+
+    public int getVagasPorHorario() { return vagasPorHorario.getAsInt(); }
+
+    public ResultadoReserva reservar(Visitante visitante, LocalDate data, LocalTime horario) {
+        if (visitante == null || data == null || !horarioValido(horario)) {
+            return ResultadoReserva.HORARIO_INVALIDO;
+        }
+        if (reservaAtiva(visitante, data) != null) {
+            return ResultadoReserva.JA_RESERVOU_NESTA_ATRACAO;
+        }
+        if (vagasRestantes(data, horario) <= 0) {
+            return ResultadoReserva.HORARIO_CHEIO;
+        }
+        reservas.add(new Reserva(visitante, data, horario));
+        return ResultadoReserva.OK;
+    }
+
+    public boolean cancelar(Visitante visitante, LocalDate data) {
+        Reserva r = reservaAtiva(visitante, data);
+        if (r == null) {
             return false;
         }
-        // Cria a fila se ela ainda não existir
-        Queue<Visitante> filaHora = filasPorHorario.computeIfAbsent(horario, k -> new LinkedList<>());
+        r.marcar(EstadoReserva.CANCELADA);
+        return true;
+    }
 
-        if (filaHora.size() >= capacidadeMaximaPorHora) {
-            return false; // cheia
-        }
-
-        return filaHora.add(visitante);
-    }
-    // Remove e retorna o próximo visitante de um determinado horário
-    public Visitante proximo(String horario) {
-        if (!validarHorario(horario)) {
-            return null;
-        }
-        Queue<Visitante> filaHora = filasPorHorario.get(horario);
-        if (filaHora != null) {
-            return filaHora.poll();
-        }
-        return null;
-    }
-    // Retorna o tamanho da fila de um horário específico
-    public int tamanho(String horario) {
-        if (!validarHorario(horario)) {
-            return 0;
-        }
-        Queue<Visitante> filaHora = filasPorHorario.get(horario);
-        return (filaHora != null) ? filaHora.size() : 0;
-    }
-    // Verifica se a fila de um horário está vazia
-    public boolean estaVazia(String horario) {
-        if (!validarHorario(horario)) {
-            return true;
-        }
-        Queue<Visitante> filaHora = filasPorHorario.get(horario);
-        return filaHora == null || filaHora.isEmpty();
-    }
-    // Chama o próximo da fila: o horário mais cedo que tiver gente esperando (FIFO dentro do horário)
-    public Visitante proximo() {
-        for (Queue<Visitante> filaHora : filasPorHorario.values()) {
-            if (!filaHora.isEmpty()) {
-                return filaHora.poll();
+    public Reserva reservaAtiva(Visitante visitante, LocalDate data) {
+        for (Reserva r : reservas) {
+            if (r.estaAtiva() && r.getVisitante() == visitante && r.getData().equals(data)) {
+                return r;
             }
         }
         return null;
     }
-    // Verifica se não há ninguém esperando em nenhum horário
-    public boolean estaVazia() {
-        return tamanhoTotal() == 0;
+
+    public boolean temReservaEm(Visitante visitante, LocalDate data, LocalTime horario) {
+        Reserva r = reservaAtiva(visitante, data);
+        return r != null && r.getHorario().equals(horario);
     }
-    // Total de visitantes esperando, somando todos os horários
-    public int tamanhoTotal() {
+
+    public int vagasRestantes(LocalDate data, LocalTime horario) {
+        long usadas = reservas.stream()
+                .filter(r -> r.estaAtiva() && r.getData().equals(data) && r.getHorario().equals(horario))
+                .count();
+        return getVagasPorHorario() - (int) usadas;
+    }
+
+    // Reserva que PODE passar agora: ativa e dentro da janela. null se não pode.
+    public Reserva elegivel(Visitante visitante, LocalDateTime agora) {
+        Reserva r = reservaAtiva(visitante, agora.toLocalDate());
+        if (r == null) {
+            return null;
+        }
+        LocalDateTime inicio = LocalDateTime.of(r.getData(), r.getHorario());
+        boolean dentro = !agora.isBefore(inicio) && !agora.isAfter(inicio.plus(TOLERANCIA));
+        return dentro ? r : null;
+    }
+
+    public void marcarUsada(Reserva reserva) {
+        reserva.marcar(EstadoReserva.USADA);
+    }
+
+    // Quem passou da tolerância sem aparecer vira NO_SHOW (libera a vaga)
+    public int expirarNoShows(LocalDateTime agora) {
         int total = 0;
-        for (Queue<Visitante> filaHora : filasPorHorario.values()) {
-            total += filaHora.size();
+        for (Reserva r : reservas) {
+            LocalDateTime fim = LocalDateTime.of(r.getData(), r.getHorario()).plus(TOLERANCIA);
+            if (r.estaAtiva() && agora.isAfter(fim)) {
+                r.marcar(EstadoReserva.NO_SHOW);
+                total++;
+            }
         }
         return total;
     }
-    // Horários disponíveis, em ordem
-    public List<String> getHorarios() {
-        return new ArrayList<>(filasPorHorario.keySet());
-    }
-    public int getCapacidadeMaximaPorHora() {
-        return capacidadeMaximaPorHora;
-    }
 
-    // Horário em que o visitante está esperando (null se não está na fila)
-    public String horarioDe(Visitante visitante) {
-        for (Map.Entry<String, Queue<Visitante>> entrada : filasPorHorario.entrySet()) {
-            if (entrada.getValue().contains(visitante)) {
-                return entrada.getKey();
+    // Quem o operador pode esperar agora, em ordem de horário
+    public List<Reserva> chamadaAtual(LocalDateTime agora) {
+        List<Reserva> lista = new ArrayList<>();
+        for (Reserva r : reservas) {
+            if (elegivel(r.getVisitante(), agora) == r) {
+                lista.add(r);
             }
         }
-        return null;
+        lista.sort(Comparator.comparing(Reserva::getHorario));
+        return lista;
     }
 
-    public boolean contem(Visitante visitante) {
-        return horarioDe(visitante) != null;
+    // Todas as reservas de um dia (qualquer estado), em ordem de horário
+    public List<Reserva> reservasDoDia(LocalDate data) {
+        List<Reserva> lista = new ArrayList<>();
+        for (Reserva r : reservas) {
+            if (r.getData().equals(data)) {
+                lista.add(r);
+            }
+        }
+        lista.sort(Comparator.comparing(Reserva::getHorario));
+        return lista;
     }
 
-    // Posição (1, 2, 3...) dentro da fila do próprio horário; 0 se não estiver nela
-    public int posicaoNoHorario(String horario, Visitante visitante) {
-        Queue<Visitante> filaHora = filasPorHorario.get(horario);
-        if (filaHora == null) {
+    // Todas as reservas de um visitante (qualquer estado e data)
+    public List<Reserva> reservasDe(Visitante visitante) {
+        List<Reserva> lista = new ArrayList<>();
+        for (Reserva r : reservas) {
+            if (r.getVisitante() == visitante) {
+                lista.add(r);
+            }
+        }
+        lista.sort(Comparator.comparing(Reserva::getData).thenComparing(Reserva::getHorario));
+        return lista;
+    }
+
+    // Posição (1, 2, 3...) do visitante entre as reservas ativas do mesmo horário; 0 se não tiver
+    public int posicaoNoHorario(Visitante visitante, LocalDate data) {
+        Reserva alvo = reservaAtiva(visitante, data);
+        if (alvo == null) {
             return 0;
         }
-        int posicao = 1;
-        for (Visitante v : filaHora) {          // a LinkedList percorre na ordem de chegada (FIFO)
-            if (v == visitante) {
-                return posicao;
+        int posicao = 0;
+        for (Reserva r : reservas) {
+            if (r.estaAtiva() && r.getData().equals(data) && r.getHorario().equals(alvo.getHorario())) {
+                posicao++;
+                if (r == alvo) {
+                    return posicao;
+                }
             }
-            posicao++;
         }
         return 0;
     }
 
-    // Posição na ORDEM DE CHAMADA da atração: mesma regra do método proximo()
-    // (horário mais cedo primeiro; dentro do horário, quem chegou antes).
-    // Retorna 0 se o visitante não está esperando.
-    public int posicaoGeral(Visitante visitante) {
-        int pessoasAntes = 0;
-        for (Map.Entry<String, Queue<Visitante>> entrada : filasPorHorario.entrySet()) {
-            int posicao = posicaoNoHorario(entrada.getKey(), visitante);
-            if (posicao > 0) {
-                return pessoasAntes + posicao;
-            }
-            pessoasAntes += entrada.getValue().size();   // todo mundo desse horário passa na frente
+    public int totalAtivas(LocalDate data) {
+        return (int) reservas.stream().filter(r -> r.estaAtiva() && r.getData().equals(data)).count();
+    }
+
+    // Quantidade de reservas ativas (qualquer dia)
+    public int tamanhoTotal() {
+        return (int) reservas.stream().filter(Reserva::estaAtiva).count();
+    }
+
+    public List<Reserva> getReservas() {
+        return Collections.unmodifiableList(reservas);
+    }
+
+    // Usado ao carregar o arquivo de dados: recoloca uma reserva com o estado que ela tinha
+    public void restaurar(Visitante visitante, LocalDate data, LocalTime horario, EstadoReserva estado) {
+        if (visitante == null || data == null || !horarioValido(horario) || estado == null) {
+            return;
         }
-        return 0;
+        Reserva r = new Reserva(visitante, data, horario);
+        r.marcar(estado);
+        reservas.add(r);
+    }
+
+    // Usado quando uma atração é editada: a nova versão herda as reservas da antiga
+    public void copiarReservasDe(FilaVirtual outra) {
+        if (outra != null && outra != this) {
+            reservas.addAll(outra.reservas);
+        }
     }
 }

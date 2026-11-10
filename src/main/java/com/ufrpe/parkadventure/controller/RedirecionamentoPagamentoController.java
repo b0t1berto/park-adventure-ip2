@@ -3,10 +3,7 @@ package com.ufrpe.parkadventure.controller;
 import com.ufrpe.parkadventure.ParkAdventure;
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -28,15 +25,9 @@ public class RedirecionamentoPagamentoController {
         PauseTransition pausa = new PauseTransition(Duration.seconds(2));
         pausa.setOnFinished(e -> {
             try {
-                FXMLLoader loader = new FXMLLoader(
-                        ParkAdventure.class.getResource("view/pagamento.fxml"));
-                Scene scene = ParkAdventure.criarCena(loader.load());
-
-                PagamentoController pagamento = loader.getController();
-                pagamento.setResumo("Ingresso day use", dataVisita, 1, 120.00);
-
-                Stage stage = (Stage) lblMensagem.getScene().getWindow();
-                stage.setScene(scene);
+                // a tela de redirecionamento é só de passagem: não entra no histórico
+                PagamentoController pagamento = ParkAdventure.substituirCena("view/pagamento.fxml");
+                pagamento.setResumo("Ingresso day use", PedidoAtual.getDataVisita(), 1, 120.00);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }

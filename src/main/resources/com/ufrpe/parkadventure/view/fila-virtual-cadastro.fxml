@@ -22,8 +22,8 @@
             <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
          </padding>
          <children>
-            <Label styleClass="titulo-fila" text="Fila virtual" />
-            <Label styleClass="subtitulo-fila" text="Escolha a atração e o horário para garantir sua vez" />
+            <Label styleClass="titulo-fila" text="Fura-fila" />
+            <Label styleClass="subtitulo-fila" text="Reserve um horário: no dia, apresente-se ao operador dentro da janela" />
             <ImageView fitHeight="64.0" pickOnBounds="true" preserveRatio="true" styleClass="logo-parque">
                <image>
                   <Image url="@imagens/logo.png" />
@@ -49,6 +49,8 @@
             </HBox>
             <Label styleClass="rotulo-campo" text="Atração" />
             <ComboBox fx:id="cbAtracao" maxWidth="1.7976931348623157E308" prefWidth="150.0" promptText="Selecione uma atração" />
+            <Label styleClass="rotulo-campo" text="Dia" />
+            <ComboBox fx:id="cbData" maxWidth="1.7976931348623157E308" prefWidth="150.0" promptText="Selecione o dia da visita" />
             <Label styleClass="rotulo-campo" text="Horário" />
             <ComboBox fx:id="cbHorario" maxWidth="1.7976931348623157E308" prefWidth="150.0" promptText="Selecione um horário (11:00 às 18:00)" />
             <Label fx:id="lblDetalhe" styleClass="detalhe-fila" wrapText="true" />
@@ -69,7 +71,7 @@
          </padding>
          <children>
             <Button fx:id="btnVoltar" mnemonicParsing="false" onAction="#aoVoltar" styleClass="botao-secundario" text="Voltar" />
-            <Button fx:id="btnEntrar" mnemonicParsing="false" onAction="#aoEntrarNaFila" styleClass="botao-primario" text="Entrar na fila" />
+            <Button fx:id="btnEntrar" mnemonicParsing="false" onAction="#aoEntrarNaFila" styleClass="botao-primario" text="Reservar fura-fila" />
          </children>
       </HBox>
    </bottom>

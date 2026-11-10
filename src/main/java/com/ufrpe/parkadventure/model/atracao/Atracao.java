@@ -4,7 +4,10 @@ import com.ufrpe.parkadventure.model.pessoa.Operador;
 import com.ufrpe.parkadventure.model.pessoa.Visitante;
 
 public abstract class Atracao implements IRestricao {
-    private static final int CAPACIDADE_FILA_PADRAO = 50;
+    // A cota do fura-fila acompanha a vazão da atração: capacidade x ciclos em 30 min x % de prioridade.
+    // Ajuste estas duas constantes conforme a duração real de cada ciclo.
+    private static final int CICLOS_POR_MEIA_HORA = 6;
+    private static final double PERCENTUAL_FURA_FILA = 0.20;
 
     private String nome;
     private int capacidadeMaxima;
@@ -12,7 +15,7 @@ public abstract class Atracao implements IRestricao {
     private int alturaMinima;
     private int idadeMinima;
     private int ocupacaoAtual;
-    private final FilaVirtual filaVirtual = new FilaVirtual(CAPACIDADE_FILA_PADRAO);
+    private final FilaVirtual filaVirtual = new FilaVirtual(this::vagasFuraFilaPorHorario);
 
     protected Atracao(String nome, int capacidadeMaxima, Operador operador, int alturaMinima, int idadeMinima) {
         this.nome = nome;
@@ -56,6 +59,29 @@ public abstract class Atracao implements IRestricao {
         if (ocupacaoAtual > 0) {
             ocupacaoAtual--;
         }
+    }
+
+    // Correção manual feita pelo operador (ex.: o programa foi reiniciado com gente dentro)
+    public boolean ajustarOcupacao(int novaOcupacao) {
+        if (novaOcupacao < 0 || novaOcupacao > capacidadeMaxima) {
+            return false;
+        }
+        ocupacaoAtual = novaOcupacao;
+        return true;
+    }
+
+    // Vagas de fura-fila por horário (meia hora), sempre pelo menos 1
+    public final int vagasFuraFilaPorHorario() {
+        return Math.max(1, (int) Math.round(capacidadeMaxima * CICLOS_POR_MEIA_HORA * PERCENTUAL_FURA_FILA));
+    }
+
+    // Ao editar uma atração, a nova versão continua com a ocupação e as reservas da anterior
+    public void herdarEstadoDe(Atracao anterior) {
+        if (anterior == null || anterior == this) {
+            return;
+        }
+        this.ocupacaoAtual = Math.min(anterior.ocupacaoAtual, this.capacidadeMaxima);
+        this.filaVirtual.copiarReservasDe(anterior.filaVirtual);
     }
 
     public boolean estaLotada() { return ocupacaoAtual >= capacidadeMaxima; }
