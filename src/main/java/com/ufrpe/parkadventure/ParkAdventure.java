@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.List;
 
 public class ParkAdventure extends Application {
     // =============================================
@@ -74,5 +75,37 @@ public class ParkAdventure extends Application {
             String telaAnteriorFxml = historico.pop();
             navegar(telaAnteriorFxml);
         }
+    }
+
+    // =============================================
+    // || SUBSTITUIR A TELA (sem entrar no histórico)
+    // =============================================
+    // Troca a tela atual por outra e devolve o controller da nova tela, para quem chamou poder
+    // passar dados (ex.: setValor). A tela que sai NÃO vai para o histórico, então o "voltar"
+    // da nova tela leva para a que veio antes dela. A janela ajusta ao tamanho preferido do FXML.
+    public static <T> T substituirCena(String fxml) throws IOException {
+        FXMLLoader loader = new FXMLLoader(ParkAdventure.class.getResource(fxml));
+        Parent raiz = loader.load();
+        fxmlAtual = fxml;
+        palcoPrimario.setScene(new Scene(raiz));
+        palcoPrimario.centerOnScreen();
+        return loader.getController();
+    }
+
+    // Igual à anterior, para quando não precisa do controller
+    public static void substituirCenaPadrao(String fxml) throws IOException {
+        substituirCena(fxml);
+    }
+
+    // Volta para uma cena já carregada (ex.: o formulário de pagamento, com o que foi digitado)
+    public static void restaurarCena(Scene cena, String fxml) {
+        fxmlAtual = fxml;
+        palcoPrimario.setScene(cena);
+        palcoPrimario.centerOnScreen();
+    }
+
+    // Remove telas do histórico (ex.: depois de pagar, "voltar" não deve reabrir a compra)
+    public static void descartarHistorico(String... fxmls) {
+        historico.removeAll(List.of(fxmls));
     }
 }

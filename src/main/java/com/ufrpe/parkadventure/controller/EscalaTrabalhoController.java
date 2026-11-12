@@ -4,6 +4,7 @@ import com.ufrpe.parkadventure.ParkAdventure;
 import com.ufrpe.parkadventure.controller.controles.Tarefas;
 import com.ufrpe.parkadventure.model.atracao.Atracao;
 import com.ufrpe.parkadventure.model.pessoa.Operador;
+import com.ufrpe.parkadventure.repository.Persistencia;
 import com.ufrpe.parkadventure.repository.EscalaTrabalho.Turno;
 import com.ufrpe.parkadventure.view.Aviso;
 import com.ufrpe.parkadventure.view.Formatos;
@@ -154,6 +155,7 @@ public class EscalaTrabalhoController {
             Aviso.erro(lblStatus, operador.getNome() + " já está escalado em " + Formatos.data(data) + ".");
             return;
         }
+        Persistencia.salvar();
         Aviso.sucesso(lblStatus, operador.getNome() + " escalado em " + Formatos.data(data) + ".");
         atualizarTabela();
     }
@@ -166,6 +168,7 @@ public class EscalaTrabalhoController {
             return;
         }
         RepositorioEscalaDeTrabalhoController.remover(selecionada.turno());
+        Persistencia.salvar();
         Aviso.sucesso(lblStatus, "Escala de " + selecionada.operador() + " em " + selecionada.data() + " removida.");
         atualizarTabela();
     }
