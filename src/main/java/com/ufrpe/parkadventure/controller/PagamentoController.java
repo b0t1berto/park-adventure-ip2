@@ -64,6 +64,7 @@ public class PagamentoController {
     public void setResumo(String item, LocalDate data, int quantidade, double total) {
         this.total = total;
         lblItem.setText(item);
+        lblItem.setWrapText(true);
         lblDataVisita.setText(data.toString());
         lblQuantidade.setText(String.valueOf(quantidade));
         lblTotal.setText(String.format("R$ %.2f", total));
