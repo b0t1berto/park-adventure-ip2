@@ -12,12 +12,12 @@ public class RepositorioIngressoController {
         return repositorioIngresso.cadastrar(ingresso);
     }
 
-    public static ArrayList<Ingresso> listarPorVisitante(String visitante) {
-        return repositorioIngresso.listarPorVisitante(visitante);
+    public static ArrayList<Ingresso> listarPorVisitante(String nomeVisitante) {
+        return repositorioIngresso.listarPorVisitante(nomeVisitante);
     }
 
-    public static Ingresso buscarUltimo(String visitante) {
-        return repositorioIngresso.buscarUltimo(visitante);
+    public static Ingresso buscarUltimo(String nomeVisitante) {
+        return repositorioIngresso.buscarUltimo(nomeVisitante);
     }
 
     public static int consultarQuantidadePorData(java.time.LocalDate data) {

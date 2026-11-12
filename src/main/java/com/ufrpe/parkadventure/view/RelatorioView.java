@@ -74,7 +74,7 @@ public class RelatorioView {
     public void exibirEscala(List<LinhaEscala> escala, int ano) {
         System.out.println("Escala de Operadores para os Feriados Nacionais de " + ano + " (BrasilAPI)");
         for (LinhaEscala linha : escala) {
-            System.out.printf("Feriado: %s (%s) | Operador: %s%n", linha.feriado(), linha.data(), linha.operador());
+            System.out.printf("Feriado: %s (%s) | Operador: %s%n", linha.feriado(), linha.data(), linha.nomeOperador());
         }
     }
 

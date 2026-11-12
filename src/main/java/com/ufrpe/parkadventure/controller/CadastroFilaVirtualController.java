@@ -34,12 +34,10 @@ public class CadastroFilaVirtualController {
     @FXML private Button btnEntrar, btnVoltar;
 
     private Visitante visitante;
-    private Ingresso ingresso;
 
     @FXML
     private void initialize() {
         visitante = ContextoController.SESSAO.getVisitanteAtual();
-        ingresso = (visitante == null) ? null : ContextoController.CONTROLE_ACESSO.ingressoParaReserva(visitante);
 
         cbAtracao.setItems(FXCollections.observableArrayList(RepositorioAtracaoController.listarTodas()));
         cbAtracao.setConverter(new StringConverter<Atracao>() {
@@ -66,15 +64,18 @@ public class CadastroFilaVirtualController {
             return;
         }
         lblVisitante.setText(visitante.getNome());
-        if (ingresso == null) {
+        List<LocalDate> datas = ContextoController.CONTROLE_ACESSO.datasDisponiveis(visitante);
+        if (datas.isEmpty()) {
             lblDataVisita.setText("Sem ingresso válido");
             Aviso.erro(lblResultado, "Você não tem ingresso válido para os próximos dias. Compre um ingresso para reservar.");
             bloquear();
             return;
         }
-        List<LocalDate> datas = ContextoController.CONTROLE_ACESSO.datasDisponiveis(ingresso);
         cbData.setItems(FXCollections.observableArrayList(datas));
-        lblDataVisita.setText("Ingresso válido até " + Formatos.data(ingresso.getDataValidade()));
+        lblDataVisita.setText(datas.size() == 1
+                ? "Ingresso válido em " + Formatos.data(datas.get(0))
+                : "Reservas liberadas de " + Formatos.data(datas.get(0))
+                + " a " + Formatos.data(datas.get(datas.size() - 1)));
         if (datas.size() == 1) {
             cbData.setValue(datas.get(0));
         }
@@ -135,8 +136,10 @@ public class CadastroFilaVirtualController {
             return;
         }
         LocalTime horario = LocalTime.parse(escolhido.substring(0, 5), HORA);
+        // usa o ingresso que vale NAQUELE dia (o visitante pode ter uma diária e um passe)
+        Ingresso ingressoDoDia = ContextoController.CONTROLE_ACESSO.ingressoParaData(visitante, data);
         ResultadoAcesso resultado = ContextoController.CONTROLE_ACESSO
-                .reservarFuraFila(visitante, ingresso, atracao, data, horario);
+                .reservarFuraFila(visitante, ingressoDoDia, atracao, data, horario);
 
         if (resultado == ResultadoAcesso.RESERVADO) {
             int posicao = atracao.getFilaVirtual().posicaoNoHorario(visitante, data);

@@ -3,11 +3,11 @@ package com.ufrpe.parkadventure.controller;
 import java.time.LocalDate;
 import java.util.List;
 import com.ufrpe.parkadventure.model.pessoa.Operador;
-import com.ufrpe.parkadventure.repository.EscalaTrabalho;
-import com.ufrpe.parkadventure.repository.EscalaTrabalho.Turno;
+import com.ufrpe.parkadventure.repository.RepositorioEscalaTrabalho;
+import com.ufrpe.parkadventure.repository.RepositorioEscalaTrabalho.Turno;
 
-public class RepositorioEscalaDeTrabalhoController {
-    private static final EscalaTrabalho escalaTrabalho = EscalaTrabalho.getInstancia();
+public class RepositorioEscalaTrabalhoController {
+    private static final RepositorioEscalaTrabalho escalaTrabalho = RepositorioEscalaTrabalho.getInstancia();
 
     public static boolean escalar(LocalDate data, Operador operador) {
         return escalaTrabalho.escalar(data, operador);

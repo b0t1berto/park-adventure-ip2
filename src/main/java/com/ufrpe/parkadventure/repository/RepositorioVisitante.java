@@ -42,8 +42,15 @@ public class RepositorioVisitante {
         }
         Visitante duplicado = buscar(visitanteAtualizado.getNome());
         if (duplicado != null && duplicado != existente) return false;
-        int indice = visitantes.indexOf(existente);
-        visitantes.set(indice, visitanteAtualizado);
+        // Copia os dados para o objeto que já existe, em vez de trocá-lo: ingressos, reservas e a sessão
+        // guardam a referência ao visitante antigo e, ao trocar o objeto, o dono "sumia" para eles.
+        existente.setNome(visitanteAtualizado.getNome());
+        existente.setDataNascimento(visitanteAtualizado.getDataNascimento());
+        existente.setCpf(visitanteAtualizado.getCpf());
+        existente.setAltura(visitanteAtualizado.getAltura());
+        existente.setEmail(visitanteAtualizado.getEmail());
+        existente.setTelefone(visitanteAtualizado.getTelefone());
+        existente.setResponsavel(visitanteAtualizado.getResponsavel());
         return true;
     }
 

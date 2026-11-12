@@ -186,24 +186,10 @@
 .logo-parque {
     -fx-effect: dropshadow(gaussian, rgba(20, 54, 93, 0.35), 8, 0.2, 0, 2);
 }
-/* ---- telas de painel: calendário, escala, fila virtual e ingressos comprados ---- */
-.titulo-cabecalho    { -fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: white; }
-.subtitulo-cabecalho { -fx-font-size: 14px; -fx-text-fill: #e3f0ff; -fx-wrap-text: true; -fx-text-alignment: center; }
-.mes-cabecalho       { -fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white; -fx-alignment: center; }
-.status-cabecalho    { -fx-font-size: 12px; -fx-text-fill: #e3f0ff; }
 
-.cabecalho-pagamento .destaque { -fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: bold; -fx-wrap-text: true; }
-
-.tela-parque .tabela-parque {
-    -fx-background-color: white;
-    -fx-background-radius: 16;
-    -fx-border-color: #bfe3ff;
-    -fx-border-radius: 16;
-    -fx-effect: dropshadow(gaussian, rgba(20,54,93,0.15), 12, 0.2, 0, 4);
-}
-.tabela-parque .column-header-background { -fx-background-radius: 16 16 0 0; }
-.tabela-parque .column-header,
-.tabela-parque .filler { -fx-background-color: #dcebff; -fx-border-color: transparent; }
-.tabela-parque .column-header .label { -fx-text-fill: #14365d; -fx-font-weight: bold; }
-.tabela-parque .table-row-cell:selected { -fx-background-color: #1f6fd1; }
-.tabela-parque .table-row-cell:selected .text { -fx-fill: white; }
+/* ---- classes usadas por calendario, escala, fila, ingressos, atrações e controle (antes não existiam) ---- */
+.titulo-cabecalho    { -fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: white; }
+.subtitulo-cabecalho { -fx-font-size: 13px; -fx-text-fill: white; -fx-opacity: 0.92; }
+.status-cabecalho    { -fx-font-size: 12px; -fx-text-fill: white; }
+.mes-cabecalho       { -fx-font-size: 17px; -fx-font-weight: bold; -fx-text-fill: white; }
+.tabela-parque       { -fx-background-color: white; -fx-border-color: #d3dbe4; -fx-border-radius: 4; }

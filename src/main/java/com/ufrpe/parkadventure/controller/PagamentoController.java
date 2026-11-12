@@ -64,7 +64,6 @@ public class PagamentoController {
     public void setResumo(String item, LocalDate data, int quantidade, double total) {
         this.total = total;
         lblItem.setText(item);
-        lblItem.setWrapText(true);
         lblDataVisita.setText(data.toString());
         lblQuantidade.setText(String.valueOf(quantidade));
         lblTotal.setText(String.format("R$ %.2f", total));
@@ -142,6 +141,7 @@ public class PagamentoController {
         if (txtNome.getText().isBlank()) return "Informe o nome completo.";
         if (txtCpf.getText().replaceAll("\\D", "").length() != 11) return "CPF inválido.";
         if (dpNascimento.getValue() == null) return "Informe a data de nascimento.";
+        if (dpNascimento.getValue().isAfter(LocalDate.now())) return "A data de nascimento não pode ser no futuro.";
         if (!txtEmail.getText().matches("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$")) return "E-mail inválido.";
         if (txtTelefone.getText().replaceAll("\\D", "").length() < 10) return "Telefone inválido.";
         if (arquivoDocumento == null) return "Anexe a foto do documento.";

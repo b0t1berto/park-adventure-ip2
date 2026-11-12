@@ -2,6 +2,7 @@ package com.ufrpe.parkadventure.controller;
 
 import com.ufrpe.parkadventure.ParkAdventure;
 import com.ufrpe.parkadventure.controller.controles.Tarefas;
+import com.ufrpe.parkadventure.model.atracao.Atracao;
 import com.ufrpe.parkadventure.model.pessoa.Operador;
 import com.ufrpe.parkadventure.view.Formatos;
 
@@ -114,7 +115,7 @@ public class CalendarioController {
             Tooltip.install(celula, new Tooltip(feriado.get()));
         }
 
-        int escalados = RepositorioEscalaDeTrabalhoController.operadoresDoDia(dia).size();
+        int escalados = RepositorioEscalaTrabalhoController.operadoresDoDia(dia).size();
         if (escalados > 0) {
             celula.getStyleClass().add("dia-escala");
             Label escala = new Label("Escala: " + escalados + (escalados == 1 ? " operador" : " operadores"));
@@ -136,15 +137,16 @@ public class CalendarioController {
         ContextoController.FERIADOS.nomeDoFeriado(dia)
                 .ifPresent(nome -> texto.append("\nFeriado nacional: ").append(nome));
 
-        List<Operador> escalados = RepositorioEscalaDeTrabalhoController.operadoresDoDia(dia);
+        List<Operador> escalados = RepositorioEscalaTrabalhoController.operadoresDoDia(dia);
         if (escalados.isEmpty()) {
             texto.append("\nNenhum operador escalado.");
         } else {
             texto.append("\nOperadores escalados:");
             for (Operador operador : escalados) {
-                String atracao = RepositorioAtracaoController.buscarOperador(operador);
+                Atracao daAtracao = RepositorioAtracaoController.buscarAtracaoPorOperador(operador);
+                String nomeDaAtracao = (daAtracao == null) ? null : daAtracao.getNome();
                 texto.append("\n  • ").append(operador.getNome())
-                        .append(atracao == null ? "" : " — " + atracao);
+                        .append(nomeDaAtracao == null ? "" : " — " + nomeDaAtracao);
             }
         }
         lblDetalhe.setText(texto.toString());

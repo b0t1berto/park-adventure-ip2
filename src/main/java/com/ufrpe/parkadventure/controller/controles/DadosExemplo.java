@@ -4,7 +4,7 @@ import com.ufrpe.parkadventure.controller.AcessoController;
 import com.ufrpe.parkadventure.controller.RepositorioAtracaoController;
 import com.ufrpe.parkadventure.controller.RepositorioIngressoController;
 import com.ufrpe.parkadventure.controller.RepositorioVisitanteController;
-import com.ufrpe.parkadventure.controller.RepositorioEscalaDeTrabalhoController;
+import com.ufrpe.parkadventure.controller.RepositorioEscalaTrabalhoController;
 import com.ufrpe.parkadventure.controller.ContextoController;
 import com.ufrpe.parkadventure.controller.IngressoController;
 import com.ufrpe.parkadventure.model.atracao.Aquatico;
@@ -72,9 +72,11 @@ public final class DadosExemplo {
 
         // Atração lotada + reservas do fura-fila (usa as regras reais do AcessoController)
         AcessoController acesso = ContextoController.CONTROLE_ACESSO;
+        // Piratas do Caribe tem capacidade 2: as duas primeiras entradas a deixam lotada
         acesso.registrarAcesso(ana, RepositorioIngressoController.buscarUltimo(ana.getNome()), piratas);       // 1/2
-        acesso.registrarAcesso(bruno, RepositorioIngressoController.buscarUltimo(bruno.getNome()), piratas);   // bruno: ingresso expirado
-        acesso.registrarAcesso(carla, RepositorioIngressoController.buscarUltimo(carla.getNome()), piratas);   // 2/2 (lotada)
+        acesso.registrarAcesso(bruno, RepositorioIngressoController.buscarUltimo(bruno.getNome()), piratas);   // 2/2 (lotada)
+        // Carla tenta entrar com a atração lotada: recebe ATRACAO_LOTADA e fica na fila física
+        acesso.registrarAcesso(carla, RepositorioIngressoController.buscarUltimo(carla.getNome()), piratas);
 
         // primeiro horário de hoje cuja janela ainda não terminou (depois das 18:15 não há reservas de teste)
         LocalDateTime agora = LocalDateTime.now();
@@ -90,13 +92,20 @@ public final class DadosExemplo {
             acesso.reservarFuraFila(edivan, RepositorioIngressoController.buscarUltimo(edivan.getNome()), piratas, hoje, horario);
         }
 
-        RepositorioEscalaDeTrabalhoController.escalar(hoje.plusDays(1), caique);
-        RepositorioEscalaDeTrabalhoController.escalar(hoje.plusDays(2), carlos);
-        RepositorioEscalaDeTrabalhoController.escalar(hoje.plusDays(2), ivaldo);
-        RepositorioEscalaDeTrabalhoController.escalar(hoje.plusDays(6), caique);
-        RepositorioEscalaDeTrabalhoController.escalar(LocalDate.of(2026, 11, 20), carlos);   // Consciência Negra
-        RepositorioEscalaDeTrabalhoController.escalar(LocalDate.of(2026, 11, 20), caique);
-        RepositorioEscalaDeTrabalhoController.escalar(LocalDate.of(2026, 12, 25), ivaldo);   // Natal
+        RepositorioEscalaTrabalhoController.escalar(hoje.plusDays(1), caique);
+        RepositorioEscalaTrabalhoController.escalar(hoje.plusDays(2), carlos);
+        RepositorioEscalaTrabalhoController.escalar(hoje.plusDays(2), ivaldo);
+        RepositorioEscalaTrabalhoController.escalar(hoje.plusDays(6), caique);
+        // feriados nacionais fixos: só entram se ainda não passaram no ano corrente (antes eram datas de 2026)
+        LocalDate consciencia = LocalDate.of(hoje.getYear(), 11, 20);   // Consciência Negra
+        LocalDate natal = LocalDate.of(hoje.getYear(), 12, 25);         // Natal
+        if (!consciencia.isBefore(hoje)) {
+            RepositorioEscalaTrabalhoController.escalar(consciencia, carlos);
+            RepositorioEscalaTrabalhoController.escalar(consciencia, caique);
+        }
+        if (!natal.isBefore(hoje)) {
+            RepositorioEscalaTrabalhoController.escalar(natal, ivaldo);
+        }
         ContextoController.SESSAO.setVisitanteAtual(carla);
     }
 }

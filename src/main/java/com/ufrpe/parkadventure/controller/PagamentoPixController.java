@@ -23,7 +23,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.UUID;
 
 public class PagamentoPixController {
@@ -49,6 +48,11 @@ public class PagamentoPixController {
         atualizarTempo();
 
         contagem = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+            // a tela saiu da janela (ex.: foi trocada por outra): para de contar
+            if (lblTempo.getScene() == null || lblTempo.getScene().getWindow() == null) {
+                contagem.stop();
+                return;
+            }
             segundosRestantes--;
             atualizarTempo();
             if (segundosRestantes <= 0) {

@@ -13,8 +13,8 @@ public class RepositorioAtracaoController {
         return repositorioAtracao.cadastrar(atracao);
     }
 
-    public static boolean cadastrarOperador(String nomeAtracao, Operador nomeOperador) {
-        return repositorioAtracao.cadastrarOperador(nomeAtracao, nomeOperador);
+    public static boolean cadastrarOperador(String nomeAtracao, Operador operador) {
+        return repositorioAtracao.cadastrarOperador(nomeAtracao, operador);
     }
 
     public static ArrayList<Atracao> listarTodas() {
@@ -25,8 +25,8 @@ public class RepositorioAtracaoController {
         return repositorioAtracao.buscar(nome);
     }
 
-    public static String buscarOperador(Operador nomeOperador) {
-        return repositorioAtracao.buscarOperador(nomeOperador);
+    public static String buscarNomeDoOperador(Operador operador) {
+        return repositorioAtracao.buscarNomeDoOperador(operador);
     }
 
     public static Atracao buscarAtracaoPorOperador(Operador operador) {

@@ -139,6 +139,28 @@ public class AcessoController {
         return datas;
     }
 
+    // Todos os dias em que o visitante pode reservar, somando TODOS os ingressos dele (sem repetir datas).
+    // Antes só o ingresso mais recente era considerado: quem tinha um Passe Anual e depois comprava uma
+    // diária perdia os dias do passe.
+    public List<LocalDate> datasDisponiveis(Visitante visitante) {
+        java.util.TreeSet<LocalDate> uniao = new java.util.TreeSet<>();
+        for (Ingresso ingresso : RepositorioIngressoController.listarPorVisitante(visitante.getNome())) {
+            uniao.addAll(datasDisponiveis(ingresso));
+        }
+        return new ArrayList<>(uniao);
+    }
+
+    // Ingresso do visitante que vale no dia informado (o mais recente que servir); null se nenhum servir
+    public Ingresso ingressoParaData(Visitante visitante, LocalDate dia) {
+        List<Ingresso> ingressos = RepositorioIngressoController.listarPorVisitante(visitante.getNome());
+        for (int i = ingressos.size() - 1; i >= 0; i--) {
+            if (ingressoVale(ingressos.get(i), dia)) {
+                return ingressos.get(i);
+            }
+        }
+        return null;
+    }
+
     // Ingresso mais recente do visitante que ainda permite reservar algum dia (null se não houver)
     public Ingresso ingressoParaReserva(Visitante visitante) {
         List<Ingresso> ingressos = RepositorioIngressoController.listarPorVisitante(visitante.getNome());

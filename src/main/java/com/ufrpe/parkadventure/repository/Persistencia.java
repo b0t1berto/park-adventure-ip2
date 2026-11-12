@@ -3,6 +3,7 @@ package com.ufrpe.parkadventure.repository;
 import com.ufrpe.parkadventure.controller.RepositorioAtracaoController;
 import com.ufrpe.parkadventure.controller.RepositorioVisitanteController;
 import com.ufrpe.parkadventure.controller.RepositorioIngressoController;
+import com.ufrpe.parkadventure.controller.RepositorioEscalaTrabalhoController;
 import com.ufrpe.parkadventure.model.atracao.Aquatico;
 import com.ufrpe.parkadventure.model.atracao.Atracao;
 import com.ufrpe.parkadventure.model.atracao.EstadoReserva;
@@ -20,6 +21,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.nio.file.AtomicMoveNotSupportedException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -33,6 +36,7 @@ public final class Persistencia {
     private static final DateTimeFormatter HORA = DateTimeFormatter.ofPattern("HH:mm");
     private static final String SEPARADOR = "\t";
     private static Path arquivo = localizarArquivo();
+    private static boolean carregado = false;
 
     private static Path localizarArquivo() {
         Path atual = Paths.get("").toAbsolutePath();
@@ -44,11 +48,18 @@ public final class Persistencia {
         return atual.resolve("dados").resolve("dados.txt");
     }
 
-    public static void definirArquivo(Path novoArquivo) { arquivo = novoArquivo; }
+    public static void definirArquivo(Path novoArquivo) {
+        arquivo = novoArquivo;
+        carregado = false;
+    }
 
     public static Path getArquivo() { return arquivo; }
 
     public static synchronized void carregar() {
+        if (carregado) {
+            return;   // carregar duas vezes duplicaria visitantes, ingressos e reservas
+        }
+        carregado = true;
         if (!Files.exists(arquivo)) {
             System.out.println("[Persistencia] Nenhum arquivo para carregar em: " + arquivo);
             return;
@@ -77,6 +88,10 @@ public final class Persistencia {
         for (String linha : linhas) {
             lerLinha(linha, 'R');
         }
+        // a escala depende dos operadores, que já foram recriados
+        for (String linha : linhas) {
+            lerLinha(linha, 'E');
+        }
     }
 
     private static void lerLinha(String linha, char tipo) {
@@ -91,6 +106,7 @@ public final class Persistencia {
                 case 'O' -> lerOperador(c);
                 case 'I' -> lerIngresso(c);
                 case 'R' -> lerReserva(c);
+                case 'E' -> lerEscala(c);
                 default -> { }
             }
         } catch (RuntimeException e) {
@@ -126,6 +142,15 @@ public final class Persistencia {
                 LocalTime.parse(c[4], HORA), EstadoReserva.valueOf(c[5]));
     }
 
+    // E <data> <nome do operador> <atração em que ele trabalha>
+    private static void lerEscala(String[] c) {
+        Operador operador = RepositorioAtracaoController.buscarOperadorPorNome(c[2], c[3]);
+        if (operador == null) {
+            return;   // o operador não existe mais
+        }
+        RepositorioEscalaTrabalhoController.escalar(LocalDate.parse(c[1], DATA), operador);
+    }
+
     private static void lerVisitante(String[] c) {
         Visitante visitante = new Visitante(c[1], c[2], vazioParaNulo(c[3]), Integer.parseInt(c[4]));
         if (!c[5].isEmpty()) {
@@ -155,13 +180,6 @@ public final class Persistencia {
         TipoIngresso tipo = TipoIngresso.valueOf(c[2]);
         LocalDate compra = LocalDate.parse(c[3], DATA);
         LocalDate validade = LocalDate.parse(c[4], DATA);
-        for (Ingresso existente : RepositorioIngressoController.listarTodos()) {
-            if (existente.getVisitante() == visitante && existente.getTipoIngresso() == tipo
-                    && existente.getDataCompra().equals(compra)
-                    && existente.getDataValidade().equals(validade)) {
-                return;
-            }
-        }
         Ingresso novo = new Ingresso(visitante, tipo, compra, validade, Double.parseDouble(c[5]));
         novo.setFormaPagamento(vazioParaNulo(campo(c, 6)));
         RepositorioIngressoController.cadastrarIngresso(novo);
@@ -221,9 +239,26 @@ public final class Persistencia {
             }
         }
 
+        for (RepositorioEscalaTrabalho.Turno turno : RepositorioEscalaTrabalhoController.listarOrdenado()) {
+            Atracao daAtracao = RepositorioAtracaoController.buscarAtracaoPorOperador(turno.operador());
+            if (daAtracao == null) {
+                continue;
+            }
+            linhas.add(String.join(SEPARADOR, "E", data(turno.data()),
+                    texto(turno.operador().getNome()), texto(daAtracao.getNome())));
+        }
+
         try {
             Files.createDirectories(arquivo.getParent());
-            Files.write(arquivo, linhas, StandardCharsets.UTF_8);
+            // grava num arquivo temporário e só depois troca: se o programa cair no meio da gravação,
+            // o arquivo de dados antigo continua inteiro (antes ele podia ficar pela metade)
+            Path temporario = arquivo.resolveSibling(arquivo.getFileName() + ".tmp");
+            Files.write(temporario, linhas, StandardCharsets.UTF_8);
+            try {
+                Files.move(temporario, arquivo, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE);
+            } catch (AtomicMoveNotSupportedException e) {
+                Files.move(temporario, arquivo, StandardCopyOption.REPLACE_EXISTING);
+            }
             System.out.println("[Persistencia] Dados salvos em: " + arquivo);
         } catch (IOException e) {
             System.err.println("Não foi possível salvar " + arquivo + ": " + e.getMessage());

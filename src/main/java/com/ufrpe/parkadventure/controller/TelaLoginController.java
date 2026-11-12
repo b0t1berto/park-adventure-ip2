@@ -56,6 +56,11 @@ public class TelaLoginController {
                     limparCampos();
                     return;
                 }
+                if (!cpfConfere(visitante.getCpf(), cpf)) {
+                    avisar("CPF incorreto!", "O CPF informado não confere com o cadastro.");
+                    limparCampos();
+                    return;
+                }
                 ContextoController.SESSAO.limpar();
                 ContextoController.SESSAO.setVisitanteAtual(visitante);
                 ParkAdventure.proximaCena("view/menu-visitante.fxml");
@@ -68,6 +73,11 @@ public class TelaLoginController {
                     limparCampos();
                     return;
                 }
+                if (!cpfConfere(operador.getCpf(), cpf)) {
+                    avisar("CPF incorreto!", "O CPF informado não confere com o cadastro.");
+                    limparCampos();
+                    return;
+                }
                 ContextoController.SESSAO.limpar();
                 ContextoController.SESSAO.setOperadorAtual(operador);
                 ParkAdventure.proximaCena("view/menu-operador.fxml");
@@ -75,6 +85,15 @@ public class TelaLoginController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    // Compara só os dígitos (com ou sem pontos e traço). Contas de exemplo, criadas sem CPF, aceitam qualquer um.
+    private boolean cpfConfere(String cpfCadastrado, String cpfDigitado) {
+        String cadastrado = cpfCadastrado == null ? "" : cpfCadastrado.replaceAll("\\D", "");
+        if (cadastrado.isEmpty()) {
+            return true;
+        }
+        return cadastrado.equals(cpfDigitado.replaceAll("\\D", ""));
     }
 
     private void avisar(String titulo, String mensagem) {

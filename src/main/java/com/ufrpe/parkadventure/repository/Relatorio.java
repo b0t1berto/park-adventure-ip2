@@ -22,7 +22,7 @@ public class Relatorio {
 
     public record ResumoReceita(List<LinhaVenda> vendas, double receitaTotal, double receitaFeriados) {}
 
-    public record LinhaEscala(String feriado, LocalDate data, String operador) {}
+    public record LinhaEscala(String feriado, LocalDate data, String nomeOperador) {}
 
     public String montarCsvAtracoes(List<Atracao> atracoes) {
         List<Atracao> ordenadas = new ArrayList<>(atracoes);

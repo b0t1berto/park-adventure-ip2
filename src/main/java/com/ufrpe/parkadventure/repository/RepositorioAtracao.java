@@ -44,7 +44,8 @@ public class RepositorioAtracao{
         return null;
     }
 
-    public String buscarOperador(Operador operador) {
+    // Devolve o NOME do operador (não a atração). Para a atração use buscarAtracaoPorOperador.
+    public String buscarNomeDoOperador(Operador operador) {
         if (operador == null) return null;
         for (Atracao atracao : atracoes) {
             if (atracao.getOperador() != null && atracao.getOperador().equals(operador)) {

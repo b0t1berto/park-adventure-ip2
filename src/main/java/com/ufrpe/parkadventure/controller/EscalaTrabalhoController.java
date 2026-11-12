@@ -4,8 +4,8 @@ import com.ufrpe.parkadventure.ParkAdventure;
 import com.ufrpe.parkadventure.controller.controles.Tarefas;
 import com.ufrpe.parkadventure.model.atracao.Atracao;
 import com.ufrpe.parkadventure.model.pessoa.Operador;
+import com.ufrpe.parkadventure.repository.RepositorioEscalaTrabalho.Turno;
 import com.ufrpe.parkadventure.repository.Persistencia;
-import com.ufrpe.parkadventure.repository.EscalaTrabalho.Turno;
 import com.ufrpe.parkadventure.view.Aviso;
 import com.ufrpe.parkadventure.view.Formatos;
 
@@ -36,14 +36,14 @@ public class EscalaTrabalhoController {
     @FXML private DatePicker dpData;
     @FXML private ComboBox<Operador> cbOperador;
 
-    private record LinhaEscala(Turno turno, String data, String dia, String operador,
-                               String atracao, String observacao) { }
+    private record LinhaEscala(Turno turno, String data, String dia, String nomeOperador,
+                               String nomeAtracao, String observacao) { }
     @FXML
     private void initialize() {
         colData.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().data()));
         colDia.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().dia()));
-        colOperador.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().operador()));
-        colAtracao.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().atracao()));
+        colOperador.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().nomeOperador()));
+        colAtracao.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().nomeAtracao()));
         colObservacao.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().observacao()));
 
         tabela.setPlaceholder(new Label("Nenhum operador escalado ainda."));
@@ -87,8 +87,9 @@ public class EscalaTrabalhoController {
 
     private void atualizarTabela() {
         List<LinhaEscala> linhas = new ArrayList<>();
-        for (Turno turno : RepositorioEscalaDeTrabalhoController.listarOrdenado()) {
-            String atracao = RepositorioAtracaoController.buscarOperador(turno.operador());
+        for (Turno turno : RepositorioEscalaTrabalhoController.listarOrdenado()) {
+            Atracao daAtracao = RepositorioAtracaoController.buscarAtracaoPorOperador(turno.operador());
+            String nomeDaAtracao = (daAtracao == null) ? null : daAtracao.getNome();
             String observacao = ContextoController.FERIADOS.nomeDoFeriado(turno.data())
                     .map(nome -> "Feriado: " + nome)
                     .orElse("");
@@ -97,7 +98,7 @@ public class EscalaTrabalhoController {
                     Formatos.data(turno.data()),
                     Formatos.diaSemana(turno.data()),
                     turno.operador().getNome(),
-                    atracao == null ? "—" : atracao,
+                    nomeDaAtracao == null ? "—" : nomeDaAtracao,
                     observacao));
         }
         tabela.setItems(FXCollections.observableArrayList(linhas));
@@ -110,7 +111,7 @@ public class EscalaTrabalhoController {
             return;
         }
         LocalDate data = proximo.get().getKey();
-        List<Operador> escalados = RepositorioEscalaDeTrabalhoController.operadoresDoDia(data);
+        List<Operador> escalados = RepositorioEscalaTrabalhoController.operadoresDoDia(data);
         String quem = escalados.isEmpty()
                 ? "nenhum operador escalado"
                 : escalados.stream().map(Operador::getNome).collect(Collectors.joining(", "));
@@ -151,12 +152,12 @@ public class EscalaTrabalhoController {
             Aviso.erro(lblStatus, "Não é possível escalar para uma data que já passou.");
             return;
         }
-        if (!RepositorioEscalaDeTrabalhoController.escalar(data, operador)) {
+        if (!RepositorioEscalaTrabalhoController.escalar(data, operador)) {
             Aviso.erro(lblStatus, operador.getNome() + " já está escalado em " + Formatos.data(data) + ".");
             return;
         }
-        Persistencia.salvar();
         Aviso.sucesso(lblStatus, operador.getNome() + " escalado em " + Formatos.data(data) + ".");
+        Persistencia.salvar();   // a escala agora é gravada no arquivo de dados
         atualizarTabela();
     }
 
@@ -167,9 +168,9 @@ public class EscalaTrabalhoController {
             Aviso.erro(lblStatus, "Selecione uma linha da tabela para remover.");
             return;
         }
-        RepositorioEscalaDeTrabalhoController.remover(selecionada.turno());
+        RepositorioEscalaTrabalhoController.remover(selecionada.turno());
         Persistencia.salvar();
-        Aviso.sucesso(lblStatus, "Escala de " + selecionada.operador() + " em " + selecionada.data() + " removida.");
+        Aviso.sucesso(lblStatus, "Escala de " + selecionada.nomeOperador() + " em " + selecionada.data() + " removida.");
         atualizarTabela();
     }
 

@@ -23,10 +23,10 @@ public class RepositorioIngresso {
         return ingressos.add(ingresso);
     }
 
-    public ArrayList<Ingresso> listarPorVisitante(String visitante) {
+    public ArrayList<Ingresso> listarPorVisitante(String nomeVisitante) {
         ArrayList<Ingresso> resultado = new ArrayList<>();
         for (Ingresso ingresso : ingressos) {
-            if (mesmoVisitante(ingresso, visitante)) {
+            if (mesmoVisitante(ingresso, nomeVisitante)) {
                 resultado.add(ingresso);
             }
         }
@@ -34,10 +34,10 @@ public class RepositorioIngresso {
     }
 
     // Ingresso mais recente do visitante (null se ele nunca comprou)
-    public Ingresso buscarUltimo(String visitante) {
+    public Ingresso buscarUltimo(String nomeVisitante) {
         Ingresso ultimo = null;
         for (Ingresso ingresso : ingressos) {
-            if (mesmoVisitante(ingresso, visitante)) {
+            if (mesmoVisitante(ingresso, nomeVisitante)) {
                 ultimo = ingresso;
             }
         }

@@ -11,6 +11,7 @@ public class CompraIngressosController {
     @FXML
     private void onIngressoProgramado(ActionEvent event) throws IOException {
         try {
+            PedidoAtual.setDataVisita(null);   // volta para "hoje" (null = hoje)
             ParkAdventure.proximaCena("view/escolha-data.fxml");
         } catch (Exception e) {
             e.printStackTrace();
@@ -20,6 +21,8 @@ public class CompraIngressosController {
     @FXML
     private void onIngressoInstantaneo(ActionEvent event) throws IOException {
         try {
+            // ingresso instantâneo é sempre para hoje (a data de uma tentativa "programada" anterior não vale)
+            PedidoAtual.setDataVisita(null);
             ParkAdventure.proximaCena("view/redirecionamento-pagamento-ingresso.fxml");
         } catch (Exception e) {
             e.printStackTrace();

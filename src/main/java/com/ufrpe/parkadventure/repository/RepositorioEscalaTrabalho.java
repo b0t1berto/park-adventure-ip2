@@ -7,17 +7,17 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class EscalaTrabalho {
+public class RepositorioEscalaTrabalho {
 
-    private static EscalaTrabalho instancia;
+    private static RepositorioEscalaTrabalho instancia;
     public record Turno(LocalDate data, Operador operador) {}
     private static final List<Turno> turnos = new ArrayList<>();
 
-    public EscalaTrabalho() {}
+    public RepositorioEscalaTrabalho() {}
 
-    public static synchronized EscalaTrabalho getInstancia() {
+    public static synchronized RepositorioEscalaTrabalho getInstancia() {
         if (instancia == null) {
-            instancia = new EscalaTrabalho();
+            instancia = new RepositorioEscalaTrabalho();
         }
         return instancia;
     }

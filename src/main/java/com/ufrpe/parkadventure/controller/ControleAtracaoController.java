@@ -37,7 +37,7 @@ public class ControleAtracaoController {
     @FXML private TableView<LinhaReserva> tabela;
     @FXML private TableColumn<LinhaReserva, String> colHorario, colVisitante, colSituacao;
 
-    private record LinhaReserva(Reserva reserva, String horario, String visitante, String situacao) { }
+    private record LinhaReserva(Reserva reserva, String horario, String nomeVisitante, String situacao) { }
 
     private Atracao atracao;
     private Timeline atualizador;
@@ -45,7 +45,7 @@ public class ControleAtracaoController {
     @FXML
     private void initialize() {
         colHorario.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().horario()));
-        colVisitante.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().visitante()));
+        colVisitante.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().nomeVisitante()));
         colSituacao.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().situacao()));
         tabela.setPlaceholder(new Label("Nenhuma reserva de fura-fila para hoje."));
 
@@ -130,7 +130,7 @@ public class ControleAtracaoController {
         }
         ResultadoAcesso resultado = ContextoController.CONTROLE_ACESSO
                 .liberarFuraFila(linha.reserva().getVisitante(), atracao, LocalDateTime.now());
-        String nome = linha.visitante();
+        String nome = linha.nomeVisitante();
         switch (resultado) {
             case AUTORIZADO -> Aviso.sucesso(lblStatus, nome + " liberado(a) (+1 registrado).");
             case ATRACAO_LOTADA -> Aviso.erro(lblStatus,

@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane styleClass="tela-parque" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.EscalaTrabalhoController">
+<BorderPane styleClass="tela-parque" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.EscalaTrabalhoController">
    <top>
       <VBox spacing="6.0" styleClass="cabecalho-pagamento" BorderPane.alignment="TOP_CENTER">
          <children>

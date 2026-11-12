@@ -51,6 +51,8 @@ public class EscolhaDataController {
             return;
         }
         try {
+            // guarda a data escolhida: sem isso o ingresso "programado" era emitido para hoje
+            PedidoAtual.setDataVisita(data);
             ParkAdventure.proximaCena("view/redirecionamento-pagamento-ingresso.fxml");
         } catch (IOException e) {
             e.printStackTrace();
