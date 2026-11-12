@@ -3,7 +3,7 @@ package com.ufrpe.parkadventure.repository;
 import com.ufrpe.parkadventure.controller.RepositorioAtracaoController;
 import com.ufrpe.parkadventure.controller.RepositorioVisitanteController;
 import com.ufrpe.parkadventure.controller.RepositorioIngressoController;
-import com.ufrpe.parkadventure.controller.RepositorioEscalaTrabalhoController;
+import com.ufrpe.parkadventure.controller.RepositorioEscalaDeTrabalhoController;
 import com.ufrpe.parkadventure.model.atracao.Aquatico;
 import com.ufrpe.parkadventure.model.atracao.Atracao;
 import com.ufrpe.parkadventure.model.atracao.EstadoReserva;
@@ -148,7 +148,7 @@ public final class Persistencia {
         if (operador == null) {
             return;   // o operador não existe mais
         }
-        RepositorioEscalaTrabalhoController.escalar(LocalDate.parse(c[1], DATA), operador);
+        RepositorioEscalaDeTrabalhoController.escalar(LocalDate.parse(c[1], DATA), operador);
     }
 
     private static void lerVisitante(String[] c) {
@@ -239,7 +239,7 @@ public final class Persistencia {
             }
         }
 
-        for (RepositorioEscalaTrabalho.Turno turno : RepositorioEscalaTrabalhoController.listarOrdenado()) {
+        for (RepositorioEscalaTrabalho.Turno turno : RepositorioEscalaDeTrabalhoController.listarOrdenado()) {
             Atracao daAtracao = RepositorioAtracaoController.buscarAtracaoPorOperador(turno.operador());
             if (daAtracao == null) {
                 continue;

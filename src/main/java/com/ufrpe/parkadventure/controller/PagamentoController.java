@@ -10,10 +10,13 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Period;
 
 public class PagamentoController {
+
+    private Scene cenaAnterior;
 
     @FXML private Label lblItem, lblDataVisita, lblQuantidade, lblTotal;
 
@@ -130,7 +133,6 @@ public class PagamentoController {
     @FXML
     private void aoVoltar() {
         try {
-            // volta para a tela anterior à compra (o redirecionamento não entra no histórico)
             ParkAdventure.voltar();
         } catch (Exception e) {
             e.printStackTrace();

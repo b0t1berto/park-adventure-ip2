@@ -22,7 +22,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="680.0" prefWidth="720.0" styleClass="tela-parque" stylesheets="@tema-parque.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.PagamentoController">
+<BorderPane prefHeight="680.0" prefWidth="720.0" styleClass="tela-parque" stylesheets="@tema-parque.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.PagamentoController">
     <top>
         <Label alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="cabecalho-pagamento" text="Finalizar compra" BorderPane.alignment="CENTER" />
     </top>
@@ -204,7 +204,7 @@
                 <Insets bottom="16.0" left="20.0" right="20.0" top="12.0" />
             </padding>
             <children>
-                <Button fx:id="btnVoltar" mnemonicParsing="false" styleClass="botao-secundario" text="Voltar" />
+                <Button fx:id="btnVoltar" mnemonicParsing="false" onAction="#aoVoltar" styleClass="botao-secundario" text="Voltar" />
                 <Button fx:id="btnPagar" mnemonicParsing="false" onAction="#aoPagar" styleClass="botao-primario" text="Pagar" />
             </children>
         </HBox>

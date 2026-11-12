@@ -1,4 +1,4 @@
-Spackage com.ufrpe.parkadventure.controller;
+package com.ufrpe.parkadventure.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

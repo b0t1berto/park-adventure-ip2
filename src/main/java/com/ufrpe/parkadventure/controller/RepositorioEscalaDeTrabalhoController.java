@@ -6,7 +6,7 @@ import com.ufrpe.parkadventure.model.pessoa.Operador;
 import com.ufrpe.parkadventure.repository.RepositorioEscalaTrabalho;
 import com.ufrpe.parkadventure.repository.RepositorioEscalaTrabalho.Turno;
 
-public class RepositorioEscalaTrabalhoController {
+public class RepositorioEscalaDeTrabalhoController {
     private static final RepositorioEscalaTrabalho escalaTrabalho = RepositorioEscalaTrabalho.getInstancia();
 
     public static boolean escalar(LocalDate data, Operador operador) {

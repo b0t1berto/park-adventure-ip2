@@ -115,7 +115,7 @@ public class CalendarioController {
             Tooltip.install(celula, new Tooltip(feriado.get()));
         }
 
-        int escalados = RepositorioEscalaTrabalhoController.operadoresDoDia(dia).size();
+        int escalados = RepositorioEscalaDeTrabalhoController.operadoresDoDia(dia).size();
         if (escalados > 0) {
             celula.getStyleClass().add("dia-escala");
             Label escala = new Label("Escala: " + escalados + (escalados == 1 ? " operador" : " operadores"));
@@ -137,7 +137,7 @@ public class CalendarioController {
         ContextoController.FERIADOS.nomeDoFeriado(dia)
                 .ifPresent(nome -> texto.append("\nFeriado nacional: ").append(nome));
 
-        List<Operador> escalados = RepositorioEscalaTrabalhoController.operadoresDoDia(dia);
+        List<Operador> escalados = RepositorioEscalaDeTrabalhoController.operadoresDoDia(dia);
         if (escalados.isEmpty()) {
             texto.append("\nNenhum operador escalado.");
         } else {

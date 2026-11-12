@@ -4,7 +4,7 @@ import com.ufrpe.parkadventure.controller.AcessoController;
 import com.ufrpe.parkadventure.controller.RepositorioAtracaoController;
 import com.ufrpe.parkadventure.controller.RepositorioIngressoController;
 import com.ufrpe.parkadventure.controller.RepositorioVisitanteController;
-import com.ufrpe.parkadventure.controller.RepositorioEscalaTrabalhoController;
+import com.ufrpe.parkadventure.controller.RepositorioEscalaDeTrabalhoController;
 import com.ufrpe.parkadventure.controller.ContextoController;
 import com.ufrpe.parkadventure.controller.IngressoController;
 import com.ufrpe.parkadventure.model.atracao.Aquatico;
@@ -92,19 +92,19 @@ public final class DadosExemplo {
             acesso.reservarFuraFila(edivan, RepositorioIngressoController.buscarUltimo(edivan.getNome()), piratas, hoje, horario);
         }
 
-        RepositorioEscalaTrabalhoController.escalar(hoje.plusDays(1), caique);
-        RepositorioEscalaTrabalhoController.escalar(hoje.plusDays(2), carlos);
-        RepositorioEscalaTrabalhoController.escalar(hoje.plusDays(2), ivaldo);
-        RepositorioEscalaTrabalhoController.escalar(hoje.plusDays(6), caique);
+        RepositorioEscalaDeTrabalhoController.escalar(hoje.plusDays(1), caique);
+        RepositorioEscalaDeTrabalhoController.escalar(hoje.plusDays(2), carlos);
+        RepositorioEscalaDeTrabalhoController.escalar(hoje.plusDays(2), ivaldo);
+        RepositorioEscalaDeTrabalhoController.escalar(hoje.plusDays(6), caique);
         // feriados nacionais fixos: só entram se ainda não passaram no ano corrente (antes eram datas de 2026)
         LocalDate consciencia = LocalDate.of(hoje.getYear(), 11, 20);   // Consciência Negra
         LocalDate natal = LocalDate.of(hoje.getYear(), 12, 25);         // Natal
         if (!consciencia.isBefore(hoje)) {
-            RepositorioEscalaTrabalhoController.escalar(consciencia, carlos);
-            RepositorioEscalaTrabalhoController.escalar(consciencia, caique);
+            RepositorioEscalaDeTrabalhoController.escalar(consciencia, carlos);
+            RepositorioEscalaDeTrabalhoController.escalar(consciencia, caique);
         }
         if (!natal.isBefore(hoje)) {
-            RepositorioEscalaTrabalhoController.escalar(natal, ivaldo);
+            RepositorioEscalaDeTrabalhoController.escalar(natal, ivaldo);
         }
         ContextoController.SESSAO.setVisitanteAtual(carla);
     }

@@ -18,7 +18,7 @@ public class PagamentoCartaoController {
     @FXML private Button btnVoltar, btnPagar;
 
     private double total;
-    private Scene cenaAnterior;   // formulário de pagamento, para o "Voltar" não perder o que foi digitado
+    private Scene cenaAnterior;
 
     public void setCenaAnterior(Scene cenaAnterior) {
         this.cenaAnterior = cenaAnterior;
