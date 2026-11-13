@@ -6,6 +6,7 @@ import com.ufrpe.parkadventure.model.atracao.EstadoReserva;
 import com.ufrpe.parkadventure.model.atracao.FilaVirtual;
 import com.ufrpe.parkadventure.model.atracao.Reserva;
 import com.ufrpe.parkadventure.model.pessoa.Visitante;
+import com.ufrpe.parkadventure.repository.Persistencia;
 import com.ufrpe.parkadventure.view.Aviso;
 import com.ufrpe.parkadventure.view.Formatos;
 
@@ -143,6 +144,7 @@ public class FilaVirtualController {
         }
         Visitante visitante = ContextoController.SESSAO.getVisitanteAtual();
         if (ContextoController.CONTROLE_ACESSO.cancelarReserva(visitante, linha.atracao(), linha.reserva().getData())) {
+            Persistencia.salvar();//tava sem
             Aviso.sucesso(lblStatus, "Reserva em " + linha.nomeAtracao() + " cancelada.");
         } else {
             Aviso.erro(lblStatus, "Não foi possível cancelar essa reserva.");

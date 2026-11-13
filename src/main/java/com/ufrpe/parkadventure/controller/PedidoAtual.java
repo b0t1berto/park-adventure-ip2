@@ -1,13 +1,13 @@
 package com.ufrpe.parkadventure.controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import com.ufrpe.parkadventure.model.ingresso.Ingresso;
 import com.ufrpe.parkadventure.model.ingresso.TipoIngresso;
 import com.ufrpe.parkadventure.model.pessoa.Responsavel;
 import com.ufrpe.parkadventure.model.pessoa.Visitante;
 import com.ufrpe.parkadventure.repository.Persistencia;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 public final class PedidoAtual {
     private PedidoAtual() { }
@@ -61,15 +61,23 @@ public final class PedidoAtual {
             return null;
         }
 
-        Visitante visitante = RepositorioVisitanteController.buscarVisitante(nome);
+        // O ingresso é sempre do visitante que está logado. Antes o formulário buscava/criava um visitante
+        Visitante visitante = ContextoController.SESSAO.getVisitanteAtual();
         if (visitante == null) {
-            visitante = new Visitante(nome, nascimento.format(DATA), cpf, altura);
-            RepositorioVisitanteController.cadastrarVisitante(visitante);
-        } else {
-            visitante.setCpf(cpf);
-            visitante.setDataNascimento(nascimento);
-            visitante.setAltura(altura);
+            // ninguém logado
+            visitante = RepositorioVisitanteController.buscarVisitante(nome);
+            if (visitante == null) {
+                visitante = new Visitante(nome, nascimento.format(DATA), cpf, altura);
+                RepositorioVisitanteController.cadastrarVisitante(visitante);
+            }
+            ContextoController.SESSAO.setVisitanteAtual(visitante);
         }
+        // a compra só completa o perfil
+        if (visitante.getCpf() == null || visitante.getCpf().isBlank()) {
+            visitante.setCpf(cpf);
+        }
+        visitante.setDataNascimento(nascimento);
+        visitante.setAltura(altura);
         visitante.setEmail(email);
         visitante.setTelefone(telefone);
 
@@ -85,8 +93,6 @@ public final class PedidoAtual {
         Ingresso ingresso = new Ingresso(visitante, TipoIngresso.DIARIA, hoje, validade, valor);
         ingresso.setFormaPagamento(formaPagamento);
         RepositorioIngressoController.cadastrarIngresso(ingresso);
-        // quem acabou de comprar passa a ser o visitante da sessão (telas de ingressos e fura-fila usam isso)
-        ContextoController.SESSAO.setVisitanteAtual(visitante);
 
         Persistencia.salvar();
         limpar();
@@ -99,6 +105,7 @@ public final class PedidoAtual {
         nome = null;
         cpf = null;
         nascimento = null;
+        altura = 0;
         email = null;
         telefone = null;
         nomeResponsavel = null;

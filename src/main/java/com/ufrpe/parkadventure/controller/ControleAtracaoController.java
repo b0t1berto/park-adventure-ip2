@@ -1,5 +1,11 @@
 package com.ufrpe.parkadventure.controller;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.ufrpe.parkadventure.ParkAdventure;
 import com.ufrpe.parkadventure.model.atracao.Atracao;
 import com.ufrpe.parkadventure.model.atracao.FilaVirtual;
@@ -18,12 +24,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.util.Duration;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 
 // Tela do operador: ele conta as pessoas (+1 / -1) e libera quem tem fura-fila na entrada de prioridade.
 public class ControleAtracaoController {

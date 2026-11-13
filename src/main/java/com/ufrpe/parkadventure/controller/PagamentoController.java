@@ -1,18 +1,32 @@
 package com.ufrpe.parkadventure.controller;
 
+import java.io.File;
+import java.time.LocalDate;
+import java.time.Period;
+
 import com.ufrpe.parkadventure.ParkAdventure;
+import com.ufrpe.parkadventure.model.pessoa.Responsavel;
+import com.ufrpe.parkadventure.model.pessoa.Visitante;
+
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
-import java.io.File;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.Period;
 
 public class PagamentoController {
 
@@ -62,6 +76,37 @@ public class PagamentoController {
 
         btnPagar.disableProperty().bind(
                 grupoPagamento.selectedToggleProperty().isNull());
+
+        preencherComDadosDaConta();
+    }
+
+    // Quem compra é o visitante logado: nome e CPF vêm da conta e não podem ser trocados aqui
+    // (digitar outro nome criava outro perfil). O resto é preenchido se a conta já tiver esses dados.
+    private void preencherComDadosDaConta() {
+        Visitante conta = ContextoController.SESSAO.getVisitanteAtual();
+        if (conta == null) {
+            return;
+        }
+        txtNome.setText(conta.getNome());
+        txtNome.setEditable(false);
+        if (conta.getCpf() != null && !conta.getCpf().isBlank()) {
+            txtCpf.setText(conta.getCpf());
+            txtCpf.setEditable(false);
+        }
+        if (conta.getEmail() != null) txtEmail.setText(conta.getEmail());
+        if (conta.getTelefone() != null) txtTelefone.setText(conta.getTelefone());
+
+        // conta recém-criada tem altura 0 e nascimento 01/01/2000 só como marcadores: aí a pessoa preenche
+        if (conta.getAltura() > 0) {
+            spAltura.getValueFactory().setValue(Math.max(50, Math.min(250, conta.getAltura())));
+            dpNascimento.setValue(conta.getDataNascimento());
+        }
+        Responsavel resp = conta.getResponsavel();
+        if (resp != null) {
+            if (resp.getNome() != null) txtNomeResponsavel.setText(resp.getNome());
+            if (resp.getCpf() != null) txtCpfResponsavel.setText(resp.getCpf());
+            if (resp.getContatoEmergencia() != null) txtContatoEmergencia.setText(resp.getContatoEmergencia());
+        }
     }
 
     public void setResumo(String item, LocalDate data, int quantidade, double total) {

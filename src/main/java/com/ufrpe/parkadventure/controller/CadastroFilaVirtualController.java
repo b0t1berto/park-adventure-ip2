@@ -5,6 +5,7 @@ import com.ufrpe.parkadventure.model.atracao.Atracao;
 import com.ufrpe.parkadventure.model.atracao.FilaVirtual;
 import com.ufrpe.parkadventure.model.ingresso.Ingresso;
 import com.ufrpe.parkadventure.model.pessoa.Visitante;
+import com.ufrpe.parkadventure.repository.Persistencia;
 import com.ufrpe.parkadventure.view.Aviso;
 import com.ufrpe.parkadventure.view.Formatos;
 
@@ -142,6 +143,7 @@ public class CadastroFilaVirtualController {
                 .reservarFuraFila(visitante, ingressoDoDia, atracao, data, horario);
 
         if (resultado == ResultadoAcesso.RESERVADO) {
+            Persistencia.salvar();   // não depende de a janela ser fechada do jeito certo
             int posicao = atracao.getFilaVirtual().posicaoNoHorario(visitante, data);
             Aviso.sucesso(lblResultado, mensagem(resultado, atracao, data, horario));
             atualizarHorarios(atracao, data);   // as vagas mudaram
