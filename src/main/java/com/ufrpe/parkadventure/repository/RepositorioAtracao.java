@@ -30,8 +30,7 @@ public class RepositorioAtracao{
         if (atracao == null || operador == null) {
             return false;
         }
-        atracao.setOperador(operador);
-        return true;
+        return atracao.adicionarOperador(operador);
     }
 
     public Atracao buscar(String nome) {
@@ -46,49 +45,53 @@ public class RepositorioAtracao{
 
     // Devolve o NOME do operador (não a atração). Para a atração use buscarAtracaoPorOperador.
     public String buscarNomeDoOperador(Operador operador) {
-        if (operador == null) return null;
-        for (Atracao atracao : atracoes) {
-            if (atracao.getOperador() != null && atracao.getOperador().equals(operador)) {
-                return atracao.getOperador().getNome();
-            }
-        }
-        return null;
+        return buscarAtracaoPorOperador(operador) == null ? null : operador.getNome();
     }
 
     // Atração em que o operador trabalha (null se ele não estiver vinculado a nenhuma)
     public Atracao buscarAtracaoPorOperador(Operador operador) {
         if (operador == null) return null;
         for (Atracao atracao : atracoes) {
-            if (atracao.getOperador() == operador) {
+            if (atracao.getOperadores().contains(operador)) {
                 return atracao;
             }
         }
         return null;
     }
 
-    // Procura o operador só pelo usuário (login sem cargo)
-    public Operador buscarOperadorPorUsuario(String usuario) {
-        if (usuario == null) return null;
+    // Procura o operador pelo nome dentro da atração informada
+    public Operador buscarOperadorPorNome(String nome, String nomeAtracao) {
+        if (nome == null || nomeAtracao == null) return null;
         for (Atracao atracao : atracoes) {
-            Operador operador = atracao.getOperador();
-            if (operador != null && operador.getNome() != null
-                    && operador.getNome().trim().equalsIgnoreCase(usuario.trim())) {
-                return operador;
+            if (atracao.getNome() == null || !atracao.getNome().trim().equalsIgnoreCase(nomeAtracao.trim())) {
+                continue;
+            }
+            for (Operador operador : atracao.getOperadores()) {
+                if (operador.getNome() != null && operador.getNome().trim().equalsIgnoreCase(nome.trim())) {
+                    return operador;
+                }
             }
         }
         return null;
     }
 
-    // Procura o operador pelo nome e pela atração em que ele trabalha (o "cargo" do login é o nome da atração)
-    public Operador buscarOperadorPorNome(String nome, String nomeAtracao) {
-        if (nome == null || nomeAtracao == null) return null;
+    // Todos os operadores de todas as atrações
+    public ArrayList<Operador> todosOsOperadores() {
+        ArrayList<Operador> todos = new ArrayList<>();
         for (Atracao atracao : atracoes) {
-            Operador operador = atracao.getOperador();
-            if (operador != null && operador.getNome() != null
-                    && operador.getNome().trim().equalsIgnoreCase(nome.trim())
-                    && atracao.getNome() != null
-                    && atracao.getNome().trim().equalsIgnoreCase(nomeAtracao.trim())) {
-                return operador;
+            todos.addAll(atracao.getOperadores());
+        }
+        return todos;
+    }
+
+    // Operador com esse usuário (sem diferenciar maiúsculas); null se não existir
+    public Operador buscarOperadorPorUsuario(String usuario) {
+        if (usuario == null) return null;
+        for (Atracao atracao : atracoes) {
+            for (Operador operador : atracao.getOperadores()) {
+                if (operador.getUsuario() != null && operador.getUsuario().equalsIgnoreCase(usuario.trim())) {
+                    return operador;
+                }
             }
         }
         return null;

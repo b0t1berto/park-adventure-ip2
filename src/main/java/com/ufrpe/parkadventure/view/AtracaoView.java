@@ -121,7 +121,11 @@ public class AtracaoView {
         console.exibir("Nome: " + atracao.getNome());
         console.exibir("Capacidade Máxima: " + atracao.getCapacidadeMaxima());
         if (atracao.temOperador()) {
-            console.exibir("Operador: " + atracao.getOperador().getNome());
+            StringBuilder nomes = new StringBuilder();
+            for (var operador : atracao.getOperadores()) {
+                nomes.append(nomes.length() == 0 ? "" : ", ").append(operador.getNome());
+            }
+            console.exibir("Operadores: " + nomes);
         } else {
             console.exibir("Operador: (nenhum vinculado)");
         }

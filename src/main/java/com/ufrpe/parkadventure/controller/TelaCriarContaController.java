@@ -1,21 +1,21 @@
 package com.ufrpe.parkadventure.controller;
 
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
+import com.ufrpe.parkadventure.ParkAdventure;
 import com.ufrpe.parkadventure.model.pessoa.Visitante;
 import com.ufrpe.parkadventure.repository.Persistencia;
-import com.ufrpe.parkadventure.ParkAdventure;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 
+// Criação de conta de VISITANTE: só usuário e senha (nome completo e CPF são informados na primeira compra).
+// Operadores não são cadastrados aqui: só o administrador cadastra operadores.
 public class TelaCriarContaController {
-
-    private static final int TAMANHO_MINIMO_SENHA = 4;
 
     @FXML
     private Label lblUsuario, lblSenha, lblMensagem, lblDivertir, lblParkAdventure;
@@ -39,19 +39,17 @@ public class TelaCriarContaController {
     }
 
     @FXML
-    public void onConfirmar (ActionEvent event) {
+    public void onConfirmar(ActionEvent event) {
         String usuario = txtUsuario.getText().trim();
         String senha = txtSenha.getText();
 
-        if (usuario.isBlank() || senha.length() < TAMANHO_MINIMO_SENHA) {
-            erro("Suas informações estão inválidas!",
-                    "Informe um usuário e uma senha com pelo menos " + TAMANHO_MINIMO_SENHA + " caracteres.");
+        String problema = AutenticacaoController.validarCredenciais(usuario, senha);
+        if (problema != null) {
+            erro("Suas informações estão inválidas!", problema);
             return;
         }
-
-        // o administrador e os operadores também entram pelo login: o usuário deles não pode ser reaproveitado
-        if (usuario.equalsIgnoreCase(TelaLoginController.USUARIO_ADM)
-                || RepositorioAtracaoController.buscarOperadorPorUsuario(usuario) != null) {
+        // administrador, visitantes e operadores entram pelo mesmo login: o usuário é único no sistema
+        if (!AutenticacaoController.usuarioDisponivel(usuario, null)) {
             erro("Conta não criada", "Esse usuário não está disponível. Escolha outro.");
             return;
         }
@@ -64,20 +62,21 @@ public class TelaCriarContaController {
             return;
         }
 
-        // nascimento e altura são só marcadores: a pessoa informa os dados de verdade na compra do ingresso
+        // o nome da conta é o usuário. Nascimento e altura são só marcadores: a pessoa informa os dados de
+        // verdade (nome completo, CPF...) na compra do ingresso.
         Visitante visitante = new Visitante(usuario, "01/01/2000", null, 0);
-        visitante.setSenha(senha);
+        visitante.setUsuario(usuario);
+        visitante.definirSenha(senha);   // só o hash da senha é guardado (ver Senha)
         if (!RepositorioVisitanteController.cadastrarVisitante(visitante)) {
             erro("Conta não criada", "Esse usuário não está disponível. Escolha outro.");
             return;
         }
-
         Persistencia.salvar();
 
         Alert pronto = new Alert(AlertType.INFORMATION);
         pronto.setTitle("CONTA CRIADA");
         pronto.setHeaderText("Conta criada com sucesso!");
-        pronto.setContentText("Seu nome, CPF, altura e data de nascimento serão pedidos na compra do ingresso.");
+        pronto.setContentText("Seu nome completo, CPF, altura e data de nascimento serão pedidos na compra do ingresso.");
         pronto.showAndWait();
 
         txtUsuario.setText("");

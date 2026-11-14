@@ -1,5 +1,7 @@
 package com.ufrpe.parkadventure;
 
+import com.ufrpe.parkadventure.controller.AutenticacaoController;
+import com.ufrpe.parkadventure.controller.GeradorEscala;
 import com.ufrpe.parkadventure.controller.RepositorioAtracaoController;
 import com.ufrpe.parkadventure.controller.controles.DadosExemplo;
 import com.ufrpe.parkadventure.repository.Persistencia;
@@ -37,6 +39,10 @@ public class ParkAdventure extends Application {
         // primeira execução: cria as atrações e os operadores do parque
         if (RepositorioAtracaoController.listarTodas().isEmpty()) {
             DadosExemplo.carregarAtracoesPadrao();
+        }
+        // toda atração precisa de um operador salvo, com usuário e senha
+        if (AutenticacaoController.garantirOperadoresDasAtracoes() | GeradorEscala.gerarProximosDias().turnosCriados() > 0) {
+            Persistencia.salvar();   // operadores e escala dos próximos dias ficam gravados
         }
         exibir("view/menu.fxml");
         palco.setTitle("Park Adventure");

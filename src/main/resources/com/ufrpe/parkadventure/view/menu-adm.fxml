@@ -77,6 +77,14 @@
                   <DropShadow color="#aaaaaa" offsetY="2.0" />
                </effect>
             </Button>
+            <Button mnemonicParsing="false" onAction="#onEscala" prefHeight="45.0" prefWidth="250.0" styleClass="botao-primario" text="Escala de Trabalho" textFill="WHITE">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="14.0" />
+               </font>
+               <effect>
+                  <DropShadow color="#aaaaaa" offsetY="2.0" />
+               </effect>
+            </Button>
          </children>
       </VBox>
    </center>

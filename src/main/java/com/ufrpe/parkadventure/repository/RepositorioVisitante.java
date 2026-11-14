@@ -24,6 +24,16 @@ public class RepositorioVisitante {
         return visitantes.add(visitante);
     }
 
+    public Visitante buscarPorUsuario(String usuario) {
+        if (usuario == null) return null;
+        for (Visitante visitante : visitantes) {
+            if (visitante.getUsuario() != null && visitante.getUsuario().equalsIgnoreCase(usuario.trim())) {
+                return visitante;
+            }
+        }
+        return null;
+    }
+
     public Visitante buscar(String nome) {
         if (nome == null) return null;
         for (Visitante visitante : visitantes) {
@@ -51,6 +61,10 @@ public class RepositorioVisitante {
         existente.setEmail(visitanteAtualizado.getEmail());
         existente.setTelefone(visitanteAtualizado.getTelefone());
         existente.setResponsavel(visitanteAtualizado.getResponsavel());
+        if (visitanteAtualizado.temCredenciais()) {   // quem edita sem informar login não apaga o que já existe
+            existente.setUsuario(visitanteAtualizado.getUsuario());
+            existente.setSenhaHash(visitanteAtualizado.getSenhaHash());
+        }
         return true;
     }
 

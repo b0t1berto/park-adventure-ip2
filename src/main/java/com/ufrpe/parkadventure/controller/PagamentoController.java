@@ -68,15 +68,21 @@ public class PagamentoController {
         preencherComDadosDaConta();
     }
 
-    // A conta (usuário e senha) já identifica quem compra. Nome e CPF são dados da compra: a pessoa informa
-    // na primeira vez e nas próximas o formulário já vem preenchido (e pode ser corrigido).
+    // A conta (usuário e senha) já identifica quem compra. Nome e CPF são informados na PRIMEIRA compra; depois
+    // disso o formulário já vem preenchido e eles NÃO podem mais ser alterados (campos bloqueados).
     private void preencherComDadosDaConta() {
         Visitante conta = ContextoController.SESSAO.getVisitanteAtual();
         if (conta == null) {
             return;
         }
-        if (conta.getNomeCompleto() != null) txtNome.setText(conta.getNomeCompleto());
-        if (conta.getCpf() != null) txtCpf.setText(conta.getCpf());
+        if (conta.getNomeCompleto() != null && !conta.getNomeCompleto().isBlank()) {
+            txtNome.setText(conta.getNomeCompleto());
+            txtNome.setEditable(false);
+        }
+        if (conta.getCpf() != null && !conta.getCpf().isBlank()) {
+            txtCpf.setText(conta.getCpf());
+            txtCpf.setEditable(false);
+        }
         if (conta.getEmail() != null) txtEmail.setText(conta.getEmail());
         if (conta.getTelefone() != null) txtTelefone.setText(conta.getTelefone());
 

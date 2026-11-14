@@ -1,5 +1,11 @@
 package com.ufrpe.parkadventure.controller;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.ufrpe.parkadventure.ParkAdventure;
 import com.ufrpe.parkadventure.model.atracao.Atracao;
 import com.ufrpe.parkadventure.model.atracao.FilaVirtual;
@@ -20,12 +26,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.util.Duration;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-
 // Tela do operador: ele conta as pessoas (+1 / -1) e libera quem tem fura-fila na entrada de prioridade.
 public class ControleAtracaoController {
 
@@ -42,6 +42,7 @@ public class ControleAtracaoController {
 
     private Atracao atracao;
     private Timeline atualizador;
+    private boolean foraDoTurno;   // o turno acabou (ou ainda não começou): os botões ficam travados
 
     @FXML
     private void initialize() {
@@ -169,8 +170,30 @@ public class ControleAtracaoController {
 
     // ---------------------------------------------------------------- atualização da tela
 
+    // Trava a tela quando o operador está fora do próprio turno (e destrava quando o turno dele começa).
+    // Só mexe na mensagem quando a situação muda, para não apagar o resultado da última ação.
+    private void aplicarTurno(LocalDateTime agora) {
+        String motivo = TurnoDoOperador.motivoSemAcesso(ContextoController.SESSAO.getOperadorAtual(), agora);
+        boolean fora = motivo != null;
+        if (fora == foraDoTurno && !(fora && lblStatus.getText().isEmpty())) {
+            return;
+        }
+        foraDoTurno = fora;
+        btnEntrou.setDisable(fora);
+        btnSaiu.setDisable(fora);
+        btnAjustar.setDisable(fora);
+        btnLiberar.setDisable(fora);
+        txtOcupacao.setDisable(fora);
+        if (fora) {
+            Aviso.erro(lblStatus, motivo);
+        } else {
+            Aviso.limpar(lblStatus);
+        }
+    }
+
     private void atualizar() {
         LocalDateTime agora = LocalDateTime.now();
+        aplicarTurno(agora);
         atracao.getFilaVirtual().expirarNoShows(agora);
 
         lblOcupacao.setText(atracao.getOcupacaoAtual() + " / " + atracao.getCapacidadeMaxima()

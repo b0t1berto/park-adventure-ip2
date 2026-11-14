@@ -1,10 +1,11 @@
 package com.ufrpe.parkadventure.controller.controles;
 
 import com.ufrpe.parkadventure.controller.AcessoController;
+import com.ufrpe.parkadventure.controller.AutenticacaoController;
+import com.ufrpe.parkadventure.controller.GeradorEscala;
 import com.ufrpe.parkadventure.controller.RepositorioAtracaoController;
 import com.ufrpe.parkadventure.controller.RepositorioIngressoController;
 import com.ufrpe.parkadventure.controller.RepositorioVisitanteController;
-import com.ufrpe.parkadventure.controller.RepositorioEscalaDeTrabalhoController;
 import com.ufrpe.parkadventure.controller.ContextoController;
 import com.ufrpe.parkadventure.controller.IngressoController;
 import com.ufrpe.parkadventure.model.atracao.Aquatico;
@@ -92,20 +93,9 @@ public final class DadosExemplo {
             acesso.reservarFuraFila(edivan, RepositorioIngressoController.buscarUltimo(edivan.getNome()), piratas, hoje, horario);
         }
 
-        RepositorioEscalaDeTrabalhoController.escalar(hoje.plusDays(1), caique);
-        RepositorioEscalaDeTrabalhoController.escalar(hoje.plusDays(2), carlos);
-        RepositorioEscalaDeTrabalhoController.escalar(hoje.plusDays(2), ivaldo);
-        RepositorioEscalaDeTrabalhoController.escalar(hoje.plusDays(6), caique);
-        // feriados nacionais fixos: só entram se ainda não passaram no ano corrente (antes eram datas de 2026)
-        LocalDate consciencia = LocalDate.of(hoje.getYear(), 11, 20);   // Consciência Negra
-        LocalDate natal = LocalDate.of(hoje.getYear(), 12, 25);         // Natal
-        if (!consciencia.isBefore(hoje)) {
-            RepositorioEscalaDeTrabalhoController.escalar(consciencia, carlos);
-            RepositorioEscalaDeTrabalhoController.escalar(consciencia, caique);
-        }
-        if (!natal.isBefore(hoje)) {
-            RepositorioEscalaDeTrabalhoController.escalar(natal, ivaldo);
-        }
+        // escala dos próximos dias: operadores revezando nos turnos de manhã e tarde de cada atração
+        AutenticacaoController.garantirOperadoresDasAtracoes();
+        GeradorEscala.gerarProximosDias();
         ContextoController.SESSAO.setVisitanteAtual(carla);
     }
 }

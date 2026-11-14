@@ -13,6 +13,7 @@ import com.ufrpe.parkadventure.model.atracao.Reserva;
 import com.ufrpe.parkadventure.model.ingresso.Ingresso;
 import com.ufrpe.parkadventure.model.ingresso.TipoIngresso;
 import com.ufrpe.parkadventure.model.pessoa.Operador;
+import com.ufrpe.parkadventure.model.pessoa.PeriodoTrabalho;
 import com.ufrpe.parkadventure.model.pessoa.Responsavel;
 import com.ufrpe.parkadventure.model.pessoa.Visitante;
 
@@ -142,13 +143,15 @@ public final class Persistencia {
                 LocalTime.parse(c[4], HORA), EstadoReserva.valueOf(c[5]));
     }
 
-    // E <data> <nome do operador> <atração em que ele trabalha>
+    // E <data> <nome do operador> <atração em que ele trabalha> <turno: MANHA ou TARDE>
     private static void lerEscala(String[] c) {
         Operador operador = RepositorioAtracaoController.buscarOperadorPorNome(c[2], c[3]);
         if (operador == null) {
             return;   // o operador não existe mais
         }
-        RepositorioEscalaDeTrabalhoController.escalar(LocalDate.parse(c[1], DATA), operador);
+        String turno = campo(c, 4);   // arquivos antigos não tinham o turno
+        PeriodoTrabalho periodo = turno.isEmpty() ? PeriodoTrabalho.MANHA : PeriodoTrabalho.valueOf(turno);
+        RepositorioEscalaDeTrabalhoController.escalar(LocalDate.parse(c[1], DATA), operador, periodo);
     }
 
     private static void lerVisitante(String[] c) {
@@ -162,17 +165,19 @@ public final class Persistencia {
         }
         visitante.setEmail(vazioParaNulo(campo(c, 9)));
         visitante.setTelefone(vazioParaNulo(campo(c, 10)));
-        visitante.setSenha(vazioParaNulo(campo(c, 11)));
-        visitante.setNomeCompleto(vazioParaNulo(campo(c, 12)));
+        visitante.setUsuario(vazioParaNulo(campo(c, 11)));
+        visitante.setSenhaHash(vazioParaNulo(campo(c, 12)));
+        visitante.setNomeCompleto(vazioParaNulo(campo(c, 13)));
         RepositorioVisitanteController.cadastrarVisitante(visitante);
     }
 
     private static void lerOperador(String[] c) {
         Atracao atracao = RepositorioAtracaoController.buscar(c[4]);
-        if (atracao != null && !atracao.temOperador()) {
+        if (atracao != null && RepositorioAtracaoController.buscarOperadorPorNome(c[1], c[4]) == null) {
             Operador operador = new Operador(c[1], c[2], vazioParaNulo(c[3]), c[4]);
-            operador.setSenha(vazioParaNulo(campo(c, 5)));
-            atracao.setOperador(operador);
+            operador.setUsuario(vazioParaNulo(campo(c, 5)));
+            operador.setSenhaHash(vazioParaNulo(campo(c, 6)));
+            atracao.adicionarOperador(operador);
         }
     }
 
@@ -202,7 +207,7 @@ public final class Persistencia {
                     r == null ? "" : texto(r.getCpf()),
                     r == null ? "" : texto(r.getContatoEmergencia()),
                     texto(v.getEmail()), texto(v.getTelefone()),
-                    texto(v.getSenha()), texto(v.getNomeCompleto())));
+                    texto(v.getUsuario()), texto(v.getSenhaHash()), texto(v.getNomeCompleto())));
         }
 
         for (Atracao a : RepositorioAtracaoController.listarTodas()) {
@@ -214,11 +219,10 @@ public final class Persistencia {
         }
 
         for (Atracao a : RepositorioAtracaoController.listarTodas()) {
-            Operador o = a.getOperador();
-            if (o != null) {
+            for (Operador o : a.getOperadores()) {
                 linhas.add(String.join(SEPARADOR, "O",
                         texto(o.getNome()), data(o.getDataNascimento()), texto(o.getCpf()),
-                        texto(a.getNome()), texto(o.getSenha())));
+                        texto(a.getNome()), texto(o.getUsuario()), texto(o.getSenhaHash())));
             }
         }
 
@@ -249,8 +253,12 @@ public final class Persistencia {
             if (daAtracao == null) {
                 continue;
             }
+            // guarda os últimos 7 dias (a regra da folga semanal olha a semana toda) e os dias futuros
+            if (turno.data().isBefore(LocalDate.now().minusDays(7))) {
+                continue;
+            }
             linhas.add(String.join(SEPARADOR, "E", data(turno.data()),
-                    texto(turno.operador().getNome()), texto(daAtracao.getNome())));
+                    texto(turno.operador().getNome()), texto(daAtracao.getNome()), turno.periodo().name()));
         }
 
         try {

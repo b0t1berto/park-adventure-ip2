@@ -10,7 +10,8 @@ public class Pessoa {
     private String nome;
     private LocalDate dataNascimento;
     private String cpf;
-    private String senha;
+    private String usuario;
+    private String senhaHash;   // nunca a senha em texto puro (ver Senha)
 
     public Pessoa(String nome, LocalDate dataNascimento, String cpf) {
         this.nome = nome;
@@ -39,15 +40,19 @@ public class Pessoa {
     public String getCpf() { return cpf; }
     public void setCpf(String cpf) { this.cpf = cpf; }
 
-    // Login: o "nome" da conta é o usuário
-    public String getSenha() { return senha; }
-    public void setSenha(String senha) { this.senha = senha; }
-    public boolean temSenha() { return senha != null && !senha.isEmpty(); }
-    public boolean senhaConfere(String tentativa) {
-        if (temSenha() && senha.equals(tentativa)) {
-            return true;
-        }
-        return false;
+    public String getUsuario() { return usuario; }
+    public void setUsuario(String usuario) { this.usuario = usuario == null ? null : usuario.trim(); }
+
+    // Hash guardado no arquivo de dados ("salt$hash")
+    public String getSenhaHash() { return senhaHash; }
+    public void setSenhaHash(String senhaHash) { this.senhaHash = senhaHash; }
+
+    public void definirSenha(String senha) { this.senhaHash = Senha.gerarHash(senha); }
+
+    public boolean senhaConfere(String senha) { return Senha.confere(senha, senhaHash); }
+
+    public boolean temCredenciais() {
+        return usuario != null && !usuario.isBlank() && senhaHash != null && !senhaHash.isBlank();
     }
 
     @Override

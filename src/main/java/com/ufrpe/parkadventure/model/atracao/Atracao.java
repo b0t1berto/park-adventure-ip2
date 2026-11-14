@@ -3,6 +3,10 @@ package com.ufrpe.parkadventure.model.atracao;
 import com.ufrpe.parkadventure.model.pessoa.Operador;
 import com.ufrpe.parkadventure.model.pessoa.Visitante;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public abstract class Atracao implements IRestricao {
     // A cota do fura-fila acompanha a vazão da atração: capacidade x ciclos em 30 min x % de prioridade.
     // Ajuste estas duas constantes conforme a duração real de cada ciclo.
@@ -11,7 +15,7 @@ public abstract class Atracao implements IRestricao {
 
     private String nome;
     private int capacidadeMaxima;
-    private Operador operador;
+    private final List<Operador> operadores = new ArrayList<>();   // vários operadores se revezam nos turnos
     private int alturaMinima;
     private int idadeMinima;
     private int ocupacaoAtual;
@@ -20,7 +24,9 @@ public abstract class Atracao implements IRestricao {
     protected Atracao(String nome, int capacidadeMaxima, Operador operador, int alturaMinima, int idadeMinima) {
         this.nome = nome;
         this.capacidadeMaxima = capacidadeMaxima;
-        this.operador = operador;
+        if (operador != null) {
+            this.operadores.add(operador);
+        }
         this.alturaMinima = alturaMinima;
         this.idadeMinima = idadeMinima;
     }
@@ -82,11 +88,15 @@ public abstract class Atracao implements IRestricao {
         }
         this.ocupacaoAtual = Math.min(anterior.ocupacaoAtual, this.capacidadeMaxima);
         this.filaVirtual.copiarReservasDe(anterior.filaVirtual);
+        for (Operador op : anterior.operadores) {
+            adicionarOperador(op);   // a nova versão continua com os operadores da anterior
+        }
     }
 
     public boolean estaLotada() { return ocupacaoAtual >= capacidadeMaxima; }
 
-    public boolean temOperador() { return operador != null; }
+    // A atração está "aberta" quando tem ao menos um operador vinculado (REQ21)
+    public boolean temOperador() { return !operadores.isEmpty(); }
 
     public String getTipo() { return getClass().getSimpleName(); }
 
@@ -96,8 +106,20 @@ public abstract class Atracao implements IRestricao {
     public int getCapacidadeMaxima() { return capacidadeMaxima; }
     public void setCapacidadeMaxima(int capacidadeMaxima) { this.capacidadeMaxima = capacidadeMaxima; }
 
-    public Operador getOperador() { return operador; }
-    public void setOperador(Operador operador) { this.operador = operador; }
+    public List<Operador> getOperadores() { return Collections.unmodifiableList(operadores); }
+
+    // Primeiro operador cadastrado (para telas que mostram só um nome); null se não houver
+    public Operador getOperador() { return operadores.isEmpty() ? null : operadores.get(0); }
+
+    // Vincula mais um operador (REQ03). Retorna false se for nulo ou já estiver vinculado.
+    public boolean adicionarOperador(Operador operador) {
+        if (operador == null || operadores.contains(operador)) {
+            return false;
+        }
+        return operadores.add(operador);
+    }
+
+    public boolean removerOperador(Operador operador) { return operadores.remove(operador); }
 
     public int getAlturaMinima() { return alturaMinima; }
     public void setAlturaMinima(int alturaMinima) { this.alturaMinima = alturaMinima; }

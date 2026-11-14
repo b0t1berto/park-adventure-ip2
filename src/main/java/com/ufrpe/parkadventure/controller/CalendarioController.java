@@ -142,10 +142,11 @@ public class CalendarioController {
             texto.append("\nNenhum operador escalado.");
         } else {
             texto.append("\nOperadores escalados:");
-            for (Operador operador : escalados) {
+            for (var turno : RepositorioEscalaDeTrabalhoController.turnosDoDia(dia)) {
+                Operador operador = turno.operador();
                 Atracao daAtracao = RepositorioAtracaoController.buscarAtracaoPorOperador(operador);
                 String nomeDaAtracao = (daAtracao == null) ? null : daAtracao.getNome();
-                texto.append("\n  • ").append(operador.getNome())
+                texto.append("\n  • ").append(turno.periodo().getRotulo()).append(": ").append(operador.getNome())
                         .append(nomeDaAtracao == null ? "" : " — " + nomeDaAtracao);
             }
         }

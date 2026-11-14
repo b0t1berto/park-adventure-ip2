@@ -12,6 +12,10 @@ public class RepositorioVisitanteController {
         return repositorioVisitante.cadastrar(visitante);
     }
 
+    public static Visitante buscarPorUsuario(String usuario) {
+        return repositorioVisitante.buscarPorUsuario(usuario);
+    }
+
     public static Visitante buscarVisitante(String nome) {
         return repositorioVisitante.buscar(nome);
     }

@@ -45,7 +45,9 @@ public class CadastroAtracaoController {
         colCapacidade.setCellValueFactory(c -> new SimpleStringProperty(String.valueOf(c.getValue().getCapacidadeMaxima())));
         colRequisitos.setCellValueFactory(c -> new SimpleStringProperty(requisitos(c.getValue())));
         colOperador.setCellValueFactory(c -> new SimpleStringProperty(
-                c.getValue().temOperador() ? c.getValue().getOperador().getNome() : "(sem operador)"));
+                c.getValue().temOperador()
+                        ? c.getValue().getOperadores().stream().map(o -> o.getNome()).collect(java.util.stream.Collectors.joining(", "))
+                        : "(sem operador)"));
         tabela.setPlaceholder(new Label("Nenhuma atração cadastrada."));
         atualizarTabela();
     }
@@ -78,7 +80,7 @@ public class CadastroAtracaoController {
             return;
         }
 
-        // sem operador por enquanto: a atração fica "fechada" até o operador ser cadastrado
+        // os operadores são criados logo abaixo (ver garantirOperadoresDasAtracoes)
         Atracao atracao;
         if (tipo.equals(INFANTIL)) {
             atracao = new Infantil(nome, capacidade, null, altura, idade);
@@ -92,6 +94,9 @@ public class CadastroAtracaoController {
             Aviso.erro(lblResultado, "Já existe uma atração com esse nome.");
             return;
         }
+        // toda atração nasce com operadores (mínimo de 3, com usuário e senha inicial) e já entra na escala
+        AutenticacaoController.garantirOperadoresDasAtracoes();
+        GeradorEscala.gerarProximosDias();
         Persistencia.salvar();
         atualizarTabela();
         txtNome.clear();
@@ -99,8 +104,9 @@ public class CadastroAtracaoController {
         txtAltura.clear();
         txtIdade.clear();
         cbTipo.setValue(null);
-        Aviso.sucesso(lblResultado, "Atração \"" + nome + "\" cadastrada. Agora cadastre o operador dela em "
-                + "\"Cadastro de Operadores\" para abri-la aos visitantes.");
+        Aviso.sucesso(lblResultado, "Atração \"" + nome + "\" cadastrada com " + GeradorEscala.MIN_OPERADORES_POR_ATRACAO
+                + " operadores (senha inicial: " + AutenticacaoController.SENHA_PADRAO_OPERADOR
+                + "). Ajuste-os em \"Cadastro de Operadores\".");
     }
 
     @FXML

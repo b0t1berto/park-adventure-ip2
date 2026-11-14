@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane styleClass="tela-parque" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.OperadoresController">
+   <top>
+      <VBox spacing="6.0" styleClass="cabecalho-pagamento" BorderPane.alignment="TOP_CENTER">
+         <children>
+            <Label styleClass="titulo-cabecalho" text="Operadores das atrações" />
+            <Label styleClass="subtitulo-cabecalho" text="Cada atração tem vários operadores que se revezam nos turnos (mínimo de 3, para cobrir manhã e tarde todos os dias). Só o administrador cadastra, altera ou remove operadores." wrapText="true" />
+         </children>
+         <padding>
+            <Insets bottom="18.0" left="24.0" right="24.0" top="18.0" />
+         </padding>
+      </VBox>
+   </top>
+   <center>
+      <TableView fx:id="tabela">
+         <columns>
+            <TableColumn fx:id="colAtracao" text="Atração" />
+            <TableColumn fx:id="colNome" text="Operador" />
+            <TableColumn fx:id="colUsuario" text="Usuário" />
+            <TableColumn fx:id="colCpf" text="CPF" />
+            <TableColumn fx:id="colTurnos" text="Turnos agendados" />
+         </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+         <padding>
+            <Insets bottom="8.0" left="20.0" right="20.0" top="16.0" />
+         </padding>
+      </TableView>
+   </center>
+   <bottom>
+      <VBox spacing="8.0" styleClass="rodape-acoes">
+         <children>
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
+               <children>
+                  <Label text="Atração:" />
+                  <ComboBox fx:id="cbAtracao" prefWidth="180.0" styleClass="combo-box-base" />
+                  <Label text="Nome:" />
+                  <TextField fx:id="txtNome" prefWidth="150.0" />
+                  <Label text="CPF:" />
+                  <TextField fx:id="txtCpf" prefWidth="120.0" promptText="opcional" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
+               <children>
+                  <Label text="Usuário:" />
+                  <TextField fx:id="txtUsuario" prefWidth="150.0" />
+                  <Label text="Senha:" />
+                  <PasswordField fx:id="txtSenha" prefWidth="150.0" promptText="mín. 6 (vazio = manter)" />
+                  <Button onAction="#onNovo" styleClass="botao-secundario" text="Novo" />
+                  <Button onAction="#onSalvar" styleClass="botao-primario" text="Salvar" />
+                  <Button onAction="#onRemover" styleClass="botao-secundario" text="Remover" />
+                  <Button onAction="#onVoltar" styleClass="botao-secundario" text="Voltar" />
+               </children>
+            </HBox>
+            <Label fx:id="lblStatus" maxWidth="Infinity" wrapText="true" />
+         </children>
+         <padding>
+            <Insets bottom="14.0" left="20.0" right="20.0" top="14.0" />
+         </padding>
+      </VBox>
+   </bottom>
+   <stylesheets>
+      <URL value="@estilo.css" />
+      <URL value="@tema-parque.css" />
+   </stylesheets>
+</BorderPane>

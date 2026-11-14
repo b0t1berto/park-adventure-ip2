@@ -2,10 +2,7 @@ package com.ufrpe.parkadventure.controller;
 
 import com.ufrpe.parkadventure.ParkAdventure;
 import com.ufrpe.parkadventure.model.pessoa.Operador;
-import com.ufrpe.parkadventure.model.pessoa.Pessoa;
 import com.ufrpe.parkadventure.model.pessoa.Visitante;
-import com.ufrpe.parkadventure.repository.Persistencia;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -15,11 +12,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
+// Login por usuário e senha: o sistema descobre sozinho se é administrador, operador ou visitante.
 public class TelaLoginController {
-
-    // Acesso do administrador. TROQUE a senha aqui se quiser outra.
-    static final String USUARIO_ADM = "leandro";
-    private static final String SENHA_ADM = "admin123";
 
     @FXML
     Label lblUsuario, lblSenha, lblParkAdventure, lblAcesseConta;
@@ -42,70 +36,41 @@ public class TelaLoginController {
         }
     }
 
-    // O tipo de conta vem do próprio usuário: administrador, visitante ou operador (não há mais campo "cargo").
     @FXML
     public void onConfirmar(ActionEvent event) {
         String usuario = txtUsuario.getText().trim();
         String senha = txtSenha.getText();
 
         if (usuario.isEmpty() || senha.isEmpty()) {
-            avisar("Suas informações estão inválidas!", "Digite o usuário e a senha para entrar na conta.");
-            txtSenha.clear();
+            avisar("Suas informações estão inválidas!", "Digite o usuário e a senha para entrar.");
+            txtSenha.setText("");
+            return;
+        }
+
+        AutenticacaoController.Resultado resultado = AutenticacaoController.entrar(usuario, senha);
+        if (resultado == null) {
+            avisar("Usuário ou senha incorretos!", "Confira os dados e tente novamente.");
+            txtSenha.setText("");
             return;
         }
 
         try {
-            if (usuario.equalsIgnoreCase(USUARIO_ADM)) {
-                if (!senha.equals(SENHA_ADM)) {
-                    falhou();
-                    return;
+            ContextoController.SESSAO.limpar();
+            switch (resultado.papel()) {
+                case ADMIN -> ParkAdventure.proximaCena("view/menu-adm.fxml");
+                case OPERADOR -> {
+                    ContextoController.SESSAO.setOperadorAtual((Operador) resultado.pessoa());
+                    ParkAdventure.proximaCena("view/menu-operador.fxml");
                 }
-                ContextoController.SESSAO.limpar();
-                ParkAdventure.proximaCena("view/menu-adm.fxml");
-                return;
-            }
-
-            Visitante visitante = RepositorioVisitanteController.buscarVisitante(usuario);
-            if (visitante != null) {
-                if (!autenticar(visitante, senha)) {
-                    falhou();
-                    return;
+                case VISITANTE -> {
+                    ContextoController.SESSAO.setVisitanteAtual((Visitante) resultado.pessoa());
+                    ParkAdventure.proximaCena("view/menu-visitante.fxml");
                 }
-                ContextoController.SESSAO.limpar();
-                ContextoController.SESSAO.setVisitanteAtual(visitante);
-                ParkAdventure.proximaCena("view/menu-visitante.fxml");
-                return;
             }
-
-            Operador operador = RepositorioAtracaoController.buscarOperadorPorUsuario(usuario);
-            if (operador != null && autenticar(operador, senha)) {
-                ContextoController.SESSAO.limpar();
-                ContextoController.SESSAO.setOperadorAtual(operador);
-                ParkAdventure.proximaCena("view/menu-operador.fxml");
-                return;
-            }
-
-            falhou();   // usuário inexistente ou senha errada: a mesma mensagem, para não revelar qual dos dois
+            txtSenha.setText("");
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    // Confere a senha digitada com a da conta
-    private boolean autenticar(Pessoa pessoa, String senha) {
-        if (pessoa.temSenha()) {
-            return pessoa.senhaConfere(senha);
-        } else {
-            // conta antiga (criada antes de existir senha): a primeira senha digitada passa a ser a dela
-            pessoa.setSenha(senha);
-            Persistencia.salvar();
-            return true;
-        }
-    }
-
-    private void falhou() {
-        avisar("Usuário ou senha incorretos!", "Confira os dados e tente de novo.");
-        txtSenha.clear();
     }
 
     private void avisar(String titulo, String mensagem) {

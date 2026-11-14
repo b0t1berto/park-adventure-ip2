@@ -3,8 +3,11 @@ package com.ufrpe.parkadventure.controller;
 import com.ufrpe.parkadventure.ParkAdventure;
 import com.ufrpe.parkadventure.model.pessoa.Operador;
 
+import java.time.LocalDateTime;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 
@@ -26,6 +29,14 @@ public class LoginOperadorController {
 
     @FXML
     void onControleAtracao(ActionEvent event) {
+        // só entra na tela de controle quem está no próprio turno
+        String motivo = TurnoDoOperador.motivoSemAcesso(ContextoController.SESSAO.getOperadorAtual(), LocalDateTime.now());
+        if (motivo != null) {
+            Alert aviso = new Alert(Alert.AlertType.WARNING, motivo);
+            aviso.setHeaderText("Fora do seu turno");
+            aviso.showAndWait();
+            return;
+        }
         ir("view/controle-atracao.fxml");
     }
 

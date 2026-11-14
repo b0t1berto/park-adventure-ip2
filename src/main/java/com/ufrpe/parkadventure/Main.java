@@ -1,6 +1,8 @@
 package com.ufrpe.parkadventure;
 
 import com.ufrpe.parkadventure.controller.AcessoController;
+import com.ufrpe.parkadventure.controller.AutenticacaoController;
+import com.ufrpe.parkadventure.controller.GeradorEscala;
 import com.ufrpe.parkadventure.controller.IngressoController;
 import com.ufrpe.parkadventure.controller.RepositorioAtracaoController;
 import com.ufrpe.parkadventure.controller.controles.DadosExemplo;
@@ -40,6 +42,9 @@ public class Main {
 
         if (RepositorioAtracaoController.listarTodas().isEmpty()) {
             DadosExemplo.carregarAtracoesPadrao();
+        }
+        if (AutenticacaoController.garantirOperadoresDasAtracoes() | GeradorEscala.gerarProximosDias().turnosCriados() > 0) {
+            Persistencia.salvar();   // operadores e escala dos próximos dias ficam gravados
         }
         if (CONSOLE.lerSimNao("Carregar dados de demonstração (visitantes, ingressos e escala)? (s/n): ")) {
             DadosExemplo.carregar();

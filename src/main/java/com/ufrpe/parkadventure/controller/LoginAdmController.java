@@ -27,7 +27,12 @@ public class LoginAdmController {
 
     @FXML
     void onCadastroOperador(ActionEvent event) {
-        abrir("view/cadastro-operador.fxml");
+        abrir("view/operadores.fxml");   // vários operadores por atração, com usuário e senha
+    }
+
+    @FXML
+    void onEscala(ActionEvent event) {
+        abrir("view/escala-trabalho.fxml");
     }
 
     @FXML

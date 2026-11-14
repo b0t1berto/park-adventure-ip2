@@ -79,3 +79,30 @@ O diagrama acima representa a estrutura das classes do projeto, desenvolvido em 
 - **Abstração:** `Atracao` define o modelo geral sem ser instanciada diretamente.
 - **Herança:** `Aquatico`, `Radical` e `Infantil` herdam de `Atracao`.
 - **Polimorfismo:** cada tipo de atração pode implementar seu próprio comportamento.
+
+## Contas, senhas e escala de operadores
+
+### Contas
+- **Visitante** cria a própria conta (nome, CPF, usuário e senha). **Operadores só são cadastrados pelo administrador** (menu do administrador > "Operadores das Atrações").
+- Usuário: mínimo de 3 caracteres, sem espaços, único. **Senha: mínimo de 6 caracteres.**
+
+### Como a senha é gravada
+A senha **nunca** é guardada em texto puro. Ao definir a senha, o sistema (classe `Senha`):
+1. gera um *salt* aleatório de 16 bytes (diferente para cada senha);
+2. calcula o hash com **PBKDF2-HMAC-SHA256**, 65.000 iterações, chave de 256 bits;
+3. grava em `dados/dados.txt` apenas `salt$hash` (os dois em Base64).
+
+No login, o hash é recalculado com o salt gravado e comparado em tempo constante com o guardado. Como o hash não pode ser
+revertido, nem o administrador consegue ver uma senha: só é possível definir uma nova. Duas pessoas com a mesma senha
+têm hashes diferentes (por causa do salt). Observação: a conta do administrador (`leandro`) é fixa no código.
+
+### Operadores e escala
+- Cada atração tem **vários operadores** (mínimo de 3). Ao iniciar, o sistema cria os que faltarem ("Operador 2 <atração>", ...)
+  com a senha inicial `operador123`, que o administrador deve trocar.
+- Há dois turnos de 4 horas por dia: **manhã (10:30-14:30)** e **tarde (14:30-18:30)**, cobrindo o atendimento das 11:00 às 18:00.
+- Regras de carga horária: no máximo **1 turno por dia** por operador e **6 dias por semana** (folga semanal).
+  Com 14 turnos por semana por atração, 3 operadores são o mínimo para cobrir todos os dias.
+- O sistema monta a escala dos **próximos 30 dias** sozinho, revezando os operadores de cada atração por igual
+  (`GeradorEscala`). Turnos escalados à mão são mantidos. Todo dia, cada atração tem operador nos dois turnos.
+- O operador só entra na tela de **controle da atração** durante o próprio turno (hoje, entre o início e o fim do turno em que está escalado).
+  Se o turno acabar com a tela aberta, os botões são travados na hora; quando o turno dele começa, são liberados de novo.

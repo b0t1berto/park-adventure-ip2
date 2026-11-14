@@ -17,7 +17,7 @@
       <VBox spacing="6.0" styleClass="cabecalho-pagamento" BorderPane.alignment="TOP_CENTER">
          <children>
             <Label styleClass="titulo-cabecalho" text="Escala de trabalho" />
-            <Label styleClass="subtitulo-cabecalho" text="Defina quais operadores trabalham em cada dia." />
+            <Label styleClass="subtitulo-cabecalho" text="Cada atração tem operadores em dois turnos por dia (manhã 10:30–14:30 e tarde 14:30–18:30), no máximo 1 turno por dia e 6 dias por semana." />
             <Label fx:id="lblProximoFeriado" alignment="CENTER" styleClass="aviso" wrapText="true" />
          </children>
          <BorderPane.margin>
@@ -33,6 +33,7 @@
          <columns>
             <TableColumn fx:id="colData" text="Data" />
             <TableColumn fx:id="colDia" text="Dia da semana" />
+            <TableColumn fx:id="colPeriodo" text="Turno" />
             <TableColumn fx:id="colOperador" text="Operador" />
             <TableColumn fx:id="colAtracao" text="Atração" />
             <TableColumn fx:id="colObservacao" text="Observação" />
@@ -52,9 +53,12 @@
                <children>
                   <Label text="Data:" />
                   <DatePicker fx:id="dpData" styleClass="date-picker-popup" />
+                  <Label text="Turno:" />
+                  <ComboBox fx:id="cbPeriodo" prefWidth="150.0" styleClass="combo-box-base" />
                   <Label text="Operador:" />
-                  <ComboBox fx:id="cbOperador" prefWidth="200.0" styleClass="combo-box-base" />
+                  <ComboBox fx:id="cbOperador" prefWidth="230.0" styleClass="combo-box-base" />
                   <Button onAction="#onEscalar" styleClass="botao-primario" text="Escalar" />
+                  <Button onAction="#onGerar" styleClass="botao-secundario" text="Gerar escala" />
                   <Button onAction="#onRemover" styleClass="botao-secundario" text="Remover linha" />
                   <Button onAction="#onVoltar" styleClass="botao-secundario" text="Voltar" />
                </children>
