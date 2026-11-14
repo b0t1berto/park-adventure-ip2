@@ -1,7 +1,6 @@
 package com.ufrpe.parkadventure.controller;
 
 import com.ufrpe.parkadventure.ParkAdventure;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -46,7 +45,7 @@ public class PagamentoConfirmadoController {
 
     @FXML
     private void aoConcluir() {
-        Platform.exit();
+        ir("view/menu.fxml");
     }
 
     private void ir(String fxml) {

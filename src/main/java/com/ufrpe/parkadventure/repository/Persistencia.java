@@ -61,6 +61,8 @@ public final class Persistencia {
             return;   // carregar duas vezes duplicaria visitantes, ingressos e reservas
         }
         carregado = true;
+        System.out.println("[Persistencia] Tentando carregar arquivo em: " + arquivo);
+        System.out.println("[Persistencia] Arquivo existe: " + Files.exists(arquivo));
         if (!Files.exists(arquivo)) {
             System.out.println("[Persistencia] Nenhum arquivo para carregar em: " + arquivo);
             return;
@@ -93,6 +95,7 @@ public final class Persistencia {
         for (String linha : linhas) {
             lerLinha(linha, 'E');
         }
+        System.out.println("[Persistencia] Dados carregados com sucesso. Linhas lidas: " + linhas.size());
     }
 
     private static void lerLinha(String linha, char tipo) {

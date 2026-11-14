@@ -34,6 +34,7 @@ public class LoginOperadorController {
         if (motivo != null) {
             Alert aviso = new Alert(Alert.AlertType.WARNING, motivo);
             aviso.setHeaderText("Fora do seu turno");
+            aviso.initOwner(lblBoasVindas.getScene().getWindow());
             aviso.showAndWait();
             return;
         }

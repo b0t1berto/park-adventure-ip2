@@ -55,6 +55,7 @@ public class TelaCriarContaController {
         }
 
         Alert confirmacao = new Alert(AlertType.CONFIRMATION);
+        confirmacao.initOwner(txtUsuario.getScene().getWindow());
         confirmacao.setTitle("CONFIRMAÇÃO");
         confirmacao.setHeaderText("Confirme os dados da sua conta");
         confirmacao.setContentText("Seu usuário será: " + usuario + " ?");
@@ -74,6 +75,7 @@ public class TelaCriarContaController {
         Persistencia.salvar();
 
         Alert pronto = new Alert(AlertType.INFORMATION);
+        pronto.initOwner(txtUsuario.getScene().getWindow());
         pronto.setTitle("CONTA CRIADA");
         pronto.setHeaderText("Conta criada com sucesso!");
         pronto.setContentText("Seu nome completo, CPF, altura e data de nascimento serão pedidos na compra do ingresso.");
@@ -85,6 +87,7 @@ public class TelaCriarContaController {
 
     private void erro(String titulo, String mensagem) {
         Alert alert = new Alert(AlertType.ERROR);
+        alert.initOwner(txtUsuario.getScene().getWindow());
         alert.setTitle("ERRO");
         alert.setHeaderText(titulo);
         alert.setContentText(mensagem);

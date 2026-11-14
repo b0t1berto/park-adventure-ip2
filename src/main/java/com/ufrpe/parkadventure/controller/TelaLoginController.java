@@ -75,6 +75,7 @@ public class TelaLoginController {
 
     private void avisar(String titulo, String mensagem) {
         Alert alert = new Alert(AlertType.ERROR);
+        alert.initOwner(txtUsuario.getScene().getWindow());
         alert.setTitle("AVISO");
         alert.setHeaderText(titulo);
         alert.setContentText(mensagem);

@@ -129,7 +129,9 @@ public class PagamentoController {
 
         String erro = validar();
         if (erro != null) {
-            new Alert(Alert.AlertType.WARNING, erro).showAndWait();
+            Alert alert = new Alert(Alert.AlertType.WARNING, erro);
+            alert.initOwner(btnPagar.getScene().getWindow());
+            alert.showAndWait();
             return;
         }
 
