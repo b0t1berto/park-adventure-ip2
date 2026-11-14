@@ -9,6 +9,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -33,6 +34,7 @@ public class ParkAdventure extends Application {
     @Override
     public void start(Stage palco) throws IOException {
         palcoPrimario = palco;
+        carregarFontes();
         Persistencia.carregar();
         // o botão "Stop" de algumas IDEs encerra a JVM sem chamar stop(): o hook ainda grava os dados
         Runtime.getRuntime().addShutdownHook(new Thread(Persistencia::salvar, "salvar-ao-encerrar"));
@@ -48,6 +50,26 @@ public class ParkAdventure extends Application {
         palco.setTitle("Park Adventure");
         palco.setResizable(true);
         palco.show();
+    }
+
+    private static void carregarFontes() {
+        try (var regular = ParkAdventure.class.getResourceAsStream(
+                     "/com/ufrpe/parkadventure/view/fontes/Fredoka-Regular.ttf");
+             var bold = ParkAdventure.class.getResourceAsStream(
+                     "/com/ufrpe/parkadventure/view/fontes/Fredoka-Bold.ttf")) {
+            if (regular == null || bold == null) {
+                System.err.println("Não foi possível carregar as fontes Fredoka: arquivo não encontrado.");
+                return;
+            }
+
+            var fonteRegular = Font.loadFont(regular, 10);
+            var fonteNegrito = Font.loadFont(bold, 10);
+            if (fonteRegular == null || fonteNegrito == null) {
+                System.err.println("Não foi possível carregar as fontes Fredoka: arquivo inválido.");
+            }
+        } catch (IOException e) {
+            System.err.println("Erro ao carregar as fontes Fredoka: " + e.getMessage());
+        }
     }
 
     @Override

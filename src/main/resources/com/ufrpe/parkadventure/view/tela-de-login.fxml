@@ -16,9 +16,8 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.paint.Color?>
-<?import javafx.scene.text.Font?>
 
-<StackPane alignment="CENTER" prefHeight="700.0" prefWidth="1000.0" styleClass="tela-parque" stylesheets="@tema-parque.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.TelaLoginController">
+<StackPane alignment="CENTER" prefHeight="700.0" prefWidth="1000.0" styleClass="tela-parque" stylesheets="@tema-parque.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.TelaLoginController">
    <children>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <top>
@@ -40,39 +39,39 @@
                               <Insets left="25.0" right="25.0" />
                            </HBox.margin>
                   </ImageView>
-                  <Label fx:id="lblParkAdventure" prefHeight="170.0" prefWidth="679.0" text=" Park Adventure" textFill="WHITE">
-                     <effect>
-                        <DropShadow height="13.75" offsetX="3.0" offsetY="2.0" radius="6.6875" spread="0.39" width="15.0">
-                           <color>
-                              <Color red="0.039" green="0.235" blue="0.552" />
-                           </color>
-                           <input>
-                              <DropShadow height="18.75" offsetX="1.0" offsetY="1.0" radius="9.1875" spread="0.14" width="20.0">
-                                 <color>
-                                    <Color red="0.629" green="0.697" blue="0.943" />
-                                 </color>
-                                 <input>
-                                    <Lighting specularConstant="0.5">
-                                       <bumpInput>
-                                          <Shadow blurType="GAUSSIAN">
-                                             <color>
-                                                <Color red="1.0" green="1.0" blue="1.0" />
-                                             </color>
-                                          </Shadow>
-                                       </bumpInput>
-                                       <light>
-                                          <Light.Distant />
-                                       </light>
-                                    </Lighting>
-                                 </input>
-                              </DropShadow>
-                           </input>
-                        </DropShadow>
-                     </effect>
-                           <font>
-                              <Font size="86.0" />
-                           </font>
-                  </Label>
+<Label fx:id="lblParkAdventure" prefHeight="154.0" prefWidth="755.0" styleClass="titulo-menu" text=" Park Adventure" textFill="WHITE">
+                      <effect>
+                         <DropShadow height="13.75" offsetX="3.0" offsetY="2.0" radius="6.6875" spread="0.39" width="15.0">
+                            <color>
+                               <Color red="0.039" green="0.235" blue="0.552" />
+                            </color>
+                            <input>
+                               <DropShadow height="18.75" offsetX="1.0" offsetY="1.0" radius="9.1875" spread="0.14" width="20.0">
+                                  <color>
+                                     <Color red="0.629" green="0.697" blue="0.943" />
+                                  </color>
+                                  <input>
+                                     <Lighting specularConstant="0.5">
+                                        <bumpInput>
+                                           <Shadow blurType="GAUSSIAN">
+                                              <color>
+                                                 <Color red="1.0" green="1.0" blue="1.0" />
+                                              </color>
+                                           </Shadow>
+                                        </bumpInput>
+                                        <light>
+                                           <Light.Distant />
+                                        </light>
+                                     </Lighting>
+                                  </input>
+                               </DropShadow>
+                            </input>
+                         </DropShadow>
+                      </effect>
+                            <HBox.margin>
+                               <Insets left="25.0" right="25.0" />
+                            </HBox.margin>
+                   </Label>
                </children>
             </HBox>
          </children>
@@ -90,12 +89,9 @@
          <children>
             <!-- Botão Voltar idêntico ao da tela de criar conta -->
             <Button fx:id="btVoltar" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onVoltar" styleClass="botao-primario" stylesheets="@tema-parque.css" text="&lt;" textFill="WHITE">
-               <font>
-                  <Font name="DejaVu Sans Bold Oblique" size="14.0" />
-               </font>
-                     <effect>
-                        <DropShadow />
-                     </effect>
+<effect>
+                         <DropShadow />
+                      </effect>
             </Button>
          </children>
       </Pane>
@@ -108,20 +104,13 @@
                      <effect>
                         <DropShadow />
                      </effect></TextField>
-            <PasswordField fx:id="txtSenha" layoutX="163.0" layoutY="286.0" prefHeight="35.0" prefWidth="200.0">
-                     <effect>
-                        <DropShadow />
-                     </effect></PasswordField>
             
             <!-- Botão OK com o mesmo estilo do botão Confirmar da tela de criar conta -->
-            <Button fx:id="btOk" layoutX="188.0" layoutY="374.0" mnemonicParsing="false" onAction="#onConfirmar" prefHeight="42.0" prefWidth="152.0" styleClass="botao-primario" stylesheets="@tema-parque.css" text="Confirmar" textFill="WHITE">
-               <font>
-                  <Font name="DejaVu Sans Bold" size="14.0" />
-               </font>
-                     <effect>
-                        <DropShadow />
-                     </effect>
-            </Button>
+<Button fx:id="btOk" layoutX="177.0" layoutY="450.0" mnemonicParsing="false" onAction="#onConfirmar" prefHeight="50.0" prefWidth="170.0" styleClass="botao-primario" stylesheets="@tema-parque.css" text="Confirmar" textFill="WHITE">
+                      <effect>
+                         <DropShadow />
+                      </effect>
+             </Button>
             <ImageView fitHeight="329.0" fitWidth="312.0" layoutX="480.0" layoutY="218.0" pickOnBounds="true">
                <image>
                   <Image url="@imagens/homem-Photoroom.png" />
@@ -131,48 +120,41 @@
                </effect>
             </ImageView>
             <!-- Substituí o Circle azul genérico por um texto de boas vindas estilizado -->
-            <Label fx:id="lblAcesseConta" layoutX="556.0" layoutY="143.0" prefHeight="88.0" prefWidth="223.0" style="-fx-border-color: white;" text="Acesse sua conta para continuar!" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-               <effect>
-                  <DropShadow height="20.0" radius="9.5" width="20.0">
-                     <color>
-                        <Color red="0.6065213680267334" green="0.6065213680267334" blue="0.6065213680267334" />
-                     </color>
-                     <input>
-                        <DropShadow />
-                     </input>
-                  </DropShadow>
-               </effect>
-                     <font>
-                        <Font name="DejaVu Sans Mono Bold" size="20.0" />
-                     </font>
-            </Label>
+<Label fx:id="lblDivertir" layoutX="459.0" layoutY="155.0" prefHeight="95.0" prefWidth="320.0" styleClass="cartao-pagamento" text="Acesse sua conta para continuar!" textAlignment="CENTER" wrapText="true">
+                <effect>
+                   <DropShadow height="20.0" radius="9.5" width="20.0">
+                      <color>
+                         <Color red="0.6065213680267334" green="0.6065213680267334" blue="0.6065213680267334" />
+                      </color>
+                      <input>
+                         <DropShadow />
+                      </input>
+                   </DropShadow>
+                </effect>
+             </Label>
             
-            <Label layoutX="65.0" layoutY="69.0" prefHeight="96.0" prefWidth="396.0" text="Bem-vindo de volta! Faça seu login." textAlignment="CENTER" textFill="WHITE" wrapText="true">
-               <font>
-                  <Font name="DejaVu Sans Mono Bold" size="30.0" />
-               </font>
+<Label fx:id="lblBemVindoDeVolta" layoutX="76.0" layoutY="26.0" prefHeight="107.0" prefWidth="373.0" styleClass="cartao-pagamento" text="Bem-vindo de volta! Faça seu login." textAlignment="CENTER" wrapText="true">
+                      <effect>
+                         <DropShadow />
+                      </effect>
+             </Label>
+            
+<Label fx:id="lblUsuario" layoutX="56.0" layoutY="218.0" prefWidth="90.0" text="Usuário:" textFill="WHITE">
+                      <effect>
+                         <DropShadow />
+                      </effect>
+             </Label>
+            
+<Label fx:id="lblSenha" layoutX="56.0" layoutY="302.0" text="Senha:" textFill="WHITE">
+                      <effect>
+                         <DropShadow />
+                      </effect>
+             </Label>
+                  <PasswordField fx:id="txtSenha" layoutX="168.0" layoutY="296.0" prefHeight="35.0" prefWidth="200.0">
                      <effect>
                         <DropShadow />
                      </effect>
-            </Label>
-            
-            <Label fx:id="lblUsuario" layoutX="39.0" layoutY="205.0" text="Usuário:" textFill="WHITE">
-               <font>
-                  <Font name="DejaVu Sans Mono Bold" size="20.0" />
-               </font>
-                     <effect>
-                        <DropShadow />
-                     </effect>
-            </Label>
-            
-            <Label fx:id="lblSenha" layoutX="41.0" layoutY="291.0" text="Senha:" textFill="WHITE">
-               <font>
-                  <Font name="DejaVu Sans Mono Bold" size="20.0" />
-               </font>
-                     <effect>
-                        <DropShadow />
-                     </effect>
-            </Label>
+                  </PasswordField>
          </children>
       </Pane>
    </center>

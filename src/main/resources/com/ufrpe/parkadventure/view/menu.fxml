@@ -14,44 +14,34 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
-<?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" styleClass="tela-parque" stylesheets="@tema-parque.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.TelaMenuController">
    <center>
       <!-- VBox para alinhar textos e botões no centro -->
       <VBox alignment="CENTER" maxWidth="500.0" spacing="8.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="lblReservar" maxWidth="363.0" prefHeight="80.0" prefWidth="363.0" style="-fx-border-radius: 6; -fx-padding: 8; -fx-background-color: #ffffff;" styleClass="cartao-pagamento" text="Que tal reservar o acesso a uma Experiência Inédita?" textAlignment="CENTER" wrapText="true">
-               <font>
-                  <Font size="24.0" />
-               </font>
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin>
-            </Label>
-            <Button fx:id="bntComeceAqui" mnemonicParsing="false" onAction="#onCriarConta" prefHeight="60.0" prefWidth="250.0" styleClass="botao-primario" text="Comece por Aqui" textFill="WHITE">
-               <effect>
-                  <DropShadow offsetY="5.0">
-                     <color>
-                        <Color red="0.5529412031173706" green="0.5529412031173706" blue="0.5529412031173706" />
-                     </color>
-                  </DropShadow>
-               </effect>
-               <font>
-                  <Font size="20.0" />
-               </font>
-               <VBox.margin>
-                  <Insets bottom="60.0" />
-               </VBox.margin>
-            </Button>
-            <Label fx:id="lblDesejaReservar" prefHeight="73.0" prefWidth="374.0" styleClass="cartao-pagamento" text="Deseja acessar sua reserva?">
-               <VBox.margin>
-                  <Insets top="15.0" />
-               </VBox.margin>
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
+<Label fx:id="lblReservar" maxWidth="363.0" prefHeight="80.0" prefWidth="363.0" style="-fx-border-radius: 6; -fx-padding: 8; -fx-background-color: #ffffff;" styleClass="cartao-pagamento" text="Que tal reservar o acesso a uma Experiência Inédita?" textAlignment="CENTER" wrapText="true">
+                <VBox.margin>
+                   <Insets bottom="5.0" />
+                </VBox.margin>
+             </Label>
+<Button fx:id="bntComeceAqui" mnemonicParsing="false" onAction="#onCriarConta" prefHeight="60.0" prefWidth="250.0" styleClass="botao-primario" text="Comece por Aqui" textFill="WHITE">
+                <effect>
+                   <DropShadow offsetY="5.0">
+                      <color>
+                         <Color red="0.5529412031173706" green="0.5529412031173706" blue="0.5529412031173706" />
+                      </color>
+                   </DropShadow>
+                </effect>
+                <VBox.margin>
+                   <Insets bottom="60.0" />
+                </VBox.margin>
+             </Button>
+<Label fx:id="lblDesejaReservar" prefHeight="73.0" prefWidth="315.0" styleClass="cartao-pagamento" text="Deseja acessar sua reserva?">
+                <VBox.margin>
+                   <Insets top="15.0" />
+                </VBox.margin>
+             </Label>
             <Button fx:id="bntAcesseAqui" mnemonicParsing="false" onAction="#onFazerLogin" prefHeight="60.0" prefWidth="250.0" styleClass="botao-primario" text="Acesse Aqui!" textFill="WHITE">
                <effect>
                   <DropShadow offsetY="3.0">
@@ -99,39 +89,36 @@
                         <DropShadow />
                      </effect>
                   </ImageView>
-                  <Label fx:id="lblParkAdventure" text="Park Adventure" textFill="WHITE">
-                     <font>
-                        <Font name="DejaVu Serif Bold Italic" size="90.0" />
-                     </font>
-                     <effect>
-                        <DropShadow height="13.75" offsetX="3.0" offsetY="2.0" radius="6.6875" spread="0.39" width="15.0">
-                           <color>
-                              <Color red="0.039" green="0.235" blue="0.552" />
-                           </color>
-                           <input>
-                              <DropShadow height="18.75" offsetX="1.0" offsetY="1.0" radius="9.1875" spread="0.14" width="20.0">
-                                 <color>
-                                    <Color red="0.629" green="0.697" blue="0.943" />
-                                 </color>
-                                 <input>
-                                    <Lighting specularConstant="0.5">
-                                       <bumpInput>
-                                          <Shadow blurType="GAUSSIAN">
-                                             <color>
-                                                <Color red="1.0" green="1.0" blue="1.0" />
-                                             </color>
-                                          </Shadow>
-                                       </bumpInput>
-                                       <light>
-                                          <Light.Distant />
-                                       </light>
-                                    </Lighting>
-                                 </input>
-                              </DropShadow>
-                           </input>
-                        </DropShadow>
-                     </effect>
-                  </Label>
+<Label fx:id="lblParkAdventure" styleClass="titulo-menu" text="Park Adventure" textFill="WHITE">
+                      <effect>
+                         <DropShadow height="13.75" offsetX="3.0" offsetY="2.0" radius="6.6875" spread="0.39" width="15.0">
+                            <color>
+                               <Color red="0.039" green="0.235" blue="0.552" />
+                            </color>
+                            <input>
+                               <DropShadow height="18.75" offsetX="1.0" offsetY="1.0" radius="9.1875" spread="0.14" width="20.0">
+                                  <color>
+                                     <Color red="0.629" green="0.697" blue="0.943" />
+                                  </color>
+                                  <input>
+                                     <Lighting specularConstant="0.5">
+                                        <bumpInput>
+                                           <Shadow blurType="GAUSSIAN">
+                                              <color>
+                                                 <Color red="1.0" green="1.0" blue="1.0" />
+                                              </color>
+                                           </Shadow>
+                                        </bumpInput>
+                                        <light>
+                                           <Light.Distant />
+                                        </light>
+                                     </Lighting>
+                                  </input>
+                               </DropShadow>
+                            </input>
+                         </DropShadow>
+                      </effect>
+                   </Label>
                </children>
                <StackPane.margin>
                   <Insets />

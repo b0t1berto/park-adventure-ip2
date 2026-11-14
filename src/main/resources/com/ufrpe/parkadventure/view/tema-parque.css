@@ -1,14 +1,21 @@
-@font-face { font-family: "Fredoka"; src: url("fontes/Fredoka-Regular.ttf"); }
-@font-face { font-family: "Fredoka"; src: url("fontes/Fredoka-Bold.ttf"); }
-
 .tela-parque {
     -fx-background-color: linear-gradient(to bottom, #bfe3ff, #eaf6ff);
 }
 .tela-parque .label, .tela-parque .button { -fx-font-family: "Fredoka"; }
 
 .titulo-parque    { -fx-font-size: 34px; -fx-font-weight: bold; -fx-text-fill: #14365d; }
+.tela-parque .titulo-menu { -fx-font-size: 95px; -fx-font-weight: bold; }
 .subtitulo-parque { -fx-font-size: 15px; -fx-text-fill: #1f6fd1; }
 .rodape-parque    { -fx-font-size: 12px; -fx-text-fill: #14365d; -fx-opacity: 0.75; }
+.tela-parque #lblReservar { -fx-font-size: 20px; }
+.tela-parque #lblDesejaReservar { -fx-font-size: 20px; }
+.tela-parque #lblMensagem { -fx-font-size: 20px; }
+.tela-parque #lblDivertir { -fx-font-size: 17px; }
+.tela-parque #lblNome { -fx-font-size: 20px; }
+.tela-parque #lblSenha { -fx-font-size: 20px; }
+.tela-parque #lblBemVindoDeVolta { -fx-font-size: 20px; }
+.tela-parque #lblBoasVindas { -fx-font-size: 20px; }
+
 
 .card-ingresso {
     -fx-padding: 12 18 12 18;
@@ -83,6 +90,8 @@
 }
 .botao-primario:hover    { -fx-scale-x: 1.04; -fx-scale-y: 1.04; }
 .botao-primario:disabled { -fx-opacity: 0.45; }
+.tela-parque #bntComeceAqui { -fx-font-size: 18px; }
+.tela-parque #bntAcesseAqui { -fx-font-size: 18px; }
 .botao-secundario {
     -fx-background-color: white;
     -fx-border-color: #1f6fd1; -fx-border-width: 2;
