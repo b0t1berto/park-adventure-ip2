@@ -7,6 +7,8 @@ public class Visitante extends Pessoa {
     private Responsavel responsavel;
     private String email;
     private String telefone;
+    // Nome real, informado na compra do ingresso
+    private String nomeCompleto;
 
     public Visitante(String nome, String dataNascimentoTexto, String cpf, int altura) {
         super(nome, dataNascimentoTexto, cpf);
@@ -24,6 +26,9 @@ public class Visitante extends Pessoa {
 
     public String getTelefone() { return telefone; }
     public void setTelefone(String telefone) { this.telefone = telefone; }
+
+    public String getNomeCompleto() { return nomeCompleto; }
+    public void setNomeCompleto(String nomeCompleto) { this.nomeCompleto = nomeCompleto; }
 
     public boolean temResponsavel() {
         return responsavel != null;

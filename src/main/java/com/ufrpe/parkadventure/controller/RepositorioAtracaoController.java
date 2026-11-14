@@ -33,6 +33,10 @@ public class RepositorioAtracaoController {
         return repositorioAtracao.buscarAtracaoPorOperador(operador);
     }
 
+    public static Operador buscarOperadorPorUsuario(String usuario) {
+        return repositorioAtracao.buscarOperadorPorUsuario(usuario);
+    }
+
     public static Operador buscarOperadorPorNome(String nome, String nomeAtracao) {
         return repositorioAtracao.buscarOperadorPorNome(nome, nomeAtracao);
     }

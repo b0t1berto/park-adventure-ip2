@@ -1,13 +1,13 @@
 package com.ufrpe.parkadventure.controller;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 import com.ufrpe.parkadventure.model.ingresso.Ingresso;
 import com.ufrpe.parkadventure.model.ingresso.TipoIngresso;
 import com.ufrpe.parkadventure.model.pessoa.Responsavel;
 import com.ufrpe.parkadventure.model.pessoa.Visitante;
 import com.ufrpe.parkadventure.repository.Persistencia;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public final class PedidoAtual {
     private PedidoAtual() { }
@@ -62,9 +62,10 @@ public final class PedidoAtual {
         }
 
         // O ingresso é sempre do visitante que está logado. Antes o formulário buscava/criava um visitante
+        // pelo NOME DIGITADO: nome diferente (ou com outra grafia) virava outra conta e trocava o perfil da sessão.
         Visitante visitante = ContextoController.SESSAO.getVisitanteAtual();
         if (visitante == null) {
-            // ninguém logado
+            // ninguém logado (o menu atual não permite): mantém o comportamento antigo, pelo nome digitado
             visitante = RepositorioVisitanteController.buscarVisitante(nome);
             if (visitante == null) {
                 visitante = new Visitante(nome, nascimento.format(DATA), cpf, altura);
@@ -72,10 +73,10 @@ public final class PedidoAtual {
             }
             ContextoController.SESSAO.setVisitanteAtual(visitante);
         }
-        // a compra só completa o perfil
-        if (visitante.getCpf() == null || visitante.getCpf().isBlank()) {
-            visitante.setCpf(cpf);
-        }
+        // a compra COMPLETA o perfil: nome, CPF, nascimento e altura não são pedidos ao criar a conta.
+        // O nome da conta (o usuário) não muda; o nome digitado aqui é o nome completo.
+        visitante.setNomeCompleto(nome);
+        visitante.setCpf(cpf);
         visitante.setDataNascimento(nascimento);
         visitante.setAltura(altura);
         visitante.setEmail(email);

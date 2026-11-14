@@ -193,3 +193,9 @@
 .status-cabecalho    { -fx-font-size: 12px; -fx-text-fill: white; }
 .mes-cabecalho       { -fx-font-size: 17px; -fx-font-weight: bold; -fx-text-fill: white; }
 .tabela-parque       { -fx-background-color: white; -fx-border-color: #d3dbe4; -fx-border-radius: 4; }
+
+/* ---- telas do administrador ---- */
+.rotulo-campo   { -fx-text-fill: #14365d; -fx-font-weight: bold; }
+.card-resumo    { -fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #d3dbe4; -fx-border-radius: 12; -fx-padding: 12 18 12 18; }
+.numero-resumo  { -fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1f6fd1; }
+.legenda-resumo { -fx-font-size: 12px; -fx-text-fill: #14365d; }

@@ -1,16 +1,11 @@
 package com.ufrpe.parkadventure.controller;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.ufrpe.parkadventure.ParkAdventure;
 import com.ufrpe.parkadventure.model.atracao.Atracao;
 import com.ufrpe.parkadventure.model.atracao.FilaVirtual;
 import com.ufrpe.parkadventure.model.atracao.Reserva;
 import com.ufrpe.parkadventure.model.pessoa.Operador;
+import com.ufrpe.parkadventure.repository.Persistencia;
 import com.ufrpe.parkadventure.view.Aviso;
 
 import javafx.animation.KeyFrame;
@@ -24,6 +19,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.util.Duration;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 // Tela do operador: ele conta as pessoas (+1 / -1) e libera quem tem fura-fila na entrada de prioridade.
 public class ControleAtracaoController {
@@ -131,6 +132,9 @@ public class ControleAtracaoController {
         ResultadoAcesso resultado = ContextoController.CONTROLE_ACESSO
                 .liberarFuraFila(linha.reserva().getVisitante(), atracao, LocalDateTime.now());
         String nome = linha.nomeVisitante();
+        if (resultado == ResultadoAcesso.AUTORIZADO) {
+            Persistencia.salvar();   // a reserva passou para "usada"
+        }
         switch (resultado) {
             case AUTORIZADO -> Aviso.sucesso(lblStatus, nome + " liberado(a) (+1 registrado).");
             case ATRACAO_LOTADA -> Aviso.erro(lblStatus,

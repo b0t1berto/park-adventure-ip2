@@ -144,7 +144,7 @@ public class FilaVirtualController {
         }
         Visitante visitante = ContextoController.SESSAO.getVisitanteAtual();
         if (ContextoController.CONTROLE_ACESSO.cancelarReserva(visitante, linha.atracao(), linha.reserva().getData())) {
-            Persistencia.salvar();//tava sem
+            Persistencia.salvar();
             Aviso.sucesso(lblStatus, "Reserva em " + linha.nomeAtracao() + " cancelada.");
         } else {
             Aviso.erro(lblStatus, "Não foi possível cancelar essa reserva.");

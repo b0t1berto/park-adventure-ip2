@@ -10,6 +10,7 @@ public class Pessoa {
     private String nome;
     private LocalDate dataNascimento;
     private String cpf;
+    private String senha;
 
     public Pessoa(String nome, LocalDate dataNascimento, String cpf) {
         this.nome = nome;
@@ -37,6 +38,17 @@ public class Pessoa {
 
     public String getCpf() { return cpf; }
     public void setCpf(String cpf) { this.cpf = cpf; }
+
+    // Login: o "nome" da conta é o usuário
+    public String getSenha() { return senha; }
+    public void setSenha(String senha) { this.senha = senha; }
+    public boolean temSenha() { return senha != null && !senha.isEmpty(); }
+    public boolean senhaConfere(String tentativa) {
+        if (temSenha() && senha.equals(tentativa)) {
+            return true;
+        }
+        return false;
+    }
 
     @Override
     public String toString() {

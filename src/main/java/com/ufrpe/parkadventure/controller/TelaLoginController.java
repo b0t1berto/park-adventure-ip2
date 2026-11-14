@@ -2,7 +2,9 @@ package com.ufrpe.parkadventure.controller;
 
 import com.ufrpe.parkadventure.ParkAdventure;
 import com.ufrpe.parkadventure.model.pessoa.Operador;
+import com.ufrpe.parkadventure.model.pessoa.Pessoa;
 import com.ufrpe.parkadventure.model.pessoa.Visitante;
+import com.ufrpe.parkadventure.repository.Persistencia;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,15 +12,23 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 public class TelaLoginController {
 
-    @FXML
-    Label lblNome, lblCpf, lblCargo, lblParkAdventure, lblAcesseConta;
+    // Acesso do administrador. TROQUE a senha aqui se quiser outra.
+    static final String USUARIO_ADM = "leandro";
+    private static final String SENHA_ADM = "admin123";
 
     @FXML
-    TextField txtFieldNome, txtFieldCpf, txtFieldCargo;
+    Label lblUsuario, lblSenha, lblParkAdventure, lblAcesseConta;
+
+    @FXML
+    TextField txtUsuario;
+
+    @FXML
+    PasswordField txtSenha;
 
     @FXML
     Button btOk;
@@ -32,68 +42,70 @@ public class TelaLoginController {
         }
     }
 
+    // O tipo de conta vem do próprio usuário: administrador, visitante ou operador (não há mais campo "cargo").
     @FXML
     public void onConfirmar(ActionEvent event) {
-        String nome = txtFieldNome.getText().trim();
-        String cpf = txtFieldCpf.getText().trim();
-        String cargo = txtFieldCargo.getText().trim();
+        String usuario = txtUsuario.getText().trim();
+        String senha = txtSenha.getText();
 
-        if (nome.isEmpty() || cpf.isEmpty()) {
-            avisar("Suas informações estão inválidas!", "Digite informações válidas para entrar na conta.");
-            limparCampos();
+        if (usuario.isEmpty() || senha.isEmpty()) {
+            avisar("Suas informações estão inválidas!", "Digite o usuário e a senha para entrar na conta.");
+            txtSenha.clear();
             return;
         }
 
         try {
-            if (nome.equalsIgnoreCase("leandro")) {
-                ContextoController.SESSAO.limpar();
-                ParkAdventure.proximaCena("view/menu-adm.fxml");
-            } else if (cargo.isEmpty()) {
-                // sem cargo: é um visitante, e ele precisa existir
-                Visitante visitante = RepositorioVisitanteController.buscarVisitante(nome);
-                if (visitante == null) {
-                    avisar("Visitante não encontrado!", "O visitante não está cadastrado.");
-                    limparCampos();
+            if (usuario.equalsIgnoreCase(USUARIO_ADM)) {
+                if (!senha.equals(SENHA_ADM)) {
+                    falhou();
                     return;
                 }
-                if (!cpfConfere(visitante.getCpf(), cpf)) {
-                    avisar("CPF incorreto!", "O CPF informado não confere com o cadastro.");
-                    limparCampos();
+                ContextoController.SESSAO.limpar();
+                ParkAdventure.proximaCena("view/menu-adm.fxml");
+                return;
+            }
+
+            Visitante visitante = RepositorioVisitanteController.buscarVisitante(usuario);
+            if (visitante != null) {
+                if (!autenticar(visitante, senha)) {
+                    falhou();
                     return;
                 }
                 ContextoController.SESSAO.limpar();
                 ContextoController.SESSAO.setVisitanteAtual(visitante);
                 ParkAdventure.proximaCena("view/menu-visitante.fxml");
-            } else {
-                // com cargo: é um operador; o cargo é o nome da atração em que ele trabalha
-                Operador operador = RepositorioAtracaoController.buscarOperadorPorNome(nome, cargo);
-                if (operador == null) {
-                    avisar("Operador não encontrado!",
-                            "Não há operador com esse nome nessa atração. No campo cargo, digite o nome da atração.");
-                    limparCampos();
-                    return;
-                }
-                if (!cpfConfere(operador.getCpf(), cpf)) {
-                    avisar("CPF incorreto!", "O CPF informado não confere com o cadastro.");
-                    limparCampos();
-                    return;
-                }
+                return;
+            }
+
+            Operador operador = RepositorioAtracaoController.buscarOperadorPorUsuario(usuario);
+            if (operador != null && autenticar(operador, senha)) {
                 ContextoController.SESSAO.limpar();
                 ContextoController.SESSAO.setOperadorAtual(operador);
                 ParkAdventure.proximaCena("view/menu-operador.fxml");
+                return;
             }
+
+            falhou();   // usuário inexistente ou senha errada: a mesma mensagem, para não revelar qual dos dois
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    // Compara só os dígitos (com ou sem pontos e traço). Contas de exemplo, criadas sem CPF, aceitam qualquer um.
-    private boolean cpfConfere(String cpfCadastrado, String cpfDigitado) {
-        String cadastrado = cpfCadastrado == null ? "" : cpfCadastrado.replaceAll("\\D", "");
-        if (cadastrado.isEmpty()) {
+    // Confere a senha digitada com a da conta
+    private boolean autenticar(Pessoa pessoa, String senha) {
+        if (pessoa.temSenha()) {
+            return pessoa.senhaConfere(senha);
+        } else {
+            // conta antiga (criada antes de existir senha): a primeira senha digitada passa a ser a dela
+            pessoa.setSenha(senha);
+            Persistencia.salvar();
             return true;
         }
-        return cadastrado.equals(cpfDigitado.replaceAll("\\D", ""));
+    }
+
+    private void falhou() {
+        avisar("Usuário ou senha incorretos!", "Confira os dados e tente de novo.");
+        txtSenha.clear();
     }
 
     private void avisar(String titulo, String mensagem) {
@@ -102,11 +114,5 @@ public class TelaLoginController {
         alert.setHeaderText(titulo);
         alert.setContentText(mensagem);
         alert.showAndWait();
-    }
-
-    private void limparCampos() {
-        txtFieldNome.setText("");
-        txtFieldCpf.setText("");
-        txtFieldCargo.setText("");
     }
 }

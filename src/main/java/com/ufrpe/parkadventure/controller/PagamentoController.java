@@ -1,32 +1,20 @@
 package com.ufrpe.parkadventure.controller;
 
-import java.io.File;
-import java.time.LocalDate;
-import java.time.Period;
-
 import com.ufrpe.parkadventure.ParkAdventure;
 import com.ufrpe.parkadventure.model.pessoa.Responsavel;
 import com.ufrpe.parkadventure.model.pessoa.Visitante;
-
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TitledPane;
-import javafx.scene.control.Toggle;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+import java.io.File;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.Period;
 
 public class PagamentoController {
 
@@ -80,19 +68,15 @@ public class PagamentoController {
         preencherComDadosDaConta();
     }
 
-    // Quem compra é o visitante logado: nome e CPF vêm da conta e não podem ser trocados aqui
-    // (digitar outro nome criava outro perfil). O resto é preenchido se a conta já tiver esses dados.
+    // A conta (usuário e senha) já identifica quem compra. Nome e CPF são dados da compra: a pessoa informa
+    // na primeira vez e nas próximas o formulário já vem preenchido (e pode ser corrigido).
     private void preencherComDadosDaConta() {
         Visitante conta = ContextoController.SESSAO.getVisitanteAtual();
         if (conta == null) {
             return;
         }
-        txtNome.setText(conta.getNome());
-        txtNome.setEditable(false);
-        if (conta.getCpf() != null && !conta.getCpf().isBlank()) {
-            txtCpf.setText(conta.getCpf());
-            txtCpf.setEditable(false);
-        }
+        if (conta.getNomeCompleto() != null) txtNome.setText(conta.getNomeCompleto());
+        if (conta.getCpf() != null) txtCpf.setText(conta.getCpf());
         if (conta.getEmail() != null) txtEmail.setText(conta.getEmail());
         if (conta.getTelefone() != null) txtTelefone.setText(conta.getTelefone());
 

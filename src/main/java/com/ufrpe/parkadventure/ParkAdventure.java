@@ -32,7 +32,7 @@ public class ParkAdventure extends Application {
     public void start(Stage palco) throws IOException {
         palcoPrimario = palco;
         Persistencia.carregar();
-        // grava os dados
+        // o botão "Stop" de algumas IDEs encerra a JVM sem chamar stop(): o hook ainda grava os dados
         Runtime.getRuntime().addShutdownHook(new Thread(Persistencia::salvar, "salvar-ao-encerrar"));
         // primeira execução: cria as atrações e os operadores do parque
         if (RepositorioAtracaoController.listarTodas().isEmpty()) {

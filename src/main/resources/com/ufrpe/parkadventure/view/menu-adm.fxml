@@ -53,7 +53,7 @@
    <center>
       <VBox alignment="CENTER" maxWidth="500.0" prefHeight="200.0" prefWidth="100.0" spacing="25.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="250.0" styleClass="botao-primario" disable="true" text="Relatório (em breve)" textFill="WHITE">
+            <Button mnemonicParsing="false" onAction="#onRelatorios" prefHeight="45.0" prefWidth="250.0" styleClass="botao-primario" text="Relatórios do Parque" textFill="WHITE">
                <font>
                   <Font name="DejaVu Sans Bold" size="14.0" />
                </font>
@@ -61,7 +61,7 @@
                   <DropShadow color="#aaaaaa" offsetY="2.0" />
                </effect>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="250.0" styleClass="botao-primario" disable="true" text="Cadastro de Atrações (em breve)" textFill="WHITE">
+            <Button mnemonicParsing="false" onAction="#onCadastroAtracao" prefHeight="45.0" prefWidth="250.0" styleClass="botao-primario" text="Cadastro de Atrações" textFill="WHITE">
                <font>
                   <Font name="DejaVu Sans Bold" size="14.0" />
                </font>
@@ -69,7 +69,7 @@
                   <DropShadow color="#aaaaaa" offsetY="2.0" />
                </effect>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="250.0" styleClass="botao-primario" disable="true" text="Funcionários Cadastrados (em breve)" textFill="WHITE">
+            <Button mnemonicParsing="false" onAction="#onCadastroOperador" prefHeight="45.0" prefWidth="250.0" styleClass="botao-primario" text="Cadastro de Operadores" textFill="WHITE">
                <font>
                   <Font name="DejaVu Sans Bold" size="14.0" />
                </font>

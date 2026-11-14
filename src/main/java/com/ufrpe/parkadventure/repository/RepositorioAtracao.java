@@ -66,6 +66,19 @@ public class RepositorioAtracao{
         return null;
     }
 
+    // Procura o operador só pelo usuário (login sem cargo)
+    public Operador buscarOperadorPorUsuario(String usuario) {
+        if (usuario == null) return null;
+        for (Atracao atracao : atracoes) {
+            Operador operador = atracao.getOperador();
+            if (operador != null && operador.getNome() != null
+                    && operador.getNome().trim().equalsIgnoreCase(usuario.trim())) {
+                return operador;
+            }
+        }
+        return null;
+    }
+
     // Procura o operador pelo nome e pela atração em que ele trabalha (o "cargo" do login é o nome da atração)
     public Operador buscarOperadorPorNome(String nome, String nomeAtracao) {
         if (nome == null || nomeAtracao == null) return null;

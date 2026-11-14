@@ -162,13 +162,17 @@ public final class Persistencia {
         }
         visitante.setEmail(vazioParaNulo(campo(c, 9)));
         visitante.setTelefone(vazioParaNulo(campo(c, 10)));
+        visitante.setSenha(vazioParaNulo(campo(c, 11)));
+        visitante.setNomeCompleto(vazioParaNulo(campo(c, 12)));
         RepositorioVisitanteController.cadastrarVisitante(visitante);
     }
 
     private static void lerOperador(String[] c) {
         Atracao atracao = RepositorioAtracaoController.buscar(c[4]);
         if (atracao != null && !atracao.temOperador()) {
-            atracao.setOperador(new Operador(c[1], c[2], vazioParaNulo(c[3]), c[4]));
+            Operador operador = new Operador(c[1], c[2], vazioParaNulo(c[3]), c[4]);
+            operador.setSenha(vazioParaNulo(campo(c, 5)));
+            atracao.setOperador(operador);
         }
     }
 
@@ -197,7 +201,8 @@ public final class Persistencia {
                     r == null ? "" : data(r.getDataNascimento()),
                     r == null ? "" : texto(r.getCpf()),
                     r == null ? "" : texto(r.getContatoEmergencia()),
-                    texto(v.getEmail()), texto(v.getTelefone())));
+                    texto(v.getEmail()), texto(v.getTelefone()),
+                    texto(v.getSenha()), texto(v.getNomeCompleto())));
         }
 
         for (Atracao a : RepositorioAtracaoController.listarTodas()) {
@@ -213,7 +218,7 @@ public final class Persistencia {
             if (o != null) {
                 linhas.add(String.join(SEPARADOR, "O",
                         texto(o.getNome()), data(o.getDataNascimento()), texto(o.getCpf()),
-                        texto(a.getNome())));
+                        texto(a.getNome()), texto(o.getSenha())));
             }
         }
 
