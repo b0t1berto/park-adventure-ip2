@@ -17,7 +17,7 @@
       <VBox spacing="6.0" styleClass="cabecalho-pagamento" BorderPane.alignment="TOP_CENTER">
          <children>
             <Label styleClass="titulo-cabecalho" text="Escala de trabalho" />
-            <Label styleClass="subtitulo-cabecalho" text="Defina quais operadores trabalham em cada dia. Os feriados nacionais vêm da BrasilAPI." />
+            <Label styleClass="subtitulo-cabecalho" text="Defina quais operadores trabalham em cada dia." />
             <Label fx:id="lblProximoFeriado" alignment="CENTER" styleClass="aviso" wrapText="true" />
          </children>
          <BorderPane.margin>
