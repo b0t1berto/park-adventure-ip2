@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.paint.Color?>
 
-<StackPane alignment="CENTER" prefHeight="700.0" prefWidth="1000.0" styleClass="tela-parque" stylesheets="@tema-parque.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.TelaLoginController">
+<StackPane alignment="CENTER" prefHeight="700.0" prefWidth="1000.0" styleClass="tela-parque" stylesheets="@tema-parque.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.view.TelaLoginController">
    <children>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <top>

@@ -15,7 +15,7 @@
   e os métodos aoCopiar(), aoConfirmar() e aoVoltar().
   (O arquivo anterior era uma cópia do formulário de pagamento, com o controller errado.)
 -->
-<BorderPane prefWidth="600.0" styleClass="tela-parque" stylesheets="@tema-parque.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.PagamentoPixController">
+<BorderPane prefWidth="600.0" styleClass="tela-parque" stylesheets="@tema-parque.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.view.PagamentoPixController">
     <top>
         <Label alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="cabecalho-pagamento" text="Pagamento com Pix" BorderPane.alignment="CENTER">
             <padding>

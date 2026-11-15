@@ -13,10 +13,10 @@ module com.ufrpe.parkadventure {
     exports com.ufrpe.parkadventure;
     opens com.ufrpe.parkadventure to javafx.fxml;
 
-    exports com.ufrpe.parkadventure.controller;
-    opens com.ufrpe.parkadventure.controller to javafx.fxml;
     exports com.ufrpe.parkadventure.view;
     opens com.ufrpe.parkadventure.view to javafx.fxml;
+    exports com.ufrpe.parkadventure.view.controles;
+    opens com.ufrpe.parkadventure.view.controles to javafx.fxml;
     exports com.ufrpe.parkadventure.repository;
 
     exports com.ufrpe.parkadventure.model.api;
@@ -24,6 +24,4 @@ module com.ufrpe.parkadventure {
     exports com.ufrpe.parkadventure.model.atracao;
     exports com.ufrpe.parkadventure.model.ingresso;
     exports com.ufrpe.parkadventure.model.pessoa;
-    exports com.ufrpe.parkadventure.controller.controles;
-    opens com.ufrpe.parkadventure.controller.controles to javafx.fxml;
 }

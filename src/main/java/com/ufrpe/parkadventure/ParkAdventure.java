@@ -1,9 +1,8 @@
 package com.ufrpe.parkadventure;
 
-import com.ufrpe.parkadventure.controller.AutenticacaoController;
-import com.ufrpe.parkadventure.controller.GeradorEscala;
-import com.ufrpe.parkadventure.controller.RepositorioAtracaoController;
-import com.ufrpe.parkadventure.controller.controles.DadosExemplo;
+import com.ufrpe.parkadventure.app.Contexto;
+import com.ufrpe.parkadventure.view.controles.DadosExemplo;
+import com.ufrpe.parkadventure.service.ServicoGeradorEscala;
 import com.ufrpe.parkadventure.repository.Persistencia;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -39,11 +38,11 @@ public class ParkAdventure extends Application {
         // o botão "Stop" de algumas IDEs encerra a JVM sem chamar stop(): o hook ainda grava os dados
         Runtime.getRuntime().addShutdownHook(new Thread(Persistencia::salvar, "salvar-ao-encerrar"));
         // primeira execução: cria as atrações e os operadores do parque
-        if (RepositorioAtracaoController.listarTodas().isEmpty()) {
+        if (Contexto.SERVICO_ATRACAO.listarTodas().isEmpty()) {
             DadosExemplo.carregarAtracoesPadrao();
         }
         // toda atração precisa de um operador salvo, com usuário e senha
-        if (AutenticacaoController.garantirOperadoresDasAtracoes() | GeradorEscala.gerarProximosDias().turnosCriados() > 0) {
+        if (Contexto.SERVICO_AUTENTICACAO.garantirOperadoresDasAtracoes(ServicoGeradorEscala.MIN_OPERADORES_POR_ATRACAO) | Contexto.SERVICO_GERADOR_ESCALA.gerarProximosDias().turnosCriados() > 0) {
             Persistencia.salvar();   // operadores e escala dos próximos dias ficam gravados
         }
         exibir("view/menu.fxml");

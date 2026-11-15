@@ -1,9 +1,6 @@
 package com.ufrpe.parkadventure.repository;
 
-import com.ufrpe.parkadventure.controller.RepositorioAtracaoController;
-import com.ufrpe.parkadventure.controller.RepositorioVisitanteController;
-import com.ufrpe.parkadventure.controller.RepositorioIngressoController;
-import com.ufrpe.parkadventure.controller.RepositorioEscalaDeTrabalhoController;
+import com.ufrpe.parkadventure.app.Contexto;
 import com.ufrpe.parkadventure.model.atracao.Aquatico;
 import com.ufrpe.parkadventure.model.atracao.Atracao;
 import com.ufrpe.parkadventure.model.atracao.EstadoReserva;
@@ -131,14 +128,14 @@ public final class Persistencia {
             default -> null;
         };
         if (atracao != null) {
-            RepositorioAtracaoController.cadastrar(atracao);
+            Contexto.SERVICO_ATRACAO.cadastrar(atracao);
         }
     }
 
     // R <visitante> <atração> <data> <horário> <estado>
     private static void lerReserva(String[] c) {
-        Visitante visitante = RepositorioVisitanteController.buscarVisitante(c[1]);
-        Atracao atracao = RepositorioAtracaoController.buscar(c[2]);
+        Visitante visitante = Contexto.SERVICO_VISITANTE.buscar(c[1]);
+        Atracao atracao = Contexto.SERVICO_ATRACAO.buscar(c[2]);
         if (visitante == null || atracao == null) {
             return;
         }
@@ -148,13 +145,13 @@ public final class Persistencia {
 
     // E <data> <nome do operador> <atração em que ele trabalha> <turno: MANHA ou TARDE>
     private static void lerEscala(String[] c) {
-        Operador operador = RepositorioAtracaoController.buscarOperadorPorNome(c[2], c[3]);
+        Operador operador = Contexto.SERVICO_ATRACAO.buscarOperadorPorNome(c[2], c[3]);
         if (operador == null) {
             return;   // o operador não existe mais
         }
         String turno = campo(c, 4);   // arquivos antigos não tinham o turno
         PeriodoTrabalho periodo = turno.isEmpty() ? PeriodoTrabalho.MANHA : PeriodoTrabalho.valueOf(turno);
-        RepositorioEscalaDeTrabalhoController.escalar(LocalDate.parse(c[1], DATA), operador, periodo);
+        Contexto.SERVICO_ESCALA.escalar(LocalDate.parse(c[1], DATA), operador, periodo);
     }
 
     private static void lerVisitante(String[] c) {
@@ -171,12 +168,12 @@ public final class Persistencia {
         visitante.setUsuario(vazioParaNulo(campo(c, 11)));
         visitante.setSenhaHash(vazioParaNulo(campo(c, 12)));
         visitante.setNomeCompleto(vazioParaNulo(campo(c, 13)));
-        RepositorioVisitanteController.cadastrarVisitante(visitante);
+        Contexto.SERVICO_VISITANTE.cadastrar(visitante);
     }
 
     private static void lerOperador(String[] c) {
-        Atracao atracao = RepositorioAtracaoController.buscar(c[4]);
-        if (atracao != null && RepositorioAtracaoController.buscarOperadorPorNome(c[1], c[4]) == null) {
+        Atracao atracao = Contexto.SERVICO_ATRACAO.buscar(c[4]);
+        if (atracao != null && Contexto.SERVICO_ATRACAO.buscarOperadorPorNome(c[1], c[4]) == null) {
             Operador operador = new Operador(c[1], c[2], vazioParaNulo(c[3]), c[4]);
             operador.setUsuario(vazioParaNulo(campo(c, 5)));
             operador.setSenhaHash(vazioParaNulo(campo(c, 6)));
@@ -185,7 +182,7 @@ public final class Persistencia {
     }
 
     private static void lerIngresso(String[] c) {
-        Visitante visitante = RepositorioVisitanteController.buscarVisitante(c[1]);
+        Visitante visitante = Contexto.SERVICO_VISITANTE.buscar(c[1]);
         if (visitante == null) {
             return;
         }
@@ -194,13 +191,13 @@ public final class Persistencia {
         LocalDate validade = LocalDate.parse(c[4], DATA);
         Ingresso novo = new Ingresso(visitante, tipo, compra, validade, Double.parseDouble(c[5]));
         novo.setFormaPagamento(vazioParaNulo(campo(c, 6)));
-        RepositorioIngressoController.cadastrarIngresso(novo);
+        Contexto.SERVICO_INGRESSO.cadastrar(novo);
     }
 
     public static synchronized void salvar() {
         List<String> linhas = new ArrayList<>();
 
-        for (Visitante v : RepositorioVisitanteController.listarTodos()) {
+        for (Visitante v : Contexto.SERVICO_VISITANTE.listarTodos()) {
             Responsavel r = v.getResponsavel();
             linhas.add(String.join(SEPARADOR, "V",
                     texto(v.getNome()), data(v.getDataNascimento()), texto(v.getCpf()),
@@ -213,7 +210,7 @@ public final class Persistencia {
                     texto(v.getUsuario()), texto(v.getSenhaHash()), texto(v.getNomeCompleto())));
         }
 
-        for (Atracao a : RepositorioAtracaoController.listarTodas()) {
+        for (Atracao a : Contexto.SERVICO_ATRACAO.listarTodas()) {
             boolean infantil = a instanceof Infantil;
             linhas.add(String.join(SEPARADOR, "A", texto(a.getNome()), a.getTipo(),
                     String.valueOf(a.getCapacidadeMaxima()),
@@ -221,7 +218,7 @@ public final class Persistencia {
                     String.valueOf(infantil ? ((Infantil) a).getIdadeMaxima() : a.getIdadeMinima())));
         }
 
-        for (Atracao a : RepositorioAtracaoController.listarTodas()) {
+        for (Atracao a : Contexto.SERVICO_ATRACAO.listarTodas()) {
             for (Operador o : a.getOperadores()) {
                 linhas.add(String.join(SEPARADOR, "O",
                         texto(o.getNome()), data(o.getDataNascimento()), texto(o.getCpf()),
@@ -229,7 +226,7 @@ public final class Persistencia {
             }
         }
 
-        for (Ingresso i : RepositorioIngressoController.listarTodos()) {
+        for (Ingresso i : Contexto.SERVICO_INGRESSO.listarTodos()) {
             if (i.getVisitante() == null) {
                 continue;
             }
@@ -241,7 +238,7 @@ public final class Persistencia {
 
         // reservas do fura-fila de hoje em diante (as antigas não precisam ser guardadas)
         LocalDate hoje = LocalDate.now();
-        for (Atracao a : RepositorioAtracaoController.listarTodas()) {
+        for (Atracao a : Contexto.SERVICO_ATRACAO.listarTodas()) {
             for (Reserva r : a.getFilaVirtual().getReservas()) {
                 if (r.getVisitante() == null || r.getData().isBefore(hoje)) {
                     continue;
@@ -251,8 +248,8 @@ public final class Persistencia {
             }
         }
 
-        for (RepositorioEscalaTrabalho.Turno turno : RepositorioEscalaDeTrabalhoController.listarOrdenado()) {
-            Atracao daAtracao = RepositorioAtracaoController.buscarAtracaoPorOperador(turno.operador());
+        for (RepositorioEscalaTrabalho.Turno turno : Contexto.SERVICO_ESCALA.listarOrdenado()) {
+            Atracao daAtracao = Contexto.SERVICO_ATRACAO.buscarAtracaoPorOperador(turno.operador());
             if (daAtracao == null) {
                 continue;
             }

@@ -1,0 +1,19 @@
+package com.ufrpe.parkadventure.model;
+
+public enum ResultadoAcesso {
+    AUTORIZADO,
+    ATRACAO_LOTADA,
+    NA_FILA,
+    FILA_CHEIA,
+    HORARIO_INVALIDO,
+    INGRESSO_DE_OUTRO_VISITANTE,
+    INGRESSO_EXPIRADO,
+    FORA_DOS_REQUISITOS,
+    SEM_RESPONSAVEL,
+    SEM_OPERADOR,
+    JA_NA_FILA,
+    RESERVADO,
+    SEM_INGRESSO,
+    CONFLITO_DE_HORARIO,
+    SEM_RESERVA_NO_HORARIO
+}

@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="640.0" prefWidth="820.0" styleClass="tela-parque" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.controller.CadastroAtracaoController">
+<BorderPane prefHeight="640.0" prefWidth="820.0" styleClass="tela-parque" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.view.CadastroAtracaoController">
    <top>
       <VBox alignment="TOP_CENTER" spacing="6.0" styleClass="cabecalho-pagamento">
          <children>
