@@ -54,6 +54,17 @@
                   </VBox>
                   <VBox spacing="8.0" styleClass="cartao-pagamento">
                      <children>
+                        <Label styleClass="subtitulo-parque" text="Entrada conferida (ingresso, requisitos e lotação)" wrapText="true" />
+                        <HBox alignment="CENTER_LEFT" spacing="8.0">
+                           <children>
+                              <TextField fx:id="txtUsuarioEntrada" prefWidth="220.0" promptText="Usuário do visitante" />
+                              <Button fx:id="btnRegistrarEntrada" onAction="#onRegistrarEntrada" styleClass="botao-primario" text="Registrar entrada" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox spacing="8.0" styleClass="cartao-pagamento">
+                     <children>
                         <Label styleClass="subtitulo-parque" text="Fura-fila de hoje (janela de 15 minutos a partir do horário)" wrapText="true" />
                         <TableView fx:id="tabela" prefHeight="170.0" styleClass="tabela-parque">
                            <columns>

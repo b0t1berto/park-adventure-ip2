@@ -32,7 +32,7 @@
                   <!-- MenuButton com a imagem do usuário -->
                   <MenuButton layoutX="495.0" layoutY="8.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="84.0" style="-fx-background-color: transparent; -fx-cursor: hand;">
                     <items>
-                      <MenuItem mnemonicParsing="false" text="Meu Perfil" />
+                      <MenuItem mnemonicParsing="false" onAction="#onMeuPerfil" text="Meu Perfil" />
                       <MenuItem mnemonicParsing="false" text="Configurações" />
                       <MenuItem fx:id="menuVoltar" mnemonicParsing="false" onAction="#onVoltar" text="Sair" />
                     </items>

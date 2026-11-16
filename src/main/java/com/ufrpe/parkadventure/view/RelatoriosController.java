@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+import javafx.scene.control.DatePicker;
 
 // Tela do administrador: visão geral do parque (atrações, visitantes, receita) e receita de ingressos por mês
 public class RelatoriosController {
@@ -62,6 +63,7 @@ public class RelatoriosController {
     private void initialize() {
         configurarVisaoGeral();
         configurarReceita();
+        configurarIngressos();
     }
 
     // =============================================
@@ -222,5 +224,46 @@ public class RelatoriosController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    // =============================================
+    // || INGRESSOS (lista, busca por usuário e quantidade por data)
+    // =============================================
+    @FXML private TextField txtBuscaIngresso;
+    @FXML private DatePicker dpDataEmissao;
+    @FXML private Label lblTotalIngressos, lblQtdData;
+    @FXML private TableView<Ingresso> tabelaIngressos;
+    @FXML private TableColumn<Ingresso, String> colIngUsuario, colIngTipo, colIngCompra, colIngValidade, colIngValor, colIngPagamento;
+
+    private void configurarIngressos() {
+        colIngUsuario.setCellValueFactory(c -> new SimpleStringProperty(
+                Contexto.SERVICO_PERFIL_VISITANTE.usuarioOuNome(c.getValue().getVisitante())));
+        colIngTipo.setCellValueFactory(c -> new SimpleStringProperty(Formatos.tipoIngresso(c.getValue().getTipoIngresso())));
+        colIngCompra.setCellValueFactory(c -> new SimpleStringProperty(Formatos.data(c.getValue().getDataCompra())));
+        colIngValidade.setCellValueFactory(c -> new SimpleStringProperty(Formatos.data(c.getValue().getDataValidade())));
+        colIngValor.setCellValueFactory(c -> new SimpleStringProperty(Formatos.moeda(c.getValue().getValor())));
+        colIngPagamento.setCellValueFactory(c -> new SimpleStringProperty(
+                c.getValue().getFormaPagamento() == null ? "-" : c.getValue().getFormaPagamento()));
+        tabelaIngressos.setPlaceholder(new Label("Nenhum ingresso encontrado."));
+        txtBuscaIngresso.textProperty().addListener((obs, antigo, novo) -> atualizarIngressos());
+        atualizarIngressos();
+    }
+
+    private void atualizarIngressos() {
+        List<Ingresso> ingressos = new ArrayList<>(Contexto.SERVICO_INGRESSO.listarPorTrecho(txtBuscaIngresso.getText()));
+        ingressos.sort(Comparator.comparing(Ingresso::getDataCompra).reversed());
+        tabelaIngressos.setItems(FXCollections.observableArrayList(ingressos));
+        lblTotalIngressos.setText(ingressos.size() + " ingresso(s)");
+    }
+
+    @FXML
+    private void onConsultarData() {
+        LocalDate data = dpDataEmissao.getValue();
+        if (data == null) {
+            lblQtdData.setText("Escolha uma data.");
+            return;
+        }
+        lblQtdData.setText(Contexto.SERVICO_INGRESSO.consultarQuantidadePorData(data)
+                + " ingresso(s) emitido(s) em " + Formatos.data(data));
     }
 }

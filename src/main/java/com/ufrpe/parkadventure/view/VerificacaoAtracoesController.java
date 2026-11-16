@@ -48,7 +48,7 @@ public class VerificacaoAtracoesController {
                 setText(texto);
                 if (texto.startsWith("Liberada") || texto.startsWith("Aberta")) {
                     getStyleClass().add("sit-ok");
-                } else if (texto.startsWith("Lotada")) {
+                } else if (texto.startsWith("Lotada") || texto.startsWith("Complete")) {
                     getStyleClass().add("sit-alerta");
                 } else {
                     getStyleClass().add("sit-bloqueio");
@@ -111,6 +111,10 @@ public class VerificacaoAtracoesController {
     private String situacao(Atracao atracao, Visitante visitante) {
         if (!atracao.temOperador()) {
             return "Fechada (sem operador)";
+        }
+        if (visitante != null && visitante.getAltura() <= 0) {
+            // conta nova: altura 0 é só marcador (altura e nascimento são informados em Meu Perfil ou na compra)
+            return "Complete seu perfil: informe altura e nascimento em Meu Perfil";
         }
         if (visitante != null) {
             switch (atracao.verificarRestricao(visitante)) {

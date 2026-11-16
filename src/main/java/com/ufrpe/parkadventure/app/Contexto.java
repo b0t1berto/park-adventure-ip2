@@ -32,6 +32,12 @@ public final class Contexto {
     public static final ServicoEmissaoIngresso SERVICO_EMISSAO_INGRESSO = new ServicoEmissaoIngresso(
             SERVICO_INGRESSO, 100.0, 800.0, 20.0);
     public static final ServicoGeradorEscala SERVICO_GERADOR_ESCALA = new ServicoGeradorEscala(SERVICO_ATRACAO, SERVICO_ESCALA);
+    public static final ServicoPerfilVisitante SERVICO_PERFIL_VISITANTE = new ServicoPerfilVisitante(
+            SERVICO_VISITANTE, SERVICO_INGRESSO, SERVICO_ATRACAO, SERVICO_AUTENTICACAO);
+    public static final ServicoGestaoAtracao SERVICO_GESTAO_ATRACAO = new ServicoGestaoAtracao(
+            SERVICO_ATRACAO, SERVICO_ESCALA, SERVICO_AUTENTICACAO, SERVICO_GERADOR_ESCALA);
+    public static final ServicoDemonstracao SERVICO_DEMONSTRACAO = new ServicoDemonstracao(
+            SERVICO_ATRACAO, SERVICO_VISITANTE, SERVICO_AUTENTICACAO);
 
     // --- Sessão e feriados ---
     public static final ServicoFeriados FERIADOS = ServicoFeriados.getInstancia();

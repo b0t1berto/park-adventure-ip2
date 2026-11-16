@@ -17,6 +17,7 @@
             <Label styleClass="subtitulo-cabecalho" text="Feriados nacionais e dias com operadores escalados. Clique em um dia para ver os detalhes." />
             <HBox alignment="TOP_CENTER" spacing="10.0">
                <children>
+                  <Button onAction="#onVoltar" styleClass="botao-secundario" text="Voltar" />
                   <Button onAction="#onMesAnterior" styleClass="botao-secundario" text="Anterior" />
                   <Label fx:id="lblMes" alignment="CENTER" minWidth="220.0" styleClass="mes-cabecalho" />
                   <Button onAction="#onMesSeguinte" styleClass="botao-secundario" text="Seguinte" />
@@ -50,7 +51,6 @@
                </children>
             </HBox>
             <Label fx:id="lblDetalhe" maxWidth="Infinity" minHeight="78.0" styleClass="detalhe" wrapText="true" />
-            <Button onAction="#onVoltar" styleClass="botao-secundario" text="Voltar" />
          </children>
          <BorderPane.margin>
             <Insets />

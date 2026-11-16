@@ -203,4 +203,11 @@ public class FilaVirtual {
             reservas.addAll(outra.reservas);
         }
     }
+
+    // Usado ao remover um visitante: apaga todas as reservas dele (de qualquer data e estado)
+    public int removerReservasDe(Visitante visitante) {
+        int antes = reservas.size();
+        reservas.removeIf(r -> r.getVisitante() == visitante);
+        return antes - reservas.size();
+    }
 }

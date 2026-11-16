@@ -20,6 +20,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 
 // Tela do administrador: cadastra atrações novas (o operador é cadastrado na outra tela)
 public class CadastroAtracaoController {
@@ -28,7 +31,7 @@ public class CadastroAtracaoController {
     private static final String RADICAL = "Radical";
     private static final String INFANTIL = "Infantil";
 
-    @FXML private TextField txtNome, txtCapacidade, txtAltura, txtIdade;
+    @FXML private TextField txtBusca, txtNome, txtCapacidade, txtAltura, txtIdade;
     @FXML private ComboBox<String> cbTipo;
     @FXML private Label lblAltura, lblIdade, lblResultado;
     @FXML private TableView<Atracao> tabela;
@@ -52,7 +55,15 @@ public class CadastroAtracaoController {
                 c.getValue().temOperador()
                         ? c.getValue().getOperadores().stream().map(o -> o.getNome()).collect(java.util.stream.Collectors.joining(", "))
                         : "(sem operador)"));
-        tabela.setPlaceholder(new Label("Nenhuma atração cadastrada."));
+        tabela.setPlaceholder(new Label("Nenhuma atração encontrada."));
+
+        // clicar numa linha carrega a atração no formulário para editar
+        tabela.getSelectionModel().selectedItemProperty().addListener((obs, antigo, novo) -> {
+            if (novo != null) {
+                preencher(novo);
+            }
+        });
+        txtBusca.textProperty().addListener((obs, antigo, novo) -> atualizarTabela());
         atualizarTabela();
     }
 
@@ -114,6 +125,64 @@ public class CadastroAtracaoController {
     }
 
     @FXML
+    private void onSalvar() {
+        Atracao selecionada = tabela.getSelectionModel().getSelectedItem();
+        if (selecionada == null) {
+            Aviso.erro(lblResultado, "Selecione uma atração na tabela para editar.");
+            return;
+        }
+        Integer capacidade = lerNumero(txtCapacidade);
+        Integer altura = lerNumero(txtAltura);
+        Integer idade = lerNumero(txtIdade);
+        if (capacidade == null || altura == null || idade == null) {
+            Aviso.erro(lblResultado, "Capacidade, altura e idade devem ser números.");
+            return;
+        }
+        String erro = Contexto.SERVICO_GESTAO_ATRACAO.editarAtracao(selecionada, cbTipo.getValue(), txtNome.getText(),
+                capacidade, altura, idade);
+        if (erro != null) {
+            Aviso.erro(lblResultado, erro);
+            return;
+        }
+        limparFormulario();
+        atualizarTabela();
+        Aviso.sucesso(lblResultado, "Atração atualizada. Operadores, ocupação e reservas foram mantidos.");
+    }
+
+    @FXML
+    private void onRemover() {
+        Atracao selecionada = tabela.getSelectionModel().getSelectedItem();
+        if (selecionada == null) {
+            Aviso.erro(lblResultado, "Selecione uma atração na tabela para remover.");
+            return;
+        }
+        Alert pergunta = new Alert(AlertType.CONFIRMATION);
+        pergunta.setTitle("CONFIRMAÇÃO");
+        pergunta.setHeaderText("Remover \"" + selecionada.getNome() + "\"?");
+        pergunta.setContentText("Os operadores dela (" + selecionada.getOperadores().size() + "), as reservas de fura-fila "
+                + "e os turnos deles na escala também serão apagados. Isso não pode ser desfeito.");
+        if (pergunta.showAndWait().filter(botao -> botao == ButtonType.OK).isEmpty()) {
+            return;
+        }
+        String nome = selecionada.getNome();
+        String erro = Contexto.SERVICO_GESTAO_ATRACAO.removerAtracao(selecionada);
+        if (erro != null) {
+            Aviso.erro(lblResultado, erro);
+            return;
+        }
+        limparFormulario();
+        atualizarTabela();
+        Aviso.sucesso(lblResultado, "Atração \"" + nome + "\" removida.");
+    }
+
+    @FXML
+    private void onLimpar() {
+        tabela.getSelectionModel().clearSelection();
+        limparFormulario();
+        Aviso.limpar(lblResultado);
+    }
+
+    @FXML
     private void onVoltar() {
         try {
             ParkAdventure.voltar();
@@ -123,7 +192,7 @@ public class CadastroAtracaoController {
     }
 
     private void atualizarTabela() {
-        tabela.setItems(FXCollections.observableArrayList(Contexto.SERVICO_ATRACAO.listarTodas()));
+        tabela.setItems(FXCollections.observableArrayList(Contexto.SERVICO_GESTAO_ATRACAO.buscarPorTrecho(txtBusca.getText())));
     }
 
     private Integer lerNumero(TextField campo) {
@@ -145,5 +214,27 @@ public class CadastroAtracaoController {
             return "Até " + infantil.getAlturaMaxima() + " cm e " + infantil.getIdadeMaxima() + " anos";
         }
         return "A partir de " + atracao.getAlturaMinima() + " cm e " + atracao.getIdadeMinima() + " anos";
+    }
+
+    private void preencher(Atracao atracao) {
+        txtNome.setText(atracao.getNome());
+        cbTipo.setValue(nomeDoTipo(atracao));
+        txtCapacidade.setText(String.valueOf(atracao.getCapacidadeMaxima()));
+        if (atracao instanceof Infantil infantil) {
+            txtAltura.setText(String.valueOf(infantil.getAlturaMaxima()));
+            txtIdade.setText(String.valueOf(infantil.getIdadeMaxima()));
+        } else {
+            txtAltura.setText(String.valueOf(atracao.getAlturaMinima()));
+            txtIdade.setText(String.valueOf(atracao.getIdadeMinima()));
+        }
+        Aviso.limpar(lblResultado);
+    }
+
+    private void limparFormulario() {
+        txtNome.clear();
+        txtCapacidade.clear();
+        txtAltura.clear();
+        txtIdade.clear();
+        cbTipo.setValue(null);
     }
 }

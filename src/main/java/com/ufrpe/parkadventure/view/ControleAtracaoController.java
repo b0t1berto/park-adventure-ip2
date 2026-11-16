@@ -29,6 +29,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.util.Duration;
+import com.ufrpe.parkadventure.model.pessoa.Visitante;
 
 // Tela do operador: ele conta as pessoas (+1 / -1) e libera quem tem fura-fila na entrada de prioridade.
 public class ControleAtracaoController {
@@ -37,8 +38,8 @@ public class ControleAtracaoController {
     private static final DateTimeFormatter HORA_SEGUNDOS = DateTimeFormatter.ofPattern("HH:mm:ss");
 
     @FXML private Label lblAtracao, lblOcupacao, lblStatus, lblAtualizado;
-    @FXML private TextField txtOcupacao;
-    @FXML private Button btnEntrou, btnSaiu, btnAjustar, btnLiberar;
+    @FXML private TextField txtOcupacao, txtUsuarioEntrada;
+    @FXML private Button btnEntrou, btnSaiu, btnAjustar, btnLiberar, btnRegistrarEntrada;
     @FXML private TableView<LinhaReserva> tabela;
     @FXML private TableColumn<LinhaReserva, String> colHorario, colVisitante, colSituacao;
 
@@ -65,6 +66,8 @@ public class ControleAtracaoController {
             btnSaiu.setDisable(true);
             btnAjustar.setDisable(true);
             btnLiberar.setDisable(true);
+            btnRegistrarEntrada.setDisable(true);
+            txtUsuarioEntrada.setDisable(true);
             txtOcupacao.setDisable(true);
             return;
         }
@@ -122,6 +125,41 @@ public class ControleAtracaoController {
         }
         txtOcupacao.setText("");
         Aviso.sucesso(lblStatus, "Ocupação ajustada para " + valor + ".");
+        atualizar();
+    }
+
+    // ---------------------------------------------------------------- entrada conferida
+
+    // O operador digita o usuário do visitante: o sistema confere ingresso, requisitos e lotação antes do +1
+    @FXML
+    private void onRegistrarEntrada() {
+        String texto = txtUsuarioEntrada.getText() == null ? "" : txtUsuarioEntrada.getText().trim();
+        if (texto.isEmpty()) {
+            Aviso.erro(lblStatus, "Digite o usuário do visitante.");
+            return;
+        }
+        Visitante visitante = Contexto.SERVICO_PERFIL_VISITANTE.buscarPorUsuarioOuNome(texto);
+        if (visitante == null) {
+            Aviso.erro(lblStatus, "Visitante não encontrado: " + texto + ".");
+            return;
+        }
+        String nome = Contexto.SERVICO_PERFIL_VISITANTE.usuarioOuNome(visitante);
+        ResultadoAcesso resultado = Contexto.SERVICO_ACESSO.registrarEntrada(visitante, atracao);
+        switch (resultado) {
+            case AUTORIZADO -> {
+                Aviso.sucesso(lblStatus, "Entrada de " + nome + " autorizada (+1 registrado).");
+                txtUsuarioEntrada.clear();
+            }
+            case ATRACAO_LOTADA -> Aviso.erro(lblStatus,
+                    "Atração lotada. " + nome + " deve esperar na fila física até alguém sair.");
+            case SEM_INGRESSO -> Aviso.erro(lblStatus, nome + " não tem ingresso válido para hoje.");
+            case INGRESSO_EXPIRADO -> Aviso.erro(lblStatus, "O ingresso de " + nome + " não vale hoje.");
+            case INGRESSO_DE_OUTRO_VISITANTE -> Aviso.erro(lblStatus, "O ingresso apresentado não é de " + nome + ".");
+            case FORA_DOS_REQUISITOS -> Aviso.erro(lblStatus, nome + " não atinge os requisitos de altura/idade desta atração.");
+            case SEM_RESPONSAVEL -> Aviso.erro(lblStatus, nome + " é menor de idade e precisa de responsável cadastrado.");
+            case SEM_OPERADOR -> Aviso.erro(lblStatus, "A atração está sem operador vinculado.");
+            default -> Aviso.erro(lblStatus, "Não foi possível registrar a entrada de " + nome + ".");
+        }
         atualizar();
     }
 
@@ -187,6 +225,8 @@ public class ControleAtracaoController {
         btnSaiu.setDisable(fora);
         btnAjustar.setDisable(fora);
         btnLiberar.setDisable(fora);
+        btnRegistrarEntrada.setDisable(fora);
+        txtUsuarioEntrada.setDisable(fora);
         txtOcupacao.setDisable(fora);
         if (fora) {
             Aviso.erro(lblStatus, motivo);

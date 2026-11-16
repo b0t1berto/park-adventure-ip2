@@ -44,9 +44,14 @@ public class PagamentoConfirmadoController {
         ir("view/compra-ingressos.fxml");
     }
 
+    // A compra terminou: volta para o menu do visitante (e não para o menu inicial, com o login)
     @FXML
     private void aoConcluir() {
-        ir("view/menu.fxml");
+        try {
+            ParkAdventure.voltarAte("view/menu-visitante.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void ir(String fxml) {

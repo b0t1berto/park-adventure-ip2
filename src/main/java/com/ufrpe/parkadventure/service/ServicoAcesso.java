@@ -45,6 +45,15 @@ public class ServicoAcesso {
     }
 
     /**
+     * Entrada comum conferida pelo operador: usa o ingresso do visitante que vale HOJE.
+     * Sem ingresso válido o resultado é SEM_INGRESSO; os demais motivos vêm de registrarAcesso().
+     */
+    public ResultadoAcesso registrarEntrada(Visitante visitante, Atracao atracao) {
+        Ingresso ingresso = ingressoParaData(visitante, LocalDate.now());
+        return registrarAcesso(visitante, ingresso, atracao);
+    }
+
+    /**
      * Saída de uma pessoa (o operador faz o -1).
      */
     public void finalizarUso(Atracao atracao) {

@@ -56,6 +56,23 @@ public class ServicoIngresso {
     }
 
     /**
+     * Ingressos dos visitantes cujo usuário ou nome contém o texto (sem diferenciar maiúsculas); vazio = todos.
+     */
+    public ArrayList<Ingresso> listarPorTrecho(String trecho) {
+        String t = trecho == null ? "" : trecho.trim().toLowerCase();
+        ArrayList<Ingresso> achados = new ArrayList<>();
+        for (Ingresso ingresso : repositorio.listarTodos()) {
+            com.ufrpe.parkadventure.model.pessoa.Visitante v = ingresso.getVisitante();
+            String alvo = ((v.getUsuario() == null ? "" : v.getUsuario()) + " " + v.getNome() + " "
+                    + (v.getNomeCompleto() == null ? "" : v.getNomeCompleto())).toLowerCase();
+            if (t.isEmpty() || alvo.contains(t)) {
+                achados.add(ingresso);
+            }
+        }
+        return achados;
+    }
+
+    /**
      * Lista todos os ingressos cadastrados.
      */
     public ArrayList<Ingresso> listarTodos() {

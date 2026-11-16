@@ -98,14 +98,18 @@
    <center>
       <Pane layoutX="-20.0" layoutY="160.0" prefHeight="305.0" prefWidth="118.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="460.0" fitWidth="439.0" layoutX="390.0" layoutY="178.0" pickOnBounds="true">
-               <image>
-                  <Image url="@imagens/criancas.png" />
-               </image>
-               <effect>
-                  <DropShadow />
-               </effect>
-            </ImageView>
+            <StackPane fx:id="areaPersonagem" layoutX="390.0" layoutY="178.0" prefHeight="460.0" prefWidth="439.0">
+               <children>
+                  <ImageView fx:id="imgPersonagem" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@imagens/criancas.png" />
+                     </image>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                  </ImageView>
+               </children>
+            </StackPane>
 <Label fx:id="lblDivertir" layoutX="459.0" layoutY="155.0" prefHeight="95.0" prefWidth="282.0" styleClass="cartao-pagamento" text="Comece seu cadastro e venha se Divertir!" textAlignment="CENTER" wrapText="true">
                 <effect>
                    <DropShadow height="20.0" radius="9.5" width="20.0">

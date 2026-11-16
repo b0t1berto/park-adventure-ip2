@@ -33,7 +33,7 @@
                   <MenuButton layoutX="495.0" layoutY="8.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="68.0" style="-fx-background-color: transparent; -fx-cursor: hand;">
                     <items>
                       <MenuItem mnemonicParsing="false" text="Meu Perfil" />
-                      <MenuItem mnemonicParsing="false" text="Configurações" />
+                      <MenuItem mnemonicParsing="false" onAction="#onConfiguracoes" text="Configurações" />
                       <MenuItem fx:id="menuVoltar" mnemonicParsing="false" onAction="#onVoltar" text="Sair" />
                     </items>
                      <graphic>
@@ -78,6 +78,14 @@
                </effect>
             </Button>
             <Button mnemonicParsing="false" onAction="#onEscala" prefHeight="45.0" prefWidth="250.0" styleClass="botao-primario" text="Escala de Trabalho" textFill="WHITE">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="14.0" />
+               </font>
+               <effect>
+                  <DropShadow color="#aaaaaa" offsetY="2.0" />
+               </effect>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#onVisitantes" prefHeight="45.0" prefWidth="250.0" styleClass="botao-primario" text="Visitantes Cadastrados" textFill="WHITE">
                <font>
                   <Font name="DejaVu Sans Bold" size="14.0" />
                </font>

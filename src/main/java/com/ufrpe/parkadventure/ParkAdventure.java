@@ -97,6 +97,22 @@ public class ParkAdventure extends Application {
         }
     }
 
+    // Volta direto para uma tela que está no histórico, descartando as que vieram depois dela (como se o
+    // usuário tivesse apertado "Voltar" várias vezes). Se ela não estiver no histórico, apenas abre a tela.
+    public static void voltarAte(String novaTelaFxml) throws IOException {
+        boolean estavaNoHistorico = historico.contains(novaTelaFxml);
+        exibir(novaTelaFxml);
+        if (!estavaNoHistorico) {
+            return;
+        }
+        while (!historico.isEmpty() && !historico.peek().equals(novaTelaFxml)) {
+            historico.pop();
+        }
+        if (!historico.isEmpty()) {
+            historico.pop();   // a própria tela volta a ser a atual
+        }
+    }
+
     // Troca a tela atual por outra SEM guardar a atual no histórico (telas "de passagem").
     // Devolve o controller da nova tela para quem chamou poder configurá-lo.
     public static <T> T substituirCena(String novaTelaFxml) throws IOException {

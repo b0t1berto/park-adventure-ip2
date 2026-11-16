@@ -38,6 +38,11 @@ public class Visitante extends Pessoa {
         return getIdade() < IDADE_MAIORIDADE;
     }
 
+    // Menor de idade conforme uma data de nascimento (para validar um perfil antes de gravá-lo)
+    public static boolean menorDeIdadeEm(java.time.LocalDate nascimento) {
+        return java.time.Period.between(nascimento, java.time.LocalDate.now()).getYears() < IDADE_MAIORIDADE;
+    }
+
     // Menor de idade sem responsável não pode acessar atrações
     public boolean precisaDeResponsavel() {
         return ehMenorDeIdade() && !temResponsavel();

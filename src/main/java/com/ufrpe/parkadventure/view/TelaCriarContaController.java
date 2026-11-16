@@ -5,6 +5,7 @@ import com.ufrpe.parkadventure.app.Contexto;
 import com.ufrpe.parkadventure.ParkAdventure;
 import com.ufrpe.parkadventure.model.pessoa.Visitante;
 import com.ufrpe.parkadventure.repository.Persistencia;
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -14,6 +15,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 
 // Criação de conta de VISITANTE: só usuário e senha (nome completo e CPF são informados na primeira compra).
 // Operadores não são cadastrados aqui: só o administrador cadastra operadores.
@@ -30,6 +33,25 @@ public class TelaCriarContaController {
 
     @FXML
     private Button bntVoltar, bntConfirmar;
+
+    @FXML
+    private StackPane areaPersonagem;
+
+    @FXML
+    private ImageView imgPersonagem;
+
+    @FXML
+    private void initialize() {
+        var tamanho = Bindings.createDoubleBinding(
+                () -> Math.max(0, Math.min(
+                        areaPersonagem.getWidth() * 0.98,
+                        areaPersonagem.getHeight() * 0.78)),
+                areaPersonagem.widthProperty(), areaPersonagem.heightProperty());
+        imgPersonagem.fitWidthProperty().bind(tamanho);
+        imgPersonagem.fitHeightProperty().bind(tamanho);
+        lblDivertir.prefWidthProperty().bind(tamanho);
+        lblDivertir.maxWidthProperty().bind(tamanho);
+    }
 
     @FXML
     void onVoltar(ActionEvent event) {

@@ -208,3 +208,38 @@
 .card-resumo    { -fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #d3dbe4; -fx-border-radius: 12; -fx-padding: 12 18 12 18; }
 .numero-resumo  { -fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1f6fd1; }
 .legenda-resumo { -fx-font-size: 12px; -fx-text-fill: #14365d; }
+
+.cabecalho-parque {
+    -fx-background-color: linear-gradient(to right, #3a9bff, #1f6fd1);
+    -fx-effect: dropshadow(gaussian, rgba(20,54,93,0.22), 12, 0.15, 0, 4);
+}
+.cabecalho-parque .titulo-menu {
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(20,54,93,0.4), 8, 0.2, 1, 2);
+}
+.conteudo-acesso { -fx-background-color: transparent; }
+.cartao-formulario {
+    -fx-background-color: white;
+    -fx-background-radius: 24;
+    -fx-padding: 24;
+    -fx-effect: dropshadow(gaussian, rgba(20,54,93,0.2), 16, 0.18, 0, 6);
+}
+.cartao-formulario .text-field,
+.cartao-formulario .password-field {
+    -fx-background-color: #f8fbff;
+    -fx-background-radius: 12;
+    -fx-border-color: #bfe3ff;
+    -fx-border-radius: 12;
+    -fx-padding: 9 12 9 12;
+}
+.balao-parque {
+    -fx-background-color: white;
+    -fx-background-radius: 24;
+    -fx-border-color: #bfe3ff;
+    -fx-border-radius: 24;
+    -fx-padding: 14 18 14 18;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #14365d;
+    -fx-effect: dropshadow(gaussian, rgba(20,54,93,0.2), 12, 0.15, 0, 4);
+}

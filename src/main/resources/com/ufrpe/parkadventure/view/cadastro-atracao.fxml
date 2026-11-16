@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane prefHeight="640.0" prefWidth="820.0" styleClass="tela-parque" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.view.CadastroAtracaoController">
@@ -51,7 +52,12 @@
                   <TextField fx:id="txtIdade" maxWidth="Infinity" promptText="0 = sem limite" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                </children>
             </GridPane>
-            <Label styleClass="rotulo-campo" text="Atrações já cadastradas" />
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
+               <children>
+                  <Label styleClass="rotulo-campo" text="Atrações cadastradas (clique numa linha para editar)" />
+                  <TextField fx:id="txtBusca" prefWidth="220.0" promptText="Buscar pelo nome" />
+               </children>
+            </HBox>
             <TableView fx:id="tabela" styleClass="tabela-parque" VBox.vgrow="ALWAYS">
                <columns>
                   <TableColumn fx:id="colNome" text="Atração" />
@@ -77,6 +83,9 @@
             <FlowPane alignment="CENTER" hgap="10.0" vgap="8.0">
                <children>
                   <Button onAction="#onCadastrar" styleClass="botao-primario" text="Cadastrar atração" />
+                  <Button onAction="#onSalvar" styleClass="botao-primario" text="Salvar alterações" />
+                  <Button onAction="#onRemover" styleClass="botao-secundario" text="Remover selecionada" />
+                  <Button onAction="#onLimpar" styleClass="botao-secundario" text="Limpar seleção" />
                   <Button onAction="#onVoltar" styleClass="botao-secundario" text="Voltar" />
                </children>
             </FlowPane>

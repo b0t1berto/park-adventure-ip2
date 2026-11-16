@@ -111,14 +111,18 @@
                          <DropShadow />
                       </effect>
              </Button>
-            <ImageView fitHeight="329.0" fitWidth="312.0" layoutX="480.0" layoutY="218.0" pickOnBounds="true">
-               <image>
-                  <Image url="@imagens/homem-Photoroom.png" />
-               </image>
-               <effect>
-                  <DropShadow />
-               </effect>
-            </ImageView>
+            <StackPane fx:id="areaPersonagem" layoutX="480.0" layoutY="218.0" prefHeight="329.0" prefWidth="312.0">
+               <children>
+                  <ImageView fx:id="imgPersonagem" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@imagens/homem-Photoroom.png" />
+                     </image>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                  </ImageView>
+               </children>
+            </StackPane>
             <!-- Substituí o Circle azul genérico por um texto de boas vindas estilizado -->
 <Label fx:id="lblDivertir" layoutX="459.0" layoutY="155.0" prefHeight="95.0" prefWidth="320.0" styleClass="cartao-pagamento" text="Acesse sua conta para continuar!" textAlignment="CENTER" wrapText="true">
                 <effect>

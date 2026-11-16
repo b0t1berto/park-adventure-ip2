@@ -43,6 +43,11 @@ public class LoginVisitanteController {
     }
 
     @FXML
+    void onMeuPerfil(ActionEvent event) {
+        ir("view/meu-perfil.fxml");
+    }
+
+    @FXML
     void onVoltar(ActionEvent event) {
         try {
             Contexto.SESSAO.limpar();

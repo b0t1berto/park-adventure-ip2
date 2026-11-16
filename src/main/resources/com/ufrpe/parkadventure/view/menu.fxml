@@ -58,9 +58,9 @@
       </VBox>
    </center>
    <top>
-      <StackPane prefHeight="200.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
+      <StackPane fx:id="cabecalhoImagem" prefHeight="200.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="200.0" fitWidth="1000.0" pickOnBounds="true">
+            <ImageView fx:id="imgFundo" fitHeight="200.0" fitWidth="1000.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@imagens/menu-fundo.jpeg" />
                </image>
