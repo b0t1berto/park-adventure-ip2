@@ -6,6 +6,7 @@ import com.ufrpe.parkadventure.ParkAdventure;
 import com.ufrpe.parkadventure.model.pessoa.Operador;
 import com.ufrpe.parkadventure.service.ServicoAutenticacao;
 import com.ufrpe.parkadventure.model.pessoa.Visitante;
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -14,12 +15,33 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 
 // Login por usuário e senha: o sistema descobre sozinho se é administrador, operador ou visitante.
 public class TelaLoginController {
 
     @FXML
-    Label lblUsuario, lblSenha, lblParkAdventure, lblAcesseConta;
+    Label lblUsuario, lblSenha, lblParkAdventure, lblAcesseConta, lblDivertir;
+
+    @FXML
+    private StackPane areaPersonagem;
+
+    @FXML
+    private ImageView imgPersonagem;
+
+    @FXML
+    private void initialize() {
+        var tamanho = Bindings.createDoubleBinding(
+                () -> Math.max(0, Math.min(
+                        areaPersonagem.getWidth() * 0.98,
+                        areaPersonagem.getHeight() * 0.78)),
+                areaPersonagem.widthProperty(), areaPersonagem.heightProperty());
+        imgPersonagem.fitWidthProperty().bind(tamanho);
+        imgPersonagem.fitHeightProperty().bind(tamanho);
+        lblDivertir.prefWidthProperty().bind(tamanho);
+        lblDivertir.maxWidthProperty().bind(tamanho);
+    }
 
     @FXML
     TextField txtUsuario;
