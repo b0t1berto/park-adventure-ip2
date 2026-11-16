@@ -1,0 +1,247 @@
+.tela-parque {
+    -fx-background-color: linear-gradient(to bottom, #bfe3ff, #eaf6ff);
+}
+.tela-parque .label, .tela-parque .button { -fx-font-family: "Fredoka"; }
+
+.titulo-parque    { -fx-font-size: 34px; -fx-font-weight: bold; -fx-text-fill: #14365d; }
+.tela-parque .titulo-menu { -fx-font-size: 80px; -fx-font-weight: bold; }
+.subtitulo-parque { -fx-font-size: 15px; -fx-text-fill: #1f6fd1; }
+.rodape-parque    { -fx-font-size: 12px; -fx-text-fill: #14365d; -fx-opacity: 0.75; }
+.tela-parque #lblReservar { -fx-font-size: 20px; }
+.tela-parque #lblDesejaReservar { -fx-font-size: 20px; }
+.tela-parque #lblMensagem { -fx-font-size: 20px; }
+.tela-parque #lblDivertir { -fx-font-size: 22px; }
+.tela-parque #lblUsuario { -fx-font-size: 20px; }
+.tela-parque #lblSenha { -fx-font-size: 20px; }
+/* .tela-parque #lblBemVindoDeVolta { -fx-font-size: 20px; } */
+.tela-parque #lblBoasVindas { -fx-font-size: 45px; }
+.tela-parque #lblMensagemDois,
+.tela-parque #lblBemVindoDeVolta { -fx-font-size: 34px; }
+
+
+.card-ingresso {
+    -fx-padding: 12 18 12 18;
+    -fx-wrap-text: true;
+    -fx-background-radius: 28; -fx-border-radius: 28;
+    -fx-font-size: 15px; -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(20,54,93,0.25), 14, 0.2, 0, 6);
+}
+.card-instantaneo { -fx-background-color: linear-gradient(to bottom right, #3a9bff, #1f6fd1); -fx-text-fill: white; }
+.card-programado  { -fx-background-color: white; -fx-border-color: #1f6fd1; -fx-border-width: 3; -fx-text-fill: #14365d; }
+.card-ingresso:hover   { -fx-scale-x: 1.04; -fx-scale-y: 1.04; }
+.card-ingresso:pressed { -fx-scale-x: 0.98; -fx-scale-y: 0.98; }
+
+.titulo-redirecionamento { -fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #14365d; }
+
+.cartao-redirecionamento {
+    -fx-background-color: white;
+    -fx-background-radius: 32;
+    -fx-padding: 36 40 36 40;
+    -fx-effect: dropshadow(gaussian, rgba(20,54,93,0.25), 18, 0.2, 0, 8);
+}
+
+.tela-parque .progress-indicator { -fx-progress-color: #1f6fd1; }
+
+.tela-parque {
+    -fx-font-family: "Fredoka";
+    -fx-accent: #1f6fd1;
+    -fx-focus-color: #1f6fd1;
+    -fx-faint-focus-color: #1f6fd133;
+}
+
+.cabecalho-pagamento {
+    -fx-background-color: linear-gradient(to right, #3a9bff, #1f6fd1);
+    -fx-text-fill: white;
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-padding: 18 16 18 16;
+}
+
+.rolagem-parque,
+.rolagem-parque > .viewport { -fx-background-color: transparent; }
+.rolagem-parque { -fx-background-insets: 0; -fx-padding: 0; }
+
+.secao-parque > .title {
+    -fx-background-color: #dcebff;
+    -fx-background-radius: 16 16 0 0;
+}
+.secao-parque > .title > .text { -fx-fill: #14365d; -fx-font-weight: bold; -fx-font-size: 15px; }
+.secao-parque > .content {
+    -fx-background-color: white;
+    -fx-border-color: #bfe3ff;
+    -fx-border-radius: 0 0 16 16;
+    -fx-background-radius: 0 0 16 16;
+}
+.secao-parque .label,
+.secao-parque .check-box,
+.secao-parque .radio-button { -fx-text-fill: #14365d; }
+
+.tela-parque .text-field:focused { -fx-border-color: #1f6fd1; -fx-border-width: 2; }
+
+.valor-total { -fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #1f6fd1; }
+
+.rodape-acoes {
+    -fx-background-color: white;
+    -fx-effect: dropshadow(gaussian, rgba(20,54,93,0.15), 12, 0, 0, -3);
+}
+.botao-primario {
+    -fx-background-color: linear-gradient(to bottom right, #3a9bff, #1f6fd1);
+    -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px;
+    -fx-background-radius: 24; -fx-padding: 10 32 10 32; -fx-cursor: hand;
+}
+.botao-primario:hover    { -fx-scale-x: 1.04; -fx-scale-y: 1.04; }
+.botao-primario:disabled { -fx-opacity: 0.45; }
+.tela-parque #bntComeceAqui { -fx-font-size: 18px; }
+.tela-parque #bntAcesseAqui { -fx-font-size: 18px; }
+.botao-secundario {
+    -fx-background-color: white;
+    -fx-border-color: #1f6fd1; -fx-border-width: 2;
+    -fx-background-radius: 24; -fx-border-radius: 24;
+    -fx-text-fill: #14365d; -fx-font-size: 16px; -fx-padding: 10 28 10 28; -fx-cursor: hand;
+}
+.botao-secundario:hover { -fx-scale-x: 1.04; -fx-scale-y: 1.04; }
+
+.cartao-pagamento {
+    -fx-background-color: white;
+    -fx-background-radius: 28;
+    -fx-padding: 24 28 24 28;
+    -fx-effect: dropshadow(gaussian, rgba(20,54,93,0.25), 18, 0.2, 0, 8);
+}
+.valor-pagamento { -fx-font-size: 40px; -fx-font-weight: bold; -fx-text-fill: #1f6fd1; }
+
+.moldura-qr {
+    -fx-background-color: white;
+    -fx-border-color: #bfe3ff; -fx-border-width: 3;
+    -fx-border-radius: 20; -fx-background-radius: 20;
+    -fx-padding: 10;
+}
+.codigo-pagamento {
+    -fx-background-color: #f1f7ff;
+    -fx-background-radius: 14; -fx-border-radius: 14;
+    -fx-border-color: #bfe3ff;
+    -fx-text-fill: #14365d;
+    -fx-alignment: center;
+    -fx-font-size: 13px;
+}
+.tempo-pix {
+    -fx-background-color: #dcebff; -fx-background-radius: 20;
+    -fx-text-fill: #14365d; -fx-font-weight: bold;
+    -fx-padding: 4 16 4 16;
+}
+.status-pagamento { -fx-text-fill: #1f6fd1; -fx-text-alignment: center; }
+
+.botao-secundario:disabled { -fx-opacity: 0.45; }
+
+.grade-cartao .label { -fx-text-fill: #14365d; }
+
+.grade-cartao .text-field,
+.grade-cartao .password-field {
+    -fx-background-color: #f8fbff;
+    -fx-background-radius: 12; -fx-border-radius: 12;
+    -fx-border-color: #bfe3ff;
+    -fx-padding: 7 12 7 12;
+}
+.grade-cartao .text-field:focused,
+.grade-cartao .password-field:focused { -fx-border-color: #1f6fd1; -fx-border-width: 2; }
+
+.grade-cartao .combo-box-base {
+    -fx-background-color: #f8fbff;
+    -fx-background-radius: 12; -fx-border-radius: 12;
+    -fx-border-color: #bfe3ff;
+}
+
+.grade-boleto {
+    -fx-background-color: #f1f7ff;
+    -fx-background-radius: 16;
+}
+.grade-boleto .label { -fx-text-fill: #14365d; }
+
+.situacao-pagamento {
+    -fx-font-size: 17px;
+    -fx-text-fill: #14365d;
+    -fx-text-alignment: center;
+}
+
+.etiqueta-pedido {
+    -fx-background-color: #dcebff;
+    -fx-background-radius: 20;
+    -fx-text-fill: #14365d;
+    -fx-font-weight: bold;
+    -fx-padding: 3 14 3 14;
+}
+
+.erro-parque { -fx-text-fill: #c62828; -fx-font-weight: bold; -fx-text-alignment: center; }
+
+.cabecalho-parque {
+    -fx-background-color: linear-gradient(to right, #3a9bff, #1f6fd1);
+    -fx-effect: dropshadow(gaussian, rgba(20,54,93,0.22), 12, 0.15, 0, 4);
+}
+.cabecalho-parque .titulo-menu {
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(20,54,93,0.4), 8, 0.2, 1, 2);
+}
+.conteudo-acesso { -fx-background-color: transparent; }
+.cartao-formulario {
+    -fx-background-color: white;
+    -fx-background-radius: 24;
+    -fx-padding: 24;
+    -fx-effect: dropshadow(gaussian, rgba(20,54,93,0.2), 16, 0.18, 0, 6);
+}
+.cartao-formulario .text-field,
+.cartao-formulario .password-field {
+    -fx-background-color: #f8fbff;
+    -fx-background-radius: 12;
+    -fx-border-color: #bfe3ff;
+    -fx-border-radius: 12;
+    -fx-padding: 9 12 9 12;
+}
+.balao-parque {
+    -fx-background-color: white;
+    -fx-background-radius: 24;
+    -fx-border-color: #bfe3ff;
+    -fx-border-radius: 24;
+    -fx-padding: 14 18 14 18;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #14365d;
+    -fx-effect: dropshadow(gaussian, rgba(20,54,93,0.2), 12, 0.15, 0, 4);
+}
+
+.campo-data { -fx-font-size: 16px; }
+
+/* Calendário do DatePicker (janela separada, por isso sem o prefixo .tela-parque) */
+.date-picker-popup,
+.date-picker-popup * { -fx-font-family: "Fredoka"; }
+
+.date-picker-popup {
+    -fx-background-color: white;
+    -fx-background-radius: 16;
+    -fx-border-color: #bfe3ff;
+    -fx-border-radius: 16;
+    -fx-effect: dropshadow(gaussian, rgba(20,54,93,0.25), 16, 0.2, 0, 6);
+}
+.date-picker-popup .month-year-pane {
+    -fx-background-color: #dcebff;
+    -fx-background-radius: 16 16 0 0;
+}
+.date-picker-popup .day-cell { -fx-background-radius: 10; -fx-text-fill: #14365d; }
+.date-picker-popup .day-cell:hover    { -fx-background-color: #dcebff; }
+.date-picker-popup .day-cell:selected { -fx-background-color: #1f6fd1; -fx-text-fill: white; }
+
+.logo-parque {
+    -fx-effect: dropshadow(gaussian, rgba(20, 54, 93, 0.35), 8, 0.2, 0, 2);
+}
+
+/* ---- classes usadas por calendario, escala, fila, ingressos, atrações e controle (antes não existiam) ---- */
+.titulo-cabecalho    { -fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: white; }
+.subtitulo-cabecalho { -fx-font-size: 13px; -fx-text-fill: white; -fx-opacity: 0.92; }
+.status-cabecalho    { -fx-font-size: 12px; -fx-text-fill: white; }
+.mes-cabecalho       { -fx-font-size: 17px; -fx-font-weight: bold; -fx-text-fill: white; }
+.tabela-parque       { -fx-background-color: white; -fx-border-color: #d3dbe4; -fx-border-radius: 4; }
+
+/* ---- telas do administrador ---- */
+.rotulo-campo   { -fx-text-fill: #14365d; -fx-font-weight: bold; }
+.card-resumo    { -fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #d3dbe4; -fx-border-radius: 12; -fx-padding: 12 18 12 18; }
+.numero-resumo  { -fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1f6fd1; }
+.legenda-resumo { -fx-font-size: 12px; -fx-text-fill: #14365d; }

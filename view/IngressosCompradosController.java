@@ -1,0 +1,93 @@
+package com.ufrpe.parkadventure.view;
+
+import com.ufrpe.parkadventure.app.Contexto;
+
+import com.ufrpe.parkadventure.model.ingresso.Ingresso;
+import com.ufrpe.parkadventure.model.pessoa.Visitante;
+import com.ufrpe.parkadventure.view.Formatos;
+import com.ufrpe.parkadventure.ParkAdventure;
+
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class IngressosCompradosController {
+
+    @FXML private Label lblVisitante, lblResumo;
+    @FXML private TableView<LinhaIngresso> tabela;
+    @FXML private TableColumn<LinhaIngresso, String> colTipo, colData, colValidade, colValor, colSituacao;
+
+    private record LinhaIngresso(String tipo, String data, String validade, String valor, String situacao) { }
+
+    @FXML
+    private void initialize() {
+        colTipo.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().tipo()));
+        colData.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().data()));
+        colValidade.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().validade()));
+        colValor.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().valor()));
+        colSituacao.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().situacao()));
+        tabela.setPlaceholder(new Label("Nenhum ingresso comprado ainda."));
+
+        Visitante visitante = Contexto.SESSAO.getVisitanteAtual();
+        if (visitante == null) {
+            lblVisitante.setText("Faça login para ver seus ingressos.");
+            lblResumo.setText("");
+            return;
+        }
+        lblVisitante.setText("Ingressos de " + visitante.getNome());
+
+        List<Ingresso> ingressos = new ArrayList<>(Contexto.SERVICO_INGRESSO.listarPorVisitante(visitante.getNome()));
+        Collections.reverse(ingressos);
+
+        LocalDate hoje = LocalDate.now();
+        double total = 0;
+        List<LinhaIngresso> linhas = new ArrayList<>();
+        for (Ingresso ingresso : ingressos) {
+            total += ingresso.getValor();
+            linhas.add(new LinhaIngresso(
+                    Formatos.tipoIngresso(ingresso.getTipoIngresso()),
+                    Formatos.data(ingresso.getDataCompra()),
+                    Formatos.data(ingresso.getDataValidade()),
+                    Formatos.moeda(ingresso.getValor()),
+                    ingresso.valido(hoje) ? "Válido" : "Expirado"));
+        }
+        tabela.setItems(FXCollections.observableArrayList(linhas));
+        lblResumo.setText(ingressos.size() + (ingressos.size() == 1 ? " ingresso" : " ingressos")
+                + "  •  total gasto: " + Formatos.moeda(total));
+    }
+
+    @FXML
+    private void onVerFilaVirtual() {
+        ir("view/fila-virtual.fxml");
+    }
+
+    @FXML
+    private void onComprarIngresso() {
+        ir("view/compra-ingressos.fxml");
+    }
+
+    @FXML 
+    private void onVoltar() {
+        try {
+            ParkAdventure.voltar();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void ir(String fxml) {
+        try {
+            ParkAdventure.proximaCena(fxml);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}

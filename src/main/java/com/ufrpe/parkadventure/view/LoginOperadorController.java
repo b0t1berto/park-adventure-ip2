@@ -26,7 +26,7 @@ public class LoginOperadorController {
     private void initialize() {
         Operador operador = Contexto.SESSAO.getOperadorAtual();
         if (operador != null && lblBoasVindas != null) {
-            lblBoasVindas.setText("Olá, " + operador.getNome() + "! Menu de Operador");
+            lblBoasVindas.setText("Olá, " + operador.getNome() + ", Bem-vindo ao Menu de Operador");
         }
     }
 
