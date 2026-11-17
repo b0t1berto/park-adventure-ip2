@@ -49,6 +49,13 @@ public class ServicoIngresso {
     }
 
     /**
+     * Quantidade de diárias válidas para visitar o parque em uma data (dia da visita).
+     */
+    public int consultarQuantidadeParaVisita(LocalDate data) {
+        return repositorio.consultarQuantidadeParaVisita(data);
+    }
+
+    /**
      * Remove um ingresso.
      */
     public boolean remover(Ingresso ingresso) {

@@ -25,6 +25,7 @@ public final class Contexto {
     public static final ServicoVisitante SERVICO_VISITANTE = new ServicoVisitante(repositorioVisitante);
     public static final ServicoIngresso SERVICO_INGRESSO = new ServicoIngresso(repositorioIngresso);
     public static final ServicoEscala SERVICO_ESCALA = new ServicoEscala(repositorioEscala);
+    public static final ServicoCapacidade SERVICO_CAPACIDADE = new ServicoCapacidade(SERVICO_ATRACAO, SERVICO_INGRESSO);
 
     // --- Serviços compostos ---
     public static final ServicoAcesso SERVICO_ACESSO = new ServicoAcesso(SERVICO_ATRACAO, SERVICO_INGRESSO);

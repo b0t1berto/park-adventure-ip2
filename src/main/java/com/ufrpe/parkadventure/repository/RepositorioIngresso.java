@@ -2,6 +2,7 @@ package com.ufrpe.parkadventure.repository;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import com.ufrpe.parkadventure.model.ingresso.Ingresso;
+import com.ufrpe.parkadventure.model.ingresso.TipoIngresso;
 
 public class RepositorioIngresso {
     private static RepositorioIngresso instancia;
@@ -49,6 +50,19 @@ public class RepositorioIngresso {
         int total = 0;
         for (Ingresso ingresso : ingressos) {
             if (ingresso.getDataCompra().equals(data)) {
+                total++;
+            }
+        }
+        return total;
+    }
+
+    // Quantidade de diárias que dão entrada no parque na data informada (dia da VISITA, não o da compra).
+    // O passe anual não entra na conta: ele não é vendido para um dia específico.
+    public int consultarQuantidadeParaVisita(LocalDate data) {
+        int total = 0;
+        for (Ingresso ingresso : ingressos) {
+            if (ingresso.getTipoIngresso() == TipoIngresso.DIARIA
+                    && data.equals(ingresso.getDataValidade())) {
                 total++;
             }
         }

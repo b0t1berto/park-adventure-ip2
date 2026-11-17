@@ -30,7 +30,11 @@ public class PagamentoConfirmadoController {
         lblForma.setText(forma);
         lblValor.setText(String.format("R$ %.2f", valor));
         lblSituacao.setText(situacao);
-        PedidoAtual.concluir(forma, valor);
+        if (PedidoAtual.concluir(forma, valor) == null && PedidoAtual.ultimaTentativaEsgotada()) {
+            // a capacidade do dia foi atingida entre o pagamento e a emissão: o ingresso não é emitido
+            lblSituacao.setText("Capacidade esgotada: ingresso não emitido");
+            btnReservar.setDisable(true);
+        }
     }
 
     // Com o ingresso emitido já dá para reservar o fura-fila

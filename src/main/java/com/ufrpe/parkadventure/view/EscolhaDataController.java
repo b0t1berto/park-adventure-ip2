@@ -1,5 +1,6 @@
 package com.ufrpe.parkadventure.view;
 
+import com.ufrpe.parkadventure.app.Contexto;
 import com.ufrpe.parkadventure.app.PedidoAtual;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -27,9 +28,18 @@ public class EscolhaDataController {
             @Override
             public void updateItem(LocalDate data, boolean vazio) {
                 super.updateItem(data, vazio);
+                // as células são reaproveitadas ao trocar de mês: limpa o que a data anterior deixou
+                setDisable(false);
+                setStyle("");
+                setTooltip(null);
                 if (data != null && (data.isBefore(hoje.plusDays(1)) || data.isAfter(limite))) {
                     setDisable(true);
                     setStyle("-fx-background-color: #eeeeee; -fx-text-fill: #aaaaaa;");
+                } else if (data != null && !vazio && Contexto.SERVICO_CAPACIDADE.estaEsgotado(data)) {
+                    // capacidade do dia atingida: não dá para escolher
+                    setDisable(true);
+                    setStyle("-fx-background-color: #ffd6d6; -fx-text-fill: #b3261e;");
+                    setTooltip(new Tooltip("Esgotado: capacidade máxima do parque atingida"));
                 }
             }
         });
@@ -49,6 +59,10 @@ public class EscolhaDataController {
         LocalDate data = dpDataVisita.getValue();
         if (data == null || !data.isAfter(LocalDate.now())) {
             lblErro.setText("Escolha uma data a partir de amanhã.");
+            return;
+        }
+        if (Contexto.SERVICO_CAPACIDADE.estaEsgotado(data)) {
+            lblErro.setText(Contexto.SERVICO_CAPACIDADE.mensagemEsgotado(data));
             return;
         }
         try {

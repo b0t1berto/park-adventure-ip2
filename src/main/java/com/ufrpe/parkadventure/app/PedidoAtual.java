@@ -17,6 +17,7 @@ public final class PedidoAtual {
 
     private static LocalDate dataVisita = LocalDate.now();
     private static Ingresso ultimoIngresso;
+    private static boolean esgotado;
 
     private static boolean temComprador;
     private static String nome;
@@ -31,6 +32,11 @@ public final class PedidoAtual {
 
     public static Ingresso getUltimoIngresso() {
         return ultimoIngresso;
+    }
+
+    // true se a última tentativa de concluir falhou por capacidade esgotada
+    public static boolean ultimaTentativaEsgotada() {
+        return esgotado;
     }
 
     public static LocalDate getDataVisita() {
@@ -62,6 +68,15 @@ public final class PedidoAtual {
             return null;
         }
 
+        LocalDate hoje = LocalDate.now();
+        LocalDate validade = dataVisita.isBefore(hoje) ? hoje : dataVisita;
+        // última barreira (antes de mexer no perfil): com a capacidade do dia atingida, o ingresso não é emitido
+        if (Contexto.SERVICO_CAPACIDADE.estaEsgotado(validade)) {
+            esgotado = true;
+            return null;
+        }
+        esgotado = false;
+
         // O ingresso é sempre do visitante que está logado. Antes o formulário buscava/criava um visitante
         // pelo NOME DIGITADO: nome diferente (ou com outra grafia) virava outra conta e trocava o perfil da sessão.
         Visitante visitante = Contexto.SESSAO.getVisitanteAtual();
@@ -90,8 +105,6 @@ public final class PedidoAtual {
             visitante.setResponsavel(responsavel);
         }
 
-        LocalDate hoje = LocalDate.now();
-        LocalDate validade = dataVisita.isBefore(hoje) ? hoje : dataVisita;
         Ingresso ingresso = new Ingresso(visitante, TipoIngresso.DIARIA, hoje, validade, valor);
         ingresso.setFormaPagamento(formaPagamento);
         Contexto.SERVICO_INGRESSO.cadastrar(ingresso);

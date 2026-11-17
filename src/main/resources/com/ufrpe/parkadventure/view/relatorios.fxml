@@ -34,6 +34,11 @@
                   <fx:include fx:id="geral" source="relatorio-geral.fxml" />
                </content>
             </Tab>
+            <Tab fx:id="tabDia" text="Dia">
+               <content>
+                  <fx:include fx:id="dia" source="relatorio-dia.fxml" />
+               </content>
+            </Tab>
             <Tab fx:id="tabIngresso" text="Ingresso">
                <content>
                   <fx:include fx:id="ingresso" source="relatorio-ingresso.fxml" />

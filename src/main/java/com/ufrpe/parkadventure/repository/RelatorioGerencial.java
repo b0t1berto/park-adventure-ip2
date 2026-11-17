@@ -75,6 +75,29 @@ public class RelatorioGerencial {
         }
     }
 
+    // Aba "Dia": um ingresso que tem relação com o dia (comprado nele e/ou válido para a visita nele)
+    public record LinhaDia(String visitante, TipoIngresso tipo, LocalDate compra, LocalDate validade,
+                           double valor, String formaPagamento, boolean compradoNoDia, boolean visitaNoDia) {
+        public String relacao() {
+            if (compradoNoDia && visitaNoDia) return "Compra e visita";
+            return compradoNoDia ? "Comprado neste dia" : "Visita neste dia";
+        }
+    }
+
+    public record RelatorioDia(LocalDate dia, List<LinhaDia> ingressos,
+                               int vendidosNoDia, double receitaNoDia,
+                               int visitasPrevistas, int capacidadeMaxima,
+                               int reservasFuraFila, int operadoresEscalados) {
+        public int vagasRestantes() { return Math.max(0, capacidadeMaxima - visitasPrevistas); }
+
+        // de 0.0 a 1.0 (serve direto no ProgressBar)
+        public double fracaoOcupacao() {
+            return capacidadeMaxima == 0 ? 1 : Math.min(1.0, (double) visitasPrevistas / capacidadeMaxima);
+        }
+
+        public boolean esgotado() { return visitasPrevistas >= capacidadeMaxima; }
+    }
+
     // Aba "Atração"
     public record LinhaAtracao(String nome, String tipo, String operador, int capacidade, int ocupacao,
                                int reservas, int usadas, int noShows, int canceladas, String situacao) {
@@ -191,6 +214,44 @@ public class RelatorioGerencial {
             }
         }
         return menor;
+    }
+
+    // =============================================
+    // || RELATÓRIO POR DIA
+    // =============================================
+    // 'capacidadeMaxima' = capacidade do parque no dia (soma das atrações x 5); vem por parâmetro porque
+    // quem calcula essa regra é o ServicoCapacidade.
+    public RelatorioDia relatorioDia(LocalDate dia, int capacidadeMaxima) {
+        List<LinhaDia> linhas = new ArrayList<>();
+        int vendidos = 0;
+        double receita = 0;
+
+        for (Ingresso ingresso : ingressos.listarTodos()) {
+            boolean comprado = dia.equals(ingresso.getDataCompra());
+            boolean visita = ingresso.getTipoIngresso() == TipoIngresso.DIARIA
+                    && dia.equals(ingresso.getDataValidade());
+            if (!comprado && !visita) {
+                continue;
+            }
+            if (comprado) {
+                vendidos++;
+                receita += ingresso.getValor();
+            }
+            String nome = ingresso.getVisitante() == null || ingresso.getVisitante().getNome() == null
+                    ? "—" : ingresso.getVisitante().getNome();
+            linhas.add(new LinhaDia(nome, ingresso.getTipoIngresso(), ingresso.getDataCompra(),
+                    ingresso.getDataValidade(), ingresso.getValor(), ingresso.getFormaPagamento(),
+                    comprado, visita));
+        }
+        linhas.sort(Comparator.comparing(LinhaDia::compra).thenComparing(LinhaDia::visitante));
+
+        int reservas = 0;
+        for (Atracao atracao : atracoes.getAtracoes()) {
+            reservas += atracao.getFilaVirtual().totalAtivas(dia);
+        }
+        return new RelatorioDia(dia, linhas, vendidos, receita,
+                ingressos.consultarQuantidadeParaVisita(dia), capacidadeMaxima,
+                reservas, escala.operadoresDoDia(dia).size());
     }
 
     // =============================================

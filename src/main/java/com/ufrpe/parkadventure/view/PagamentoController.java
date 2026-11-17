@@ -138,6 +138,16 @@ public class PagamentoController {
             return;
         }
 
+        // confere a capacidade do dia da visita ANTES de ir para o pagamento
+        LocalDate diaVisita = PedidoAtual.getDataVisita();
+        if (Contexto.SERVICO_CAPACIDADE.estaEsgotado(diaVisita)) {
+            Alert esgotado = new Alert(Alert.AlertType.WARNING, Contexto.SERVICO_CAPACIDADE.mensagemEsgotado(diaVisita));
+            esgotado.setHeaderText("Ingressos esgotados");
+            esgotado.initOwner(btnPagar.getScene().getWindow());
+            esgotado.showAndWait();
+            return;
+        }
+
         boolean menor = paneResponsavel.isVisible();
         PedidoAtual.definirComprador(
                 txtNome.getText(), txtCpf.getText(), dpNascimento.getValue(), spAltura.getValue(),

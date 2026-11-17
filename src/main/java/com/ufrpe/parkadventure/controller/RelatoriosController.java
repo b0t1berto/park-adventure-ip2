@@ -26,7 +26,7 @@ import java.util.List;
 public class RelatoriosController {
 
     @FXML private TabPane tabPane;
-    @FXML private Tab tabGeral, tabIngresso, tabLucro, tabAtracao, tabListaIngressos;
+    @FXML private Tab tabGeral, tabDia, tabIngresso, tabLucro, tabAtracao, tabListaIngressos;
     @FXML private TextField txtBuscaIngresso;
     @FXML private DatePicker dpDataEmissao;
     @FXML private Label lblTotalIngressos, lblQtdData;
@@ -36,6 +36,7 @@ public class RelatoriosController {
 
     // Injetados pelo fx:include: fx:id="geral" -> geralController, e assim por diante
     @FXML private RelatorioGeralController geralController;
+    @FXML private RelatorioDiaController diaController;
     @FXML private RelatorioIngressoController ingressoController;
     @FXML private RelatorioLucroController lucroController;
     @FXML private RelatorioAtracaoController atracaoController;
@@ -64,6 +65,7 @@ public class RelatoriosController {
 
     private void atualizar(Tab aba) {
         if (aba == tabGeral) geralController.atualizar();
+        else if (aba == tabDia) diaController.atualizar();
         else if (aba == tabIngresso) ingressoController.atualizar();
         else if (aba == tabLucro) lucroController.atualizar();
         else if (aba == tabAtracao) atracaoController.atualizar();
