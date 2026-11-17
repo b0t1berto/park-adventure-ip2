@@ -1,5 +1,5 @@
 .tela-parque {
-    -fx-background-color: linear-gradient(to bottom, #bfe3ff, #eaf6ff);
+    -fx-background-color: linear-gradient(to bottom, #1f6fd1, #3a9bff);
 }
 .tela-parque .label, .tela-parque .button { -fx-font-family: "Fredoka"; }
 
@@ -180,6 +180,21 @@
 .cabecalho-parque .titulo-menu {
     -fx-text-fill: white;
     -fx-effect: dropshadow(gaussian, rgba(20,54,93,0.4), 8, 0.2, 1, 2);
+}
+.menu-perfil {
+    -fx-background-color: transparent;
+    -fx-padding: 4;
+    -fx-cursor: hand;
+}
+.menu-opcao-perfil {
+    -fx-padding: 7 14 7 14;
+}
+.menu-opcao-perfil .label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #14365d;
+}
+.menu-opcao-perfil:focused {
+    -fx-background-color: #dcebff;
 }
 .conteudo-acesso { -fx-background-color: transparent; }
 .cartao-formulario {

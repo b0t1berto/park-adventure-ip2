@@ -24,7 +24,7 @@
                <children>
                   <StackPane prefHeight="125.0" prefWidth="200.0">
                      <children>
-                        <ImageView fitHeight="203.0" fitWidth="231.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="185.0" fitWidth="196.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@imagens/logo.png" />
                            </image>
@@ -70,19 +70,25 @@
                <StackPane.margin>
                   <Insets />
                </StackPane.margin>
+               <effect>
+                  <DropShadow />
+               </effect>
             </HBox>
          </children>
          <effect>
             <DropShadow />
          </effect>
+         <BorderPane.margin>
+            <Insets bottom="-49.0" />
+         </BorderPane.margin>
       </StackPane>
    </top>
    <center>
-      <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="700.0" fitWidth="1600.0" pickOnBounds="true" translateY="50.0">
+            <ImageView fitHeight="700.0" fitWidth="1600.0" opacity="0.51" pickOnBounds="true" translateY="50.0">
                <image>
-                  <Image url="@imagens/upscalemedia-transformed%20(1).png" />
+                  <Image url="@imagens/background.jpg" />
                </image>
                <effect>
                   <BoxBlur>
@@ -100,7 +106,7 @@
                <children>
       <Label fx:id="lblReservar" maxWidth="363.0" prefHeight="80.0" prefWidth="363.0" style="-fx-border-radius: 6; -fx-padding: 8; -fx-background-color: #ffffff;" styleClass="cartao-pagamento" text="Que tal reservar o acesso a uma Experiência Inédita?" textAlignment="CENTER" wrapText="true">
                       <VBox.margin>
-                         <Insets bottom="5.0" />
+                         <Insets bottom="5.0" top="50.0" />
                       </VBox.margin>
                    </Label>
       <Button fx:id="bntComeceAqui" mnemonicParsing="false" onAction="#onCriarConta" prefHeight="60.0" prefWidth="250.0" styleClass="botao-primario" text="Comece por Aqui" textFill="WHITE">

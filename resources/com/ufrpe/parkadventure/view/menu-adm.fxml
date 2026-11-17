@@ -17,26 +17,26 @@
 
 <BorderPane minHeight="480.0" minWidth="600.0" prefHeight="480.0" prefWidth="600.0" styleClass="tela-parque" stylesheets="@tema-parque.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.view.LoginAdmController">
    <top>
-      <StackPane prefHeight="68.0" prefWidth="600.0" styleClass="cabecalho-pagamento" BorderPane.alignment="CENTER">
+      <StackPane prefHeight="88.0" prefWidth="600.0" style="-fx-background-color: #5ba6b9;" BorderPane.alignment="CENTER">
          <effect>
             <DropShadow offsetY="3.0" />
          </effect>
          <children>
-            <HBox alignment="CENTER_LEFT" spacing="12.0">
+            <HBox alignment="CENTER_LEFT" spacing="12.0" styleClass="cabecalho-parque">
                <padding>
-                  <Insets bottom="8.0" left="16.0" right="16.0" top="8.0" />
+                  <Insets bottom="8.0" left="32.0" right="16.0" top="8.0" />
                </padding>
                <children>
-                  <Label fx:id="lblBoasVindas" styleClass="titulo-cabecalho" text="Bem-vindo ao menu de administrador!" wrapText="true" />
+                  <Label fx:id="lblBoasVindas" styleClass="titulo-cabecalho" text="Bem-vindo ao menu de Administrador!" wrapText="true" />
                   <Region HBox.hgrow="ALWAYS" />
-                  <MenuButton mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand;">
+                  <MenuButton mnemonicParsing="false" styleClass="menu-perfil">
                     <items>
-                      <MenuItem mnemonicParsing="false" text="Meu Perfil" />
-                      <MenuItem mnemonicParsing="false" text="Configurações" />
-                      <MenuItem fx:id="menuVoltar" mnemonicParsing="false" onAction="#onVoltar" text="Sair" />
+                      <MenuItem mnemonicParsing="false" styleClass="menu-opcao-perfil" text="Meu Perfil" />
+                      <MenuItem mnemonicParsing="false" styleClass="menu-opcao-perfil" text="Configurações" />
+                      <MenuItem fx:id="menuVoltar" mnemonicParsing="false" onAction="#onVoltar" styleClass="menu-opcao-perfil" text="Sair" />
                     </items>
                      <graphic>
-                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@imagens/unnamed.jpg" />
                            </image>
@@ -49,7 +49,7 @@
       </StackPane>
    </top>
    <center>
-      <VBox alignment="CENTER" maxWidth="500.0" prefHeight="200.0" prefWidth="100.0" spacing="25.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" maxWidth="500.0" prefHeight="200.0" prefWidth="100.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
             <Button mnemonicParsing="false" onAction="#onRelatorios" prefHeight="45.0" prefWidth="250.0" styleClass="botao-primario" text="Relatórios do Parque" textFill="WHITE">
                <font>

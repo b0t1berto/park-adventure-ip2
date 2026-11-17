@@ -4,7 +4,6 @@ import com.ufrpe.parkadventure.app.Contexto;
 import com.ufrpe.parkadventure.app.TurnoDoOperador;
 
 import com.ufrpe.parkadventure.ParkAdventure;
-import com.ufrpe.parkadventure.model.pessoa.Operador;
 
 import java.time.LocalDateTime;
 
@@ -21,14 +20,6 @@ public class LoginOperadorController {
 
     @FXML
     Label lblBoasVindas;
-
-    @FXML
-    private void initialize() {
-        Operador operador = Contexto.SESSAO.getOperadorAtual();
-        if (operador != null && lblBoasVindas != null) {
-            lblBoasVindas.setText("Olá, " + operador.getNome() + ", Bem-vindo ao Menu de Operador");
-        }
-    }
 
     @FXML
     void onControleAtracao(ActionEvent event) {
