@@ -15,13 +15,10 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Period;
 
 public class PagamentoController {
-
-    private Scene cenaAnterior;
 
     @FXML private Label lblItem, lblDataVisita, lblQuantidade, lblTotal;
 

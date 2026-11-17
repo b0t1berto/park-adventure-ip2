@@ -8,7 +8,6 @@ import com.ufrpe.parkadventure.model.pessoa.Operador;
 import com.ufrpe.parkadventure.repository.Persistencia;
 import com.ufrpe.parkadventure.service.ServicoAutenticacao;
 import com.ufrpe.parkadventure.service.ServicoGeradorEscala;
-import com.ufrpe.parkadventure.view.Aviso;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;

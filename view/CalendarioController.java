@@ -6,7 +6,6 @@ import com.ufrpe.parkadventure.ParkAdventure;
 import com.ufrpe.parkadventure.view.controles.Tarefas;
 import com.ufrpe.parkadventure.model.atracao.Atracao;
 import com.ufrpe.parkadventure.model.pessoa.Operador;
-import com.ufrpe.parkadventure.view.Formatos;
 
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;

@@ -4,7 +4,6 @@ import com.ufrpe.parkadventure.app.Contexto;
 
 import com.ufrpe.parkadventure.model.ingresso.Ingresso;
 import com.ufrpe.parkadventure.model.pessoa.Visitante;
-import com.ufrpe.parkadventure.view.Formatos;
 import com.ufrpe.parkadventure.ParkAdventure;
 
 import javafx.beans.property.SimpleStringProperty;

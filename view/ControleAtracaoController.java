@@ -16,7 +16,6 @@ import com.ufrpe.parkadventure.model.atracao.FilaVirtual;
 import com.ufrpe.parkadventure.model.atracao.Reserva;
 import com.ufrpe.parkadventure.model.pessoa.Operador;
 import com.ufrpe.parkadventure.repository.Persistencia;
-import com.ufrpe.parkadventure.view.Aviso;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;

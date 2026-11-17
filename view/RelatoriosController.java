@@ -9,8 +9,6 @@ import com.ufrpe.parkadventure.model.ingresso.Ingresso;
 import com.ufrpe.parkadventure.repository.Relatorio;
 import com.ufrpe.parkadventure.repository.Relatorio.LinhaVenda;
 import com.ufrpe.parkadventure.repository.Relatorio.ResumoReceita;
-import com.ufrpe.parkadventure.view.Aviso;
-import com.ufrpe.parkadventure.view.Formatos;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;

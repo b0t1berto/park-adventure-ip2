@@ -6,7 +6,6 @@ import com.ufrpe.parkadventure.model.atracao.Atracao;
 import com.ufrpe.parkadventure.model.atracao.FilaVirtual;
 import com.ufrpe.parkadventure.model.atracao.Infantil;
 import com.ufrpe.parkadventure.model.atracao.Radical;
-import com.ufrpe.parkadventure.model.ingresso.Ingresso;
 import com.ufrpe.parkadventure.model.ingresso.TipoIngresso;
 import com.ufrpe.parkadventure.model.pessoa.Operador;
 import com.ufrpe.parkadventure.model.pessoa.Responsavel;
