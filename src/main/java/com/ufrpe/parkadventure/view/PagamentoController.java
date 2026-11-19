@@ -4,6 +4,7 @@ import com.ufrpe.parkadventure.app.Contexto;
 import com.ufrpe.parkadventure.app.PedidoAtual;
 
 import com.ufrpe.parkadventure.ParkAdventure;
+import com.ufrpe.parkadventure.model.ingresso.TipoIngresso;
 import com.ufrpe.parkadventure.model.pessoa.Responsavel;
 import com.ufrpe.parkadventure.model.pessoa.Visitante;
 import javafx.fxml.FXML;
@@ -68,7 +69,16 @@ public class PagamentoController {
         btnPagar.disableProperty().bind(
                 grupoPagamento.selectedToggleProperty().isNull());
 
+        preencherResumo();
         preencherComDadosDaConta();
+    }
+
+    private void preencherResumo() {
+        TipoIngresso tipo = PedidoAtual.getTipoIngresso();
+        if (tipo == TipoIngresso.PASSE_ANUAL) {
+            double preco = Contexto.SERVICO_EMISSAO_INGRESSO.calcularValor(TipoIngresso.PASSE_ANUAL, false);
+            setResumo("Passe Anual", PedidoAtual.getDataVisita(), 1, preco);
+        }
     }
 
     // A conta (usuário e senha) já identifica quem compra. Nome e CPF são informados na PRIMEIRA compra; depois

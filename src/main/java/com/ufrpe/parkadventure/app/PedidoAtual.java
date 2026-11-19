@@ -16,6 +16,7 @@ public final class PedidoAtual {
     private static final DateTimeFormatter DATA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     private static LocalDate dataVisita = LocalDate.now();
+    private static TipoIngresso tipoIngresso = TipoIngresso.DIARIA;
     private static Ingresso ultimoIngresso;
     private static boolean esgotado;
 
@@ -45,6 +46,14 @@ public final class PedidoAtual {
 
     public static void setDataVisita(LocalDate data) {
         dataVisita = (data == null) ? LocalDate.now() : data;
+    }
+
+    public static TipoIngresso getTipoIngresso() {
+        return tipoIngresso;
+    }
+
+    public static void setTipoIngresso(TipoIngresso tipo) {
+        tipoIngresso = tipo;
     }
 
     public static void definirComprador(String nome, String cpf, LocalDate nascimento, int altura,
@@ -105,7 +114,7 @@ public final class PedidoAtual {
             visitante.setResponsavel(responsavel);
         }
 
-        Ingresso ingresso = new Ingresso(visitante, TipoIngresso.DIARIA, hoje, validade, valor);
+        Ingresso ingresso = new Ingresso(visitante, tipoIngresso, hoje, validade, valor);
         ingresso.setFormaPagamento(formaPagamento);
         Contexto.SERVICO_INGRESSO.cadastrar(ingresso);
 
@@ -127,5 +136,6 @@ public final class PedidoAtual {
         cpfResponsavel = null;
         contatoEmergencia = null;
         dataVisita = LocalDate.now();
+        tipoIngresso = TipoIngresso.DIARIA;
     }
 }

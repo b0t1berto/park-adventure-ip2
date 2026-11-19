@@ -6,6 +6,7 @@ import com.ufrpe.parkadventure.model.ingresso.TipoIngresso;
 import com.ufrpe.parkadventure.model.pessoa.Visitante;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 /**
  * Serviço de emissão de ingressos: cálculo de preço com acréscimo em feriados
@@ -72,5 +73,29 @@ public class ServicoEmissaoIngresso {
         Ingresso ingresso = new Ingresso(visitante, tipo, dataCompra, validade, calcularValor(tipo, feriado));
         servicoIngresso.cadastrar(ingresso);
         return ingresso;
+    }
+
+    /**
+     * Verifica se um visitante já comprou um passe anual no mês corrente.
+     * O passe anual permite no máximo 1 compra por mês (12 entradas no total).
+     * Retorna true se o visitante pode comprar, false se já comprou neste mês.
+     */
+    public boolean podeComprarPasseAnual(Visitante visitante) {
+        if (visitante == null) {
+            return true;
+        }
+        LocalDate agora = LocalDate.now();
+        int anoAtual = agora.getYear();
+        int mesAtual = agora.getMonthValue();
+        ArrayList<Ingresso> ingressos = servicoIngresso.listarPorVisitante(visitante.getNome());
+        for (Ingresso ingresso : ingressos) {
+            if (ingresso.getTipoIngresso() == TipoIngresso.PASSE_ANUAL) {
+                LocalDate dataCompra = ingresso.getDataCompra();
+                if (dataCompra.getYear() == anoAtual && dataCompra.getMonthValue() == mesAtual) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

@@ -37,23 +37,32 @@
       </VBox>
    </top>
    <center>
-      <HBox alignment="CENTER" maxWidth="720.0" prefHeight="100.0" prefWidth="200.0" spacing="32.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" spacing="32.0" BorderPane.alignment="CENTER">
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding>
          <children>
-            <Button mnemonicParsing="false" onAction="#onIngressoInstantaneo" prefHeight="170.0" prefWidth="300.0" text="Ingresso instantâneo" textAlignment="CENTER" wrapText="true">
+            <HBox alignment="CENTER" maxWidth="720.0" spacing="32.0">
+               <children>
+                  <Button fx:id="btnInstantaneo" mnemonicParsing="false" onAction="#onIngressoInstantaneo" prefHeight="170.0" prefWidth="300.0" text="Ingresso instantâneo" textAlignment="CENTER" wrapText="true">
+                     <styleClass>
+                        <String fx:value="card-ingresso" />
+                        <String fx:value="card-instantaneo" />
+                     </styleClass></Button>
+                  <Button fx:id="btnProgramado" mnemonicParsing="false" onAction="#onIngressoProgramado" prefHeight="170.0" prefWidth="300.0" text="Ingresso programado" textAlignment="CENTER" wrapText="true">
+                     <styleClass>
+                        <String fx:value="card-ingresso" />
+                        <String fx:value="card-programado" />
+                     </styleClass></Button>
+               </children>
+            </HBox>
+            <Button fx:id="btnPasseAnual" mnemonicParsing="false" onAction="#onPasseAnual" prefHeight="170.0" prefWidth="634.0" text="Passe Anual — acesso a todas as atrações por 1 ano" textAlignment="CENTER" wrapText="true">
                <styleClass>
                   <String fx:value="card-ingresso" />
-                  <String fx:value="card-instantaneo" />
-               </styleClass></Button>
-            <Button mnemonicParsing="false" onAction="#onIngressoProgramado" prefHeight="170.0" prefWidth="300.0" text="Ingresso programado" textAlignment="CENTER" wrapText="true">
-               <styleClass>
-                  <String fx:value="card-ingresso" />
-                  <String fx:value="card-programado" />
+                  <String fx:value="card-anual" />
                </styleClass></Button>
          </children>
-      </HBox>
+      </VBox>
    </center>
    <bottom>
       <Label alignment="CENTER" styleClass="rodape-parque" text="Menores de 18 anos entram acompanhados de um responsável" BorderPane.alignment="CENTER">
