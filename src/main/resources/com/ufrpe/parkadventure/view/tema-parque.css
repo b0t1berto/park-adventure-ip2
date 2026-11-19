@@ -243,3 +243,25 @@
     -fx-text-fill: #14365d;
     -fx-effect: dropshadow(gaussian, rgba(20,54,93,0.2), 12, 0.15, 0, 4);
 }
+
+
+/* ===== Telas de acesso: menu, login e criar conta (estilo da antiga pasta "view" de fora) =====
+   Só afeta telas que tenham a classe "tela-acesso"; as demais telas continuam como estavam. */
+.tela-acesso {
+    -fx-background-color: linear-gradient(to bottom, #1f6fd1, #3a9bff);
+}
+.tela-acesso .titulo-menu { -fx-font-size: 64px; -fx-font-weight: bold; }
+.tela-acesso.tela-menu .titulo-menu { -fx-font-size: 90px; }
+.tela-acesso #lblDivertir { -fx-font-size: 22px; }
+.tela-acesso #lblUsuario,
+.tela-acesso #lblSenha { -fx-font-size: 20px; }
+.tela-acesso #lblMensagemDois,
+.tela-acesso #lblBemVindoDeVolta { -fx-font-size: 34px; }
+
+/* imagem de fundo do menu: cobre toda a área, não importa o tamanho da janela */
+.fundo-menu {
+    -fx-background-image: url("imagens/background.jpg");
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+    -fx-background-size: cover;
+}
