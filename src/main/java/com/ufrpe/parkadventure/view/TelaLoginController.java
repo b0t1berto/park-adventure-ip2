@@ -32,10 +32,20 @@ public class TelaLoginController {
 
     @FXML
     private void initialize() {
+        // A área do personagem não pode "empurrar" o tamanho da tela: o tamanho dela
+        // vem só do GridPane.
+        // Sem isso, a imagem (muito grande) fazia a janela crescer ao
+        // abrir/redimensionar.
+        areaPersonagem.setMinSize(0, 0);
+        areaPersonagem.setPrefSize(0, 0);
+
+        // Mínimo 1: ImageView com fitWidth/fitHeight <= 0 usa o tamanho ORIGINAL da
+        // imagem (era o bug,
+        // pois no carregamento a área ainda tem tamanho 0).
         var tamanho = Bindings.createDoubleBinding(
-                () -> Math.max(0, Math.min(
+                () -> Math.max(1, Math.min(
                         areaPersonagem.getWidth() * 0.98,
-                        areaPersonagem.getHeight() * 0.78)),
+                        Math.min(areaPersonagem.getHeight() * 0.78, areaPersonagem.getHeight() - 120))),
                 areaPersonagem.widthProperty(), areaPersonagem.heightProperty());
         imgPersonagem.fitWidthProperty().bind(tamanho);
         imgPersonagem.fitHeightProperty().bind(tamanho);

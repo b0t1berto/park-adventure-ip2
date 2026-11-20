@@ -42,10 +42,20 @@ public class TelaCriarContaController {
 
     @FXML
     private void initialize() {
+        // A área do personagem não pode "empurrar" o tamanho da tela: o tamanho dela
+        // vem só do GridPane.
+        // Sem isso, a imagem (muito grande) fazia a janela crescer ao
+        // abrir/redimensionar.
+        areaPersonagem.setMinSize(0, 0);
+        areaPersonagem.setPrefSize(0, 0);
+
+        // Mínimo 1: ImageView com fitWidth/fitHeight <= 0 usa o tamanho ORIGINAL da
+        // imagem (era o bug,
+        // pois no carregamento a área ainda tem tamanho 0).
         var tamanho = Bindings.createDoubleBinding(
-                () -> Math.max(0, Math.min(
+                () -> Math.max(1, Math.min(
                         areaPersonagem.getWidth() * 0.98,
-                        areaPersonagem.getHeight() * 0.78)),
+                        Math.min(areaPersonagem.getHeight() * 0.78, areaPersonagem.getHeight() - 120))),
                 areaPersonagem.widthProperty(), areaPersonagem.heightProperty());
         imgPersonagem.fitWidthProperty().bind(tamanho);
         imgPersonagem.fitHeightProperty().bind(tamanho);
@@ -72,7 +82,8 @@ public class TelaCriarContaController {
             erro("Suas informações estão inválidas!", problema);
             return;
         }
-        // administrador, visitantes e operadores entram pelo mesmo login: o usuário é único no sistema
+        // administrador, visitantes e operadores entram pelo mesmo login: o usuário é
+        // único no sistema
         if (!Contexto.SERVICO_AUTENTICACAO.usuarioDisponivel(usuario, null)) {
             erro("Conta não criada", "Esse usuário não está disponível. Escolha outro.");
             return;
@@ -87,11 +98,12 @@ public class TelaCriarContaController {
             return;
         }
 
-        // o nome da conta é o usuário. Nascimento e altura são só marcadores: a pessoa informa os dados de
+        // o nome da conta é o usuário. Nascimento e altura são só marcadores: a pessoa
+        // informa os dados de
         // verdade (nome completo, CPF...) na compra do ingresso.
         Visitante visitante = new Visitante(usuario, "01/01/2000", null, 0);
         visitante.setUsuario(usuario);
-        visitante.definirSenha(senha);   // só o hash da senha é guardado (ver Senha)
+        visitante.definirSenha(senha); // só o hash da senha é guardado (ver Senha)
         if (!Contexto.SERVICO_VISITANTE.cadastrar(visitante)) {
             erro("Conta não criada", "Esse usuário não está disponível. Escolha outro.");
             return;
@@ -102,7 +114,8 @@ public class TelaCriarContaController {
         pronto.initOwner(txtUsuario.getScene().getWindow());
         pronto.setTitle("CONTA CRIADA");
         pronto.setHeaderText("Conta criada com sucesso!");
-        pronto.setContentText("Seu nome completo, CPF, altura e data de nascimento serão pedidos na compra do ingresso.");
+        pronto.setContentText(
+                "Seu nome completo, CPF, altura e data de nascimento serão pedidos na compra do ingresso.");
         pronto.showAndWait();
 
         txtUsuario.setText("");
