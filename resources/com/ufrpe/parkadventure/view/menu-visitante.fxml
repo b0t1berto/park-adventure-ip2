@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane prefHeight="400.0" prefWidth="600.0" styleClass="tela-parque" stylesheets="@tema-parque.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.view.LoginVisitanteController">
+   <top>
+      <StackPane prefHeight="88.0" prefWidth="600.0" style="-fx-background-color: #5ba6b9;" BorderPane.alignment="CENTER">
+         <effect>
+            <DropShadow offsetY="3.0" />
+         </effect>
+         <children>
+            <HBox alignment="CENTER_LEFT" spacing="12.0" styleClass="cabecalho-parque">
+               <padding>
+                  <Insets bottom="8.0" left="32.0" right="16.0" top="8.0" />
+               </padding>
+               <children>
+                  <Label fx:id="lblBoasVindas" styleClass="titulo-cabecalho" text="Bem-vindo ao menu de visitantes!" wrapText="true" />
+                  <Region HBox.hgrow="ALWAYS" />
+                  <MenuButton mnemonicParsing="false" styleClass="menu-perfil">
+                    <items>
+                      <MenuItem mnemonicParsing="false" styleClass="menu-opcao-perfil" text="Meu Perfil" />
+                      <MenuItem mnemonicParsing="false" styleClass="menu-opcao-perfil" text="Configurações" />
+                      <MenuItem fx:id="menuVoltar" mnemonicParsing="false" onAction="#onVoltar" styleClass="menu-opcao-perfil" text="Sair" />
+                    </items>
+                     <graphic>
+                        <ImageView fx:id="imgGuest" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@imagens/guest.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuButton>
+               </children>
+            </HBox>
+         </children>
+      </StackPane>
+   </top>
+   <center>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="bntComparIngresso" mnemonicParsing="false" onAction="#onComprarIngresso" prefHeight="45.0" prefWidth="250.0" styleClass="botao-primario" stylesheets="@tema-parque.css" text="Comprar Ingressos" textFill="WHITE">
+               <effect>
+                  <DropShadow color="#aaaaaa" offsetY="2.0" />
+               </effect>
+            </Button>
+            <Button fx:id="bntVerIngresso" mnemonicParsing="false" onAction="#onVerIngresso" prefHeight="45.0" prefWidth="250.0" styleClass="botao-primario" stylesheets="@tema-parque.css" text="Meu Histórico" textFill="WHITE">
+               <effect>
+                  <DropShadow color="#aaaaaa" offsetY="2.0" />
+               </effect>
+            </Button>
+            <Button fx:id="bntVerAtracoes" mnemonicParsing="false" onAction="#onVerAtracoes" prefHeight="45.0" prefWidth="250.0" styleClass="botao-primario" stylesheets="@tema-parque.css" text="Ver Atrações" textFill="WHITE">
+               <effect>
+                  <DropShadow color="#aaaaaa" offsetY="2.0" />
+               </effect>
+            </Button>
+            <Button fx:id="bntMinhasReservas" mnemonicParsing="false" onAction="#onMinhasReservas" prefHeight="45.0" prefWidth="250.0" styleClass="botao-primario" stylesheets="@tema-parque.css" text="Minhas Reservas" textFill="WHITE">
+               <effect>
+                  <DropShadow color="#aaaaaa" offsetY="2.0" />
+               </effect>
+            </Button>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>
