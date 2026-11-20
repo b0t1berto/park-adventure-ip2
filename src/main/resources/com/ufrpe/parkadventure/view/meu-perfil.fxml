@@ -34,7 +34,7 @@
          <content>
             <VBox spacing="14.0">
                <children>
-                  <Label styleClass="rotulo-campo" text="Meus dados" />
+                  <Label styleClass="secao-titulo" text="Meus dados" />
             <GridPane hgap="14.0" vgap="10.0">
                <columnConstraints>
                   <ColumnConstraints minWidth="130.0" />
@@ -55,7 +55,7 @@
                   <TextField fx:id="txtEmail" maxWidth="Infinity" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                   <Label styleClass="rotulo-campo" text="Telefone" GridPane.columnIndex="0" GridPane.rowIndex="3" />
                   <TextField fx:id="txtTelefone" maxWidth="Infinity" promptText="Com DDD" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Label styleClass="rotulo-campo" text="Responsável (obrigatório para menores de 18 anos)" wrapText="true" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="4" />
+                  <Label styleClass="secao-titulo" text="Responsável (obrigatório para menores de 18 anos)" wrapText="true" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="4" />
                   <Label styleClass="rotulo-campo" text="Nome do responsável" GridPane.columnIndex="0" GridPane.rowIndex="5" />
                   <TextField fx:id="txtNomeResponsavel" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                   <Label styleClass="rotulo-campo" text="CPF do responsável" GridPane.columnIndex="2" GridPane.rowIndex="5" />
@@ -64,7 +64,7 @@
                   <TextField fx:id="txtContatoEmergencia" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="6" />
                </children>
             </GridPane>
-                  <Label styleClass="rotulo-campo" text="Trocar senha" />
+                  <Label styleClass="secao-titulo" text="Trocar senha" />
                   <GridPane hgap="14.0" vgap="10.0">
                      <columnConstraints>
                         <ColumnConstraints minWidth="130.0" />
