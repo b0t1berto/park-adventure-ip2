@@ -78,7 +78,7 @@
             <children>
                 <Button fx:id="btnReservar" mnemonicParsing="false" onAction="#aoReservarFilaVirtual" styleClass="botao-primario" text="Reservar fura-fila" />
                 <Button fx:id="btnNovoPedido" mnemonicParsing="false" onAction="#aoNovoPedido" styleClass="botao-secundario" text="Novo pedido" />
-                <Button fx:id="btnConcluir" mnemonicParsing="false" onAction="#aoConcluir" styleClass="botao-primario" text="Concluir" />
+                <Button fx:id="btnConcluir" mnemonicParsing="false" onAction="#aoConcluir" styleClass="botao-secundario" text="Concluir" />
             </children>
         </HBox>
     </bottom>

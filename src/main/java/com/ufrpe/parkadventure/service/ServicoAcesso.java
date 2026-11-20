@@ -74,6 +74,10 @@ public class ServicoAcesso {
         if (problema != null) {
             return problema;
         }
+        // Passe anual: limite de 1 reserva de fura-fila por mês
+        if (ingresso.getTipoIngresso() == TipoIngresso.PASSE_ANUAL && jaReservouNoMes(visitante, ingresso)) {
+            return ResultadoAcesso.LIMITE_MENSAL_EXCEDIDO;
+        }
         if (!FilaVirtual.horarioValido(horario)) {
             return ResultadoAcesso.HORARIO_INVALIDO;
         }
@@ -256,5 +260,26 @@ public class ServicoAcesso {
      */
     public boolean estaLotada(Atracao atracao) {
         return atracao.estaLotada();
+    }
+
+    /**
+     * Verifica se um visitante com passe anual já fez reserva de fura-fila no mês corrente.
+     * O passe anual permite no máximo 1 reserva por mês (12 entradas no total).
+     */
+    private boolean jaReservouNoMes(Visitante visitante, Ingresso ingresso) {
+        LocalDate agora = LocalDate.now();
+        int anoAtual = agora.getYear();
+        int mesAtual = agora.getMonthValue();
+        for (Atracao atracao : servicoAtracao.listarTodas()) {
+            for (Reserva reserva : atracao.getFilaVirtual().getReservas()) {
+                if (reserva.getVisitante() == visitante
+                        && reserva.estaAtiva()
+                        && reserva.getData().getYear() == anoAtual
+                        && reserva.getData().getMonthValue() == mesAtual) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

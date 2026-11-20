@@ -205,6 +205,7 @@ public class CadastroFilaVirtualController {
             case SEM_OPERADOR -> atracao.getNome() + " está fechada: não há operador vinculado.";
             case JA_NA_FILA -> nome + " já tem reserva em " + atracao.getNome() + " nesse dia.";
             case CONFLITO_DE_HORARIO -> nome + " já tem reserva em outra atração nesse mesmo horário.";
+            case LIMITE_MENSAL_EXCEDIDO -> "Você já usou a reserva de fura-fila deste mês. O passe anual permite 1 reserva por mês.";
             default -> "Não foi possível reservar.";
         };
     }

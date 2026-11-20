@@ -11,6 +11,7 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -25,10 +26,10 @@ public class RedirecionamentoPagamentoController {
     @FXML
     private Label lblMensagem;
 
-    private boolean pausaTerminou;
-    private boolean precoPronto;
-    private boolean avancou;
-    private boolean feriado;
+    private volatile boolean pausaTerminou;
+    private volatile boolean precoPronto;
+    private volatile boolean avancou;
+    private volatile boolean feriado;
     private Optional<String> nomeFeriado = Optional.empty();
     private double preco = Contexto.SERVICO_EMISSAO_INGRESSO.calcularValor(TipoIngresso.DIARIA, false);
 
@@ -56,14 +57,24 @@ public class RedirecionamentoPagamentoController {
             nomeFeriado = Contexto.FERIADOS.nomeDoFeriado(data);
             preco = Contexto.SERVICO_EMISSAO_INGRESSO.calcularValor(TipoIngresso.DIARIA, feriado);
             precoPronto = true;
-            tentarAvancar();
+            Platform.runLater(this::tentarAvancar);
         });
         consulta.setOnFailed(e -> {
             // sem internet: cobra o preço normal (mesmo comportamento de IngressoController.ehFeriado)
             precoPronto = true;
-            tentarAvancar();
+            Platform.runLater(this::tentarAvancar);
         });
         Tarefas.executar(consulta);
+
+        // timeout de segurança: se a API demorar mais que 5 segundos, avança com preço normal
+        PauseTransition timeout = new PauseTransition(Duration.seconds(5));
+        timeout.setOnFinished(e -> {
+            if (!precoPronto) {
+                precoPronto = true;
+                tentarAvancar();
+            }
+        });
+        timeout.play();
     }
 
     private void tentarAvancar() {

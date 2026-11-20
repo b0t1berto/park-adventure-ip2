@@ -78,7 +78,12 @@ public final class PedidoAtual {
         }
 
         LocalDate hoje = LocalDate.now();
-        LocalDate validade = dataVisita.isBefore(hoje) ? hoje : dataVisita;
+        LocalDate validade;
+        if (tipoIngresso == TipoIngresso.PASSE_ANUAL) {
+            validade = hoje.plusYears(1);
+        } else {
+            validade = dataVisita.isBefore(hoje) ? hoje : dataVisita;
+        }
         // última barreira (antes de mexer no perfil): com a capacidade do dia atingida, o ingresso não é emitido
         if (Contexto.SERVICO_CAPACIDADE.estaEsgotado(validade)) {
             esgotado = true;
