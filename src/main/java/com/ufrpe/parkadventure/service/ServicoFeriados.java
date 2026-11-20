@@ -30,7 +30,8 @@ public class ServicoFeriados {
         }
         List<Feriados.Feriado> lista = Feriados.buscarFeriadosBrasilAPI(ano);
         if (lista.isEmpty()) {
-            throw new IOException("A BrasilAPI não retornou feriados para " + ano);
+            // Fallback: usa feriados nacionais embutidos quando a API está indisponível
+            lista = Feriados.feriadosNacionaisEmbutidos(ano);
         }
         Map<LocalDate, String> porData = new TreeMap<>();
         for (Feriados.Feriado f : lista) {

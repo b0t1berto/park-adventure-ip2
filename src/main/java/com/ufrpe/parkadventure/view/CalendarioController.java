@@ -3,6 +3,7 @@ package com.ufrpe.parkadventure.view;
 import com.ufrpe.parkadventure.app.Contexto;
 
 import com.ufrpe.parkadventure.ParkAdventure;
+import com.ufrpe.parkadventure.view.controles.GeradorCalendarioHTML;
 import com.ufrpe.parkadventure.view.controles.Tarefas;
 import com.ufrpe.parkadventure.model.atracao.Atracao;
 import com.ufrpe.parkadventure.model.pessoa.Operador;
@@ -11,6 +12,8 @@ import com.ufrpe.parkadventure.view.Formatos;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.ColumnConstraints;
@@ -210,6 +213,26 @@ public class CalendarioController {
         montarGrade();
         mostrarDetalhe(dataSelecionada);
         carregarFeriadosDoMes();
+    }
+
+    @FXML
+    private void onAbrirCalendarioNavegador() {
+        int ano = mesExibido.getYear();
+        Task<Void> tarefa = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                GeradorCalendarioHTML.gerarEAbrir(ano);
+                return null;
+            }
+        };
+        tarefa.setOnSucceeded(e -> lblStatusApi.setText("Calendário aberto no navegador!"));
+        tarefa.setOnFailed(e -> {
+            Throwable ex = tarefa.getException();
+            String mensagem = (ex != null) ? ex.getMessage() : "Erro desconhecido";
+            lblStatusApi.setText("Erro ao abrir calendário: " + mensagem);
+            new Alert(AlertType.ERROR, "Não foi possível abrir o calendário no navegador.\n\n" + mensagem).showAndWait();
+        });
+        Tarefas.executar(tarefa);
     }
 
     @FXML

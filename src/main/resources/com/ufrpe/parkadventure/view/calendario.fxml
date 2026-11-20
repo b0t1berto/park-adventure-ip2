@@ -22,6 +22,7 @@
                   <Label fx:id="lblMes" alignment="CENTER" minWidth="220.0" styleClass="mes-cabecalho" />
                   <Button onAction="#onMesSeguinte" styleClass="botao-secundario" text="Seguinte" />
                   <Button onAction="#onHoje" styleClass="botao-secundario" text="Hoje" />
+                  <Button onAction="#onAbrirCalendarioNavegador" styleClass="botao-secundario" text="🌐 Abrir no navegador" />
                   <Label fx:id="lblStatusApi" styleClass="status-cabecalho" />
                </children>
             </HBox>
