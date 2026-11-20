@@ -15,8 +15,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.stage.FileChooser;
 import javafx.util.StringConverter;
 
+import java.io.File;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.YearMonth;
@@ -119,5 +123,31 @@ public class RelatorioIngressoController {
         lblReceita.setText(Formatos.moeda(r.receitaTotal()));
         lblReceitaFeriados.setText(Formatos.moeda(r.receitaFeriados()) + "  (" + r.vendasEmFeriados() + " vendas)");
         lblTicketMedio.setText(Formatos.moeda(r.ticketMedio()));
+    }
+
+    @FXML
+    private void onExportarCsv() {
+        var itens = tabela.getItems();
+        if (itens == null || itens.isEmpty()) {
+            Aviso.erro(lblStatus, "Não há dados para exportar.");
+            return;
+        }
+        FileChooser escolha = new FileChooser();
+        escolha.setTitle("Salvar relatório de ingressos");
+        Month mes = cbMes.getValue();
+        int ano = cbAno.getValue();
+        escolha.setInitialFileName("relatorio-ingressos-" + mes.getValue() + "-" + ano + ".csv");
+        escolha.getExtensionFilters().add(new FileChooser.ExtensionFilter("Arquivo CSV (*.csv)", "*.csv"));
+        File arquivo = escolha.showSaveDialog(tabela.getScene().getWindow());
+        if (arquivo == null) {
+            return;   // cancelou
+        }
+        try {
+            String conteudo = "\uFEFF" + relatorio.montarCsvIngressos(itens);
+            Files.writeString(arquivo.toPath(), conteudo, StandardCharsets.UTF_8);
+            Aviso.sucesso(lblStatus, "Relatório salvo em: " + arquivo.getAbsolutePath());
+        } catch (Exception e) {
+            Aviso.erro(lblStatus, "Não foi possível salvar o arquivo: " + e.getMessage());
+        }
     }
 }

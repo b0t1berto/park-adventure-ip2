@@ -375,4 +375,106 @@ public class RelatorioGerencial {
         }
         return texto;
     }
+
+    // =============================================
+    // || EXPORTAÇÃO CSV — INGRESSOS
+    // =============================================
+    public String montarCsvIngressos(List<VendaDetalhada> vendas) {
+        StringBuilder csv = new StringBuilder(
+                "Data;Visitante;Tipo;Valor;Pagamento;Feriado\n");
+        for (VendaDetalhada v : vendas) {
+            csv.append(v.data()).append(';')
+                    .append(campoCsv(v.visitante())).append(';')
+                    .append(campoCsv(tipoLabel(v.tipo()))).append(';')
+                    .append(String.format(PT_BR, "%.2f", v.valor())).append(';')
+                    .append(campoCsv(v.formaPagamento() == null ? "" : v.formaPagamento())).append(';')
+                    .append(campoCsv(v.feriado() == null ? "" : v.feriado())).append('\n');
+        }
+        return csv.toString();
+    }
+
+    // =============================================
+    // || EXPORTAÇÃO CSV — DIA
+    // =============================================
+    public String montarCsvDia(List<LinhaDia> ingressos) {
+        StringBuilder csv = new StringBuilder(
+                "Visitante;Tipo;Relacao;Compra;Visita;Valor;Pagamento\n");
+        for (LinhaDia l : ingressos) {
+            csv.append(campoCsv(l.visitante())).append(';')
+                    .append(campoCsv(tipoLabel(l.tipo()))).append(';')
+                    .append(campoCsv(l.relacao())).append(';')
+                    .append(l.compra()).append(';')
+                    .append(l.validade()).append(';')
+                    .append(String.format(PT_BR, "%.2f", l.valor())).append(';')
+                    .append(campoCsv(l.formaPagamento() == null ? "" : l.formaPagamento())).append('\n');
+        }
+        return csv.toString();
+    }
+
+    // =============================================
+    // || EXPORTAÇÃO CSV — LUCRO
+    // =============================================
+    public String montarCsvLucro(List<LinhaLucro> meses) {
+        StringBuilder csv = new StringBuilder(
+                "Mes;Ingressos;Receita;Turnos;Custo;Lucro;Margem (%)\n");
+        for (LinhaLucro l : meses) {
+            csv.append(mesLabel(l.mes())).append(';')
+                    .append(l.ingressos()).append(';')
+                    .append(String.format(PT_BR, "%.2f", l.receita())).append(';')
+                    .append(l.turnos()).append(';')
+                    .append(String.format(PT_BR, "%.2f", l.custo())).append(';')
+                    .append(String.format(PT_BR, "%.2f", l.lucro())).append(';')
+                    .append(String.format(PT_BR, "%.1f", l.margem())).append('\n');
+        }
+        return csv.toString();
+    }
+
+    // =============================================
+    // || EXPORTAÇÃO CSV — GERAL (operadores em feriados)
+    // =============================================
+    /**
+     * Exporta a tabela de operadores escalados nos próximos feriados.
+     * O controller passa a lista de linhas que já exibe na tabela.
+     */
+    public String montarCsvGeralFeriados(Object[] linhas) {
+        // Linhas são records LinhaFeriado do controller: (LocalDate data, String nome, String operadores)
+        StringBuilder csv = new StringBuilder("Feriado;Data;Dia da semana;Operadores escalados\n");
+        for (Object obj : linhas) {
+            // usa reflexão leve — o record é LinhaFeriado do controller
+            String nome = (String) refletir(obj, "nome");
+            LocalDate data = (LocalDate) refletir(obj, "data");
+            String operadores = (String) refletir(obj, "operadores");
+            csv.append(campoCsv(nome)).append(';')
+                    .append(data).append(';')
+                    .append(campoCsv(diaSemanaLabel(data))).append(';')
+                    .append(campoCsv(operadores)).append('\n');
+        }
+        return csv.toString();
+    }
+
+    // ---- helpers ----
+
+    private String tipoLabel(TipoIngresso tipo) {
+        if (tipo == null) return "";
+        return tipo == TipoIngresso.PASSE_ANUAL ? "Passe anual" : "Diária";
+    }
+
+    private String mesLabel(YearMonth mes) {
+        String nome = mes.getMonth().getDisplayName(java.time.format.TextStyle.FULL, PT_BR);
+        return Character.toUpperCase(nome.charAt(0)) + nome.substring(1) + " " + mes.getYear();
+    }
+
+    private String diaSemanaLabel(LocalDate data) {
+        String nome = data.getDayOfWeek().getDisplayName(java.time.format.TextStyle.FULL, PT_BR);
+        return Character.toUpperCase(nome.charAt(0)) + nome.substring(1);
+    }
+
+    @SuppressWarnings("unchecked")
+    private <T> T refletir(Object record, String nome) {
+        try {
+            return (T) record.getClass().getDeclaredMethod(nome).invoke(record);
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

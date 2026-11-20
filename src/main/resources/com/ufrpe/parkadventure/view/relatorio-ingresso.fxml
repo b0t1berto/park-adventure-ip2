@@ -18,6 +18,7 @@
             <ComboBox fx:id="cbMes" prefWidth="150.0" />
             <Label text="Ano:" />
             <ComboBox fx:id="cbAno" prefWidth="100.0" />
+            <Button onAction="#onExportarCsv" styleClass="botao-principal" text="Exportar CSV" />
             <Label styleClass="subtitulo" text="Linhas em vermelho = vendas em feriado nacional" />
          </children>
       </HBox>

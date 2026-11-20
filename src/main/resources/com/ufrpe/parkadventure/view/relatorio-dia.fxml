@@ -21,6 +21,7 @@
             <DatePicker fx:id="dpDia" />
             <Button onAction="#onProximoDia" styleClass="botao-secundario" text="&gt;" />
             <Button onAction="#onHoje" styleClass="botao-secundario" text="Hoje" />
+            <Button onAction="#onExportarCsv" styleClass="botao-principal" text="Exportar CSV" />
             <Label fx:id="lblDiaSemana" styleClass="titulo-secao" />
             <Label fx:id="lblFeriado" styleClass="subtitulo" />
          </children>

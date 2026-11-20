@@ -17,7 +17,11 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
 
+import java.io.File;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.TextStyle;
@@ -157,5 +161,30 @@ public class RelatorioLucroController {
     private String abreviado(YearMonth mes) {
         String nome = mes.getMonth().getDisplayName(TextStyle.SHORT, PT_BR);
         return Character.toUpperCase(nome.charAt(0)) + nome.substring(1);
+    }
+
+    @FXML
+    private void onExportarCsv() {
+        var itens = tabela.getItems();
+        if (itens == null || itens.isEmpty()) {
+            Aviso.erro(lblStatus, "Não há dados para exportar.");
+            return;
+        }
+        FileChooser escolha = new FileChooser();
+        escolha.setTitle("Salvar relatório de lucro");
+        int ano = cbAno.getValue();
+        escolha.setInitialFileName("relatorio-lucro-" + ano + ".csv");
+        escolha.getExtensionFilters().add(new FileChooser.ExtensionFilter("Arquivo CSV (*.csv)", "*.csv"));
+        File arquivo = escolha.showSaveDialog(tabela.getScene().getWindow());
+        if (arquivo == null) {
+            return;   // cancelou
+        }
+        try {
+            String conteudo = "\uFEFF" + relatorio.montarCsvLucro(itens);
+            Files.writeString(arquivo.toPath(), conteudo, StandardCharsets.UTF_8);
+            Aviso.sucesso(lblStatus, "Relatório salvo em: " + arquivo.getAbsolutePath());
+        } catch (Exception e) {
+            Aviso.erro(lblStatus, "Não foi possível salvar o arquivo: " + e.getMessage());
+        }
     }
 }

@@ -16,7 +16,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.FileChooser;
 
+import java.io.File;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.time.LocalDate;
 
 // Aba "Dia": vendas do dia, visitas previstas, capacidade máxima do parque (soma das atrações x 5)
@@ -104,5 +108,29 @@ public class RelatorioDiaController {
     @FXML
     private void onProximoDia() {
         if (dpDia.getValue() != null) dpDia.setValue(dpDia.getValue().plusDays(1));
+    }
+
+    @FXML
+    private void onExportarCsv() {
+        var itens = tabela.getItems();
+        if (itens == null || itens.isEmpty()) {
+            Aviso.erro(lblSituacao, "Não há dados para exportar.");
+            return;
+        }
+        FileChooser escolha = new FileChooser();
+        escolha.setTitle("Salvar relatório do dia");
+        escolha.setInitialFileName("relatorio-dia-" + dpDia.getValue() + ".csv");
+        escolha.getExtensionFilters().add(new FileChooser.ExtensionFilter("Arquivo CSV (*.csv)", "*.csv"));
+        File arquivo = escolha.showSaveDialog(tabela.getScene().getWindow());
+        if (arquivo == null) {
+            return;   // cancelou
+        }
+        try {
+            String conteudo = "\uFEFF" + relatorio.montarCsvDia(itens);
+            Files.writeString(arquivo.toPath(), conteudo, StandardCharsets.UTF_8);
+            Aviso.sucesso(lblSituacao, "Relatório salvo em: " + arquivo.getAbsolutePath());
+        } catch (Exception e) {
+            Aviso.erro(lblSituacao, "Não foi possível salvar o arquivo: " + e.getMessage());
+        }
     }
 }

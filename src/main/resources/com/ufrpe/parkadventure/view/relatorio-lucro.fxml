@@ -26,6 +26,7 @@
             <Label text="Custo fixo mensal (R$):" />
             <TextField fx:id="txtCustoFixo" onAction="#onCalcular" prefWidth="90.0" promptText="0,00" />
             <Button onAction="#onCalcular" styleClass="botao-principal" text="Calcular" />
+            <Button onAction="#onExportarCsv" styleClass="botao-principal" text="Exportar CSV" />
          </children>
       </HBox>
       <FlowPane hgap="12.0" vgap="12.0">

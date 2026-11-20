@@ -15,7 +15,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.FileChooser;
 
+import java.io.File;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -79,20 +83,45 @@ public class RelatorioGeralController {
                 "Não foi possível consultar a BrasilAPI (sem internet?). Os números acima continuam corretos."));
     }
 
+    private List<LinhaFeriado> linhasFeriadosAtuais = List.of();
+
     private void montarFeriados(LocalDate hoje, Map<LocalDate, String> ano, Map<LocalDate, String> proximoAno) {
         Map<LocalDate, String> todos = new java.util.TreeMap<>(ano);
         todos.putAll(proximoAno);
 
-        List<LinhaFeriado> linhas = new ArrayList<>();
+        linhasFeriadosAtuais = new ArrayList<>();
         for (Map.Entry<LocalDate, String> f : todos.entrySet()) {
             if (f.getKey().isBefore(hoje)) continue;
             List<Operador> escalados = RepositorioEscalaTrabalho.getInstancia().operadoresDoDia(f.getKey());
             String quem = escalados.isEmpty() ? "Sem operador escalado"
                     : escalados.stream().map(Operador::getNome).collect(Collectors.joining(", "));
-            linhas.add(new LinhaFeriado(f.getKey(), f.getValue(), quem));
-            if (linhas.size() == QTD_FERIADOS) break;
+            linhasFeriadosAtuais.add(new LinhaFeriado(f.getKey(), f.getValue(), quem));
+            if (linhasFeriadosAtuais.size() == QTD_FERIADOS) break;
         }
-        tabelaFeriados.setItems(FXCollections.observableArrayList(linhas));
+        tabelaFeriados.setItems(FXCollections.observableArrayList(linhasFeriadosAtuais));
         Aviso.limpar(lblStatus);
+    }
+
+    @FXML
+    private void onExportarCsv() {
+        if (linhasFeriadosAtuais.isEmpty()) {
+            Aviso.erro(lblStatus, "Não há dados para exportar.");
+            return;
+        }
+        FileChooser escolha = new FileChooser();
+        escolha.setTitle("Salvar relatório geral — feriados");
+        escolha.setInitialFileName("relatorio-geral-feriados.csv");
+        escolha.getExtensionFilters().add(new FileChooser.ExtensionFilter("Arquivo CSV (*.csv)", "*.csv"));
+        File arquivo = escolha.showSaveDialog(tabelaFeriados.getScene().getWindow());
+        if (arquivo == null) {
+            return;   // cancelou
+        }
+        try {
+            String conteudo = "\uFEFF" + relatorio.montarCsvGeralFeriados(linhasFeriadosAtuais.toArray());
+            Files.writeString(arquivo.toPath(), conteudo, StandardCharsets.UTF_8);
+            Aviso.sucesso(lblStatus, "Relatório salvo em: " + arquivo.getAbsolutePath());
+        } catch (Exception e) {
+            Aviso.erro(lblStatus, "Não foi possível salvar o arquivo: " + e.getMessage());
+        }
     }
 }
