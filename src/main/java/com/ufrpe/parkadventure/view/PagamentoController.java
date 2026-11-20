@@ -25,6 +25,7 @@ public class PagamentoController {
     private Scene cenaAnterior;
 
     @FXML private Label lblItem, lblDataVisita, lblQuantidade, lblTotal;
+    @FXML private Label lblDetalhePasse, lblDetalhePasseLabel;
 
     @FXML private TextField txtNome, txtCpf, txtEmail, txtTelefone;
     @FXML private DatePicker dpNascimento;
@@ -78,6 +79,13 @@ public class PagamentoController {
         if (tipo == TipoIngresso.PASSE_ANUAL) {
             double preco = Contexto.SERVICO_EMISSAO_INGRESSO.calcularValor(TipoIngresso.PASSE_ANUAL, false);
             setResumo("Passe Anual", PedidoAtual.getDataVisita(), 1, preco);
+            lblDetalhePasseLabel.setVisible(true);
+            lblDetalhePasse.setVisible(true);
+            lblDetalhePasse.setText("12 entradas (1 por mês) • Validade: 1 ano • Acesso a todas as atrações");
+            lblDataVisita.setText("Não requer data");
+        } else {
+            lblDetalhePasseLabel.setVisible(false);
+            lblDetalhePasse.setVisible(false);
         }
     }
 
@@ -142,7 +150,9 @@ public class PagamentoController {
 
         String erro = validar();
         if (erro != null) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, erro);
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText("Verifique os dados");
+            alert.setContentText(erro);
             alert.initOwner(btnPagar.getScene().getWindow());
             alert.showAndWait();
             return;
@@ -151,8 +161,9 @@ public class PagamentoController {
         // confere a capacidade do dia da visita ANTES de ir para o pagamento
         LocalDate diaVisita = PedidoAtual.getDataVisita();
         if (Contexto.SERVICO_CAPACIDADE.estaEsgotado(diaVisita)) {
-            Alert esgotado = new Alert(Alert.AlertType.WARNING, Contexto.SERVICO_CAPACIDADE.mensagemEsgotado(diaVisita));
-            esgotado.setHeaderText("Ingressos esgotados");
+            Alert esgotado = new Alert(Alert.AlertType.WARNING);
+            esgotado.setHeaderText("Ingressos esgotados para hoje");
+            esgotado.setContentText("Infelizmente não restam vagas para hoje.\n\nVocê pode:\n• Escolher uma data futura (Ingresso programado)\n• Comprar um Passe Anual para entrar em outro dia\n\nDesculpe o inconveniente!");
             esgotado.initOwner(btnPagar.getScene().getWindow());
             esgotado.showAndWait();
             return;
@@ -200,19 +211,19 @@ public class PagamentoController {
     }
 
     private String validar() {
-        if (txtNome.getText().isBlank()) return "Informe o nome completo.";
-        if (txtCpf.getText().replaceAll("\\D", "").length() != 11) return "CPF inválido.";
-        if (dpNascimento.getValue() == null) return "Informe a data de nascimento.";
+        if (txtNome.getText().isBlank()) return "Precisamos do seu nome completo para emitir o ingresso.";
+        if (txtCpf.getText().replaceAll("\\D", "").length() != 11) return "O CPF precisa ter 11 dígitos. Verifique e tente novamente.";
+        if (dpNascimento.getValue() == null) return "Informe sua data de nascimento para continuar.";
         if (dpNascimento.getValue().isAfter(LocalDate.now())) return "A data de nascimento não pode ser no futuro.";
-        if (!txtEmail.getText().matches("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$")) return "E-mail inválido.";
-        if (txtTelefone.getText().replaceAll("\\D", "").length() < 10) return "Telefone inválido.";
-        if (arquivoDocumento == null) return "Anexe a foto do documento.";
+        if (!txtEmail.getText().matches("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$")) return "O e-mail informado parece inválido. Verifique e tente novamente.";
+        if (txtTelefone.getText().replaceAll("\\D", "").length() < 10) return "Informe um telefone válido com DDD.";
+        if (arquivoDocumento == null) return "Anexe uma foto do seu documento com foto para finalizar a compra.";
 
         if (paneResponsavel.isVisible()) {
-            if (txtNomeResponsavel.getText().isBlank()) return "Informe o nome do responsável.";
-            if (txtCpfResponsavel.getText().replaceAll("\\D", "").length() != 11) return "CPF do responsável inválido.";
-            if (txtContatoEmergencia.getText().isBlank()) return "Informe o contato de emergência.";
-            if (!chkAutorizacao.isSelected()) return "É necessária a autorização do responsável.";
+            if (txtNomeResponsavel.getText().isBlank()) return "Informe o nome do responsável para liberar a entrada do menor.";
+            if (txtCpfResponsavel.getText().replaceAll("\\D", "").length() != 11) return "O CPF do responsável precisa ter 11 dígitos.";
+            if (txtContatoEmergencia.getText().isBlank()) return "Informe um contato de emergência do responsável.";
+            if (!chkAutorizacao.isSelected()) return "O responsável precisa autorizar a entrada do menor. Marque a caixa de autorização.";
         }
         return null;
     }

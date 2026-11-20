@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -19,6 +20,7 @@ public class CompraIngressosController {
     @FXML private Button btnInstantaneo;
     @FXML private Button btnProgramado;
     @FXML private Button btnPasseAnual;
+    @FXML private Label lblVagas;
 
     @FXML
     private void initialize() {
@@ -29,6 +31,23 @@ public class CompraIngressosController {
         btnInstantaneo.setText("Ingresso instantâneo\n" + moedaDiaria);
         btnProgramado.setText("Ingresso programado\n" + moedaDiaria);
         btnPasseAnual.setText("Passe Anual — 12 entradas (1 por mês)\n" + moedaAnual);
+        atualizarAvisoDeVagas();
+    }
+
+    private void atualizarAvisoDeVagas() {
+        LocalDate hoje = LocalDate.now();
+        int vagas = Contexto.SERVICO_CAPACIDADE.vagasRestantes(hoje);
+        int capacidade = Contexto.SERVICO_CAPACIDADE.capacidadeMaximaDiaria();
+        if (vagas == 0) {
+            lblVagas.setText("⚠ Ingressos esgotados para hoje — tente o Passe Anual ou escolha uma data futura.");
+            lblVagas.getStyleClass().add("esgotado");
+        } else if (vagas <= capacidade * 0.1) {
+            // menos de 10% das vagas restantes
+            lblVagas.setText("⚠ Restam apenas " + vagas + " vagas para hoje — garanta o seu!");
+            lblVagas.getStyleClass().add("critico");
+        } else {
+            lblVagas.setText("✓ " + vagas + " vagas disponíveis para hoje.");
+        }
     }
 
     @FXML
@@ -47,8 +66,9 @@ public class CompraIngressosController {
         // capacidade do dia atingida: não vende ingresso para hoje
         LocalDate hoje = LocalDate.now();
         if (Contexto.SERVICO_CAPACIDADE.estaEsgotado(hoje)) {
-            Alert alerta = new Alert(Alert.AlertType.WARNING, Contexto.SERVICO_CAPACIDADE.mensagemEsgotado(hoje));
-            alerta.setHeaderText("Ingressos esgotados");
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setHeaderText("Ingressos esgotados para hoje");
+            alerta.setContentText("Infelizmente não restam vagas para hoje.\n\nVocê pode:\n• Escolher uma data futura (Ingresso programado)\n• Comprar um Passe Anual para entrar em outro dia\n\nDesculpe o inconveniente!");
             alerta.initOwner(((Node) event.getSource()).getScene().getWindow());
             alerta.showAndWait();
             return;
@@ -68,10 +88,10 @@ public class CompraIngressosController {
         // Verifica se o visitante já comprou um passe anual neste mês
         Visitante visitante = Contexto.SESSAO.getVisitanteAtual();
         if (visitante != null && !Contexto.SERVICO_EMISSAO_INGRESSO.podeComprarPasseAnual(visitante)) {
-            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
             alerta.initOwner(((Node) event.getSource()).getScene().getWindow());
-            alerta.setHeaderText("Limite atingido");
-            alerta.setContentText("Você já comprou um passe anual este mês. O limite é de 1 compra por mês.");
+            alerta.setHeaderText("Você já possui o Passe Anual");
+            alerta.setContentText("Você já tem um passe anual ativo.\n\nAcesse 'Minhas Reservas' para reservar um novo fura-fila.");
             alerta.showAndWait();
             return;
         }

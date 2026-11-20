@@ -61,6 +61,7 @@
                   <String fx:value="card-ingresso" />
                   <String fx:value="card-anual" />
                </styleClass></Button>
+            <Label fx:id="lblVagas" alignment="CENTER" maxWidth="634.0" styleClass="aviso-vagas" text="" wrapText="true" />
          </children>
       </VBox>
    </center>

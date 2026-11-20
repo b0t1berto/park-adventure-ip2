@@ -266,3 +266,25 @@
     -fx-background-position: center center;
     -fx-background-size: cover;
 }
+
+/* ===== Aviso de vagas na tela de compra ===== */
+.aviso-vagas {
+    -fx-background-color: #dcebff;
+    -fx-background-radius: 16;
+    -fx-border-color: #bfe3ff;
+    -fx-border-radius: 16;
+    -fx-padding: 8 16 8 16;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #14365d;
+}
+.aviso-vagas.critico {
+    -fx-background-color: #fff4d6;
+    -fx-border-color: #f59e0b;
+    -fx-text-fill: #92400e;
+}
+.aviso-vagas.esgotado {
+    -fx-background-color: #fee2e2;
+    -fx-border-color: #ef4444;
+    -fx-text-fill: #991b1b;
+}
