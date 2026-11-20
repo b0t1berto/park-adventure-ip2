@@ -16,7 +16,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Rectangle;
 
 // Login por usuário e senha: o sistema descobre sozinho se é administrador, operador ou visitante.
 public class TelaLoginController {
@@ -32,20 +34,28 @@ public class TelaLoginController {
 
     @FXML
     private void initialize() {
-        // A área do personagem não pode "empurrar" o tamanho da tela: o tamanho dela
-        // vem só do GridPane.
-        // Sem isso, a imagem (muito grande) fazia a janela crescer ao
-        // abrir/redimensionar.
+        
+        imgPersonagem.setPreserveRatio(true);
+        imgPersonagem.setSmooth(true);
+        lblDivertir.setMinWidth(0);
+
         areaPersonagem.setMinSize(0, 0);
         areaPersonagem.setPrefSize(0, 0);
+        if (imgPersonagem.getParent() instanceof Region caixa) {
+            caixa.setMinSize(0, 0);
+        }
 
-        // Mínimo 1: ImageView com fitWidth/fitHeight <= 0 usa o tamanho ORIGINAL da
-        // imagem (era o bug,
-        // pois no carregamento a área ainda tem tamanho 0).
+        Rectangle recorte = new Rectangle();
+        recorte.widthProperty().bind(areaPersonagem.widthProperty());
+        recorte.heightProperty().bind(areaPersonagem.heightProperty());
+        areaPersonagem.setClip(recorte);
+
+        //Tamanho da imagem acompanha a área. Mínimo 1: fitWidth/fitHeight <= 0 faz o ImageView usar o
+        //Arredonda para baixo para não oscilar por frações de pixel.
         var tamanho = Bindings.createDoubleBinding(
-                () -> Math.max(1, Math.min(
+                () -> Math.max(1, Math.floor(Math.min(
                         areaPersonagem.getWidth() * 0.98,
-                        Math.min(areaPersonagem.getHeight() * 0.78, areaPersonagem.getHeight() - 120))),
+                        Math.min(areaPersonagem.getHeight() * 0.78, areaPersonagem.getHeight() - 120)))),
                 areaPersonagem.widthProperty(), areaPersonagem.heightProperty());
         imgPersonagem.fitWidthProperty().bind(tamanho);
         imgPersonagem.fitHeightProperty().bind(tamanho);
