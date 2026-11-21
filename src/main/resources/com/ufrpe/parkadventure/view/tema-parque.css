@@ -101,6 +101,13 @@
 }
 .botao-secundario:hover { -fx-scale-x: 1.04; -fx-scale-y: 1.04; }
 
+.botao-perigo {
+    -fx-background-color: #c62828;
+    -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px;
+    -fx-background-radius: 24; -fx-padding: 10 28 10 28; -fx-cursor: hand;
+}
+.botao-perigo:hover { -fx-background-color: #b71c1c; -fx-scale-x: 1.04; -fx-scale-y: 1.04; }
+
 .cartao-pagamento {
     -fx-background-color: white;
     -fx-background-radius: 28;

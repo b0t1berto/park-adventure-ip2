@@ -54,6 +54,17 @@ public class LoginOperadorController {
         ir("view/calendario.fxml");
     }
 
+    // Item "Configurações" do menu: abre a tela de configurações da aplicação
+    @FXML
+    void onConfiguracoes(ActionEvent event) {
+        ir("view/configuracoes.fxml");
+    }
+
+    @FXML
+    void onMeuPerfil(ActionEvent event) {
+        ir("view/meu-perfil.fxml");
+    }
+
     @FXML
     void onVoltar(ActionEvent event) {
         try {

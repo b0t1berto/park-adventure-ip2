@@ -9,46 +9,40 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="tela-parque" stylesheets="@tema-parque.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.view.LoginVisitanteController">
    <top>
-      <StackPane prefHeight="68.0" prefWidth="600.0" style="-fx-background-color: #5ba6b9;" BorderPane.alignment="CENTER">
+      <Pane prefHeight="68.0" prefWidth="600.0" style="-fx-background-color: #5ba6b9;" styleClass="cabecalho-pagamento" stylesheets="@tema-parque.css" BorderPane.alignment="CENTER">
          <effect>
             <DropShadow offsetY="3.0" />
          </effect>
          <children>
-            <Pane prefHeight="200.0" prefWidth="200.0" styleClass="cabecalho-pagamento" stylesheets="@tema-parque.css">
-               <children>
-                  
-                  <Label fx:id="lblBoasVindas" alignment="CENTER" layoutX="40.0" layoutY="19.0" prefHeight="36.0" prefWidth="442.0" text="Bem-Vindo ao Menu de Visitantes!" textFill="WHITE">
-                     <font>
-                        <Font name="DejaVu Sans Mono Bold" size="24.0" />
-                     </font>
-                  </Label>
-                  
-                  <!-- MenuButton com a imagem do usuário -->
-                  <MenuButton layoutX="495.0" layoutY="8.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="84.0" style="-fx-background-color: transparent; -fx-cursor: hand;">
-                    <items>
-                      <MenuItem mnemonicParsing="false" onAction="#onMeuPerfil" text="Meu Perfil" />
-                      <MenuItem mnemonicParsing="false" text="Configurações" />
-                      <MenuItem fx:id="menuVoltar" mnemonicParsing="false" onAction="#onVoltar" text="Sair" />
-                    </items>
-                     <graphic>
-                        <ImageView fx:id="imgGuest" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <!-- URL provisória da imagem, será substituída posteriormente -->
-                              <Image url="@imagens/guest.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </MenuButton>
-               </children>
-            </Pane>
+            <Label fx:id="lblBoasVindas" alignment="CENTER" layoutX="40.0" layoutY="19.0" prefHeight="36.0" prefWidth="442.0" text="Bem-Vindo ao Menu de Visitantes!" textFill="WHITE">
+               <font>
+                  <Font name="DejaVu Sans Mono Bold" size="24.0" />
+               </font>
+            </Label>
+            
+            <!-- MenuButton com a imagem do usuário -->
+            <MenuButton layoutX="495.0" layoutY="8.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand;">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#onMeuPerfil" text="Meu Perfil" />
+                <MenuItem mnemonicParsing="false" onAction="#onConfiguracoes" text="Configurações" />
+                <MenuItem fx:id="menuVoltar" mnemonicParsing="false" onAction="#onVoltar" text="Sair" />
+              </items>
+               <graphic>
+                  <ImageView fx:id="imgGuest" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <!-- URL provisória da imagem, será substituída posteriormente -->
+                        <Image url="@imagens/guest.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </MenuButton>
          </children>
-      </StackPane>
+      </Pane>
    </top>
    <center>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="15.0" BorderPane.alignment="CENTER">
