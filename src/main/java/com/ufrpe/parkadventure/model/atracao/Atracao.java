@@ -76,9 +76,10 @@ public abstract class Atracao implements IRestricao {
         return true;
     }
 
-    // Vagas de fura-fila por horário (meia hora), sempre pelo menos 1
+    // Vagas de fura-fila por horário (meia hora), sempre pelo menos 1, mas não mais que a capacidade máxima
     public final int vagasFuraFilaPorHorario() {
-        return Math.max(1, (int) Math.round(capacidadeMaxima * CICLOS_POR_MEIA_HORA * PERCENTUAL_FURA_FILA));
+        int calculado = Math.max(1, (int) Math.round(capacidadeMaxima * CICLOS_POR_MEIA_HORA * PERCENTUAL_FURA_FILA));
+        return Math.min(calculado, capacidadeMaxima);
     }
 
     // Ao editar uma atração, a nova versão continua com a ocupação e as reservas da anterior
