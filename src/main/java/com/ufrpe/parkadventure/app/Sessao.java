@@ -2,11 +2,13 @@ package com.ufrpe.parkadventure.app;
 
 import com.ufrpe.parkadventure.model.pessoa.Operador;
 import com.ufrpe.parkadventure.model.pessoa.Visitante;
+import com.ufrpe.parkadventure.service.ServicoAutenticacao.Papel;
 
 public class Sessao {
     private static Sessao instancia;
     private Visitante visitanteAtual;
     private Operador operadorAtual;
+    private Papel papel;
 
     Sessao() {}
 
@@ -25,9 +27,14 @@ public class Sessao {
 
     public void setOperadorAtual(Operador operadorAtual) { this.operadorAtual = operadorAtual; }
 
+    public Papel getPapel() { return papel; }
+
+    public void setPapel(Papel papel) { this.papel = papel; }
+
     // Chamado no login: quem entra no sistema substitui a sessão anterior
     public void limpar() {
         visitanteAtual = null;
         operadorAtual = null;
+        papel = null;
     }
 }

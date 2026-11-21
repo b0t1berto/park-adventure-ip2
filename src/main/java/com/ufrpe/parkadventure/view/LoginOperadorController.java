@@ -62,7 +62,7 @@ public class LoginOperadorController {
 
     @FXML
     void onMeuPerfil(ActionEvent event) {
-        ir("view/meu-perfil.fxml");
+        ir("view/perfil-operador.fxml");
     }
 
     @FXML

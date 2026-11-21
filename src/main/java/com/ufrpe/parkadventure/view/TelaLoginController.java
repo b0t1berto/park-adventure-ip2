@@ -101,6 +101,7 @@ public class TelaLoginController {
 
         try {
             Contexto.SESSAO.limpar();
+            Contexto.SESSAO.setPapel(resultado.papel());
             switch (resultado.papel()) {
                 case ADMIN -> ParkAdventure.proximaCena("view/menu-adm.fxml");
                 case ServicoAutenticacao.Papel.OPERADOR -> {

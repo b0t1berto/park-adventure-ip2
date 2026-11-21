@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.ColumnConstraints;
@@ -35,6 +36,7 @@ public class CalendarioController {
 
     @FXML private Label lblMes, lblStatusApi, lblDetalhe;
     @FXML private GridPane grade;
+    @FXML private Button btAnterior, btSeguinte;
 
     private YearMonth mesExibido = YearMonth.now();
     private LocalDate dataSelecionada = LocalDate.now();
@@ -44,6 +46,7 @@ public class CalendarioController {
         configurarGrade();
         montarGrade();                    // desenha já com o que existir no cache
         mostrarDetalhe(dataSelecionada);
+        atualizarBotoesMes();
         carregarFeriadosDoMes();          // busca o que faltar na internet e redesenha
     }
 
@@ -192,10 +195,16 @@ public class CalendarioController {
         Tarefas.executar(tarefa);
     }
 
+    private void atualizarBotoesMes() {
+        btAnterior.setText(Formatos.mesAno(mesExibido.minusMonths(1)));
+        btSeguinte.setText(Formatos.mesAno(mesExibido.plusMonths(1)));
+    }
+
     @FXML
     private void onMesAnterior() {
         mesExibido = mesExibido.minusMonths(1);
         montarGrade();
+        atualizarBotoesMes();
         carregarFeriadosDoMes();
     }
 
@@ -203,6 +212,7 @@ public class CalendarioController {
     private void onMesSeguinte() {
         mesExibido = mesExibido.plusMonths(1);
         montarGrade();
+        atualizarBotoesMes();
         carregarFeriadosDoMes();
     }
 
@@ -212,6 +222,7 @@ public class CalendarioController {
         dataSelecionada = LocalDate.now();
         montarGrade();
         mostrarDetalhe(dataSelecionada);
+        atualizarBotoesMes();
         carregarFeriadosDoMes();
     }
 

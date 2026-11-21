@@ -1,8 +1,11 @@
 package com.ufrpe.parkadventure.view;
 
 import com.ufrpe.parkadventure.ParkAdventure;
+import com.ufrpe.parkadventure.app.Contexto;
+import com.ufrpe.parkadventure.service.ServicoAutenticacao.Papel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 
@@ -14,6 +17,19 @@ public class LoginAdmController {
 
     @FXML
     Label lblBoasVindas;
+
+    @FXML
+    Button btCadastroOperador;
+
+    @FXML
+    private void initialize() {
+        // Apenas o administrador pode cadastrar operadores
+        boolean isAdmin = Contexto.SESSAO.getPapel() == Papel.ADMIN;
+        if (btCadastroOperador != null) {
+            btCadastroOperador.setVisible(isAdmin);
+            btCadastroOperador.setManaged(isAdmin);
+        }
+    }
 
     @FXML
     void onRelatorios(ActionEvent event) {
@@ -42,7 +58,7 @@ public class LoginAdmController {
 
     @FXML
     void onMeuPerfil(ActionEvent event) {
-        abrir("view/meu-perfil.fxml");
+        abrir("view/perfil-admin.fxml");
     }
 
     // Item "Configurações" do menu: abre a tela de configurações da aplicação

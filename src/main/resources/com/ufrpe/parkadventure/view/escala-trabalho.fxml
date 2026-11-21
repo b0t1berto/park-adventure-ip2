@@ -53,13 +53,13 @@
                <children>
                   <Label text="Data:" />
                   <DatePicker fx:id="dpData" styleClass="date-picker-popup" />
-                  <Label text="Turno:" />
+                  <Label fx:id="lblTurno" text="Turno:" />
                   <ComboBox fx:id="cbPeriodo" prefWidth="150.0" styleClass="combo-box-base" />
-                  <Label text="Operador:" />
+                  <Label fx:id="lblOperador" text="Operador:" />
                   <ComboBox fx:id="cbOperador" prefWidth="230.0" styleClass="combo-box-base" />
-                  <Button onAction="#onEscalar" styleClass="botao-primario" text="Escalar" />
-                  <Button onAction="#onGerar" styleClass="botao-secundario" text="Gerar escala" />
-                  <Button onAction="#onRemover" styleClass="botao-secundario" text="Remover linha" />
+                  <Button fx:id="btEscalar" onAction="#onEscalar" styleClass="botao-primario" text="Escalar" />
+                  <Button fx:id="btGerar" onAction="#onGerar" styleClass="botao-secundario" text="Gerar escala" />
+                  <Button fx:id="btRemover" onAction="#onRemover" styleClass="botao-secundario" text="Remover linha" />
                   <Button onAction="#onVoltar" styleClass="botao-secundario" text="Voltar" />
                </children>
             </HBox>

@@ -63,7 +63,7 @@
                   <DropShadow color="#aaaaaa" offsetY="2.0" />
                </effect>
             </Button>
-            <Button mnemonicParsing="false" onAction="#onCadastroOperador" prefHeight="45.0" prefWidth="250.0" styleClass="botao-primario" text="Cadastro de Operadores" textFill="WHITE">
+            <Button fx:id="btCadastroOperador" mnemonicParsing="false" onAction="#onCadastroOperador" prefHeight="45.0" prefWidth="250.0" styleClass="botao-primario" text="Cadastro de Operadores" textFill="WHITE">
                <font>
                   <Font name="DejaVu Sans Bold" size="14.0" />
                </font>
