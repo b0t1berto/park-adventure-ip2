@@ -4,6 +4,7 @@ import com.ufrpe.parkadventure.model.atracao.Atracao;
 import com.ufrpe.parkadventure.model.pessoa.Operador;
 import com.ufrpe.parkadventure.model.pessoa.Pessoa;
 import com.ufrpe.parkadventure.model.pessoa.Visitante;
+import com.ufrpe.parkadventure.util.NomesAleatorios;
 
 import java.security.MessageDigest;
 import java.nio.charset.StandardCharsets;
@@ -129,15 +130,16 @@ public class ServicoAutenticacao {
         return candidato;
     }
 
-    // "Operador <atração>" para o primeiro; "Operador 2 <atração>", ... para os demais
+    // Gera um nome aleatório único (nome + sobrenome) para o operador
     private String nomeLivre(Atracao atracao, int n) {
-        while (true) {
-            String nome = (n == 1 ? "Operador " : "Operador " + n + " ") + atracao.getNome();
+        for (int i = 0; i < 100; i++) {
+            String nome = NomesAleatorios.gerarNomeCompleto();
             if (servicoAtracao.buscarOperadorPorNome(nome, atracao.getNome()) == null) {
                 return nome;
             }
-            n++;
         }
+        // fallback (improvável): usa o nome antigo
+        return "Operador " + n + " " + atracao.getNome();
     }
 
     private boolean iguais(String a, String b) {
