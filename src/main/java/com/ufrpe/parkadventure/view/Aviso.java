@@ -1,7 +1,5 @@
 package com.ufrpe.parkadventure.view;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 
 public final class Aviso {
@@ -11,12 +9,7 @@ public final class Aviso {
 
     public static void erro(Label label, String texto) {
         mostrar(label, texto, "erro");
-        Alert alert = new Alert(AlertType.ERROR);
-        alert.initOwner(label.getScene().getWindow());
-        alert.setTitle("ERRO");
-        alert.setHeaderText("Atenção");
-        alert.setContentText(texto);
-        alert.showAndWait();
+        DialogoParque.mostrarErro(label.getScene(), "Atenção", texto);
     }
 
     public static void info(Label label, String texto) { mostrar(label, texto, null); }

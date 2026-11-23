@@ -66,11 +66,9 @@ public class CompraIngressosController {
         // capacidade do dia atingida: não vende ingresso para hoje
         LocalDate hoje = LocalDate.now();
         if (Contexto.SERVICO_CAPACIDADE.estaEsgotado(hoje)) {
-            Alert alerta = new Alert(Alert.AlertType.WARNING);
-            alerta.setHeaderText("Ingressos esgotados para hoje");
-            alerta.setContentText("Infelizmente não restam vagas para hoje.\n\nVocê pode:\n• Escolher uma data futura (Ingresso programado)\n• Comprar um Passe Anual para entrar em outro dia\n\nDesculpe o inconveniente!");
-            alerta.initOwner(((Node) event.getSource()).getScene().getWindow());
-            alerta.showAndWait();
+            DialogoParque.mostrar(Alert.AlertType.WARNING, ((Node) event.getSource()).getScene(),
+                    "Ingressos esgotados para hoje",
+                    "Infelizmente não restam vagas para hoje.\n\nVocê pode:\n• Escolher uma data futura (Ingresso programado)\n• Comprar um Passe Anual para entrar em outro dia\n\nDesculpe o inconveniente!");
             return;
         }
         try {
@@ -88,28 +86,26 @@ public class CompraIngressosController {
         // Verifica se o visitante já comprou um passe anual neste mês
         Visitante visitante = Contexto.SESSAO.getVisitanteAtual();
         if (visitante != null && !Contexto.SERVICO_EMISSAO_INGRESSO.podeComprarPasseAnual(visitante)) {
-            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
-            alerta.initOwner(((Node) event.getSource()).getScene().getWindow());
-            alerta.setHeaderText("Você já possui o Passe Anual");
-            alerta.setContentText("Você já tem um passe anual ativo.\n\nAcesse 'Minhas Reservas' para reservar um novo fura-fila.");
-            alerta.showAndWait();
+            DialogoParque.mostrar(Alert.AlertType.INFORMATION, ((Node) event.getSource()).getScene(),
+                    "Você já possui o Passe Anual",
+                    "Você já tem um passe anual ativo.\n\nAcesse 'Minhas Reservas' para reservar um novo fura-fila.");
             return;
         }
-        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
-        alerta.initOwner(((Node) event.getSource()).getScene().getWindow());
-        alerta.setHeaderText("Passe Anual");
-        alerta.setContentText("O passe anual inclui 12 entradas, com limite de 1 entrada por mês. Deseja continuar?");
-        alerta.showAndWait().ifPresent(response -> {
-            if (response == javafx.scene.control.ButtonType.OK) {
-                try {
-                    PedidoAtual.setDataVisita(null);
-                    PedidoAtual.setTipoIngresso(TipoIngresso.PASSE_ANUAL);
-                    ParkAdventure.proximaCena("view/pagamento.fxml");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        DialogoParque.mostrar(Alert.AlertType.CONFIRMATION, ((Node) event.getSource()).getScene(),
+                "Passe Anual",
+                "O passe anual inclui 12 entradas, com limite de 1 entrada por mês. Deseja continuar?",
+                response -> {
+                    if (response != javafx.scene.control.ButtonType.OK) {
+                        return;
+                    }
+                    try {
+                        PedidoAtual.setDataVisita(null);
+                        PedidoAtual.setTipoIngresso(TipoIngresso.PASSE_ANUAL);
+                        ParkAdventure.proximaCena("view/pagamento.fxml");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
     }
 
     @FXML 

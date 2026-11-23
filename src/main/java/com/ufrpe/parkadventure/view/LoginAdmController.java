@@ -1,13 +1,15 @@
 package com.ufrpe.parkadventure.view;
 
 import com.ufrpe.parkadventure.ParkAdventure;
-import com.ufrpe.parkadventure.app.Contexto;
-import com.ufrpe.parkadventure.service.ServicoAutenticacao.Papel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
+import com.ufrpe.parkadventure.app.Contexto;
+import com.ufrpe.parkadventure.service.ServicoDemonstracao;
+import com.ufrpe.parkadventure.view.controles.DadosExemplo;
 
 // Menu do administrador: leva para relatórios, cadastro de atrações e cadastro de operadores
 public class LoginAdmController {
@@ -17,19 +19,6 @@ public class LoginAdmController {
 
     @FXML
     Label lblBoasVindas;
-
-    @FXML
-    Button btCadastroOperador;
-
-    @FXML
-    private void initialize() {
-        // Apenas o administrador pode cadastrar operadores
-        boolean isAdmin = Contexto.SESSAO.getPapel() == Papel.ADMIN;
-        if (btCadastroOperador != null) {
-            btCadastroOperador.setVisible(isAdmin);
-            btCadastroOperador.setManaged(isAdmin);
-        }
-    }
 
     @FXML
     void onRelatorios(ActionEvent event) {
@@ -56,15 +45,32 @@ public class LoginAdmController {
         abrir("view/visitantes.fxml");
     }
 
-    @FXML
-    void onMeuPerfil(ActionEvent event) {
-        abrir("view/perfil-admin.fxml");
-    }
-
-    // Item "Configurações" do menu: abre a tela de configurações da aplicação
+    // Item "Configurações" do menu: carrega visitantes, ingressos, reservas e escala de exemplo
     @FXML
     void onConfiguracoes(ActionEvent event) {
-        abrir("view/configuracoes.fxml");
+        DialogoParque.mostrar(AlertType.CONFIRMATION, lblBoasVindas.getScene(),
+                "Carregar os dados de demonstração?",
+                "Cria visitantes (senha \"" + ServicoDemonstracao.SENHA_DEMONSTRACAO
+                + "\"), ingressos, uma atração lotada, reservas de fura-fila e a escala dos próximos dias. "
+                + "Os dados atuais são mantidos.",
+                resposta -> {
+                    if (resposta == ButtonType.OK) {
+                        carregarDadosDemonstracao();
+                    }
+                });
+    }
+
+    private void carregarDadosDemonstracao() {
+        String erro = Contexto.SERVICO_DEMONSTRACAO.verificarPodeCarregar();
+        if (erro == null) {
+            DadosExemplo.carregar();                                  // a carga de exemplo que já existia no projeto
+            Contexto.SERVICO_DEMONSTRACAO.liberarAcessoDosVisitantes();
+            Contexto.SESSAO.limpar();                                 // a carga deixa a Carla "logada"; aqui quem entrou é o administrador
+        }
+        DialogoParque.mostrar(erro == null ? AlertType.INFORMATION : AlertType.ERROR,
+                lblBoasVindas.getScene(),
+                erro == null ? "Dados de demonstração carregados." : "Nada foi carregado.",
+                erro == null ? "Veja em Visitantes Cadastrados e em Relatórios do Parque." : erro);
     }
 
     @FXML

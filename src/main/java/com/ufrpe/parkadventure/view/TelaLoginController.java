@@ -9,16 +9,12 @@ import com.ufrpe.parkadventure.model.pessoa.Visitante;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Rectangle;
 
 // Login por usuário e senha: o sistema descobre sozinho se é administrador, operador ou visitante.
 public class TelaLoginController {
@@ -34,28 +30,10 @@ public class TelaLoginController {
 
     @FXML
     private void initialize() {
-        
-        imgPersonagem.setPreserveRatio(true);
-        imgPersonagem.setSmooth(true);
-        lblDivertir.setMinWidth(0);
-
-        areaPersonagem.setMinSize(0, 0);
-        areaPersonagem.setPrefSize(0, 0);
-        if (imgPersonagem.getParent() instanceof Region caixa) {
-            caixa.setMinSize(0, 0);
-        }
-
-        Rectangle recorte = new Rectangle();
-        recorte.widthProperty().bind(areaPersonagem.widthProperty());
-        recorte.heightProperty().bind(areaPersonagem.heightProperty());
-        areaPersonagem.setClip(recorte);
-
-        //Tamanho da imagem acompanha a área. Mínimo 1: fitWidth/fitHeight <= 0 faz o ImageView usar o
-        //Arredonda para baixo para não oscilar por frações de pixel.
         var tamanho = Bindings.createDoubleBinding(
-                () -> Math.max(1, Math.floor(Math.min(
+                () -> Math.max(0, Math.min(
                         areaPersonagem.getWidth() * 0.98,
-                        Math.min(areaPersonagem.getHeight() * 0.78, areaPersonagem.getHeight() - 120)))),
+                        areaPersonagem.getHeight() * 0.78)),
                 areaPersonagem.widthProperty(), areaPersonagem.heightProperty());
         imgPersonagem.fitWidthProperty().bind(tamanho);
         imgPersonagem.fitHeightProperty().bind(tamanho);
@@ -101,7 +79,6 @@ public class TelaLoginController {
 
         try {
             Contexto.SESSAO.limpar();
-            Contexto.SESSAO.setPapel(resultado.papel());
             switch (resultado.papel()) {
                 case ADMIN -> ParkAdventure.proximaCena("view/menu-adm.fxml");
                 case ServicoAutenticacao.Papel.OPERADOR -> {
@@ -120,11 +97,6 @@ public class TelaLoginController {
     }
 
     private void avisar(String titulo, String mensagem) {
-        Alert alert = new Alert(AlertType.ERROR);
-        alert.initOwner(txtUsuario.getScene().getWindow());
-        alert.setTitle("AVISO");
-        alert.setHeaderText(titulo);
-        alert.setContentText(mensagem);
-        alert.showAndWait();
+        DialogoParque.mostrarErro(txtUsuario.getScene(), titulo, mensagem);
     }
 }

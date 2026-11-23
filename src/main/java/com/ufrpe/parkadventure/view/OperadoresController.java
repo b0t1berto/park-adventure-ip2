@@ -8,11 +8,9 @@ import com.ufrpe.parkadventure.model.pessoa.Operador;
 import com.ufrpe.parkadventure.repository.Persistencia;
 import com.ufrpe.parkadventure.service.ServicoAutenticacao;
 import com.ufrpe.parkadventure.service.ServicoGeradorEscala;
-import com.ufrpe.parkadventure.app.NomesAleatorios;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
@@ -93,7 +91,7 @@ public class OperadoresController {
         tabela.getSelectionModel().clearSelection();
         cbAtracao.setDisable(false);
         cbAtracao.setValue(null);
-        txtNome.setText(NomesAleatorios.gerarNomeCompleto());
+        txtNome.setText("");
         txtCpf.setText("");
         txtUsuario.setText("");
         txtSenha.setText("");
@@ -173,15 +171,22 @@ public class OperadoresController {
                     + " operadores para cobrir manhã e tarde todos os dias. Cadastre outro antes de remover este.");
             return;
         }
-        Alert confirmacao = new Alert(AlertType.CONFIRMATION,
-                "Remover " + emEdicao.getNome() + " de " + atracao.getNome() + "? Os turnos dele serão redistribuídos.");
-        confirmacao.initOwner(tabela.getScene().getWindow());
-        if (confirmacao.showAndWait().filter(botao -> botao == ButtonType.OK).isEmpty()) {
-            return;
-        }
-        String nome = emEdicao.getNome();
-        atracao.removerOperador(emEdicao);
-        Contexto.SERVICO_ESCALA.removerDoOperador(emEdicao);
+        Operador selecionado = emEdicao;
+        DialogoParque.mostrar(AlertType.CONFIRMATION, tabela.getScene(),
+                "Remover operador?",
+                "Remover " + selecionado.getNome() + " de " + atracao.getNome()
+                        + "? Os turnos dele serão redistribuídos.",
+                resposta -> {
+                    if (resposta == ButtonType.OK) {
+                        removerOperador(atracao, selecionado);
+                    }
+                });
+    }
+
+    private void removerOperador(Atracao atracao, Operador operador) {
+        String nome = operador.getNome();
+        atracao.removerOperador(operador);
+        Contexto.SERVICO_ESCALA.removerDoOperador(operador);
         Contexto.SERVICO_GERADOR_ESCALA.gerarProximosDias();   // redistribui os turnos que ficaram vagos
         Persistencia.salvar();
         atualizarTabela();

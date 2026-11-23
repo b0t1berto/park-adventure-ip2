@@ -88,7 +88,7 @@
                         <Insets bottom="5.0" />
                      </VBox.margin>
                   </Label>
-                  <Button fx:id="bntComeceAqui" mnemonicParsing="false" onAction="#onCriarConta" prefHeight="60.0" prefWidth="250.0" styleClass="botao-primario" text="Cadastre-se" textFill="WHITE">
+                  <Button fx:id="bntComeceAqui" mnemonicParsing="false" onAction="#onCriarConta" prefHeight="60.0" prefWidth="250.0" styleClass="botao-primario" text="Comece por Aqui" textFill="WHITE">
                      <effect>
                         <DropShadow offsetY="5.0">
                            <color>
@@ -105,7 +105,7 @@
                         <Insets top="15.0" />
                      </VBox.margin>
                   </Label>
-                  <Button fx:id="bntAcesseAqui" mnemonicParsing="false" onAction="#onFazerLogin" prefHeight="60.0" prefWidth="250.0" styleClass="botao-primario" text="Entrar" textFill="WHITE">
+                  <Button fx:id="bntAcesseAqui" mnemonicParsing="false" onAction="#onFazerLogin" prefHeight="60.0" prefWidth="250.0" styleClass="botao-primario" text="Acesse Aqui!" textFill="WHITE">
                      <effect>
                         <DropShadow offsetY="3.0">
                            <color>

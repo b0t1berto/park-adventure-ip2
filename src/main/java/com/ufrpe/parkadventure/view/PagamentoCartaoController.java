@@ -6,7 +6,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.YearMonth;
 
 public class PagamentoCartaoController {

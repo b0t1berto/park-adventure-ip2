@@ -6,7 +6,6 @@ import com.ufrpe.parkadventure.model.pessoa.Visitante;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
@@ -101,14 +100,18 @@ public class VisitantesController {
             return;
         }
         int ingressos = Contexto.SERVICO_INGRESSO.listarPorVisitante(selecionado.getNome()).size();
-        Alert pergunta = new Alert(AlertType.CONFIRMATION);
-        pergunta.setTitle("CONFIRMAÇÃO");
-        pergunta.setHeaderText("Remover \"" + rotuloUsuario(selecionado) + "\"?");
-        pergunta.setContentText("Os ingressos dele (" + ingressos + ") e as reservas de fura-fila também serão apagados. "
-                + "Isso não pode ser desfeito.");
-        if (pergunta.showAndWait().filter(botao -> botao == ButtonType.OK).isEmpty()) {
-            return;
-        }
+        DialogoParque.mostrar(AlertType.CONFIRMATION, tabela.getScene(),
+                "Remover \"" + rotuloUsuario(selecionado) + "\"?",
+                "Os ingressos dele (" + ingressos + ") e as reservas de fura-fila também serão apagados. "
+                        + "Isso não pode ser desfeito.",
+                resposta -> {
+                    if (resposta == ButtonType.OK) {
+                        removerVisitante(selecionado);
+                    }
+                });
+    }
+
+    private void removerVisitante(Visitante selecionado) {
         String nome = rotuloUsuario(selecionado);
         if (Contexto.SERVICO_PERFIL_VISITANTE.removerComDependencias(selecionado)) {
             formulario.limpar();

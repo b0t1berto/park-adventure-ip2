@@ -6,7 +6,6 @@ import com.ufrpe.parkadventure.ParkAdventure;
 import com.ufrpe.parkadventure.model.atracao.Atracao;
 import com.ufrpe.parkadventure.model.atracao.Infantil;
 import com.ufrpe.parkadventure.model.pessoa.Visitante;
-import com.ufrpe.parkadventure.view.Aviso;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
