@@ -62,7 +62,9 @@ public final class DadosExemplo {
         for (Visitante v : new Visitante[]{miguel, pedro, edivan, ana, bruno, carla}) {
             Contexto.SERVICO_EMISSAO_INGRESSO.emitirIngresso(v, TipoIngresso.DIARIA, hoje, false);
         }
-        Contexto.SERVICO_EMISSAO_INGRESSO.emitirIngresso(ana, TipoIngresso.PASSE_ANUAL, hoje, false);
+        // passe anual: a entrada do mês de Ana é usada hoje (no passe, só vale o dia escolhido em "Usar passe")
+        var passeAna = Contexto.SERVICO_EMISSAO_INGRESSO.emitirIngresso(ana, TipoIngresso.PASSE_ANUAL, hoje, false);
+        Contexto.SERVICO_PASSE_ANUAL.usar(passeAna, hoje);
 
         // Atração lotada + reservas do fura-fila (usa as regras reais do ServicoAcesso)
         Contexto.SERVICO_ACESSO.registrarAcesso(ana, Contexto.SERVICO_INGRESSO.buscarUltimo(ana.getNome()), piratas);       // 1/2

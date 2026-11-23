@@ -91,14 +91,14 @@ public class CompraIngressosController {
             Alert alerta = new Alert(Alert.AlertType.INFORMATION);
             alerta.initOwner(((Node) event.getSource()).getScene().getWindow());
             alerta.setHeaderText("Você já possui o Passe Anual");
-            alerta.setContentText("Você já tem um passe anual ativo.\n\nAcesse 'Minhas Reservas' para reservar um novo fura-fila.");
+            alerta.setContentText("Você já tem um passe anual ativo.\n\nUse o botão 'Usar passe' no menu para escolher o dia de cada mês.");
             alerta.showAndWait();
             return;
         }
         Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
         alerta.initOwner(((Node) event.getSource()).getScene().getWindow());
         alerta.setHeaderText("Passe Anual");
-        alerta.setContentText("O passe anual inclui 12 entradas, com limite de 1 entrada por mês. Deseja continuar?");
+        alerta.setContentText("O passe anual inclui 12 entradas, 1 por mês. Em 'Usar passe' você escolhe, mês a mês, o dia da visita. Deseja continuar?");
         alerta.showAndWait().ifPresent(response -> {
             if (response == javafx.scene.control.ButtonType.OK) {
                 try {

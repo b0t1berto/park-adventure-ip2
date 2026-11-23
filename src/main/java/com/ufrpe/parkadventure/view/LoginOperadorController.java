@@ -44,14 +44,10 @@ public class LoginOperadorController {
         ir("view/controle-atracao.fxml");
     }
 
+    // O operador só enxerga a PRÓPRIA escala (a escala geral e o calendário ficam com o administrador)
     @FXML
-    void onEscala(ActionEvent event) {
-        ir("view/escala-trabalho.fxml");
-    }
-
-    @FXML
-    void onCalendario(ActionEvent event) {
-        ir("view/calendario.fxml");
+    void onMinhaEscala(ActionEvent event) {
+        ir("view/minha-escala.fxml");
     }
 
     // Item "Configurações" do menu: abre a tela de configurações da aplicação

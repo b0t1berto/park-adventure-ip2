@@ -207,6 +207,13 @@ public final class Persistencia {
         LocalDate validade = LocalDate.parse(c[4], DATA);
         Ingresso novo = new Ingresso(visitante, tipo, compra, validade, Double.parseDouble(c[5]));
         novo.setFormaPagamento(vazioParaNulo(campo(c, 6)));
+        // passe anual: dias escolhidos, separados por vírgula (arquivos antigos não tinham esse campo)
+        String diasPasse = campo(c, 7);
+        if (!diasPasse.isBlank()) {
+            for (String dia : diasPasse.split(",")) {
+                novo.adicionarDiaPasse(LocalDate.parse(dia.trim(), DATA));
+            }
+        }
         Contexto.SERVICO_INGRESSO.cadastrar(novo);
     }
 
@@ -249,7 +256,8 @@ public final class Persistencia {
             linhas.add(String.join(SEPARADOR, "I",
                     texto(i.getVisitante().getNome()), i.getTipoIngresso().name(),
                     data(i.getDataCompra()), data(i.getDataValidade()),
-                    String.valueOf(i.getValor()), texto(i.getFormaPagamento())));
+                    String.valueOf(i.getValor()), texto(i.getFormaPagamento()),
+                    i.getDiasPasse().stream().map(Persistencia::data).collect(java.util.stream.Collectors.joining(","))));
         }
 
         // reservas do fura-fila de hoje em diante (as antigas não precisam ser guardadas)

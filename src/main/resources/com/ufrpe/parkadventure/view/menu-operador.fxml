@@ -8,25 +8,28 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="tela-parque" stylesheets="@tema-parque.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.view.LoginOperadorController">
+<BorderPane maxHeight="Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="tela-parque" stylesheets="@tema-parque.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.view.LoginOperadorController">
    <top>
-      <Pane prefHeight="68.0" prefWidth="600.0" style="-fx-background-color: #5ba6b9;" styleClass="cabecalho-pagamento" stylesheets="@tema-parque.css" BorderPane.alignment="CENTER">
+      <BorderPane prefHeight="68.0" style="-fx-background-color: #5ba6b9; -fx-padding: 0 12 0 12;" styleClass="cabecalho-pagamento" BorderPane.alignment="CENTER">
          <effect>
             <DropShadow offsetY="3.0" />
          </effect>
-         <children>
-            <Label fx:id="lblBoasVindas" alignment="CENTER" layoutX="42.0" layoutY="19.0" prefHeight="36.0" prefWidth="440.0" text="Bem-Vindo ao Menu de Operador!" textFill="WHITE">
+         <left>
+            <Region prefWidth="64.0" BorderPane.alignment="CENTER" />
+         </left>
+         <center>
+            <Label fx:id="lblBoasVindas" maxWidth="Infinity" alignment="CENTER" text="Bem-Vindo ao Menu de Operador!" textFill="WHITE">
                <font>
                   <Font name="DejaVu Sans Mono Bold" size="16.0" />
                </font>
             </Label>
-            
-            <!-- MenuButton com a imagem do usuário -->
-            <MenuButton layoutX="492.0" layoutY="8.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand;">
+         </center>
+         <right>
+            <MenuButton BorderPane.alignment="CENTER" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand;">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#onMeuPerfil" text="Meu Perfil" />
                 <MenuItem mnemonicParsing="false" onAction="#onConfiguracoes" text="Configurações" />
@@ -41,8 +44,8 @@
                   </ImageView>
                </graphic>
             </MenuButton>
-         </children>
-      </Pane>
+         </right>
+      </BorderPane>
    </top>
    <center>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0" stylesheets="@tema-parque.css" BorderPane.alignment="CENTER">
@@ -55,15 +58,7 @@
                   <DropShadow color="#aaaaaa" offsetY="2.0" />
                </effect>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="250.0" styleClass="botao-primario" stylesheets="@tema-parque.css" text="Escala de Trabalho" onAction="#onEscala" textFill="WHITE">
-               <font>
-                  <Font name="DejaVu Sans Bold" size="14.0" />
-               </font>
-               <effect>
-                  <DropShadow color="#aaaaaa" offsetY="2.0" />
-               </effect>
-            </Button>
-            <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="250.0" styleClass="botao-primario" stylesheets="@tema-parque.css" text="Calendário" onAction="#onCalendario" textFill="WHITE">
+            <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="250.0" styleClass="botao-primario" stylesheets="@tema-parque.css" text="Minha Escala" onAction="#onMinhaEscala" textFill="WHITE">
                <font>
                   <Font name="DejaVu Sans Bold" size="14.0" />
                </font>

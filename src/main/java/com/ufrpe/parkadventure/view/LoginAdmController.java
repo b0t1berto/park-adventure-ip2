@@ -52,6 +52,11 @@ public class LoginAdmController {
     }
 
     @FXML
+    void onCalendario(ActionEvent event) {
+        abrir("view/calendario.fxml");
+    }
+
+    @FXML
     void onVisitantes(ActionEvent event) {
         abrir("view/visitantes.fxml");
     }

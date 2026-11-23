@@ -20,9 +20,6 @@ import java.util.List;
  */
 public class ServicoAcesso {
 
-    // Com o Passe Anual, o visitante só pode reservar o fura-fila para os próximos dias
-    private static final int DIAS_DE_ANTECEDENCIA = 30;
-
     private final ServicoAtracao servicoAtracao;
     private final ServicoIngresso servicoIngresso;
 
@@ -73,10 +70,6 @@ public class ServicoAcesso {
         ResultadoAcesso problema = validar(visitante, ingresso, atracao, data);
         if (problema != null) {
             return problema;
-        }
-        // Passe anual: limite de 1 reserva de fura-fila por mês
-        if (ingresso.getTipoIngresso() == TipoIngresso.PASSE_ANUAL && jaReservouNoMes(visitante, ingresso)) {
-            return ResultadoAcesso.LIMITE_MENSAL_EXCEDIDO;
         }
         if (!FilaVirtual.horarioValido(horario)) {
             return ResultadoAcesso.HORARIO_INVALIDO;
@@ -136,14 +129,16 @@ public class ServicoAcesso {
     // ---------------------------------------------------------------- ingressos e datas
 
     /**
-     * O ingresso vale no dia? Diária: só no dia de validade. Passe anual: da compra até a validade.
+     * O ingresso vale no dia? Diária: só no dia de validade. Passe anual: só nos dias que o visitante
+     * escolheu em "Usar passe" (1 por mês), dentro da validade.
      */
     public boolean ingressoVale(Ingresso ingresso, LocalDate dia) {
         if (ingresso == null || dia == null) {
             return false;
         }
         if (ingresso.getTipoIngresso() == TipoIngresso.PASSE_ANUAL) {
-            return !dia.isBefore(ingresso.getDataCompra()) && !dia.isAfter(ingresso.getDataValidade());
+            return ingresso.temDiaPasse(dia)
+                    && !dia.isBefore(ingresso.getDataCompra()) && !dia.isAfter(ingresso.getDataValidade());
         }
         return dia.equals(ingresso.getDataValidade());
     }
@@ -158,9 +153,9 @@ public class ServicoAcesso {
         }
         LocalDate hoje = LocalDate.now();
         if (ingresso.getTipoIngresso() == TipoIngresso.PASSE_ANUAL) {
-            LocalDate fim = hoje.plusDays(DIAS_DE_ANTECEDENCIA);
-            for (LocalDate dia = hoje; !dia.isAfter(fim); dia = dia.plusDays(1)) {
-                if (ingressoVale(ingresso, dia)) {
+            // só os dias que o visitante já escolheu para usar o passe
+            for (LocalDate dia : ingresso.getDiasPasse()) {
+                if (!dia.isBefore(hoje) && ingressoVale(ingresso, dia)) {
                     datas.add(dia);
                 }
             }
@@ -260,26 +255,5 @@ public class ServicoAcesso {
      */
     public boolean estaLotada(Atracao atracao) {
         return atracao.estaLotada();
-    }
-
-    /**
-     * Verifica se um visitante com passe anual já fez reserva de fura-fila no mês corrente.
-     * O passe anual permite no máximo 1 reserva por mês (12 entradas no total).
-     */
-    private boolean jaReservouNoMes(Visitante visitante, Ingresso ingresso) {
-        LocalDate agora = LocalDate.now();
-        int anoAtual = agora.getYear();
-        int mesAtual = agora.getMonthValue();
-        for (Atracao atracao : servicoAtracao.listarTodas()) {
-            for (Reserva reserva : atracao.getFilaVirtual().getReservas()) {
-                if (reserva.getVisitante() == visitante
-                        && reserva.estaAtiva()
-                        && reserva.getData().getYear() == anoAtual
-                        && reserva.getData().getMonthValue() == mesAtual) {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 }

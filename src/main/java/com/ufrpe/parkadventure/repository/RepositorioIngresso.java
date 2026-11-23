@@ -56,13 +56,16 @@ public class RepositorioIngresso {
         return total;
     }
 
-    // Quantidade de diárias que dão entrada no parque na data informada (dia da VISITA, não o da compra).
-    // O passe anual não entra na conta: ele não é vendido para um dia específico.
+    // Quantidade de ingressos que dão entrada no parque na data informada (dia da VISITA, não o da compra):
+    // as diárias daquele dia e os passes anuais cujo dono escolheu esse dia.
     public int consultarQuantidadeParaVisita(LocalDate data) {
         int total = 0;
         for (Ingresso ingresso : ingressos) {
-            if (ingresso.getTipoIngresso() == TipoIngresso.DIARIA
-                    && data.equals(ingresso.getDataValidade())) {
+            boolean diaria = ingresso.getTipoIngresso() == TipoIngresso.DIARIA
+                    && data.equals(ingresso.getDataValidade());
+            boolean passe = ingresso.getTipoIngresso() == TipoIngresso.PASSE_ANUAL
+                    && ingresso.temDiaPasse(data);
+            if (diaria || passe) {
                 total++;
             }
         }

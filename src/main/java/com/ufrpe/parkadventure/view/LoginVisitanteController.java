@@ -37,6 +37,12 @@ public class LoginVisitanteController {
         ir("view/verificacao-atracoes.fxml");
     }
 
+    // Passe anual: escolher o dia de cada mês em que o visitante vai usar a entrada
+    @FXML
+    void onUsarPasse(ActionEvent event) {
+        ir("view/usar-passe.fxml");
+    }
+
     @FXML
     void onMinhasReservas(ActionEvent event) {
         ir("view/fila-virtual.fxml");

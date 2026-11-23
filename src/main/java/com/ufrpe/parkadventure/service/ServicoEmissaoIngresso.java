@@ -76,24 +76,18 @@ public class ServicoEmissaoIngresso {
     }
 
     /**
-     * Verifica se um visitante já comprou um passe anual no mês corrente.
-     * O passe anual permite no máximo 1 compra por mês (12 entradas no total).
-     * Retorna true se o visitante pode comprar, false se já comprou neste mês.
+     * Verifica se o visitante pode comprar um passe anual: só se ele não tiver outro passe ainda dentro da validade.
+     * O passe anual dá direito a 1 entrada por mês (12 no total), no dia escolhido em "Usar passe".
      */
     public boolean podeComprarPasseAnual(Visitante visitante) {
         if (visitante == null) {
             return true;
         }
-        LocalDate agora = LocalDate.now();
-        int anoAtual = agora.getYear();
-        int mesAtual = agora.getMonthValue();
+        LocalDate hoje = LocalDate.now();
         ArrayList<Ingresso> ingressos = servicoIngresso.listarPorVisitante(visitante.getNome());
         for (Ingresso ingresso : ingressos) {
-            if (ingresso.getTipoIngresso() == TipoIngresso.PASSE_ANUAL) {
-                LocalDate dataCompra = ingresso.getDataCompra();
-                if (dataCompra.getYear() == anoAtual && dataCompra.getMonthValue() == mesAtual) {
-                    return false;
-                }
+            if (ingresso.getTipoIngresso() == TipoIngresso.PASSE_ANUAL && ingresso.valido(hoje)) {
+                return false;
             }
         }
         return true;

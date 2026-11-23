@@ -8,25 +8,28 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane minHeight="480.0" minWidth="600.0" prefHeight="480.0" prefWidth="600.0" styleClass="tela-parque" stylesheets="@tema-parque.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.view.LoginAdmController">
    <top>
-      <Pane prefHeight="68.0" prefWidth="600.0" style="-fx-background-color: #5ba6b9;" styleClass="cabecalho-pagamento" BorderPane.alignment="CENTER">
+      <BorderPane prefHeight="68.0" style="-fx-background-color: #5ba6b9; -fx-padding: 0 12 0 12;" styleClass="cabecalho-pagamento" BorderPane.alignment="CENTER">
          <effect>
             <DropShadow offsetY="3.0" />
          </effect>
-         <children>
-            <Label fx:id="lblBoasVindas" alignment="CENTER" layoutX="5.0" layoutY="11.0" prefHeight="49.0" prefWidth="515.0" text="Bem-Vindo ao Menu de Administrador!" textFill="WHITE" wrapText="true">
+         <left>
+            <Region prefWidth="64.0" BorderPane.alignment="CENTER" />
+         </left>
+         <center>
+            <Label fx:id="lblBoasVindas" maxWidth="Infinity" alignment="CENTER" text="Bem-Vindo ao Menu de Administrador!" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="DejaVu Sans Mono Bold" size="16.0" />
                </font>
             </Label>
-            
-            <!-- MenuButton com a imagem do usuário -->
-            <MenuButton layoutX="495.0" layoutY="8.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand;">
+         </center>
+         <right>
+            <MenuButton BorderPane.alignment="CENTER" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand;">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#onMeuPerfil" text="Meu Perfil" />
                 <MenuItem mnemonicParsing="false" onAction="#onConfiguracoes" text="Configurações" />
@@ -41,8 +44,8 @@
                   </ImageView>
                </graphic>
             </MenuButton>
-         </children>
-      </Pane>
+         </right>
+      </BorderPane>
    </top>
    <center>
       <VBox alignment="CENTER" maxWidth="500.0" prefHeight="200.0" prefWidth="100.0" spacing="25.0" BorderPane.alignment="CENTER">
@@ -72,6 +75,14 @@
                </effect>
             </Button>
             <Button mnemonicParsing="false" onAction="#onEscala" prefHeight="45.0" prefWidth="250.0" styleClass="botao-primario" text="Escala de Trabalho" textFill="WHITE">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="14.0" />
+               </font>
+               <effect>
+                  <DropShadow color="#aaaaaa" offsetY="2.0" />
+               </effect>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#onCalendario" prefHeight="45.0" prefWidth="250.0" styleClass="botao-primario" text="Calendário" textFill="WHITE">
                <font>
                   <Font name="DejaVu Sans Bold" size="14.0" />
                </font>

@@ -2,6 +2,8 @@ package com.ufrpe.parkadventure.view;
 
 import com.ufrpe.parkadventure.ParkAdventure;
 import com.ufrpe.parkadventure.app.PedidoAtual;
+import com.ufrpe.parkadventure.model.ingresso.Ingresso;
+import com.ufrpe.parkadventure.model.ingresso.TipoIngresso;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -15,6 +17,8 @@ public class PagamentoConfirmadoController {
 
     @FXML private Label lblSituacao, lblCodigo, lblForma, lblValor, lblData;
     @FXML private Button btnReservar, btnNovoPedido, btnConcluir;
+
+    private boolean passeComprado;
 
     @FXML
     private void initialize() {
@@ -30,17 +34,22 @@ public class PagamentoConfirmadoController {
         lblForma.setText(forma);
         lblValor.setText(String.format("R$ %.2f", valor));
         lblSituacao.setText(situacao);
-        if (PedidoAtual.concluir(forma, valor) == null && PedidoAtual.ultimaTentativaEsgotada()) {
+        Ingresso emitido = PedidoAtual.concluir(forma, valor);
+        if (emitido == null && PedidoAtual.ultimaTentativaEsgotada()) {
             // a capacidade do dia foi atingida entre o pagamento e a emissão: o ingresso não é emitido
             lblSituacao.setText("Capacidade esgotada: ingresso não emitido");
             btnReservar.setDisable(true);
+        } else if (emitido != null && emitido.getTipoIngresso() == TipoIngresso.PASSE_ANUAL) {
+            // passe anual: o próximo passo é escolher o dia do mês em "Usar passe"
+            passeComprado = true;
+            btnReservar.setText("Usar passe");
         }
     }
 
-    // Com o ingresso emitido já dá para reservar o fura-fila
+    // Com o ingresso emitido já dá para reservar o fura-fila (no passe anual, primeiro se escolhe o dia)
     @FXML
     private void aoReservarFilaVirtual() {
-        ir("view/fila-virtual-cadastro.fxml");
+        ir(passeComprado ? "view/usar-passe.fxml" : "view/fila-virtual-cadastro.fxml");
     }
 
     @FXML
