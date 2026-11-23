@@ -1,7 +1,6 @@
 package com.ufrpe.parkadventure.view;
 
 import com.ufrpe.parkadventure.app.Contexto;
-import com.ufrpe.parkadventure.service.ServicoAutenticacao.Papel;
 
 import com.ufrpe.parkadventure.ParkAdventure;
 import com.ufrpe.parkadventure.view.controles.Tarefas;
@@ -11,14 +10,11 @@ import com.ufrpe.parkadventure.model.pessoa.PeriodoTrabalho;
 import com.ufrpe.parkadventure.repository.RepositorioEscalaTrabalho.Turno;
 import com.ufrpe.parkadventure.repository.Persistencia;
 import com.ufrpe.parkadventure.service.ServicoGeradorEscala;
-import com.ufrpe.parkadventure.view.Aviso;
-import com.ufrpe.parkadventure.view.Formatos;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
@@ -31,7 +27,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -42,8 +37,6 @@ public class EscalaTrabalhoController {
     @FXML private DatePicker dpData;
     @FXML private ComboBox<Operador> cbOperador;
     @FXML private ComboBox<PeriodoTrabalho> cbPeriodo;
-    @FXML private Label lblTurno, lblOperador;
-    @FXML private Button btEscalar, btGerar, btRemover;
 
     private record LinhaEscala(Turno turno, String data, String dia, String periodo, String nomeOperador,
                                String nomeAtracao, String observacao) { }
@@ -91,30 +84,6 @@ public class EscalaTrabalhoController {
         lblProximoFeriado.setText("Consultando feriados na BrasilAPI…");
         atualizarTabela();
         carregarFeriadosEmSegundoPlano();
-        restringirAcessoPorPapel();
-    }
-
-    private void restringirAcessoPorPapel() {
-        // Apenas o admin pode escalar, gerar escala e remover linhas
-        boolean isAdmin = Contexto.SESSAO.getPapel() == Papel.ADMIN;
-        if (!isAdmin) {
-            dpData.setVisible(false);
-            dpData.setManaged(false);
-            lblTurno.setVisible(false);
-            lblTurno.setManaged(false);
-            cbPeriodo.setVisible(false);
-            cbPeriodo.setManaged(false);
-            lblOperador.setVisible(false);
-            lblOperador.setManaged(false);
-            cbOperador.setVisible(false);
-            cbOperador.setManaged(false);
-            btEscalar.setVisible(false);
-            btEscalar.setManaged(false);
-            btGerar.setVisible(false);
-            btGerar.setManaged(false);
-            btRemover.setVisible(false);
-            btRemover.setManaged(false);
-        }
     }
 
     private List<Operador> operadoresDisponiveis() {

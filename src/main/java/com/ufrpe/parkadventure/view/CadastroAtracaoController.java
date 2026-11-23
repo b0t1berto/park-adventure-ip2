@@ -10,7 +10,6 @@ import com.ufrpe.parkadventure.model.atracao.Radical;
 import com.ufrpe.parkadventure.repository.Persistencia;
 import com.ufrpe.parkadventure.service.ServicoAutenticacao;
 import com.ufrpe.parkadventure.service.ServicoGeradorEscala;
-import com.ufrpe.parkadventure.view.Aviso;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -20,7 +19,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 
@@ -156,14 +154,18 @@ public class CadastroAtracaoController {
             Aviso.erro(lblResultado, "Selecione uma atração na tabela para remover.");
             return;
         }
-        Alert pergunta = new Alert(AlertType.CONFIRMATION);
-        pergunta.setTitle("CONFIRMAÇÃO");
-        pergunta.setHeaderText("Remover \"" + selecionada.getNome() + "\"?");
-        pergunta.setContentText("Os operadores dela (" + selecionada.getOperadores().size() + "), as reservas de fura-fila "
-                + "e os turnos deles na escala também serão apagados. Isso não pode ser desfeito.");
-        if (pergunta.showAndWait().filter(botao -> botao == ButtonType.OK).isEmpty()) {
-            return;
-        }
+        DialogoParque.mostrar(AlertType.CONFIRMATION, tabela.getScene(),
+                "Remover \"" + selecionada.getNome() + "\"?",
+                "Os operadores dela (" + selecionada.getOperadores().size() + "), as reservas de fura-fila "
+                        + "e os turnos deles na escala também serão apagados. Isso não pode ser desfeito.",
+                resposta -> {
+                    if (resposta == ButtonType.OK) {
+                        removerAtracao(selecionada);
+                    }
+                });
+    }
+
+    private void removerAtracao(Atracao selecionada) {
         String nome = selecionada.getNome();
         String erro = Contexto.SERVICO_GESTAO_ATRACAO.removerAtracao(selecionada);
         if (erro != null) {

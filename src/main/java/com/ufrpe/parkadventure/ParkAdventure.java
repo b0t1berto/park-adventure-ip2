@@ -42,7 +42,7 @@ public class ParkAdventure extends Application {
             DadosExemplo.carregarAtracoesPadrao();
         }
         // toda atração precisa de um operador salvo, com usuário e senha
-        if (Contexto.SERVICO_AUTENTICACAO.garantirOperadoresDasAtracoes(ServicoGeradorEscala.MIN_OPERADORES_POR_ATRACAO) || Contexto.SERVICO_GERADOR_ESCALA.gerarProximosDias().turnosCriados() > 0) {
+        if (Contexto.SERVICO_AUTENTICACAO.garantirOperadoresDasAtracoes(ServicoGeradorEscala.MIN_OPERADORES_POR_ATRACAO) | Contexto.SERVICO_GERADOR_ESCALA.gerarProximosDias().turnosCriados() > 0) {
             Persistencia.salvar();   // operadores e escala dos próximos dias ficam gravados
         }
         exibir("view/menu.fxml");

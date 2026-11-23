@@ -16,7 +16,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Period;
 
@@ -150,22 +149,16 @@ public class PagamentoController {
 
         String erro = validar();
         if (erro != null) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setHeaderText("Verifique os dados");
-            alert.setContentText(erro);
-            alert.initOwner(btnPagar.getScene().getWindow());
-            alert.showAndWait();
+            DialogoParque.mostrar(Alert.AlertType.WARNING, btnPagar.getScene(), "Verifique os dados", erro);
             return;
         }
 
         // confere a capacidade do dia da visita ANTES de ir para o pagamento
         LocalDate diaVisita = PedidoAtual.getDataVisita();
         if (Contexto.SERVICO_CAPACIDADE.estaEsgotado(diaVisita)) {
-            Alert esgotado = new Alert(Alert.AlertType.WARNING);
-            esgotado.setHeaderText("Ingressos esgotados para hoje");
-            esgotado.setContentText("Infelizmente não restam vagas para hoje.\n\nVocê pode:\n• Escolher uma data futura (Ingresso programado)\n• Comprar um Passe Anual para entrar em outro dia\n\nDesculpe o inconveniente!");
-            esgotado.initOwner(btnPagar.getScene().getWindow());
-            esgotado.showAndWait();
+            DialogoParque.mostrar(Alert.AlertType.WARNING, btnPagar.getScene(),
+                    "Ingressos esgotados para hoje",
+                    "Infelizmente não restam vagas para hoje.\n\nVocê pode:\n• Escolher uma data futura (Ingresso programado)\n• Comprar um Passe Anual para entrar em outro dia\n\nDesculpe o inconveniente!");
             return;
         }
 

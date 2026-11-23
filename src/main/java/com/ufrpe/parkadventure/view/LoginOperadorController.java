@@ -35,10 +35,8 @@ public class LoginOperadorController {
         // só entra na tela de controle quem está no próprio turno
         String motivo = TurnoDoOperador.motivoSemAcesso(Contexto.SESSAO.getOperadorAtual(), LocalDateTime.now());
         if (motivo != null) {
-            Alert aviso = new Alert(Alert.AlertType.WARNING, motivo);
-            aviso.setHeaderText("Fora do seu turno");
-            aviso.initOwner(lblBoasVindas.getScene().getWindow());
-            aviso.showAndWait();
+            DialogoParque.mostrar(Alert.AlertType.WARNING, lblBoasVindas.getScene(),
+                    "Fora do seu turno", motivo);
             return;
         }
         ir("view/controle-atracao.fxml");
@@ -52,17 +50,6 @@ public class LoginOperadorController {
     @FXML
     void onCalendario(ActionEvent event) {
         ir("view/calendario.fxml");
-    }
-
-    // Item "Configurações" do menu: abre a tela de configurações da aplicação
-    @FXML
-    void onConfiguracoes(ActionEvent event) {
-        ir("view/configuracoes.fxml");
-    }
-
-    @FXML
-    void onMeuPerfil(ActionEvent event) {
-        ir("view/perfil-operador.fxml");
     }
 
     @FXML

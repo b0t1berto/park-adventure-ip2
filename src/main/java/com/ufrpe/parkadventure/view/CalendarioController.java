@@ -3,18 +3,15 @@ package com.ufrpe.parkadventure.view;
 import com.ufrpe.parkadventure.app.Contexto;
 
 import com.ufrpe.parkadventure.ParkAdventure;
-import com.ufrpe.parkadventure.view.controles.GeradorCalendarioHTML;
+// import com.ufrpe.parkadventure.view.controles.GeradorCalendarioHTML;
 import com.ufrpe.parkadventure.view.controles.Tarefas;
 import com.ufrpe.parkadventure.model.atracao.Atracao;
 import com.ufrpe.parkadventure.model.pessoa.Operador;
-import com.ufrpe.parkadventure.view.Formatos;
 
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.ColumnConstraints;
@@ -36,7 +33,6 @@ public class CalendarioController {
 
     @FXML private Label lblMes, lblStatusApi, lblDetalhe;
     @FXML private GridPane grade;
-    @FXML private Button btAnterior, btSeguinte;
 
     private YearMonth mesExibido = YearMonth.now();
     private LocalDate dataSelecionada = LocalDate.now();
@@ -46,7 +42,6 @@ public class CalendarioController {
         configurarGrade();
         montarGrade();                    // desenha já com o que existir no cache
         mostrarDetalhe(dataSelecionada);
-        atualizarBotoesMes();
         carregarFeriadosDoMes();          // busca o que faltar na internet e redesenha
     }
 
@@ -195,16 +190,10 @@ public class CalendarioController {
         Tarefas.executar(tarefa);
     }
 
-    private void atualizarBotoesMes() {
-        btAnterior.setText(Formatos.mesAno(mesExibido.minusMonths(1)));
-        btSeguinte.setText(Formatos.mesAno(mesExibido.plusMonths(1)));
-    }
-
     @FXML
     private void onMesAnterior() {
         mesExibido = mesExibido.minusMonths(1);
         montarGrade();
-        atualizarBotoesMes();
         carregarFeriadosDoMes();
     }
 
@@ -212,7 +201,6 @@ public class CalendarioController {
     private void onMesSeguinte() {
         mesExibido = mesExibido.plusMonths(1);
         montarGrade();
-        atualizarBotoesMes();
         carregarFeriadosDoMes();
     }
 
@@ -222,7 +210,6 @@ public class CalendarioController {
         dataSelecionada = LocalDate.now();
         montarGrade();
         mostrarDetalhe(dataSelecionada);
-        atualizarBotoesMes();
         carregarFeriadosDoMes();
     }
 
@@ -232,7 +219,7 @@ public class CalendarioController {
         Task<Void> tarefa = new Task<>() {
             @Override
             protected Void call() throws Exception {
-                GeradorCalendarioHTML.gerarEAbrir(ano);
+                // GeradorCalendarioHTML.gerarEAbrir(ano);
                 return null;
             }
         };
@@ -241,7 +228,8 @@ public class CalendarioController {
             Throwable ex = tarefa.getException();
             String mensagem = (ex != null) ? ex.getMessage() : "Erro desconhecido";
             lblStatusApi.setText("Erro ao abrir calendário: " + mensagem);
-            new Alert(AlertType.ERROR, "Não foi possível abrir o calendário no navegador.\n\n" + mensagem).showAndWait();
+            DialogoParque.mostrar(AlertType.ERROR, lblStatusApi.getScene(),
+                    "Não foi possível abrir o calendário no navegador", mensagem);
         });
         Tarefas.executar(tarefa);
     }

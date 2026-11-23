@@ -18,9 +18,9 @@
             <HBox alignment="TOP_CENTER" spacing="10.0">
                <children>
                   <Button onAction="#onVoltar" styleClass="botao-secundario" text="Voltar" />
-                  <Button fx:id="btAnterior" onAction="#onMesAnterior" styleClass="botao-secundario" text="Anterior" />
+                  <Button onAction="#onMesAnterior" styleClass="botao-secundario" text="Anterior" />
                   <Label fx:id="lblMes" alignment="CENTER" minWidth="220.0" styleClass="mes-cabecalho" />
-                  <Button fx:id="btSeguinte" onAction="#onMesSeguinte" styleClass="botao-secundario" text="Seguinte" />
+                  <Button onAction="#onMesSeguinte" styleClass="botao-secundario" text="Seguinte" />
                   <Button onAction="#onHoje" styleClass="botao-secundario" text="Hoje" />
                   <Button onAction="#onAbrirCalendarioNavegador" styleClass="botao-secundario" text="🌐 Abrir no navegador" />
                   <Label fx:id="lblStatusApi" styleClass="status-cabecalho" />

@@ -10,8 +10,6 @@ import com.ufrpe.parkadventure.model.atracao.Infantil;
 import com.ufrpe.parkadventure.model.ingresso.Ingresso;
 import com.ufrpe.parkadventure.model.pessoa.Visitante;
 import com.ufrpe.parkadventure.repository.Persistencia;
-import com.ufrpe.parkadventure.view.Aviso;
-import com.ufrpe.parkadventure.view.Formatos;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;

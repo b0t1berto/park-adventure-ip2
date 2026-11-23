@@ -12,7 +12,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.application.Platform;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -85,17 +84,19 @@ public class RedirecionamentoPagamentoController {
 
         // alerta de feriado antes de prosseguir para o pagamento
         if (feriado) {
-            Stage stage = (Stage) lblMensagem.getScene().getWindow();
             String motivo = nomeFeriado.orElse("feriado nacional");
-            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
-            alerta.initOwner(stage);
-            alerta.setHeaderText("Preço especial em feriado");
-            alerta.setContentText(
+            DialogoParque.mostrar(Alert.AlertType.INFORMATION, lblMensagem.getScene(),
+                "Preço especial em feriado",
                 "A data escolhida coincide com " + motivo + ". O ingresso terá um acréscimo de "
-                + (int) Contexto.SERVICO_EMISSAO_INGRESSO.getAcrescimoFeriadoPercentual() + "% no valor.");
-            alerta.showAndWait();
+                + (int) Contexto.SERVICO_EMISSAO_INGRESSO.getAcrescimoFeriadoPercentual() + "% no valor.",
+                resposta -> avancarParaPagamento());
+            return;
         }
 
+        avancarParaPagamento();
+    }
+
+    private void avancarParaPagamento() {
         try {
             // a tela de redirecionamento é só de passagem: não entra no histórico
             PagamentoController pagamento = ParkAdventure.substituirCena("view/pagamento.fxml");

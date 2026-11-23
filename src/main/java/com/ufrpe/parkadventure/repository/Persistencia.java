@@ -13,7 +13,6 @@ import com.ufrpe.parkadventure.model.pessoa.Operador;
 import com.ufrpe.parkadventure.model.pessoa.PeriodoTrabalho;
 import com.ufrpe.parkadventure.model.pessoa.Responsavel;
 import com.ufrpe.parkadventure.model.pessoa.Visitante;
-import com.ufrpe.parkadventure.app.NomesAleatorios;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -26,9 +25,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public final class Persistencia {
     private Persistencia() { }
@@ -38,8 +35,6 @@ public final class Persistencia {
     private static final String SEPARADOR = "\t";
     private static Path arquivo = localizarArquivo();
     private static boolean carregado = false;
-    // mapeia "Operador Montanha Russa" → "Ana Silva" para que a escala encontre o operador pelo nome antigo
-    private static Map<String, String> mapaNomeAntigoParaNovo = new HashMap<>();
 
     private static Path localizarArquivo() {
         Path atual = Paths.get("").toAbsolutePath();
@@ -63,7 +58,6 @@ public final class Persistencia {
             return;   // carregar duas vezes duplicaria visitantes, ingressos e reservas
         }
         carregado = true;
-        mapaNomeAntigoParaNovo.clear();
         System.out.println("[Persistencia] Tentando carregar arquivo em: " + arquivo);
         System.out.println("[Persistencia] Arquivo existe: " + Files.exists(arquivo));
         if (!Files.exists(arquivo)) {
@@ -151,10 +145,7 @@ public final class Persistencia {
 
     // E <data> <nome do operador> <atração em que ele trabalha> <turno: MANHA ou TARDE>
     private static void lerEscala(String[] c) {
-        String nomeArquivo = c[2];
-        // se o nome foi alterado (genérico → aleatório), usa o nome novo para buscar
-        String nomeBusca = mapaNomeAntigoParaNovo.getOrDefault(nomeArquivo, nomeArquivo);
-        Operador operador = Contexto.SERVICO_ATRACAO.buscarOperadorPorNome(nomeBusca, c[3]);
+        Operador operador = Contexto.SERVICO_ATRACAO.buscarOperadorPorNome(c[2], c[3]);
         if (operador == null) {
             return;   // o operador não existe mais
         }
@@ -183,14 +174,7 @@ public final class Persistencia {
     private static void lerOperador(String[] c) {
         Atracao atracao = Contexto.SERVICO_ATRACAO.buscar(c[4]);
         if (atracao != null && Contexto.SERVICO_ATRACAO.buscarOperadorPorNome(c[1], c[4]) == null) {
-            String nomeAntigo = c[1];
-            String nome = nomeAntigo;
-            // se o nome é genérico ("Operador Montanha Russa"), substitui por um nome aleatório
-            if (NomesAleatorios.ehNomeGenerico(nome)) {
-                nome = NomesAleatorios.gerarNomeCompleto();
-                mapaNomeAntigoParaNovo.put(nomeAntigo, nome);
-            }
-            Operador operador = new Operador(nome, c[2], vazioParaNulo(c[3]), c[4]);
+            Operador operador = new Operador(c[1], c[2], vazioParaNulo(c[3]), c[4]);
             operador.setUsuario(vazioParaNulo(campo(c, 5)));
             operador.setSenhaHash(vazioParaNulo(campo(c, 6)));
             atracao.adicionarOperador(operador);

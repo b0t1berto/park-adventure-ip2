@@ -8,9 +8,8 @@ import com.ufrpe.parkadventure.repository.Persistencia;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -42,20 +41,10 @@ public class TelaCriarContaController {
 
     @FXML
     private void initialize() {
-        // A área do personagem não pode "empurrar" o tamanho da tela: o tamanho dela
-        // vem só do GridPane.
-        // Sem isso, a imagem (muito grande) fazia a janela crescer ao
-        // abrir/redimensionar.
-        areaPersonagem.setMinSize(0, 0);
-        areaPersonagem.setPrefSize(0, 0);
-
-        // Mínimo 1: ImageView com fitWidth/fitHeight <= 0 usa o tamanho ORIGINAL da
-        // imagem (era o bug,
-        // pois no carregamento a área ainda tem tamanho 0).
         var tamanho = Bindings.createDoubleBinding(
-                () -> Math.max(1, Math.min(
+                () -> Math.max(0, Math.min(
                         areaPersonagem.getWidth() * 0.98,
-                        Math.min(areaPersonagem.getHeight() * 0.78, areaPersonagem.getHeight() - 120))),
+                        areaPersonagem.getHeight() * 0.78)),
                 areaPersonagem.widthProperty(), areaPersonagem.heightProperty());
         imgPersonagem.fitWidthProperty().bind(tamanho);
         imgPersonagem.fitHeightProperty().bind(tamanho);
@@ -82,52 +71,43 @@ public class TelaCriarContaController {
             erro("Suas informações estão inválidas!", problema);
             return;
         }
-        // administrador, visitantes e operadores entram pelo mesmo login: o usuário é
-        // único no sistema
+        // administrador, visitantes e operadores entram pelo mesmo login: o usuário é único no sistema
         if (!Contexto.SERVICO_AUTENTICACAO.usuarioDisponivel(usuario, null)) {
             erro("Conta não criada", "Esse usuário não está disponível. Escolha outro.");
             return;
         }
 
-        Alert confirmacao = new Alert(AlertType.CONFIRMATION);
-        confirmacao.initOwner(txtUsuario.getScene().getWindow());
-        confirmacao.setTitle("CONFIRMAÇÃO");
-        confirmacao.setHeaderText("Confirme os dados da sua conta");
-        confirmacao.setContentText("Seu usuário será: " + usuario + " ?");
-        if (confirmacao.showAndWait().filter(botao -> botao == ButtonType.OK).isEmpty()) {
-            return;
-        }
+        DialogoParque.mostrar(Alert.AlertType.CONFIRMATION, txtUsuario.getScene(),
+                "Confirme os dados da sua conta", "Seu usuário será: " + usuario + " ?",
+                resposta -> {
+                    if (resposta == ButtonType.OK) {
+                        cadastrarConta(usuario, senha);
+                    }
+                });
+    }
 
-        // o nome da conta é o usuário. Nascimento e altura são só marcadores: a pessoa
-        // informa os dados de
+    private void cadastrarConta(String usuario, String senha) {
+        // o nome da conta é o usuário. Nascimento e altura são só marcadores: a pessoa informa os dados de
         // verdade (nome completo, CPF...) na compra do ingresso.
         Visitante visitante = new Visitante(usuario, "01/01/2000", null, 0);
         visitante.setUsuario(usuario);
-        visitante.definirSenha(senha); // só o hash da senha é guardado (ver Senha)
+        visitante.definirSenha(senha);   // só o hash da senha é guardado (ver Senha)
         if (!Contexto.SERVICO_VISITANTE.cadastrar(visitante)) {
             erro("Conta não criada", "Esse usuário não está disponível. Escolha outro.");
             return;
         }
         Persistencia.salvar();
 
-        Alert pronto = new Alert(AlertType.INFORMATION);
-        pronto.initOwner(txtUsuario.getScene().getWindow());
-        pronto.setTitle("CONTA CRIADA");
-        pronto.setHeaderText("Conta criada com sucesso!");
-        pronto.setContentText(
-                "Seu nome completo, CPF, altura e data de nascimento serão pedidos na compra do ingresso.");
-        pronto.showAndWait();
-
-        txtUsuario.setText("");
-        txtSenha.setText("");
+        DialogoParque.mostrar(Alert.AlertType.INFORMATION, txtUsuario.getScene(),
+                "Conta criada com sucesso!",
+                "Seu nome completo, CPF, altura e data de nascimento serão pedidos na compra do ingresso.",
+                resposta -> {
+                    txtUsuario.clear();
+                    txtSenha.clear();
+                });
     }
 
     private void erro(String titulo, String mensagem) {
-        Alert alert = new Alert(AlertType.ERROR);
-        alert.initOwner(txtUsuario.getScene().getWindow());
-        alert.setTitle("ERRO");
-        alert.setHeaderText(titulo);
-        alert.setContentText(mensagem);
-        alert.showAndWait();
+        DialogoParque.mostrarErro(txtUsuario.getScene(), titulo, mensagem);
     }
 }
