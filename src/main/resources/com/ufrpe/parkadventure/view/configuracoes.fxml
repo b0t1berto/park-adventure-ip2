@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="600.0" prefWidth="880.0" styleClass="tela-parque" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.view.ConfiguracoesController">
+   <top>
+      <VBox alignment="TOP_CENTER" spacing="6.0" styleClass="cabecalho-pagamento">
+         <children>
+            <Label styleClass="titulo-cabecalho" text="Configurações" />
+            <Label styleClass="subtitulo-cabecalho" text="Personalize sua experiência no Park Adventure" />
+         </children>
+         <padding>
+            <Insets bottom="18.0" left="24.0" right="24.0" top="18.0" />
+         </padding>
+      </VBox>
+   </top>
+   <center>
+      <ScrollPane fitToWidth="true" styleClass="rolagem-parque">
+         <content>
+            <VBox spacing="20.0">
+               <padding>
+                  <Insets bottom="12.0" left="20.0" right="20.0" top="16.0" />
+               </padding>
+
+               <!-- ====== Aparência ====== -->
+               <VBox spacing="10.0">
+                  <Label styleClass="secao-titulo" text="Aparência" />
+
+
+                  <VBox spacing="8.0">
+                     <Label styleClass="rotulo-campo" text="Tamanho da fonte" />
+                     <HBox spacing="10.0" alignment="CENTER_LEFT">
+                        <Button onAction="#onDiminuirFonte" text="A-" styleClass="botao-secundario" prefWidth="60.0" />
+                        <Label fx:id="lblTamanhoFonte" text="13 px" styleClass="valor" HBox.hgrow="ALWAYS" />
+                        <Button onAction="#onAumentarFonte" text="A+" styleClass="botao-secundario" prefWidth="60.0" />
+                     </HBox>
+                  </VBox>
+               </VBox>
+
+               <Separator prefWidth="Infinity" />
+
+               <!-- ====== Sobre ====== -->
+               <VBox spacing="10.0">
+                  <Label styleClass="secao-titulo" text="Sobre o Park Adventure" />
+
+                  <VBox spacing="6.0">
+                     <Label text="Park Adventure — Sistema de Gerenciamento de Parque de Diversões" style="-fx-font-weight: bold; -fx-text-fill: #14365d;" />
+                     <Label text="Versão 1.0.0" style="-fx-text-fill: #5c6b7a;" />
+                     <Label text="Desenvolvido com JavaFX para fins acadêmicos na UFRPE (Universidade Federal Rural de Pernambuco)." wrapText="true" style="-fx-text-fill: #5c6b7a;" />
+                     <Label text="Este sistema permite gerenciar um parque de diversões completo: cadastrar visitantes e operadores, vender ingressos, controlar filas e reservas, montar escalas de trabalho e gerar relatórios. O objetivo é simular o funcionamento real de um parque, com diferentes perfis de usuário (visitante, operador e administrador) e fluxos de trabalho integrados." wrapText="true" style="-fx-text-fill: #5c6b7a;" />
+                  </VBox>
+
+                  <VBox spacing="6.0">
+                     <Label styleClass="rotulo-campo" text="Tecnologias utilizadas" />
+                     <VBox spacing="3.0">
+                        <Label text="• Java 17+ com JavaFX 21 para a interface gráfica" style="-fx-text-fill: #5c6b7a;" />
+                        <Label text="• Arquitetura MVC (Model-View-Controller) com injeção de dependência" style="-fx-text-fill: #5c6b7a;" />
+                        <Label text="• Persistência em arquivo de texto (dados/dados.txt) para salvar os dados entre sessões" style="-fx-text-fill: #5c6b7a;" />
+                        <Label text="• Maven para gerenciamento de dependências e compilação" style="-fx-text-fill: #5c6b7a;" />
+                     </VBox>
+                  </VBox>
+
+                  <VBox spacing="6.0">
+                     <Label styleClass="rotulo-campo" text="Licença" />
+                     <Label text="Este projeto é de uso acadêmico. O código-fonte está disponível para fins educacionais e pode ser utilizado como referência para estudos de arquitetura de software e desenvolvimento de interfaces gráficas." wrapText="true" style="-fx-text-fill: #5c6b7a;" />
+                  </VBox>
+
+                  <VBox spacing="6.0">
+                     <Label styleClass="rotulo-campo" text="Estatísticas do parque" />
+                     <Label text="Quantidade de registros atualmente salvos no sistema:" style="-fx-text-fill: #5c6b7a;" />
+                     <HBox spacing="20.0">
+                        <VBox spacing="2.0">
+                           <Label fx:id="lblTotalAtracoes" styleClass="valor" text="0" />
+                           <Label text="Atrações cadastradas" style="-fx-text-fill: #5c6b7a;" />
+                        </VBox>
+                        <VBox spacing="2.0">
+                           <Label fx:id="lblTotalVisitantes" styleClass="valor" text="0" />
+                           <Label text="Visitantes cadastrados" style="-fx-text-fill: #5c6b7a;" />
+                        </VBox>
+                        <VBox spacing="2.0">
+                           <Label fx:id="lblTotalIngressos" styleClass="valor" text="0" />
+                           <Label text="Ingressos vendidos" style="-fx-text-fill: #5c6b7a;" />
+                        </VBox>
+                     </HBox>
+                  </VBox>
+               </VBox>
+
+            </VBox>
+         </content>
+      </ScrollPane>
+   </center>
+   <bottom>
+      <VBox spacing="10.0" styleClass="rodape-acoes">
+         <children>
+            <Label fx:id="lblResultado" maxWidth="Infinity" wrapText="true" />
+            <FlowPane alignment="CENTER" hgap="10.0" vgap="8.0">
+               <children>
+                  <Button onAction="#onVoltar" styleClass="botao-secundario" text="Voltar" />
+               </children>
+            </FlowPane>
+         </children>
+         <padding>
+            <Insets bottom="14.0" left="20.0" right="20.0" top="14.0" />
+         </padding>
+      </VBox>
+   </bottom>
+   <stylesheets>
+      <URL value="@estilo.css" />
+      <URL value="@tema-parque.css" />
+   </stylesheets>
+</BorderPane>

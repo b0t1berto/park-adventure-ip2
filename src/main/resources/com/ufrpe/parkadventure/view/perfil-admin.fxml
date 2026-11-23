@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="500.0" prefWidth="700.0" styleClass="tela-parque" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.view.PerfilAdminController">
+   <top>
+      <VBox alignment="TOP_CENTER" spacing="6.0" styleClass="cabecalho-pagamento">
+         <children>
+            <Label styleClass="titulo-cabecalho" text="Meu perfil" />
+            <Label fx:id="lblUsuario" styleClass="subtitulo-cabecalho" text="Administrador" />
+         </children>
+         <padding>
+            <Insets bottom="18.0" left="24.0" right="24.0" top="18.0" />
+         </padding>
+      </VBox>
+   </top>
+   <center>
+      <ScrollPane fitToWidth="true" styleClass="rolagem-parque">
+         <content>
+            <VBox spacing="14.0">
+               <children>
+                  <Label styleClass="secao-titulo" text="Meus dados" />
+                  <GridPane hgap="14.0" vgap="10.0">
+                     <columnConstraints>
+                        <ColumnConstraints minWidth="130.0" />
+                        <ColumnConstraints hgrow="ALWAYS" />
+                        <ColumnConstraints minWidth="130.0" />
+                        <ColumnConstraints hgrow="ALWAYS" />
+                     </columnConstraints>
+                     <children>
+                        <Label styleClass="rotulo-campo" text="Nome" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <TextField fx:id="txtNome" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="0" />
+                        <Label styleClass="rotulo-campo" text="CPF" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <TextField fx:id="txtCpf" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label styleClass="rotulo-campo" text="Cargo / Atração" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <TextField fx:id="txtCargo" maxWidth="Infinity" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                        <Label styleClass="rotulo-campo" text="Usuário (login)" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                        <TextField fx:id="txtUsuario" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" />
+                     </children>
+                  </GridPane>
+                  <Label styleClass="secao-titulo" text="Trocar senha" />
+                  <GridPane hgap="14.0" vgap="10.0">
+                     <columnConstraints>
+                        <ColumnConstraints minWidth="130.0" />
+                        <ColumnConstraints hgrow="ALWAYS" />
+                        <ColumnConstraints minWidth="130.0" />
+                        <ColumnConstraints hgrow="ALWAYS" />
+                     </columnConstraints>
+                     <children>
+                        <Label styleClass="rotulo-campo" text="Senha atual" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <PasswordField fx:id="txtSenhaAtual" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="0" />
+                        <Label styleClass="rotulo-campo" text="Nova senha" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <PasswordField fx:id="txtSenhaNova" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
+                        <Label styleClass="rotulo-campo" text="Confirmar senha" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                        <PasswordField fx:id="txtSenhaConfirmar" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" />
+                     </children>
+                  </GridPane>
+               </children>
+               <padding>
+                  <Insets bottom="12.0" left="20.0" right="20.0" top="16.0" />
+               </padding>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </center>
+   <bottom>
+      <VBox spacing="10.0" styleClass="rodape-acoes">
+         <children>
+            <Label fx:id="lblResultado" maxWidth="Infinity" wrapText="true" />
+            <FlowPane alignment="CENTER" hgap="10.0" vgap="8.0">
+               <children>
+                  <Button onAction="#onAlterarSenha" styleClass="botao-primario" text="Alterar senha" />
+                  <Button onAction="#onVoltar" styleClass="botao-secundario" text="Voltar" />
+               </children>
+            </FlowPane>
+         </children>
+         <padding>
+            <Insets bottom="14.0" left="20.0" right="20.0" top="14.0" />
+         </padding>
+      </VBox>
+   </bottom>
+   <stylesheets>
+      <URL value="@estilo.css" />
+      <URL value="@tema-parque.css" />
+   </stylesheets>
+</BorderPane>
