@@ -4,7 +4,7 @@ import com.ufrpe.parkadventure.model.atracao.Atracao;
 import com.ufrpe.parkadventure.model.pessoa.Operador;
 import com.ufrpe.parkadventure.model.pessoa.Pessoa;
 import com.ufrpe.parkadventure.model.pessoa.Visitante;
-import com.ufrpe.parkadventure.util.NomesAleatorios;
+import com.ufrpe.parkadventure.app.NomesAleatorios;
 
 import java.security.MessageDigest;
 import java.nio.charset.StandardCharsets;

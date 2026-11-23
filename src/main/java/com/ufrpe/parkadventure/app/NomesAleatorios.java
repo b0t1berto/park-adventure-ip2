@@ -1,4 +1,4 @@
-package com.ufrpe.parkadventure.util;
+package com.ufrpe.parkadventure.app;
 
 import java.util.Random;
 

@@ -13,7 +13,7 @@ import com.ufrpe.parkadventure.model.pessoa.Operador;
 import com.ufrpe.parkadventure.model.pessoa.PeriodoTrabalho;
 import com.ufrpe.parkadventure.model.pessoa.Responsavel;
 import com.ufrpe.parkadventure.model.pessoa.Visitante;
-import com.ufrpe.parkadventure.util.NomesAleatorios;
+import com.ufrpe.parkadventure.app.NomesAleatorios;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
