@@ -40,3 +40,4 @@ build/
 .DS_Store
 ### Dados locais do app ###
 dados/dados.txt
+target/
