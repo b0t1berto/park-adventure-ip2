@@ -93,7 +93,7 @@ public class RedirecionamentoPagamentoController {
             alerta.setContentText(
                 "A data escolhida coincide com " + motivo + ". O ingresso terá um acréscimo de "
                 + (int) Contexto.SERVICO_EMISSAO_INGRESSO.getAcrescimoFeriadoPercentual() + "% no valor.");
-            alerta.showAndWait();
+            Aviso.mostrar(alerta);
         }
 
         try {

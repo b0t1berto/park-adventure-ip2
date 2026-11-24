@@ -70,7 +70,7 @@ public class CompraIngressosController {
             alerta.setHeaderText("Ingressos esgotados para hoje");
             alerta.setContentText("Infelizmente não restam vagas para hoje.\n\nVocê pode:\n• Escolher uma data futura (Ingresso programado)\n• Comprar um Passe Anual para entrar em outro dia\n\nDesculpe o inconveniente!");
             alerta.initOwner(((Node) event.getSource()).getScene().getWindow());
-            alerta.showAndWait();
+            Aviso.mostrar(alerta);
             return;
         }
         try {
@@ -92,14 +92,14 @@ public class CompraIngressosController {
             alerta.initOwner(((Node) event.getSource()).getScene().getWindow());
             alerta.setHeaderText("Você já possui o Passe Anual");
             alerta.setContentText("Você já tem um passe anual ativo.\n\nUse o botão 'Usar passe' no menu para escolher o dia de cada mês.");
-            alerta.showAndWait();
+            Aviso.mostrar(alerta);
             return;
         }
         Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
         alerta.initOwner(((Node) event.getSource()).getScene().getWindow());
         alerta.setHeaderText("Passe Anual");
         alerta.setContentText("O passe anual inclui 12 entradas, 1 por mês. Em 'Usar passe' você escolhe, mês a mês, o dia da visita. Deseja continuar?");
-        alerta.showAndWait().ifPresent(response -> {
+        Aviso.mostrar(alerta).ifPresent(response -> {
             if (response == javafx.scene.control.ButtonType.OK) {
                 try {
                     PedidoAtual.setDataVisita(null);

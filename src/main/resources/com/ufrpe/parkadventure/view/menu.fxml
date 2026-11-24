@@ -100,12 +100,12 @@
                         <Insets bottom="60.0" />
                      </VBox.margin>
                   </Button>
-                  <Label fx:id="lblDesejaReservar" prefHeight="73.0" prefWidth="315.0" styleClass="cartao-pagamento" text="Deseja acessar sua reserva?">
+                  <Label fx:id="lblDesejaReservar" prefHeight="73.0" prefWidth="315.0" styleClass="cartao-pagamento" text="Deseja acessar sua Conta?">
                      <VBox.margin>
                         <Insets top="15.0" />
                      </VBox.margin>
                   </Label>
-                  <Button fx:id="bntAcesseAqui" mnemonicParsing="false" onAction="#onFazerLogin" prefHeight="60.0" prefWidth="250.0" styleClass="botao-primario" text="Entrar" textFill="WHITE">
+                  <Button fx:id="bntAcesseAqui" mnemonicParsing="false" onAction="#onFazerLogin" prefHeight="60.0" prefWidth="250.0" styleClass="botao-primario" text="Acesse aqui!" textFill="WHITE">
                      <effect>
                         <DropShadow offsetY="3.0">
                            <color>

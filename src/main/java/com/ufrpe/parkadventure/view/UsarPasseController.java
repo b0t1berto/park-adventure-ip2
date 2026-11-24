@@ -110,7 +110,7 @@ public class UsarPasseController {
         confirmacao.setHeaderText("Usar o passe em " + Formatos.data(dia) + "?");
         confirmacao.setContentText("Será a sua entrada de " + Formatos.mesAno(java.time.YearMonth.from(dia))
                 + ". Você ainda pode trocar o dia enquanto ele não chegar.");
-        if (confirmacao.showAndWait().orElse(ButtonType.CANCEL) != ButtonType.OK) {
+        if (Aviso.mostrar(confirmacao).orElse(ButtonType.CANCEL) != ButtonType.OK) {
             return;
         }
         motivo = Contexto.SERVICO_PASSE_ANUAL.usar(passe, dia);

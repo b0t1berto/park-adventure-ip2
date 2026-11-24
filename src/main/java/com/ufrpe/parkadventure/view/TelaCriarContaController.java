@@ -94,7 +94,7 @@ public class TelaCriarContaController {
         confirmacao.setTitle("CONFIRMAÇÃO");
         confirmacao.setHeaderText("Confirme os dados da sua conta");
         confirmacao.setContentText("Seu usuário será: " + usuario + " ?");
-        if (confirmacao.showAndWait().filter(botao -> botao == ButtonType.OK).isEmpty()) {
+        if (Aviso.mostrar(confirmacao).filter(botao -> botao == ButtonType.OK).isEmpty()) {
             return;
         }
 
@@ -116,7 +116,7 @@ public class TelaCriarContaController {
         pronto.setHeaderText("Conta criada com sucesso!");
         pronto.setContentText(
                 "Seu nome completo, CPF, altura e data de nascimento serão pedidos na compra do ingresso.");
-        pronto.showAndWait();
+        Aviso.mostrar(pronto);
 
         txtUsuario.setText("");
         txtSenha.setText("");
@@ -128,6 +128,6 @@ public class TelaCriarContaController {
         alert.setTitle("ERRO");
         alert.setHeaderText(titulo);
         alert.setContentText(mensagem);
-        alert.showAndWait();
+        Aviso.mostrar(alert);
     }
 }

@@ -241,7 +241,8 @@ public class CalendarioController {
             Throwable ex = tarefa.getException();
             String mensagem = (ex != null) ? ex.getMessage() : "Erro desconhecido";
             lblStatusApi.setText("Erro ao abrir calendário: " + mensagem);
-            new Alert(AlertType.ERROR, "Não foi possível abrir o calendário no navegador.\n\n" + mensagem).showAndWait();
+            Aviso.mostrar(new Alert(AlertType.ERROR,
+                    "Não foi possível abrir o calendário no navegador.\n\n" + mensagem));
         });
         Tarefas.executar(tarefa);
     }

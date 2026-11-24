@@ -125,6 +125,6 @@ public class TelaLoginController {
         alert.setTitle("AVISO");
         alert.setHeaderText(titulo);
         alert.setContentText(mensagem);
-        alert.showAndWait();
+        Aviso.mostrar(alert);
     }
 }

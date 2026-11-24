@@ -20,8 +20,8 @@
 .mes          { -fx-font-size: 17px; -fx-font-weight: bold; -fx-text-fill: #14365d; }
 
 /* mensagens de feedback (classes trocadas pela classe Aviso) */
-.ok    { -fx-text-fill: #1b7a3a; }
-.erro  { -fx-text-fill: #b3261e; }
+.ok    { -fx-text-fill: #1b7a3a; -fx-font-weight: bold; }
+.erro  { -fx-text-fill: #b3261e; -fx-font-weight: bold; }
 
 .aviso {
     -fx-background-color: #fff4d6;

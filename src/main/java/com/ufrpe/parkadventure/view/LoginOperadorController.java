@@ -26,7 +26,7 @@ public class LoginOperadorController {
     private void initialize() {
         Operador operador = Contexto.SESSAO.getOperadorAtual();
         if (operador != null && lblBoasVindas != null) {
-            lblBoasVindas.setText("Olá, " + operador.getNome() + ", Bem-vindo ao Menu de Operador");
+            lblBoasVindas.setText("Bem-vindo, " + operador.getNome());
         }
     }
 
@@ -38,7 +38,7 @@ public class LoginOperadorController {
             Alert aviso = new Alert(Alert.AlertType.WARNING, motivo);
             aviso.setHeaderText("Fora do seu turno");
             aviso.initOwner(lblBoasVindas.getScene().getWindow());
-            aviso.showAndWait();
+            Aviso.mostrar(aviso);
             return;
         }
         ir("view/controle-atracao.fxml");

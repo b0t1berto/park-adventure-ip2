@@ -14,7 +14,7 @@
 .tela-parque #lblNome { -fx-font-size: 20px; }
 .tela-parque #lblSenha { -fx-font-size: 20px; }
 .tela-parque #lblBemVindoDeVolta { -fx-font-size: 20px; }
-.tela-parque #lblBoasVindas { -fx-font-size: 20px; }
+.tela-parque #lblBoasVindas { -fx-font-size: 36px; }
 
 
 .card-ingresso {
@@ -57,6 +57,86 @@
     -fx-padding: 18 16 18 16;
 }
 
+.cabecalho-menu {
+    -fx-background-color: linear-gradient(to right, #3a9bff, #1f6fd1);
+    -fx-padding: 0 16;
+    -fx-min-height: 76px;
+    -fx-pref-height: 76px;
+}
+.titulo-cabecalho-menu {
+    -fx-font-family: "Fredoka";
+    -fx-font-size: 21px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+.menu-perfil {
+    -fx-background-color: transparent;
+    -fx-background-radius: 24;
+    -fx-border-color: transparent;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 24;
+    -fx-padding: 6 9 6 7;
+    -fx-min-width: 62px;
+    -fx-min-height: 54px;
+    -fx-cursor: hand;
+}
+.menu-perfil:hover,
+.menu-perfil:showing {
+    -fx-background-color: rgba(255,255,255,0.1);
+    -fx-border-color: transparent;
+    -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.42), 13, 0.28, 0, 0),
+                dropshadow(gaussian, rgba(20,54,93,0.24), 7, 0.12, 0, 2);
+}
+.menu-perfil:focused:not(:hover):not(:showing) {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-effect: none;
+}
+.menu-perfil:pressed {
+    -fx-background-color: rgba(20,54,93,0.14);
+    -fx-border-color: transparent;
+    -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.3), 9, 0.22, 0, 0);
+}
+.menu-perfil > .label {
+    -fx-padding: 0;
+    -fx-spacing: 8;
+}
+.menu-perfil > .arrow-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0 2 0 7;
+}
+.menu-perfil > .arrow-button > .arrow {
+    -fx-background-color: white;
+    -fx-pref-width: 8px;
+    -fx-pref-height: 6px;
+}
+.context-menu {
+    -fx-background-color: white;
+    -fx-background-radius: 14;
+    -fx-border-color: #bfe3ff;
+    -fx-border-radius: 14;
+    -fx-border-width: 1;
+    -fx-padding: 6;
+    -fx-effect: dropshadow(gaussian, rgba(20,54,93,0.22), 12, 0.12, 0, 4);
+}
+.context-menu .menu-item {
+    -fx-background-color: transparent;
+    -fx-background-radius: 9;
+    -fx-padding: 9 14;
+    -fx-cursor: hand;
+}
+.context-menu .menu-item > .label {
+    -fx-font-family: "Fredoka";
+    -fx-font-size: 14px;
+    -fx-text-fill: #14365d;
+}
+.context-menu .menu-item:focused {
+    -fx-background-color: #e3f0ff;
+}
+.context-menu .menu-item:focused > .label {
+    -fx-text-fill: #1858a6;
+    -fx-font-weight: bold;
+}
 .rolagem-parque,
 .rolagem-parque > .viewport { -fx-background-color: transparent; }
 .rolagem-parque { -fx-background-insets: 0; -fx-padding: 0; }
@@ -178,6 +258,98 @@
 }
 
 .erro-parque { -fx-text-fill: #c62828; -fx-font-weight: bold; -fx-text-alignment: center; }
+.ok    { -fx-text-fill: #1b7a3a; -fx-font-weight: bold; }
+.erro  { -fx-text-fill: #b3261e; -fx-font-weight: bold; }
+
+.alerta-parque {
+    -fx-background-color: white;
+    -fx-background-radius: 20;
+    -fx-border-color: #bfe3ff;
+    -fx-border-width: 1;
+    -fx-border-radius: 20;
+    -fx-font-family: "Fredoka";
+    -fx-background-insets: 0;
+    -fx-border-insets: 0;
+    -fx-padding: 0;
+    -fx-spacing: 0;
+}
+.alerta-cabecalho {
+    -fx-background-color: linear-gradient(to right, #dcebff, #f1f8ff);
+    -fx-background-radius: 20 20 0 0;
+    -fx-padding: 20 22 18 22;
+    -fx-min-height: 82;
+}
+.alerta-erro {
+    -fx-border-color: #e7a5a0;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+}
+.alerta-aviso {
+    -fx-border-color: #e7c56e;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+}
+.alerta-confirmacao {
+    -fx-border-color: #8fb4e3;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+}
+.alerta-erro .alerta-cabecalho {
+    -fx-background-color: linear-gradient(to right, #fff0ef, #fff9f8);
+    -fx-background-radius: 20 20 0 0;
+}
+.alerta-aviso .alerta-cabecalho {
+    -fx-background-color: linear-gradient(to right, #fff6df, #fffcf3);
+    -fx-background-radius: 20 20 0 0;
+}
+.alerta-confirmacao .alerta-cabecalho {
+    -fx-background-color: linear-gradient(to right, #dcebff, #f1f8ff);
+    -fx-background-radius: 20 20 0 0;
+}
+.alerta-icone { -fx-fit-width: 42; -fx-fit-height: 42; }
+.alerta-titulo {
+    -fx-font-family: "Fredoka";
+    -fx-text-fill: #14365d;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+.alerta-erro .alerta-titulo { -fx-text-fill: #b3261e; }
+.alerta-aviso .alerta-titulo { -fx-text-fill: #a76500; }
+.alerta-conteudo { -fx-padding: 22 26 18 26; }
+.alerta-mensagem {
+    -fx-font-family: "Fredoka";
+    -fx-font-size: 15px;
+    -fx-text-fill: #40566d;
+    -fx-line-spacing: 3px;
+}
+.alerta-acoes {
+    -fx-background-color: #f7fbff;
+    -fx-background-radius: 0 0 20 20;
+    -fx-border-color: #e5f1fc transparent transparent transparent;
+    -fx-padding: 14 22 16 22;
+}
+.alerta-acoes .button {
+    -fx-font-family: "Fredoka";
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-padding: 8 24 8 24;
+    -fx-cursor: hand;
+}
+.alerta-acoes .alerta-botao-primario {
+    -fx-background-color: linear-gradient(to bottom right, #3a9bff, #1f6fd1);
+    -fx-text-fill: white;
+}
+.alerta-acoes .alerta-botao-primario:hover { -fx-background-color: #1858a6; }
+.alerta-acoes .alerta-botao-secundario {
+    -fx-background-color: white;
+    -fx-border-color: #1f6fd1;
+    -fx-border-width: 1.5;
+    -fx-text-fill: #14365d;
+}
+.alerta-acoes .alerta-botao-secundario:hover { -fx-background-color: #eaf6ff; }
+.alerta-acoes .button:focused { -fx-effect: dropshadow(gaussian, rgba(31,111,209,0.35), 8, 0, 0, 0); }
 
 .campo-data { -fx-font-size: 16px; }
 

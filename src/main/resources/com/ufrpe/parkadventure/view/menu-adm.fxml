@@ -14,29 +14,25 @@
 
 <BorderPane minHeight="480.0" minWidth="600.0" prefHeight="480.0" prefWidth="600.0" styleClass="tela-parque" stylesheets="@tema-parque.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ufrpe.parkadventure.view.LoginAdmController">
    <top>
-      <BorderPane prefHeight="68.0" style="-fx-background-color: #5ba6b9; -fx-padding: 0 12 0 12;" styleClass="cabecalho-pagamento" BorderPane.alignment="CENTER">
+      <BorderPane prefHeight="76.0" styleClass="cabecalho-menu" BorderPane.alignment="CENTER">
          <effect>
             <DropShadow offsetY="3.0" />
          </effect>
          <left>
-            <Region prefWidth="64.0" BorderPane.alignment="CENTER" />
+            <Region prefWidth="56.0" BorderPane.alignment="CENTER" />
          </left>
          <center>
-            <Label fx:id="lblBoasVindas" maxWidth="Infinity" alignment="CENTER" text="Bem-Vindo ao Menu de Administrador!" textFill="WHITE" wrapText="true">
-               <font>
-                  <Font name="DejaVu Sans Mono Bold" size="16.0" />
-               </font>
-            </Label>
+            <Label fx:id="lblBoasVindas" maxWidth="Infinity" alignment="CENTER" styleClass="titulo-cabecalho-menu" text="Bem-Vindo ao Menu de Administrador!" wrapText="true" />
          </center>
          <right>
-            <MenuButton BorderPane.alignment="CENTER" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand;">
+            <MenuButton BorderPane.alignment="CENTER" mnemonicParsing="false" styleClass="menu-perfil">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#onMeuPerfil" text="Meu Perfil" />
                 <MenuItem mnemonicParsing="false" onAction="#onConfiguracoes" text="Configurações" />
                 <MenuItem fx:id="menuVoltar" mnemonicParsing="false" onAction="#onVoltar" text="Sair" />
               </items>
                <graphic>
-                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <!-- URL provisória da imagem, será substituída posteriormente -->
                         <Image url="@imagens/unnamed.jpg" />

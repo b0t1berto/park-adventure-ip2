@@ -154,7 +154,7 @@ public class PagamentoController {
             alert.setHeaderText("Verifique os dados");
             alert.setContentText(erro);
             alert.initOwner(btnPagar.getScene().getWindow());
-            alert.showAndWait();
+            Aviso.mostrar(alert);
             return;
         }
 
@@ -165,7 +165,7 @@ public class PagamentoController {
             esgotado.setHeaderText("Ingressos esgotados para hoje");
             esgotado.setContentText("Infelizmente não restam vagas para hoje.\n\nVocê pode:\n• Escolher uma data futura (Ingresso programado)\n• Comprar um Passe Anual para entrar em outro dia\n\nDesculpe o inconveniente!");
             esgotado.initOwner(btnPagar.getScene().getWindow());
-            esgotado.showAndWait();
+            Aviso.mostrar(esgotado);
             return;
         }
 

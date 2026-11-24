@@ -176,7 +176,7 @@ public class OperadoresController {
         Alert confirmacao = new Alert(AlertType.CONFIRMATION,
                 "Remover " + emEdicao.getNome() + " de " + atracao.getNome() + "? Os turnos dele serão redistribuídos.");
         confirmacao.initOwner(tabela.getScene().getWindow());
-        if (confirmacao.showAndWait().filter(botao -> botao == ButtonType.OK).isEmpty()) {
+        if (Aviso.mostrar(confirmacao).filter(botao -> botao == ButtonType.OK).isEmpty()) {
             return;
         }
         String nome = emEdicao.getNome();

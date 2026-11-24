@@ -161,7 +161,7 @@ public class CadastroAtracaoController {
         pergunta.setHeaderText("Remover \"" + selecionada.getNome() + "\"?");
         pergunta.setContentText("Os operadores dela (" + selecionada.getOperadores().size() + "), as reservas de fura-fila "
                 + "e os turnos deles na escala também serão apagados. Isso não pode ser desfeito.");
-        if (pergunta.showAndWait().filter(botao -> botao == ButtonType.OK).isEmpty()) {
+        if (Aviso.mostrar(pergunta).filter(botao -> botao == ButtonType.OK).isEmpty()) {
             return;
         }
         String nome = selecionada.getNome();

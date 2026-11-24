@@ -106,7 +106,7 @@ public class VisitantesController {
         pergunta.setHeaderText("Remover \"" + rotuloUsuario(selecionado) + "\"?");
         pergunta.setContentText("Os ingressos dele (" + ingressos + ") e as reservas de fura-fila também serão apagados. "
                 + "Isso não pode ser desfeito.");
-        if (pergunta.showAndWait().filter(botao -> botao == ButtonType.OK).isEmpty()) {
+        if (Aviso.mostrar(pergunta).filter(botao -> botao == ButtonType.OK).isEmpty()) {
             return;
         }
         String nome = rotuloUsuario(selecionado);
